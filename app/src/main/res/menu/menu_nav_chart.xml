@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cnb_unselectedColor="@color/white">
+
+    <item
+        android:id="@+id/dayFragment"
+        android:icon="@drawable/ic_d"
+        android:title="@string/tit_day"
+        app:cnb_backgroundColor="@color/cyan"
+        app:cnb_iconColor="@color/white"
+        app:cnb_textColor="@color/white" />
+
+    <item
+        android:id="@+id/weekFragment"
+        android:icon="@drawable/ic_w"
+        android:title="@string/tit_week"
+        app:cnb_backgroundColor="@color/cyan"
+        app:cnb_iconColor="@color/white"
+        app:cnb_textColor="@color/white" />
+
+    <item
+        android:id="@+id/monthFragment"
+        android:icon="@drawable/ic_m"
+        android:title="@string/tit_month"
+        app:cnb_backgroundColor="@color/cyan"
+        app:cnb_iconColor="@color/white"
+        app:cnb_textColor="@color/white" />
+
+    <item
+        android:id="@+id/yearFragment"
+        android:icon="@drawable/ic_y"
+        android:title="@string/tit_year"
+        app:cnb_backgroundColor="@color/cyan"
+        app:cnb_iconColor="@color/white"
+        app:cnb_textColor="@color/white" />
+</menu>

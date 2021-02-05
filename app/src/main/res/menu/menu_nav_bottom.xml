@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/homeFragment"
+        android:icon="@drawable/ic_home"
+        android:title="@string/tit_home" />
+
+    <item
+        android:id="@+id/devicesFragment"
+        android:icon="@drawable/ic_plug"
+        android:title="@string/tit_devices" />
+
+    <item
+        android:id="@+id/goalFragment"
+        android:icon="@drawable/ic_goal"
+        android:title="@string/txt_goals" />
+
+    <item
+        android:id="@+id/menuFragment"
+        android:icon="@drawable/ic_menu"
+        android:title="@string/tit_menu" />
+</menu>

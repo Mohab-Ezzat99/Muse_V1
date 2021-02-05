@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_nav"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.muse.fragment.HomeFragment"
+        android:label="@string/tit_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/devicesFragment"
+        android:name="com.example.muse.fragment.DevicesFragment"
+        android:label="@string/tit_devices"
+        tools:layout="@layout/fragment_devices" >
+        <action
+            android:id="@+id/action_devicesFragment_to_selectedDeviceActivity"
+            app:destination="@id/selectedDeviceActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/goalFragment"
+        android:name="com.example.muse.fragment.GoalsFragment"
+        android:label="@string/txt_goals"
+        tools:layout="@layout/fragment_goals" />
+    <fragment
+        android:id="@+id/menuFragment"
+        android:name="com.example.muse.fragment.MenuFragment"
+        android:label="@string/tit_menu"
+        tools:layout="@layout/fragment_menu" />
+    <activity
+        android:id="@+id/selectedDeviceActivity"
+        android:name="com.example.muse.SelectedDeviceActivity"
+        android:label="activity_selected_device"
+        tools:layout="@layout/activity_selected_device" />
+</navigation>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.OnFourthFragment">
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="@dimen/_150sdp"
+        android:contentDescription="@string/txt_null"
+        android:src="@drawable/ic_like"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias=".3" />
+
+    <TextView
+        android:id="@+id/textView20"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_we_are_all_set_nenjoy_using_muse"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_16ssp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/imageView6"
+        app:layout_constraintStart_toStartOf="@+id/imageView6"
+        app:layout_constraintTop_toBottomOf="@+id/imageView6"
+        app:layout_constraintVertical_bias=".1" />
+
+    <TextView
+        android:id="@+id/onFourth_tv_finish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_finish"
+        android:textColor="@color/cyan"
+        android:textSize="@dimen/_20ssp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias=".9"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias=".95" />
+
+    <View
+        android:id="@+id/View16"
+        android:layout_width="@dimen/_8sdp"
+        android:layout_height="@dimen/_8sdp"
+        android:background="@drawable/shape_cyan_circle_stroke"
+        app:layout_constraintBottom_toBottomOf="@+id/onFourth_tv_finish"
+        app:layout_constraintEnd_toStartOf="@+id/onFourth_tv_finish"
+        app:layout_constraintHorizontal_bias=".15"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/onFourth_tv_finish" />
+
+    <View
+        android:id="@+id/View18"
+        android:layout_width="@dimen/_8sdp"
+        android:layout_height="@dimen/_8sdp"
+        android:layout_marginStart="@dimen/_4sdp"
+        android:background="@drawable/shape_cyan_circle_stroke"
+        app:layout_constraintBottom_toBottomOf="@+id/onFourth_tv_finish"
+        app:layout_constraintHorizontal_bias=".15"
+        app:layout_constraintStart_toEndOf="@+id/View16"
+        app:layout_constraintTop_toTopOf="@+id/onFourth_tv_finish" />
+
+    <View
+        android:id="@+id/View17"
+        android:layout_width="@dimen/_8sdp"
+        android:layout_height="@dimen/_8sdp"
+        android:layout_marginStart="@dimen/_4sdp"
+        android:background="@drawable/shape_cyan_circle_stroke"
+        app:layout_constraintBottom_toBottomOf="@+id/onFourth_tv_finish"
+        app:layout_constraintHorizontal_bias=".15"
+        app:layout_constraintStart_toEndOf="@+id/View18"
+        app:layout_constraintTop_toTopOf="@+id/onFourth_tv_finish" />
+
+    <View
+        android:id="@+id/View1"
+        android:layout_width="@dimen/_8sdp"
+        android:layout_height="@dimen/_8sdp"
+        android:layout_marginStart="@dimen/_4sdp"
+        android:background="@drawable/shape_cyan_circle_fill"
+        app:layout_constraintBottom_toBottomOf="@+id/onFourth_tv_finish"
+        app:layout_constraintStart_toEndOf="@+id/View17"
+        app:layout_constraintTop_toTopOf="@+id/onFourth_tv_finish" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
