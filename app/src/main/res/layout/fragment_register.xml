@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/cyan"
-    tools:context=".RegisterActivity">
+    tools:context=".StartActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -13,6 +13,7 @@
         android:layout_gravity="center">
 
         <ImageView
+            android:contentDescription="@string/txt_null"
             android:id="@+id/register_iv"
             android:layout_width="@dimen/_64sdp"
             android:layout_height="@dimen/_64sdp"
@@ -60,8 +61,7 @@
                 android:drawablePadding="@dimen/_8sdp"
                 android:inputType="textPersonName"
                 android:maxLength="30"
-                android:textColor="@color/white"
-                android:textCursorDrawable="@color/yellow_l" />
+                android:textColor="@color/white"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -88,8 +88,7 @@
                 android:drawablePadding="@dimen/_8sdp"
                 android:inputType="textEmailAddress"
                 android:maxLength="30"
-                android:textColor="@color/white"
-                android:textCursorDrawable="@color/yellow_l" />
+                android:textColor="@color/white"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -116,8 +115,7 @@
                 android:drawablePadding="@dimen/_8sdp"
                 android:inputType="textPassword"
                 android:maxLength="15"
-                android:textColor="@color/white"
-                android:textCursorDrawable="@color/yellow_l" />
+                android:textColor="@color/white"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -144,8 +142,7 @@
                 android:drawablePadding="@dimen/_8sdp"
                 android:inputType="textPassword"
                 android:maxLength="15"
-                android:textColor="@color/white"
-                android:textCursorDrawable="@color/yellow_l" />
+                android:textColor="@color/white"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -172,8 +169,7 @@
                 android:drawablePadding="@dimen/_8sdp"
                 android:inputType="textPersonName"
                 android:maxLength="20"
-                android:textColor="@color/white"
-                android:textCursorDrawable="@color/yellow_l" />
+                android:textColor="@color/white"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 

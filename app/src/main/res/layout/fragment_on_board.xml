@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".OnBoardingActivity">
+    tools:context=".StartActivity">
 
-    <androidx.viewpager.widget.ViewPager
+    <com.example.muse.NonSwipeableViewPager
         android:id="@+id/onBoard_vp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

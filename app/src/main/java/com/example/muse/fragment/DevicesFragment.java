@@ -2,6 +2,7 @@ package com.example.muse.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Path;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +19,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.muse.R;
-import com.example.muse.SelectedDeviceActivity;
+import com.example.muse.StartActivity;
 import com.example.muse.adapters.RVAddDeviceAdapter;
 import com.example.muse.adapters.RVDeviceBotAdapter;
 import com.example.muse.interfaces.OnADItemListener;
@@ -32,11 +33,6 @@ public class DevicesFragment extends Fragment implements OnADItemListener {
     private RVAddDeviceAdapter addDeviceAdapter;
     private Group not_add;
     private BottomSheetDialog bottomSheetDialog;
-
-    public static final String TV = "TV";
-    public static final String FRIDGE = "Fridge";
-    public static final String AIR = "Air Conditioner";
-    public static final String DEVICE = "Another device";
 
     public DevicesFragment() {
         // Required empty public constructor
@@ -71,9 +67,9 @@ public class DevicesFragment extends Fragment implements OnADItemListener {
 
         // adapter with click listener
         addDeviceAdapter = new RVAddDeviceAdapter(name -> {
-            Intent intent = new Intent(getActivity(), SelectedDeviceActivity.class);
-            intent.putExtra("NAME", name);
-            requireActivity().startActivity(intent);
+            DevicesFragmentDirections.ActionDevicesFragmentToSelectedDeviceFragment action
+                    =DevicesFragmentDirections.actionDevicesFragmentToSelectedDeviceFragment(name);
+            MainFragment.navControllerMain.navigate(action);
         });
         recyclerView.setAdapter(addDeviceAdapter);
     }
@@ -102,6 +98,7 @@ public class DevicesFragment extends Fragment implements OnADItemListener {
                 getResources().getString(R.string.tit_another_device)));
         rv.setAdapter(botAdapter);
 
+
         //launch bottom sheet
         bottomSheetDialog.setContentView(bottom_sheet);
         bottomSheetDialog.show();
@@ -111,24 +108,24 @@ public class DevicesFragment extends Fragment implements OnADItemListener {
     @Override
     public void OnItemClick(String name) {
         switch (name) {
-            case TV:
+            case StartActivity.TV:
                 addDeviceAdapter.addItem(new MAddDevice(getResources().getDrawable(R.drawable.ic_tv, null),
-                        true, TV, "50", 50));
+                        true, StartActivity.TV, "50", 50));
                 break;
 
-            case FRIDGE:
+            case StartActivity.FRIDGE:
                 addDeviceAdapter.addItem(new MAddDevice(getResources().getDrawable(R.drawable.ic_fridge, null),
-                        true, FRIDGE, "50", 50));
+                        true, StartActivity.FRIDGE, "50", 50));
                 break;
 
-            case AIR:
+            case StartActivity.AIR:
                 addDeviceAdapter.addItem(new MAddDevice(getResources().getDrawable(R.drawable.ic_air_conditioner, null),
-                        true, AIR, "50", 50));
+                        true, StartActivity.AIR, "50", 50));
                 break;
 
-            case DEVICE:
+            case StartActivity.DEVICE:
                 addDeviceAdapter.addItem(new MAddDevice(getResources().getDrawable(R.drawable.ic_plug, null),
-                        true, DEVICE, "50", 50));
+                        true, StartActivity.DEVICE, "50", 50));
                 break;
         }
         // visibility

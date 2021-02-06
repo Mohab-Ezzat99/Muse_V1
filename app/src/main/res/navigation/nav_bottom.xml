@@ -14,10 +14,10 @@
         android:id="@+id/devicesFragment"
         android:name="com.example.muse.fragment.DevicesFragment"
         android:label="@string/tit_devices"
-        tools:layout="@layout/fragment_devices" >
+        tools:layout="@layout/fragment_devices">
         <action
-            android:id="@+id/action_devicesFragment_to_selectedDeviceActivity"
-            app:destination="@id/selectedDeviceActivity" />
+            android:id="@+id/action_devicesFragment_to_selectedDeviceFragment"
+            app:destination="@id/selectedDeviceFragment" />
     </fragment>
     <fragment
         android:id="@+id/goalFragment"
@@ -29,9 +29,13 @@
         android:name="com.example.muse.fragment.MenuFragment"
         android:label="@string/tit_menu"
         tools:layout="@layout/fragment_menu" />
-    <activity
-        android:id="@+id/selectedDeviceActivity"
-        android:name="com.example.muse.SelectedDeviceActivity"
-        android:label="activity_selected_device"
-        tools:layout="@layout/activity_selected_device" />
+    <fragment
+        android:id="@+id/selectedDeviceFragment"
+        android:name="com.example.muse.fragment.SelectedDeviceFragment"
+        android:label="fragment_selected_device"
+        tools:layout="@layout/fragment_selected_device" >
+        <argument
+            android:name="name"
+            app:argType="string" />
+    </fragment>
 </navigation>

@@ -10,19 +10,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
         android:theme="@style/Theme.Muse">
-        <activity android:name=".OnBoardingActivity"/>
-        <activity android:name=".SelectedDeviceActivity" />
-        <activity
-            android:name=".RegisterActivity"
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
-        <activity
-            android:name=".LoginActivity"
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".SplashActivity">
+        <activity android:name=".StartActivity"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

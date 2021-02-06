@@ -33,7 +33,6 @@ public class OnFirstFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         ViewPager viewPager= requireActivity().findViewById(R.id.onBoard_vp);
-
         view.findViewById(R.id.onFirst_tv_next).setOnClickListener(v -> viewPager.setCurrentItem(1));
     }
 }
