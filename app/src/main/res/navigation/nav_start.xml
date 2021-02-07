@@ -36,7 +36,11 @@
         android:id="@+id/mainFragment"
         android:name="com.example.muse.fragment.MainFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_main" />
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_selectedDeviceFragment"
+            app:destination="@id/selectedDeviceFragment" />
+    </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.muse.fragment.LoginFragment"
@@ -66,5 +70,13 @@
             app:destination="@id/onBoardFragment"
             app:popUpTo="@id/registerFragment"
             app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectedDeviceFragment"
+        android:name="com.example.muse.fragment.SelectedDeviceFragment"
+        android:label="SelectedDeviceFragment" >
+        <argument
+            android:name="name"
+            app:argType="string" />
     </fragment>
 </navigation>

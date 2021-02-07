@@ -28,7 +28,7 @@
         android:fontFamily="sans-serif"
         android:text="@string/app_name"
         android:textColor="@color/white"
-        android:textSize="@dimen/_22ssp"
+        android:textSize="@dimen/_20ssp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -140,15 +140,13 @@
         app:layout_constraintTop_toTopOf="@+id/login_tv_forgot" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_4sdp"
-        android:orientation="horizontal"
+        android:layout_marginBottom="@dimen/_8sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearFab"
-        app:layout_constraintVertical_bias="0">
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:id="@+id/tv_doNotHave"
@@ -174,14 +172,11 @@
         android:id="@+id/linearFab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_4sdp"
-        android:orientation="horizontal"
-        android:padding="@dimen/_8sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/login_btn_login"
-        app:layout_constraintStart_toStartOf="@+id/login_btn_login"
-        app:layout_constraintTop_toBottomOf="@+id/textView5"
-        app:layout_constraintVertical_bias="0">
+        android:padding="@dimen/_4sdp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView5">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/login_fab_google"
@@ -209,7 +204,7 @@
         android:layout_height="wrap_content"
         android:text="@string/txt_or"
         android:textColor="@color/white"
-        android:textSize="@dimen/_14ssp"
+        android:textSize="@dimen/_12ssp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

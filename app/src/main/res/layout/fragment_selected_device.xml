@@ -343,21 +343,25 @@
             android:contentDescription="@string/txt_null"
             android:padding="@dimen/_8sdp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/selectedD_chipNav"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
             app:srcCompat="@drawable/ic_calendar" />
 
-        <FrameLayout
+        <fragment
             android:id="@+id/selectedD_fragment"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="@dimen/_4sdp"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/nav_chart"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_percent=".2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/selectedD_chipNav"
-            app:layout_constraintVertical_bias="0" />
+            app:layout_constraintVertical_bias="0"
+            tools:ignore="FragmentTagUsage" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout4"

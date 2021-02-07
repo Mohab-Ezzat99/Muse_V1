@@ -7,33 +7,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
+
+import androidx.activity.OnBackPressedCallback;
+import androidx.activity.OnBackPressedDispatcher;
+import androidx.activity.OnBackPressedDispatcherOwner;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
-import androidx.navigation.ui.NavigationUI;
 
 import com.example.muse.R;
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.ValueFormatter;
-import com.google.android.material.navigation.NavigationView;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 
 public class HomeFragment extends Fragment {
 
     private ChipNavigationBar chipNavigationBar;
+    private NavController navControllerChart;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -58,31 +53,31 @@ public class HomeFragment extends Fragment {
         int flag = window.getDecorView().getSystemUiVisibility() | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
         window.getDecorView().setSystemUiVisibility(flag);
 
+        navControllerChart = Navigation.findNavController(requireActivity(), R.id.FHome_fragment);
         chipNavigationBar =view.findViewById(R.id.FHome_chipNav);
         chipNavigationBar.setItemSelected(R.id.dayFragment,true);
-        loadFragment(new ChartDayFragment());
 
         chipNavigationBar.setOnItemSelectedListener(i -> {
             switch (i){
                 case R.id.dayFragment :
-                    loadFragment(new ChartDayFragment());
+                    navControllerChart.popBackStack();
+                    navControllerChart.navigate(R.id.chartDayFragment);
                     return;
 
                 case R.id.weekFragment :
-                    loadFragment(new ChartWeekFragment());
+                    navControllerChart.popBackStack();
+                    navControllerChart.navigate(R.id.chartWeekFragment);
                     return;
 
                 case R.id.monthFragment :
-                    loadFragment(new ChartMonthFragment());
+                    navControllerChart.popBackStack();
+                    navControllerChart.navigate(R.id.chartMonthFragment);
                     return;
 
                 case R.id.yearFragment :
-                    loadFragment(new ChartYearFragment());
+                    navControllerChart.popBackStack();
+                    navControllerChart.navigate(R.id.chartYearFragment);
             }
         });
-    }
-
-    private void loadFragment(Fragment fragment) {
-        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.FHome_fragment,fragment).commit();
     }
 }

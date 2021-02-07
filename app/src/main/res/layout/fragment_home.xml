@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -25,27 +26,31 @@
             app:layout_constraintTop_toTopOf="@+id/floatingActionButton" />
 
         <ImageView
-            android:contentDescription="@string/txt_null"
             android:id="@+id/floatingActionButton"
             android:layout_width="@dimen/_34sdp"
             android:layout_height="@dimen/_34sdp"
             android:layout_margin="@dimen/_4sdp"
             android:background="@drawable/shape_cyan_circle_stroke"
+            android:contentDescription="@string/txt_null"
             android:padding="@dimen/_8sdp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/FHome_chipNav"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_calendar" />
 
-        <FrameLayout
+        <fragment
             android:id="@+id/FHome_fragment"
             android:name="androidx.navigation.fragment.NavHostFragment"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="@dimen/_4sdp"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/nav_chart"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_percent=".45"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/FHome_chipNav" />
+            app:layout_constraintTop_toBottomOf="@+id/FHome_chipNav"
+            tools:ignore="FragmentTagUsage" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout2"

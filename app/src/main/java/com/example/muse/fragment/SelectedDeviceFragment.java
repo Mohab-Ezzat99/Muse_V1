@@ -6,6 +6,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +23,7 @@ public class SelectedDeviceFragment extends Fragment {
 
     private String item;
     private ChipNavigationBar chipNavigationBar;
+    private NavController navControllerChart;
     private TextView tv_title,tv_item_device,tv_notif_device,tv_goal_name,tv_schedule_name;
     private ImageView iv_item_icon,iv_goal_icon;
 
@@ -54,26 +57,30 @@ public class SelectedDeviceFragment extends Fragment {
             displayItem(item);
         }
 
+        navControllerChart = Navigation.findNavController(requireActivity(), R.id.selectedD_fragment);
         chipNavigationBar =view.findViewById(R.id.selectedD_chipNav);
         chipNavigationBar.setItemSelected(R.id.dayFragment,true);
-        loadFragment(new ChartDayFragment());
 
         chipNavigationBar.setOnItemSelectedListener(i -> {
             switch (i){
                 case R.id.dayFragment :
-                    loadFragment(new ChartDayFragment());
+                    navControllerChart.popBackStack();
+                    navControllerChart.navigate(R.id.chartDayFragment);
                     return;
 
                 case R.id.weekFragment :
-                    loadFragment(new ChartWeekFragment());
+                    navControllerChart.popBackStack();
+                    navControllerChart.navigate(R.id.chartWeekFragment);
                     return;
 
                 case R.id.monthFragment :
-                    loadFragment(new ChartMonthFragment());
+                    navControllerChart.popBackStack();
+                    navControllerChart.navigate(R.id.chartMonthFragment);
                     return;
 
                 case R.id.yearFragment :
-                    loadFragment(new ChartYearFragment());
+                    navControllerChart.popBackStack();
+                    navControllerChart.navigate(R.id.chartYearFragment);
             }
         });
     }
@@ -149,9 +156,5 @@ public class SelectedDeviceFragment extends Fragment {
                 tv_schedule_name.setText(StartActivity.DEVICE);
                 break;
         }
-    }
-
-    private void loadFragment(Fragment fragment) {
-        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.selectedD_fragment,fragment).commit();
     }
 }

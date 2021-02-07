@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_chart"
+    app:startDestination="@id/chartDayFragment">
+
+    <fragment
+        android:id="@+id/chartDayFragment"
+        android:name="com.example.muse.fragment.ChartDayFragment"
+        android:label="fragment_chart_day"
+        tools:layout="@layout/fragment_chart_day" />
+    <fragment
+        android:id="@+id/chartWeekFragment"
+        android:name="com.example.muse.fragment.ChartWeekFragment"
+        android:label="fragment_chart_week"
+        tools:layout="@layout/fragment_chart_week" />
+    <fragment
+        android:id="@+id/chartMonthFragment"
+        android:name="com.example.muse.fragment.ChartMonthFragment"
+        android:label="fragment_chart_month"
+        tools:layout="@layout/fragment_chart_month" />
+    <fragment
+        android:id="@+id/chartYearFragment"
+        android:name="com.example.muse.fragment.ChartYearFragment"
+        android:label="fragment_chart_year"
+        tools:layout="@layout/fragment_chart_year" />
+</navigation>

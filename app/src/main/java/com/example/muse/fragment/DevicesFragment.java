@@ -67,9 +67,9 @@ public class DevicesFragment extends Fragment implements OnADItemListener {
 
         // adapter with click listener
         addDeviceAdapter = new RVAddDeviceAdapter(name -> {
-            DevicesFragmentDirections.ActionDevicesFragmentToSelectedDeviceFragment action
-                    =DevicesFragmentDirections.actionDevicesFragmentToSelectedDeviceFragment(name);
-            MainFragment.navControllerMain.navigate(action);
+            MainFragmentDirections.ActionMainFragmentToSelectedDeviceFragment action
+                    =MainFragmentDirections.actionMainFragmentToSelectedDeviceFragment(name);
+            StartActivity.navControllerStart.navigate(action);
         });
         recyclerView.setAdapter(addDeviceAdapter);
     }
