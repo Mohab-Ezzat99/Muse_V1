@@ -21,12 +21,12 @@
             android:background="@drawable/shape_cyan_circle_stroke"
             android:isScrollContainer="true"
             app:cnb_menuResource="@menu/menu_nav_chart"
-            app:layout_constraintBottom_toBottomOf="@+id/floatingActionButton"
+            app:layout_constraintBottom_toBottomOf="@+id/FHome_iv_cat"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/floatingActionButton" />
+            app:layout_constraintTop_toTopOf="@+id/FHome_iv_cat" />
 
         <ImageView
-            android:id="@+id/floatingActionButton"
+            android:id="@+id/FHome_iv_cat"
             android:layout_width="@dimen/_34sdp"
             android:layout_height="@dimen/_34sdp"
             android:layout_margin="@dimen/_4sdp"

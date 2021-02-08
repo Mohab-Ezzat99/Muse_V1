@@ -12,6 +12,7 @@ import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
@@ -26,6 +27,9 @@ import com.example.muse.interfaces.OnADItemListener;
 import com.example.muse.model.MAddDevice;
 import com.example.muse.model.MBottomDevice;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.Objects;
 
 public class DevicesFragment extends Fragment implements OnADItemListener {
 
@@ -42,6 +46,10 @@ public class DevicesFragment extends Fragment implements OnADItemListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).show();
+        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setDisplayShowTitleEnabled(true);
+        StartActivity.mTitle.setText(StartActivity.toolbar.getTitle());
+        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setDisplayShowTitleEnabled(false);
         return inflater.inflate(R.layout.fragment_devices, container, false);
     }
 
@@ -57,8 +65,8 @@ public class DevicesFragment extends Fragment implements OnADItemListener {
         flags &= ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR; // use XOR here for remove LIGHT_STATUS_BAR from flags
         window.getDecorView().setSystemUiVisibility(flags);
 
-        CardView cv_add = view.findViewById(R.id.FDevices_cv_add);
-        cv_add.setOnClickListener(v -> showBottomSheet(view));
+        FloatingActionButton fab_add = view.findViewById(R.id.FDevices_fab_add);
+        fab_add.setOnClickListener(v -> showBottomSheet(view));
         not_add = view.findViewById(R.id.FDevices_group);
 
         recyclerView = view.findViewById(R.id.FDevices_rv);

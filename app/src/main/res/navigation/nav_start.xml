@@ -48,7 +48,9 @@
         tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
-            app:destination="@id/registerFragment" />
+            app:destination="@id/registerFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_loginFragment_to_mainFragment"
             app:destination="@id/mainFragment"
@@ -74,7 +76,8 @@
     <fragment
         android:id="@+id/selectedDeviceFragment"
         android:name="com.example.muse.fragment.SelectedDeviceFragment"
-        android:label="SelectedDeviceFragment" >
+        android:label="{name}"
+        tools:layout="@layout/fragment_selected_device">
         <argument
             android:name="name"
             app:argType="string" />

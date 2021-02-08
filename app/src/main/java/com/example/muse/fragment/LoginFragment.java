@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.muse.R;
@@ -51,6 +52,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         int flags = window.getDecorView().getSystemUiVisibility(); // get current flag
         flags &= ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR; // use XOR here for remove LIGHT_STATUS_BAR from flags
         window.getDecorView().setSystemUiVisibility(flags);
+
+        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).hide();
 
         tv_forgot = view.findViewById(R.id.login_tv_forgot);
         tv_signUp = view.findViewById(R.id.login_tv_signUp);

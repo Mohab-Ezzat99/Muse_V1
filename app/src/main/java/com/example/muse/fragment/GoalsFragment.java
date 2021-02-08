@@ -10,6 +10,7 @@ import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
@@ -17,9 +18,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.muse.R;
+import com.example.muse.StartActivity;
 import com.example.muse.adapters.RVAddGoalAdapter;
 import com.example.muse.model.MAddGoal;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.Objects;
 
 public class GoalsFragment extends Fragment {
 
@@ -35,6 +40,10 @@ public class GoalsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).show();
+        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setDisplayShowTitleEnabled(true);
+        StartActivity.mTitle.setText(StartActivity.toolbar.getTitle());
+        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setDisplayShowTitleEnabled(false);
         return inflater.inflate(R.layout.fragment_goals, container, false);
     }
 
@@ -50,8 +59,8 @@ public class GoalsFragment extends Fragment {
         flags &= ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR; // use XOR here for remove LIGHT_STATUS_BAR from flags
         window.getDecorView().setSystemUiVisibility(flags);
 
-        CardView cv_add = view.findViewById(R.id.FGoals_cv_add);
-        cv_add.setOnClickListener(v -> showBottomSheet(view));
+        FloatingActionButton fab_add = view.findViewById(R.id.FGoals_fab_add);
+        fab_add.setOnClickListener(v -> showBottomSheet(view));
         not_add = view.findViewById(R.id.FGoals_group);
 
         recyclerView = view.findViewById(R.id.FGoals_rv);

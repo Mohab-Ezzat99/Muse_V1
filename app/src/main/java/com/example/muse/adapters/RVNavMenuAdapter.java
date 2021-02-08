@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SwitchCompat;
@@ -31,7 +32,8 @@ public class RVNavMenuAdapter extends RecyclerView.Adapter<NMViewHolder> {
     public void onBindViewHolder(@NonNull NMViewHolder holder, int position) {
         MNavMenu MNavMenu = MNavMenus.get(position);
         holder.iv_icon.setImageDrawable(MNavMenu.getIcon());
-        holder.tv_name.setText(MNavMenu.getName());
+        holder.name=MNavMenu.getName();
+        holder.tv_name.setText(holder.name);
 
         if (position == MNavMenus.size() - 1)
             holder.switchCompat.setVisibility(View.VISIBLE);
@@ -53,11 +55,15 @@ class NMViewHolder extends RecyclerView.ViewHolder {
     ImageView iv_icon;
     TextView tv_name;
     SwitchCompat switchCompat;
+    String name;
 
     public NMViewHolder(@NonNull View itemView) {
         super(itemView);
         iv_icon = itemView.findViewById(R.id.itemNM_iv_icon);
         tv_name = itemView.findViewById(R.id.itemNM_name);
         switchCompat = itemView.findViewById(R.id.itemNM_switch);
+
+        itemView.setOnClickListener(v -> Toast.makeText(itemView.getContext(), name+" Soon", Toast.LENGTH_SHORT).show());
+
     }
 }

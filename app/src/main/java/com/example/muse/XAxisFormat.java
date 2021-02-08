@@ -27,10 +27,11 @@ public class XAxisFormat extends ValueFormatter {
         ArrayList<Entry> yValues = new ArrayList<>();
         yValues.add(new Entry(0, 0f));
         yValues.add(new Entry(1, 2f));
-        yValues.add(new Entry(2, 6f));
-        yValues.add(new Entry(3, 8f));
+        yValues.add(new Entry(2, 4f));
+        yValues.add(new Entry(3, 2f));
         yValues.add(new Entry(4, 5f));
-        yValues.add(new Entry(5, 10f));
+        yValues.add(new Entry(5, 6f));
+        yValues.add(new Entry(6, 10f));
 
         //collect values in a set
         LineDataSet lineDataSet = new LineDataSet(yValues, null);

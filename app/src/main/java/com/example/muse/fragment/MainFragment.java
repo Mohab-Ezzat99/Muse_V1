@@ -9,12 +9,16 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.muse.R;
+import com.example.muse.StartActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Locale;
@@ -42,12 +46,21 @@ public class MainFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         requireActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        requireActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
 
+        //bottom nav
         bottomNavigationView = view.findViewById(R.id.bottomNavigationView);
         navControllerMain = Navigation.findNavController(requireActivity(), R.id.main_fragment);
         NavigationUI.setupWithNavController(bottomNavigationView, navControllerMain);
 
-        requireActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE );
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration
+                .Builder(R.id.homeFragment
+                , R.id.devicesFragment
+                , R.id.goalFragment
+                , R.id.alertsFragment
+                , R.id.menuFragment)
+                .build();
+        NavigationUI.setupActionBarWithNavController((AppCompatActivity) requireActivity(), navControllerMain,appBarConfiguration);
 
         //set English
         Configuration config = requireContext().getResources().getConfiguration();

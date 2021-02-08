@@ -14,6 +14,7 @@ import androidx.activity.OnBackPressedDispatcher;
 import androidx.activity.OnBackPressedDispatcherOwner;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.NavOptions;
@@ -38,6 +39,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).hide();
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
@@ -56,6 +58,8 @@ public class HomeFragment extends Fragment {
         navControllerChart = Navigation.findNavController(requireActivity(), R.id.FHome_fragment);
         chipNavigationBar =view.findViewById(R.id.FHome_chipNav);
         chipNavigationBar.setItemSelected(R.id.dayFragment,true);
+
+        view.findViewById(R.id.FHome_iv_cat).setOnClickListener(v -> Toast.makeText(getContext(), "Soon", Toast.LENGTH_SHORT).show());
 
         chipNavigationBar.setOnItemSelectedListener(i -> {
             switch (i){

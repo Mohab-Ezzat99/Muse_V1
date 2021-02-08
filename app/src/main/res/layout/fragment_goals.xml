@@ -4,83 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cyan"
     tools:context=".fragment.DevicesFragment">
-
-    <TextView
-        android:id="@+id/textView10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/txt_goals"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_20sdp"
-        android:textStyle="bold"
-        android:layout_marginStart="@dimen/_8sdp"
-        app:layout_constraintBottom_toBottomOf="@+id/FGoals_cv_add"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/FGoals_cv_add" />
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/FGoals_cv_add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="@dimen/_10sdp"
-        app:cardElevation="@dimen/_6sdp"
-        android:layout_margin="@dimen/_8sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="@dimen/_8sdp">
-
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="@dimen/_16sdp"
-                android:layout_height="@dimen/_16sdp"
-                android:layout_margin="@dimen/_4sdp"
-                android:contentDescription="@string/txt_null"
-                android:src="@drawable/ic_add"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/textView7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_4sdp"
-                android:layout_marginEnd="@dimen/_4sdp"
-                android:text="@string/txt_add_goal"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_14sdp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@id/imageView2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView2"
-                app:layout_constraintTop_toTopOf="@id/imageView2" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
 
     <!--not added-->
     <androidx.constraintlayout.widget.Group
         android:id="@+id/FGoals_group"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:background="@drawable/shape_white_up"
         app:constraint_referenced_ids="imageView3,FGoals_tv_not_add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/FGoals_cv_add" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="@dimen/_64sdp"
-        android:layout_height="@dimen/_64sdp"
+        android:layout_width="@dimen/_54sdp"
+        android:layout_height="@dimen/_54sdp"
         android:contentDescription="@string/txt_null"
         android:src="@drawable/ic_goal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -96,7 +36,7 @@
         android:layout_marginTop="@dimen/_16sdp"
         android:gravity="center"
         android:text="@string/txt_no_goals_have_been_added"
-        android:textSize="@dimen/_16sdp"
+        android:textSize="@dimen/_14ssp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView3"
@@ -108,12 +48,27 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:visibility="gone"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:background="@drawable/shape_white_up"
         android:padding="@dimen/_8sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/FGoals_cv_add"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias=".03" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/FGoals_fab_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/cyan"
+        android:clickable="true"
+        android:contentDescription="@string/txt_null"
+        android:focusable="true"
+        android:scaleType="center"
+        android:src="@drawable/ic_add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias=".95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias=".96" />
 </androidx.constraintlayout.widget.ConstraintLayout>

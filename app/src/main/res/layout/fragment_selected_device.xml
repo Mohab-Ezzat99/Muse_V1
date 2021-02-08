@@ -4,25 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@drawable/shape_white_up"
     tools:context=".StartActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/selectedD_tv_title"
-            android:layout_width="0dp"
-            android:layout_height="?android:attr/actionBarSize"
-            android:background="@color/cyan"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_20sdp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
@@ -35,7 +22,7 @@
             app:layout_constraintEnd_toStartOf="@+id/selectedD_fab"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/selectedD_tv_title">
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -143,8 +130,7 @@
             app:cardUseCompatPadding="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardView"
-            app:layout_constraintWidth_percent=".9">
+            app:layout_constraintTop_toBottomOf="@+id/cardView">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -181,7 +167,6 @@
                     android:layout_marginTop="@dimen/_8sdp"
                     android:layout_marginBottom="@dimen/_8sdp"
                     android:text="@string/txt_has_been_on_for_more_3_hrs"
-                    android:textColor="@color/black"
                     android:textSize="@dimen/_14ssp"
                     app:layout_constraintStart_toStartOf="@+id/imageView2"
                     app:layout_constraintTop_toBottomOf="@+id/imageView2" />
@@ -330,12 +315,12 @@
             android:background="@drawable/shape_cyan_circle_stroke"
             android:isScrollContainer="true"
             app:cnb_menuResource="@menu/menu_nav_chart"
-            app:layout_constraintBottom_toBottomOf="@+id/floatingActionButton"
+            app:layout_constraintBottom_toBottomOf="@+id/selectedD_iv_cat"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/floatingActionButton" />
+            app:layout_constraintTop_toTopOf="@+id/selectedD_iv_cat" />
 
         <ImageView
-            android:id="@+id/floatingActionButton"
+            android:id="@+id/selectedD_iv_cat"
             android:layout_width="@dimen/_34sdp"
             android:layout_height="@dimen/_34sdp"
             android:layout_margin="@dimen/_4sdp"

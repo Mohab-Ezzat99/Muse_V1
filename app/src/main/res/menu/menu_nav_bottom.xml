@@ -17,6 +17,11 @@
         android:title="@string/txt_goals" />
 
     <item
+        android:id="@+id/alertsFragment"
+        android:icon="@drawable/ic_notification"
+        android:title="@string/tit_alerts" />
+
+    <item
         android:id="@+id/menuFragment"
         android:icon="@drawable/ic_menu"
         android:title="@string/tit_menu" />

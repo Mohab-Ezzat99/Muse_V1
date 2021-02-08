@@ -25,4 +25,9 @@
         android:name="com.example.muse.fragment.MenuFragment"
         android:label="@string/tit_menu"
         tools:layout="@layout/fragment_menu" />
+    <fragment
+        android:id="@+id/alertsFragment"
+        android:name="com.example.muse.fragment.AlertsFragment"
+        android:label="@string/tit_alerts"
+        tools:layout="@layout/fragment_alerts" />
 </navigation>

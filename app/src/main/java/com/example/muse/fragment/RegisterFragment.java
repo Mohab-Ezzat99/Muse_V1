@@ -3,9 +3,12 @@ package com.example.muse.fragment;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavOptions;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +18,8 @@ import android.widget.TextView;
 
 import com.example.muse.R;
 import com.example.muse.StartActivity;
+
+import java.util.Objects;
 
 public class RegisterFragment extends Fragment implements View.OnClickListener {
 
@@ -36,11 +41,21 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).hide();
+
         tv_login=view.findViewById(R.id.register_tv_login);
         btn_register=view.findViewById(R.id.register_btn_register);
 
         tv_login.setOnClickListener(this);
         btn_register.setOnClickListener(this);
+
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(),
+                new OnBackPressedCallback(true) {
+                    @Override
+                    public void handleOnBackPressed() {
+                        StartActivity.navControllerStart.navigate(R.id.action_registerFragment_to_loginFragment);
+                    }
+                });
     }
 
     @SuppressLint("NonConstantResourceId")

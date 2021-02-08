@@ -1,14 +1,13 @@
 package com.example.muse.fragment;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.muse.R;
 import com.example.muse.XAxisFormat;
@@ -52,7 +51,7 @@ public class ChartYearFragment extends Fragment {
         yAxis.setDrawLimitLinesBehindData(true);
 
         // x axis edit
-        String[] values = new String[]{"0 am", "4 am", "8 am", "12 pm", "4 pm", "8 pm"};
+        String[] values = new String[]{"", "2015", "2016", "2017", "2018", "2019", "2020"};
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setValueFormatter(new XAxisFormat(values));
         xAxis.setGranularity(1f);

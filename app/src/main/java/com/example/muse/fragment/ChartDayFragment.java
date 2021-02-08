@@ -1,25 +1,19 @@
 package com.example.muse.fragment;
 
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.example.muse.XAxisFormat;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.example.muse.R;
+import com.example.muse.XAxisFormat;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-
-import java.util.ArrayList;
 
 public class ChartDayFragment extends Fragment {
 
@@ -57,7 +51,7 @@ public class ChartDayFragment extends Fragment {
         yAxis.setDrawLimitLinesBehindData(true);
 
         // x axis edit
-        String[] values = new String[]{"0 am", "4 am", "8 am", "12 pm", "4 pm", "8 pm"};
+        String[] values = new String[]{"", "4 am", "8 am", "12 pm", "4 pm", "8 pm", "12 am"};
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setValueFormatter(new XAxisFormat(values));
         xAxis.setGranularity(1f);
