@@ -57,6 +57,8 @@ public class MenuFragment extends Fragment {
         adapter.addItem(new MNavMenu(getResources().getDrawable(R.drawable.ic_report, null),"Report"));
         adapter.addItem(new MNavMenu(getResources().getDrawable(R.drawable.ic_settings, null),"Settings"));
         adapter.addItem(new MNavMenu(getResources().getDrawable(R.drawable.ic_moon, null),"Dark mode"));
+        adapter.addItem(new MNavMenu(getResources().getDrawable(R.drawable.ic_contactus, null),"Contact us"));
+        adapter.addItem(new MNavMenu(getResources().getDrawable(R.drawable.ic_logout, null),"Logout"));
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),

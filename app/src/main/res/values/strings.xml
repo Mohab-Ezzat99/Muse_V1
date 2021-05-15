@@ -1,20 +1,25 @@
 <resources>
     <string name="app_name">Muse</string>
-    <string name="txt_demo">Demo</string>
+    <string name="txt_null">null</string>
 
-    <!--bottom sheet_add device-->
+    <!--_________________________________________________________________________________________-->
+    <!--bottom sheet device-->
     <string name="txt_add_device">Add Device</string>
 
-    <!--bottom sheet_add goal-->
+    <!--bottom sheet goal-->
     <string name="txt_add_goal">Add Goal</string>
     <string name="txt_i_want_my">I want my</string>
+    <string name="txt_consumption_at_the_end_of">Consumption at the end of</string>
+    <string name="txt_to_be">To be</string>
+    <string name="BTxt_submit">Submit</string>
+
     <string-array name="spinner_devices">
         <item>Device</item>
         <item>Air Conditioner</item>
         <item>TV</item>
         <item>Fridge</item>
     </string-array>
-    <string name="txt_consumption_at_the_end_of">Consumption at the end of</string>
+
     <string-array name="spinner_time">
         <item>Time</item>
         <item>Day</item>
@@ -22,17 +27,15 @@
         <item>Month</item>
         <item>Year</item>
     </string-array>
-    <string name="txt_to_be">To be</string>
+
     <string-array name="spinner_consumption">
         <item>Value</item>
         <item>100KW</item>
         <item>200KW</item>
         <item>300KW</item>
     </string-array>
-    <string name="BTxt_submit">Submit</string>
 
     <!--_________________________________________________________________________________________-->
-
     <!--fragment chart day-->
     <string name="txt_day_consumptions">Day consumptions</string>
 
@@ -46,9 +49,14 @@
     <string name="txt_year_consumptions">Year consumptions</string>
 
     <!--_________________________________________________________________________________________-->
+    <!--line chart taps-->
+    <string name="tit_day">Day</string>
+    <string name="tit_week">Week</string>
+    <string name="tit_month">Month</string>
+    <string name="tit_year">Year</string>
 
+    <!--_________________________________________________________________________________________-->
     <!--fragment devices-->
-    <string name="tit_devices">Devices</string>
     <string name="txt_no_devices_have_been_added">No devices have been added</string>
 
     <!--fragment goals-->
@@ -74,62 +82,77 @@
     <string name="txt_estimated_200kw">Estimated :200kw</string>
 
     <!--_________________________________________________________________________________________-->
+    <!--fragment login-->
 
     <!--hint -->
     <string name="hint_email">Email</string>
     <string name="hint_password">Password</string>
+
+    <!--Text-->
+    <string name="txt_remember_me">Remember me</string>
+    <string name="txt_forgot_password">Forgot password?</string>
+    <string name="txt_or">OR</string>
+    <string name="txt_don_t_have_an_account">Don\'t have an account?</string>
+    <string name="txt_sign_up">Sign Up</string>
+
+    <!--Button text-->
+    <string name="BTxt_login">Login</string>
+
+    <!--_________________________________________________________________________________________-->
+    <!--fragment on first-->
+    <string name="txt_welcome_to_muse">Welcome to Muse!</string>
+    <string name="txt_kindly_follow_these_steps_to_connect_your_product_to_wi_fi_network_and_start_controlling_it_remotely_nplease_ensure_that_your_product_is_correctly_power_supplied">
+        Kindly follow these steps to connect your product to Wi-Fi network and start controlling it remotely.\nplease ensure that your product is correctly power supplied.</string>
+    <string name="txt_next">Next</string>
+
+    <!--_________________________________________________________________________________________-->
+    <!--fragment on fourth-->
+    <string name="txt_we_are_all_set_nenjoy_using_muse">We are all set.\nEnjoy using Muse!</string>
+    <string name="txt_finish">Finish</string>
+
+    <!--_________________________________________________________________________________________-->
+    <!--fragment on second-->
+    <string name="txt_wi_fi_connection">Wi-Fi connection</string>
+    <string name="txt_muse_will_be_configured_to_access_this_network">
+        Muse will be configured to access this network</string>
+    <string name="txt_etisalat545">Etisalat545</string>
+    <string name="txt_connect_to_another_wi_fi">Connect to another Wi-Fi!</string>
+
+    <!--_________________________________________________________________________________________-->
+    <!--fragment on third-->
+    <string name="txt_press_the_red_button_on_your_muse_device">
+        Press the red button on your Muse device</string>
+
+    <!--_________________________________________________________________________________________-->
+    <!--fragment register-->
+    <string name="have_an_account">Have an account?</string>
+    <!--hint -->
     <string name="hint_full_name">Full Name</string>
     <string name="hint_confirm_password">Confirm Password</string>
     <string name="hint_device_id">Device ID</string>
-
-    <!--Text-->
-    <string name="txt_sign_up">Sign Up</string>
-    <string name="txt_null">null</string>
-    <string name="txt_forgot_password">Forgot password?</string>
-    <string name="txt_total_consumption">Total Consumption</string>
-    <string name="txt_chart">Chart</string>
-    <string name="txt_50">50%</string>
-    <string name="txt_has_been_on_for_more_3_hrs">has been on for more 3 hrs!</string>
-    <string name="txt_is_set_to_turn_off_at_2_00_am_everyday">is set to turn off at 2:00 am everyday</string>
-    <string name="txt_schedule">Schedule</string>
-    <string name="txt_or">OR</string>
-    <string name="txt_kindly_follow_these_steps_to_connect_your_product_to_wi_fi_network_and_start_controlling_it_remotely_nplease_ensure_that_your_product_is_correctly_power_supplied">Kindly follow these steps to connect your product to Wi-Fi network and start controlling it remotely.\nplease ensure that your product is correctly power supplied.</string>
-    <string name="txt_welcome_to_muse">Welcome to Muse!</string>
-    <string name="txt_next">Next</string>
-    <string name="txt_we_are_all_set_nenjoy_using_muse">We are all set.\nEnjoy using Muse!</string>
-    <string name="txt_finish">Finish</string>
-    <string name="txt_press_the_red_button_on_your_muse_device">Press the red button on your Muse device</string>
-    <string name="txt_wi_fi_connection">Wi-Fi connection</string>
-    <string name="txt_muse_will_be_configured_to_access_this_network">Muse will be configured to access this network</string>
-    <string name="txt_etisalat545">Etisalat545</string>
-    <string name="txt_connect_to_another_wi_fi">Connect to another Wi-Fi!</string>
-    <string name="txt_line_chart">Line Chart</string>
-
     <!--    Button text-->
-    <string name="BTxt_login">Login</string>
     <string name="BTxt_register">Register</string>
 
-    <!--    Another-->
-    <string name="don_t_have_an_account">Don\'t have an account?</string>
-    <string name="have_an_account">Have an account?</string>
-    <string name="txt_remember_me">Remember me</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--_________________________________________________________________________________________-->
+    <!--fragment selected device-->
+    <string name="txt_50">50%</string>
+    <string name="txt_has_been_on_for_more_3_hrs">has been on for more 3 hrs!</string>
+    <string name="txt_schedule">Schedule</string>
+    <string name="txt_is_set_to_turn_off_at_2_00_am_everyday">is set to turn off at 2:00 am everyday</string>
 
-    <!--    Titles-->
+    <!--_________________________________________________________________________________________-->
+    <!--Navigation bottom-->
     <string name="tit_home">Home</string>
-    <string name="tit_notifications">Notifications</string>
+    <string name="tit_devices">Devices</string>
+    <string name="tit_goal">Goal</string>
+    <string name="tit_alerts">Alerts</string>
     <string name="tit_menu">Menu</string>
+
+    <!--_________________________________________________________________________________________-->
+    <!--Devices-->
     <string name="tit_air_conditioner">Air Conditioner</string>
     <string name="tit_fridge">Fridge</string>
     <string name="tit_tv">TV</string>
     <string name="tit_another_device">Another device</string>
-    <string name="tit_goal">Goal</string>
-    <string name="tit_day">Day</string>
-    <string name="tit_week">Week</string>
-    <string name="tit_month">Month</string>
-    <string name="tit_year">Year</string>
-    <string name="tit_alerts">Alerts</string>
-
-    <!--_________________________________________________________________________________________-->
 
 </resources>

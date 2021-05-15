@@ -35,7 +35,7 @@ public class RVNavMenuAdapter extends RecyclerView.Adapter<NMViewHolder> {
         holder.name=MNavMenu.getName();
         holder.tv_name.setText(holder.name);
 
-        if (position == MNavMenus.size() - 1)
+        if (position == 3)
             holder.switchCompat.setVisibility(View.VISIBLE);
     }
 

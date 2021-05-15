@@ -152,7 +152,7 @@
             android:id="@+id/tv_doNotHave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/don_t_have_an_account"
+            android:text="@string/txt_don_t_have_an_account"
             android:textColor="@color/white"
             android:textSize="@dimen/_14ssp" />
 
