@@ -5,7 +5,6 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:fillViewport="true"
     android:padding="@dimen/_4sdp">
 
@@ -47,7 +46,7 @@
             app:defaultNavHost="true"
             app:navGraph="@navigation/nav_chart"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent=".45"
+            app:layout_constraintHeight_percent=".5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/FHome_chipNav"
             tools:ignore="FragmentTagUsage" />

@@ -4,13 +4,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
 import com.example.muse.R;
-import com.example.muse.XAxisFormat;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -41,7 +38,7 @@ public class ChartWeekFragment extends Fragment {
         lineChart.setAutoScaleMinMaxEnabled(true);
 
         // fixed line chart for now
-        lineChart.setData(XAxisFormat.drawLineChart(getContext()));
+//        lineChart.setData(XAxisFormat.drawLineChart(getContext()));
 
         // y axis edit
         YAxis yAxis = lineChart.getAxisLeft();
@@ -53,7 +50,7 @@ public class ChartWeekFragment extends Fragment {
         // x axis edit
         String[] values = new String[]{"","Sat", "Sun", "Mon", "Tue", "Wed", "Thu"};
         XAxis xAxis = lineChart.getXAxis();
-        xAxis.setValueFormatter(new XAxisFormat(values));
+//        xAxis.setValueFormatter(new XAxisFormat(values));
         xAxis.setGranularity(1f);
     }
 }

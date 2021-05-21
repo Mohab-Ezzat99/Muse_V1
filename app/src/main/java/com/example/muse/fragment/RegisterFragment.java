@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavOptions;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,7 +54,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 new OnBackPressedCallback(true) {
                     @Override
                     public void handleOnBackPressed() {
-                        StartActivity.navControllerStart.navigate(R.id.action_registerFragment_to_loginFragment);
+                        Navigation.findNavController(requireActivity(),R.id.start_fragment).navigate(R.id.action_registerFragment_to_loginFragment);
                     }
                 });
     }
@@ -64,10 +65,10 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
 
             case R.id.register_tv_login:
-                StartActivity.navControllerStart.navigate(R.id.action_registerFragment_to_loginFragment);
+                Navigation.findNavController(requireActivity(),R.id.start_fragment).navigate(R.id.action_registerFragment_to_loginFragment);
                 break;
             case R.id.register_btn_register:
-                StartActivity.navControllerStart.navigate(R.id.action_registerFragment_to_onBoardFragment);
+                Navigation.findNavController(requireActivity(),R.id.start_fragment).navigate(R.id.action_registerFragment_to_onBoardFragment);
                 break;
         }
     }

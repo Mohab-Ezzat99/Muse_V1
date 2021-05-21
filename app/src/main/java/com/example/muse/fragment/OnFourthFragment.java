@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +31,6 @@ public class OnFourthFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        view.findViewById(R.id.onFourth_tv_finish).setOnClickListener(v -> StartActivity.navControllerStart.navigate(R.id.action_onBoardFragment_to_mainFragment));
+        view.findViewById(R.id.onFourth_tv_finish).setOnClickListener(v -> Navigation.findNavController(requireActivity(),R.id.start_fragment).navigate(R.id.action_onBoardFragment_to_mainFragment));
     }
 }

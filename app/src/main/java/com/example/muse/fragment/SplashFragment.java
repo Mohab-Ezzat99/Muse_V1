@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import com.example.muse.R;
 import com.example.muse.StartActivity;
@@ -56,7 +57,7 @@ public class SplashFragment extends Fragment {
         iv.setAnimation(anim_left);
         tv.setAnimation(anim_left);
 
-        new Handler().postDelayed(() -> StartActivity.navControllerStart.navigate(R.id.action_splashFragment_to_loginFragment), 1000);
+        new Handler().postDelayed(() -> Navigation.findNavController(requireActivity(),R.id.start_fragment).navigate(R.id.action_splashFragment_to_loginFragment), 1000);
 
     }
 }

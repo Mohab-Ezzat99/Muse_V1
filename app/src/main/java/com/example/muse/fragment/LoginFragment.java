@@ -15,6 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 
 import com.example.muse.R;
 import com.example.muse.StartActivity;
@@ -79,11 +81,11 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.login_tv_signUp:
-                StartActivity.navControllerStart.navigate(R.id.action_loginFragment_to_registerFragment);
+                Navigation.findNavController(requireActivity(),R.id.start_fragment).navigate(R.id.action_loginFragment_to_registerFragment);
                 break;
 
             case R.id.login_btn_login:
-                StartActivity.navControllerStart.navigate(R.id.action_loginFragment_to_mainFragment);
+                Navigation.findNavController(requireActivity(),R.id.start_fragment).navigate(R.id.action_loginFragment_to_mainFragment);
                 break;
 
             case R.id.login_fab_fb:

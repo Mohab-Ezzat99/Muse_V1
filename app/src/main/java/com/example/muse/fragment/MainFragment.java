@@ -27,8 +27,7 @@ import java.util.Objects;
 public class MainFragment extends Fragment {
 
     private BottomNavigationView bottomNavigationView;
-    @SuppressLint("StaticFieldLeak")
-    public static NavController navControllerMain;
+    public NavController navControllerMain;
 
     public MainFragment() {
         // Required empty public constructor

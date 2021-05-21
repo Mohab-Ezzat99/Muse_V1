@@ -41,7 +41,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/itl_fullName"
             style="@style/TextInputLayoutStyle"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/_270sdp"
             android:layout_height="wrap_content"
             android:hint="@string/hint_full_name"
             android:textColorHint="@color/white"
@@ -50,7 +50,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/register_tv_appName"
             app:layout_constraintVertical_bias="0.05"
-            app:layout_constraintWidth_percent=".85">
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/register_et_fullName"
@@ -74,11 +74,11 @@
             android:hint="@string/hint_email"
             android:textColorHint="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/itl_fullName"
+            app:layout_constraintStart_toStartOf="@+id/itl_fullName"
             app:layout_constraintTop_toBottomOf="@+id/itl_fullName"
             app:layout_constraintVertical_bias="0.0"
-            app:layout_constraintWidth_percent=".85">
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/register_et_email"
@@ -88,7 +88,7 @@
                 android:drawablePadding="@dimen/_8sdp"
                 android:inputType="textEmailAddress"
                 android:maxLength="30"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -100,10 +100,10 @@
             android:layout_marginTop="@dimen/_12sdp"
             android:hint="@string/hint_password"
             android:textColorHint="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/itl_fullName"
+            app:layout_constraintStart_toStartOf="@+id/itl_fullName"
             app:layout_constraintTop_toBottomOf="@+id/itl_email"
-            app:layout_constraintWidth_percent=".85"
+
             app:passwordToggleEnabled="true"
             app:passwordToggleTint="@color/yellow_l">
 
@@ -115,7 +115,7 @@
                 android:drawablePadding="@dimen/_8sdp"
                 android:inputType="textPassword"
                 android:maxLength="15"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -127,10 +127,10 @@
             android:layout_marginTop="@dimen/_12sdp"
             android:hint="@string/hint_confirm_password"
             android:textColorHint="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/itl_fullName"
+            app:layout_constraintStart_toStartOf="@+id/itl_fullName"
             app:layout_constraintTop_toBottomOf="@+id/itl_password"
-            app:layout_constraintWidth_percent=".85"
+
             app:passwordToggleEnabled="true"
             app:passwordToggleTint="@color/yellow_l">
 
@@ -142,7 +142,7 @@
                 android:drawablePadding="@dimen/_8sdp"
                 android:inputType="textPassword"
                 android:maxLength="15"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -155,11 +155,11 @@
             android:hint="@string/hint_device_id"
             android:textColorHint="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/itl_fullName"
+            app:layout_constraintStart_toStartOf="@+id/itl_fullName"
             app:layout_constraintTop_toBottomOf="@+id/itl_confPassword"
             app:layout_constraintVertical_bias="0.0"
-            app:layout_constraintWidth_percent=".85">
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/register_et_device"
@@ -169,7 +169,7 @@
                 android:drawablePadding="@dimen/_8sdp"
                 android:inputType="textPersonName"
                 android:maxLength="20"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -184,10 +184,9 @@
             android:textColor="@color/cyan"
             android:textSize="@dimen/_12ssp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/itl_device"
-            app:layout_constraintWidth_percent=".85" />
+            app:layout_constraintEnd_toEndOf="@+id/itl_fullName"
+            app:layout_constraintStart_toStartOf="@+id/itl_fullName"
+            app:layout_constraintTop_toBottomOf="@+id/itl_device" />
 
         <TextView
             android:id="@+id/textView2"

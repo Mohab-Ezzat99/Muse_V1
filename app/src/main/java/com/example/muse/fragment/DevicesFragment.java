@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -47,9 +48,6 @@ public class DevicesFragment extends Fragment implements OnADItemListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).show();
-        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setDisplayShowTitleEnabled(true);
-        StartActivity.mTitle.setText(StartActivity.toolbar.getTitle());
-        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setDisplayShowTitleEnabled(false);
         return inflater.inflate(R.layout.fragment_devices, container, false);
     }
 
@@ -75,9 +73,9 @@ public class DevicesFragment extends Fragment implements OnADItemListener {
 
         // adapter with click listener
         addDeviceAdapter = new RVAddDeviceAdapter(name -> {
-            MainFragmentDirections.ActionMainFragmentToSelectedDeviceFragment action
-                    =MainFragmentDirections.actionMainFragmentToSelectedDeviceFragment(name);
-            StartActivity.navControllerStart.navigate(action);
+            DevicesFragmentDirections.ActionDevicesFragmentToSelectedDeviceFragment action
+                    =DevicesFragmentDirections.actionDevicesFragmentToSelectedDeviceFragment(name);
+            Navigation.findNavController(requireActivity(),R.id.main_fragment).navigate(action);
         });
         recyclerView.setAdapter(addDeviceAdapter);
     }

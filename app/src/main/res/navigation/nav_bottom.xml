@@ -14,7 +14,21 @@
         android:id="@+id/devicesFragment"
         android:name="com.example.muse.fragment.DevicesFragment"
         android:label="@string/tit_devices"
-        tools:layout="@layout/fragment_devices"/>
+        tools:layout="@layout/fragment_devices">
+        <action
+            android:id="@+id/action_devicesFragment_to_selectedDeviceFragment"
+            app:destination="@id/selectedDeviceFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/selectedDeviceFragment"
+        android:name="com.example.muse.fragment.SelectedDeviceFragment"
+        android:label="{name}"
+        tools:layout="@layout/fragment_selected_device">
+        <argument
+            android:name="name"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/goalFragment"
         android:name="com.example.muse.fragment.GoalsFragment"

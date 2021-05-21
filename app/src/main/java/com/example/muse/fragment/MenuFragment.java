@@ -32,9 +32,6 @@ public class MenuFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).show();
-        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setDisplayShowTitleEnabled(true);
-        StartActivity.mTitle.setText(StartActivity.toolbar.getTitle());
-        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setDisplayShowTitleEnabled(false);
         return inflater.inflate(R.layout.fragment_menu, container, false);
     }
 
