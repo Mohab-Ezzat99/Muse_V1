@@ -17,7 +17,7 @@ import com.example.muse.model.MAddGoal;
 
 import java.util.ArrayList;
 
-public class RVAddGoalAdapter extends RecyclerView.Adapter<AGViewHolder> {
+public class RVAddGoalAdapter extends RecyclerView.Adapter<RVAddGoalAdapter.AGViewHolder> {
     private ArrayList<MAddGoal> MAddGoals = new ArrayList<>();
     private Context context;
 
@@ -70,18 +70,18 @@ public class RVAddGoalAdapter extends RecyclerView.Adapter<AGViewHolder> {
         this.MAddGoals.add(itemAD);
         notifyDataSetChanged();
     }
-}
 
-class AGViewHolder extends RecyclerView.ViewHolder {
+    class AGViewHolder extends RecyclerView.ViewHolder {
 
-    ImageView iv_icon, iv_done;
-    TextView tv_name, tv_status;
+        ImageView iv_icon, iv_done;
+        TextView tv_name, tv_status;
 
-    public AGViewHolder(@NonNull View itemView) {
-        super(itemView);
-        iv_icon = itemView.findViewById(R.id.itemAG_iv_icon);
-        iv_done = itemView.findViewById(R.id.itemAG_iv_result);
-        tv_name = itemView.findViewById(R.id.itemAG_tv_name);
-        tv_status = itemView.findViewById(R.id.itemAG_TPre1V);
+        public AGViewHolder(@NonNull View itemView) {
+            super(itemView);
+            iv_icon = itemView.findViewById(R.id.itemAG_iv_icon);
+            iv_done = itemView.findViewById(R.id.itemAG_iv_result);
+            tv_name = itemView.findViewById(R.id.itemAG_tv_name);
+            tv_status = itemView.findViewById(R.id.itemAG_TPre1V);
+        }
     }
 }

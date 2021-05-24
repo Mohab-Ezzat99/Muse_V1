@@ -32,6 +32,7 @@
             android:background="@drawable/shape_cyan_circle_stroke"
             android:contentDescription="@string/txt_null"
             android:padding="@dimen/_8sdp"
+            app:layout_constraintHorizontal_bias=".9"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/FHome_chipNav"
             app:layout_constraintTop_toTopOf="parent"

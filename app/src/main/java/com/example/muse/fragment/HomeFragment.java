@@ -9,18 +9,15 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import androidx.activity.OnBackPressedCallback;
-import androidx.activity.OnBackPressedDispatcher;
-import androidx.activity.OnBackPressedDispatcherOwner;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
-import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
 import com.example.muse.R;
+import com.example.muse.utility.SaveState;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 import java.util.Objects;
@@ -48,12 +45,10 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // status bar color
-        Window window = requireActivity().getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(getResources().getColor(R.color.white, null));
-        int flag = window.getDecorView().getSystemUiVisibility() | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
-        window.getDecorView().setSystemUiVisibility(flag);
+        if(SaveState.getDarkModeState())
+            setupDarkStatusBar();
+        else
+            setupLightStatusBar();
 
         navControllerChart = Navigation.findNavController(requireActivity(), R.id.FHome_fragment);
         chipNavigationBar =view.findViewById(R.id.FHome_chipNav);
@@ -78,10 +73,26 @@ public class HomeFragment extends Fragment {
                     navControllerChart.navigate(R.id.chartMonthFragment);
                     return;
 
-                case R.id.yearFragment :
+                case R.id.yearFragment:
                     navControllerChart.popBackStack();
                     navControllerChart.navigate(R.id.chartYearFragment);
             }
         });
+    }
+
+    public void setupLightStatusBar() {
+        // status bar color
+        Window window = requireActivity().getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(getResources().getColor(R.color.white, null));
+        int flag = window.getDecorView().getSystemUiVisibility() | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+        window.getDecorView().setSystemUiVisibility(flag);
+    }
+
+    public void setupDarkStatusBar() {
+        // status bar color
+        Window window = requireActivity().getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(getResources().getColor(R.color.nice_black, null));
     }
 }

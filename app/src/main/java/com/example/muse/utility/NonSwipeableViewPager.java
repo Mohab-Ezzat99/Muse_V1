@@ -1,4 +1,4 @@
-package com.example.muse;
+package com.example.muse.utility;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

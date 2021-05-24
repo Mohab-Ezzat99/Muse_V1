@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/shape_white_up"
     tools:context=".StartActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -85,7 +84,7 @@
                     android:layout_marginTop="@dimen/_8sdp"
                     android:layout_marginEnd="@dimen/_8sdp"
                     android:layout_marginBottom="@dimen/_8sdp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/nice_black"
                     android:textSize="@dimen/_12ssp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/selectedD_item_switch"
@@ -107,13 +106,15 @@
         </androidx.cardview.widget.CardView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            style="@style/Widget.MaterialComponents.FloatingActionButton"
             android:id="@+id/selectedD_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="?attr/colorOnPrimary"
             android:clickable="true"
             android:contentDescription="@string/txt_null"
             android:focusable="true"
+            app:tint="@color/cyan"
             app:layout_constraintBottom_toBottomOf="@+id/cardView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -154,7 +155,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_8sdp"
                     android:layout_marginLeft="@dimen/_8sdp"
-                    android:textColor="@color/black"
+                    android:textColor="?attr/colorOnSecondary"
                     android:textSize="@dimen/_14ssp"
                     app:layout_constraintBottom_toBottomOf="@+id/imageView2"
                     app:layout_constraintStart_toEndOf="@+id/imageView2"
@@ -327,6 +328,7 @@
             android:background="@drawable/shape_cyan_circle_stroke"
             android:contentDescription="@string/txt_null"
             android:padding="@dimen/_8sdp"
+            app:layout_constraintHorizontal_bias=".9"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/selectedD_chipNav"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
@@ -342,7 +344,7 @@
             app:navGraph="@navigation/nav_chart"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent=".2"
+            app:layout_constraintHeight_percent=".3"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/selectedD_chipNav"
             app:layout_constraintVertical_bias="0"

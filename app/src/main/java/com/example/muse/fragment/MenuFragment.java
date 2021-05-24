@@ -7,9 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,6 +21,7 @@ import com.example.muse.R;
 import com.example.muse.StartActivity;
 import com.example.muse.adapters.RVNavMenuAdapter;
 import com.example.muse.model.MNavMenu;
+import com.example.muse.utility.SaveState;
 
 import java.util.Objects;
 
@@ -61,5 +65,22 @@ public class MenuFragment extends Fragment {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
                 DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(dividerItemDecoration);
+
+        adapter.setListener(new RVNavMenuAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(String name) {
+                //item click
+            }
+
+            @Override
+            public void isDarkModeChecked(boolean isChecked) {
+                if (isChecked) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                }
+                else
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                SaveState.setDarkModeState(isChecked);
+            }
+        });
     }
 }

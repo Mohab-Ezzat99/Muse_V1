@@ -10,15 +10,14 @@
 
     <ImageView
         android:id="@+id/login_iv"
-        android:layout_width="@dimen/_64sdp"
-        android:layout_height="@dimen/_64sdp"
+        android:layout_width="@dimen/_74sdp"
+        android:layout_height="@dimen/_74sdp"
         android:contentDescription="@string/txt_null"
         android:src="@drawable/ic_light"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/textView5"
+        app:layout_constraintEnd_toStartOf="@+id/view4"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.2" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/login_tv_appName"
@@ -28,11 +27,11 @@
         android:fontFamily="sans-serif"
         android:text="@string/app_name"
         android:textColor="@color/white"
-        android:textSize="@dimen/_20ssp"
+        android:textSize="@dimen/_16ssp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/login_iv"
+        app:layout_constraintStart_toStartOf="@+id/login_iv"
         app:layout_constraintTop_toBottomOf="@+id/login_iv"
         app:layout_constraintVertical_bias="0" />
 
@@ -45,9 +44,10 @@
         android:textColorHint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias=".9"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_tv_appName"
-        app:layout_constraintVertical_bias="0.05">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.2">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/login_et_email"
@@ -97,8 +97,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_12sdp"
         android:backgroundTint="@color/yellow_h"
-        android:text="@string/BTxt_login"
         android:paddingVertical="@dimen/_8sdp"
+        android:text="@string/BTxt_login"
         android:textAllCaps="false"
         android:textColor="@color/cyan"
         android:textSize="@dimen/_12ssp"
@@ -144,10 +144,11 @@
         android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/_8sdp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintEnd_toEndOf="@+id/login_btn_login"
+        app:layout_constraintStart_toStartOf="@+id/login_btn_login"
+        app:layout_constraintTop_toBottomOf="@+id/login_btn_login"
+        app:layout_constraintVertical_bias=".05">
 
         <TextView
             android:id="@+id/tv_doNotHave"
@@ -174,9 +175,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/_4sdp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/textView5"
+        app:layout_constraintStart_toStartOf="@+id/textView5"
         app:layout_constraintTop_toBottomOf="@+id/textView5">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -184,10 +185,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_8sdp"
-            app:tintMode="multiply"
             android:backgroundTint="@color/white"
             android:contentDescription="@string/txt_null"
-            android:src="@drawable/ic_google" />
+            app:srcCompat="@drawable/ic_google" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/login_fab_fb"
@@ -209,30 +209,43 @@
         android:textSize="@dimen/_12ssp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_btn_login"
-        app:layout_constraintVertical_bias=".1" />
+        app:layout_constraintEnd_toEndOf="@+id/login_iv"
+        app:layout_constraintStart_toStartOf="@+id/login_iv"
+        app:layout_constraintTop_toTopOf="@+id/login_btn_login"
+        app:layout_constraintVertical_bias="0" />
 
     <View
         android:id="@+id/view2"
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:layout_marginEnd="@dimen/_8sdp"
+        android:layout_marginHorizontal="@dimen/_8sdp"
         android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/textView5"
         app:layout_constraintEnd_toStartOf="@+id/textView5"
-        app:layout_constraintStart_toStartOf="@+id/login_btn_login"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView5" />
 
     <View
+        android:id="@+id/view3"
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginHorizontal="@dimen/_8sdp"
         android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/textView5"
-        app:layout_constraintEnd_toEndOf="@+id/login_btn_login"
+        app:layout_constraintEnd_toStartOf="@+id/view4"
         app:layout_constraintStart_toEndOf="@+id/textView5"
         app:layout_constraintTop_toTopOf="@+id/textView5" />
+
+    <View
+        android:id="@+id/view4"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:layout_marginVertical="@dimen/_8sdp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias=".4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

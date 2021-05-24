@@ -4,9 +4,9 @@ import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SwitchCompat;
@@ -14,18 +14,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.muse.R;
 import com.example.muse.model.MNavMenu;
+import com.example.muse.utility.SaveState;
 
 import java.util.ArrayList;
 
-public class RVNavMenuAdapter extends RecyclerView.Adapter<NMViewHolder> {
+public class RVNavMenuAdapter extends RecyclerView.Adapter<RVNavMenuAdapter.NMViewHolder> {
 
     private ArrayList<MNavMenu> MNavMenus = new ArrayList<>();
+    private OnItemClickListener listener;
 
     @SuppressLint("InflateParams")
     @NonNull
     @Override
     public NMViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new NMViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_nav_menu,parent,false));
+        return new NMViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_nav_menu, parent, false));
     }
 
     @Override
@@ -34,9 +36,11 @@ public class RVNavMenuAdapter extends RecyclerView.Adapter<NMViewHolder> {
         holder.iv_icon.setImageDrawable(MNavMenu.getIcon());
         holder.name=MNavMenu.getName();
         holder.tv_name.setText(holder.name);
-
-        if (position == 3)
+        if (position == 3) {
             holder.switchCompat.setVisibility(View.VISIBLE);
+            if(SaveState.getDarkModeState())
+                holder.switchCompat.setChecked(true);
+        }
     }
 
     @Override
@@ -44,26 +48,40 @@ public class RVNavMenuAdapter extends RecyclerView.Adapter<NMViewHolder> {
         return MNavMenus.size();
     }
 
-    public void addItem(MNavMenu MNavMenu){
+    public void addItem(MNavMenu MNavMenu) {
         this.MNavMenus.add(MNavMenu);
         notifyDataSetChanged();
+
     }
-}
 
-class NMViewHolder extends RecyclerView.ViewHolder {
+    public void setListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
 
-    ImageView iv_icon;
-    TextView tv_name;
-    SwitchCompat switchCompat;
-    String name;
+    public interface OnItemClickListener {
+        void onItemClick(String name);
+        void isDarkModeChecked(boolean isChecked);
+    }
 
-    public NMViewHolder(@NonNull View itemView) {
-        super(itemView);
-        iv_icon = itemView.findViewById(R.id.itemNM_iv_icon);
-        tv_name = itemView.findViewById(R.id.itemNM_name);
-        switchCompat = itemView.findViewById(R.id.itemNM_switch);
+    public class NMViewHolder extends RecyclerView.ViewHolder {
 
-        itemView.setOnClickListener(v -> Toast.makeText(itemView.getContext(), name+" Soon", Toast.LENGTH_SHORT).show());
+        ImageView iv_icon;
+        TextView tv_name;
+        SwitchCompat switchCompat;
+        String name;
+        boolean isDarkModeChecked;
 
+        public NMViewHolder(@NonNull View itemView) {
+            super(itemView);
+            iv_icon = itemView.findViewById(R.id.itemNM_iv_icon);
+            tv_name = itemView.findViewById(R.id.itemNM_name);
+            switchCompat = itemView.findViewById(R.id.itemNM_switch);
+
+            itemView.setOnClickListener(v -> listener.onItemClick(name));
+            switchCompat.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                isDarkModeChecked=isChecked;
+                listener.isDarkModeChecked(isDarkModeChecked);
+            });
+        }
     }
 }

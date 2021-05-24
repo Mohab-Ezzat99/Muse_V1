@@ -1,17 +1,25 @@
 package com.example.muse.fragment;
 
+import android.annotation.SuppressLint;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import com.example.muse.DataCharts;
+
+import com.example.muse.StartActivity;
+import com.example.muse.utility.DataCharts;
 import com.example.muse.R;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
+
+import java.util.Objects;
 
 public class ChartDayFragment extends Fragment {
 
@@ -22,8 +30,7 @@ public class ChartDayFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_chart_day, container, false);
     }
@@ -36,18 +43,12 @@ public class ChartDayFragment extends Fragment {
         setupLineChart();
 
         // fixed line chart for now
-        DataCharts dataCharts = new DataCharts();
         int[] xAxis_value = {0, 1, 2, 3, 4, 5, 6};
         float[] yAxis_value = {0f,2f,4f, 2f, 5f, 6f, 10f};
-        lineChart.setData(dataCharts.drawLineChart(getContext(),xAxis_value,yAxis_value ));
-
-        // x axis edit
-        String[] values = new String[]{"", "4 am", "8 am", "12 pm", "4 pm", "8 pm", "12 am"};
-        XAxis xAxis = lineChart.getXAxis();
-        xAxis.setValueFormatter(dataCharts.new XAxisFormat(values));
-        xAxis.setGranularity(1f);
+        lineChart.setData(DataCharts.drawLineChart(getContext(),xAxis_value,yAxis_value ));
     }
 
+    @SuppressLint("ResourceType")
     public void setupLineChart(){
         lineChart.setDragEnabled(true);
         lineChart.setScaleEnabled(false);
@@ -59,7 +60,15 @@ public class ChartDayFragment extends Fragment {
         YAxis yAxis = lineChart.getAxisLeft();
         yAxis.setAxisMaximum(10f);
         yAxis.setAxisMinimum(0f);
+        yAxis.setTextColor(StartActivity.color);
         yAxis.setLabelCount(6, true);
         yAxis.setDrawLimitLinesBehindData(true);
+
+        // x axis edit
+        String[] values = new String[]{"", "4 am", "8 am", "12 pm", "4 pm", "8 pm", "12 am"};
+        XAxis xAxis = lineChart.getXAxis();
+        xAxis.setTextColor(StartActivity.color);
+        xAxis.setValueFormatter(new DataCharts.XAxisFormat(values));
+        xAxis.setGranularity(1f);
     }
 }

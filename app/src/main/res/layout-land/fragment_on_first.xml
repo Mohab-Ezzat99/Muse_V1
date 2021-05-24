@@ -5,39 +5,50 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusableInTouchMode="true"
-    tools:context=".fragment.OnFourthFragment">
+    tools:context=".fragment.OnFirstFragment">
+
 
     <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="@dimen/_150sdp"
-        android:layout_height="@dimen/_150sdp"
+        android:id="@+id/imageView4"
+        android:layout_width="@dimen/_130sdp"
+        android:layout_height="@dimen/_130sdp"
         android:contentDescription="@string/txt_null"
-        android:src="@drawable/ic_like"
+        android:src="@drawable/ic_undraw_home"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias=".3" />
-
-    <TextView
-        android:id="@+id/textView20"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/txt_we_are_all_set_nenjoy_using_muse"
-        android:textColor="?attr/colorOnSecondary"
-        android:textSize="@dimen/_16ssp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/imageView6"
-        app:layout_constraintStart_toStartOf="@+id/imageView6"
-        app:layout_constraintTop_toBottomOf="@+id/imageView6"
         app:layout_constraintVertical_bias=".1" />
 
     <TextView
-        android:id="@+id/onFourth_tv_finish"
+        android:id="@+id/textView13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/txt_finish"
+        android:text="@string/txt_welcome_to_muse"
+        android:textColor="?attr/colorOnSecondary"
+        android:textSize="@dimen/_16ssp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView4"
+        app:layout_constraintStart_toStartOf="@+id/imageView4"
+        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_kindly_follow_these_steps_to_connect_your_product_to_wi_fi_network_and_start_controlling_it_remotely_nplease_ensure_that_your_product_is_correctly_power_supplied"
+        android:textSize="@dimen/_14ssp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/imageView4"
+        app:layout_constraintStart_toStartOf="@+id/imageView4"
+        app:layout_constraintTop_toBottomOf="@+id/textView13"
+        app:layout_constraintVertical_bias=".1"
+        app:layout_constraintWidth_percent=".7" />
+
+    <TextView
+        android:id="@+id/onFirst_tv_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_next"
         android:textColor="@color/cyan"
         android:textSize="@dimen/_20ssp"
         android:textStyle="bold"
@@ -52,12 +63,12 @@
         android:id="@+id/View16"
         android:layout_width="@dimen/_8sdp"
         android:layout_height="@dimen/_8sdp"
-        android:background="@drawable/shape_cyan_circle_stroke"
-        app:layout_constraintBottom_toBottomOf="@+id/onFourth_tv_finish"
-        app:layout_constraintEnd_toStartOf="@+id/onFourth_tv_finish"
+        android:background="@drawable/shape_cyan_circle_fill"
+        app:layout_constraintBottom_toBottomOf="@+id/onFirst_tv_next"
+        app:layout_constraintEnd_toStartOf="@+id/onFirst_tv_next"
         app:layout_constraintHorizontal_bias=".15"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/onFourth_tv_finish" />
+        app:layout_constraintTop_toTopOf="@+id/onFirst_tv_next" />
 
     <View
         android:id="@+id/View18"
@@ -65,10 +76,10 @@
         android:layout_height="@dimen/_8sdp"
         android:layout_marginStart="@dimen/_4sdp"
         android:background="@drawable/shape_cyan_circle_stroke"
-        app:layout_constraintBottom_toBottomOf="@+id/onFourth_tv_finish"
+        app:layout_constraintBottom_toBottomOf="@+id/onFirst_tv_next"
         app:layout_constraintHorizontal_bias=".15"
         app:layout_constraintStart_toEndOf="@+id/View16"
-        app:layout_constraintTop_toTopOf="@+id/onFourth_tv_finish" />
+        app:layout_constraintTop_toTopOf="@+id/onFirst_tv_next" />
 
     <View
         android:id="@+id/View17"
@@ -76,19 +87,18 @@
         android:layout_height="@dimen/_8sdp"
         android:layout_marginStart="@dimen/_4sdp"
         android:background="@drawable/shape_cyan_circle_stroke"
-        app:layout_constraintBottom_toBottomOf="@+id/onFourth_tv_finish"
+        app:layout_constraintBottom_toBottomOf="@+id/onFirst_tv_next"
         app:layout_constraintHorizontal_bias=".15"
         app:layout_constraintStart_toEndOf="@+id/View18"
-        app:layout_constraintTop_toTopOf="@+id/onFourth_tv_finish" />
+        app:layout_constraintTop_toTopOf="@+id/onFirst_tv_next" />
 
     <View
         android:id="@+id/View1"
         android:layout_width="@dimen/_8sdp"
         android:layout_height="@dimen/_8sdp"
         android:layout_marginStart="@dimen/_4sdp"
-        android:background="@drawable/shape_cyan_circle_fill"
-        app:layout_constraintBottom_toBottomOf="@+id/onFourth_tv_finish"
+        android:background="@drawable/shape_cyan_circle_stroke"
+        app:layout_constraintBottom_toBottomOf="@+id/onFirst_tv_next"
         app:layout_constraintStart_toEndOf="@+id/View17"
-        app:layout_constraintTop_toTopOf="@+id/onFourth_tv_finish" />
-
+        app:layout_constraintTop_toTopOf="@+id/onFirst_tv_next" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,20 +1,17 @@
 package com.example.muse.fragment;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.muse.NonSwipeableViewPager;
+import com.example.muse.utility.NonSwipeableViewPager;
 import com.example.muse.R;
 import com.example.muse.adapters.VPOnBoardAdapter;
 

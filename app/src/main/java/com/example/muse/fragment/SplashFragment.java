@@ -17,7 +17,6 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.example.muse.R;
-import com.example.muse.StartActivity;
 
 import java.util.Objects;
 
@@ -52,12 +51,16 @@ public class SplashFragment extends Fragment {
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).hide();
 
         anim_left = AnimationUtils.loadAnimation(getContext(), R.anim.anim_left);
-        iv=view.findViewById(R.id.splash_iv_light);
-        tv=view.findViewById(R.id.splash_tv_muse);
+        iv = view.findViewById(R.id.splash_iv_light);
+        tv = view.findViewById(R.id.splash_tv_muse);
         iv.setAnimation(anim_left);
         tv.setAnimation(anim_left);
 
-        new Handler().postDelayed(() -> Navigation.findNavController(requireActivity(),R.id.start_fragment).navigate(R.id.action_splashFragment_to_loginFragment), 1000);
+
+        new Handler().postDelayed(() -> {
+            if(isAdded())
+                Navigation.findNavController(requireActivity(),R.id.start_fragment).navigate(R.id.action_splashFragment_to_loginFragment);
+        },1000);
 
     }
 }

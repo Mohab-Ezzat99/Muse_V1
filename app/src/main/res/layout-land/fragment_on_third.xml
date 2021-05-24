@@ -5,28 +5,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusableInTouchMode="true"
-    tools:context=".fragment.OnFourthFragment">
+    tools:context=".fragment.OnThirdFragment">
+
 
     <ImageView
         android:id="@+id/imageView6"
-        android:layout_width="@dimen/_150sdp"
-        android:layout_height="@dimen/_150sdp"
+        android:layout_width="@dimen/_130sdp"
+        android:layout_height="@dimen/_130sdp"
         android:contentDescription="@string/txt_null"
-        android:src="@drawable/ic_like"
+        android:src="@drawable/ic_light"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias=".3" />
+        app:layout_constraintVertical_bias=".2" />
 
     <TextView
         android:id="@+id/textView20"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/txt_we_are_all_set_nenjoy_using_muse"
+        android:text="@string/txt_press_the_red_button_on_your_muse_device"
         android:textColor="?attr/colorOnSecondary"
         android:textSize="@dimen/_16ssp"
         android:textStyle="bold"
+        app:layout_constraintWidth_percent=".55"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/imageView6"
         app:layout_constraintStart_toStartOf="@+id/imageView6"
@@ -34,10 +36,10 @@
         app:layout_constraintVertical_bias=".1" />
 
     <TextView
-        android:id="@+id/onFourth_tv_finish"
+        android:id="@+id/onThird_tv_next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/txt_finish"
+        android:text="@string/txt_next"
         android:textColor="@color/cyan"
         android:textSize="@dimen/_20ssp"
         android:textStyle="bold"
@@ -53,11 +55,11 @@
         android:layout_width="@dimen/_8sdp"
         android:layout_height="@dimen/_8sdp"
         android:background="@drawable/shape_cyan_circle_stroke"
-        app:layout_constraintBottom_toBottomOf="@+id/onFourth_tv_finish"
-        app:layout_constraintEnd_toStartOf="@+id/onFourth_tv_finish"
+        app:layout_constraintBottom_toBottomOf="@+id/onThird_tv_next"
+        app:layout_constraintEnd_toStartOf="@+id/onThird_tv_next"
         app:layout_constraintHorizontal_bias=".15"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/onFourth_tv_finish" />
+        app:layout_constraintTop_toTopOf="@+id/onThird_tv_next" />
 
     <View
         android:id="@+id/View18"
@@ -65,30 +67,29 @@
         android:layout_height="@dimen/_8sdp"
         android:layout_marginStart="@dimen/_4sdp"
         android:background="@drawable/shape_cyan_circle_stroke"
-        app:layout_constraintBottom_toBottomOf="@+id/onFourth_tv_finish"
+        app:layout_constraintBottom_toBottomOf="@+id/onThird_tv_next"
         app:layout_constraintHorizontal_bias=".15"
         app:layout_constraintStart_toEndOf="@+id/View16"
-        app:layout_constraintTop_toTopOf="@+id/onFourth_tv_finish" />
+        app:layout_constraintTop_toTopOf="@+id/onThird_tv_next" />
 
     <View
         android:id="@+id/View17"
         android:layout_width="@dimen/_8sdp"
         android:layout_height="@dimen/_8sdp"
         android:layout_marginStart="@dimen/_4sdp"
-        android:background="@drawable/shape_cyan_circle_stroke"
-        app:layout_constraintBottom_toBottomOf="@+id/onFourth_tv_finish"
+        android:background="@drawable/shape_cyan_circle_fill"
+        app:layout_constraintBottom_toBottomOf="@+id/onThird_tv_next"
         app:layout_constraintHorizontal_bias=".15"
         app:layout_constraintStart_toEndOf="@+id/View18"
-        app:layout_constraintTop_toTopOf="@+id/onFourth_tv_finish" />
+        app:layout_constraintTop_toTopOf="@+id/onThird_tv_next" />
 
     <View
         android:id="@+id/View1"
         android:layout_width="@dimen/_8sdp"
         android:layout_height="@dimen/_8sdp"
         android:layout_marginStart="@dimen/_4sdp"
-        android:background="@drawable/shape_cyan_circle_fill"
-        app:layout_constraintBottom_toBottomOf="@+id/onFourth_tv_finish"
+        android:background="@drawable/shape_cyan_circle_stroke"
+        app:layout_constraintBottom_toBottomOf="@+id/onThird_tv_next"
         app:layout_constraintStart_toEndOf="@+id/View17"
-        app:layout_constraintTop_toTopOf="@+id/onFourth_tv_finish" />
-
+        app:layout_constraintTop_toTopOf="@+id/onThird_tv_next" />
 </androidx.constraintlayout.widget.ConstraintLayout>

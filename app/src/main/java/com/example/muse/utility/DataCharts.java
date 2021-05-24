@@ -1,21 +1,26 @@
-package com.example.muse;
+package com.example.muse.utility;
 
 import android.content.Context;
 
 import androidx.core.content.ContextCompat;
 
+import com.example.muse.R;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 
 public class DataCharts {
 
-    public LineData drawLineChart(Context context, int[] xAxis_value, float[] yAxis_value) {
+    public static LineData drawLineChart(Context context, int[] xAxis_value, float[] yAxis_value) {
         // y axis values
         ArrayList<Entry> yEntries = new ArrayList<>();
         for (int i=0;i<xAxis_value.length;i++)
@@ -42,7 +47,24 @@ public class DataCharts {
         return new LineData(dataSets);
     }
 
-    public class XAxisFormat extends ValueFormatter {
+    public static BarData drawBarChart(Context context, int[] xAxis_value, float[] yAxis_value) {
+        // y axis values
+        ArrayList<BarEntry> yEntries = new ArrayList<>();
+        for (int i=0;i<xAxis_value.length;i++)
+            yEntries.add(new BarEntry(xAxis_value[i], yAxis_value[i]));
+
+        //collect values in a set
+        BarDataSet barDataSet = new BarDataSet(yEntries, null);
+        barDataSet.setColors(ContextCompat.getColor(context,R.color.cyan));
+        barDataSet.setValueTextSize(12f);
+        barDataSet.setValueTextColor(ContextCompat.getColor(context, R.color.red));
+
+        //assign all data sets to line chart
+        return new BarData(barDataSet);
+    }
+
+
+    public static class XAxisFormat extends ValueFormatter {
         String[] mValues;
 
         public XAxisFormat(String[] values) {

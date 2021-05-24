@@ -180,7 +180,7 @@
         android:backgroundTint="@color/orange"
         android:text="@string/BTxt_submit"
         android:textAllCaps="false"
-        android:textColor="@color/black"
+        android:textColor="@color/nice_black"
         android:textSize="@dimen/_12ssp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/relativeLayout3"

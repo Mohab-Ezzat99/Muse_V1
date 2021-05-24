@@ -5,7 +5,11 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,10 +20,14 @@ import android.widget.Toast;
 
 import com.example.muse.R;
 import com.example.muse.StartActivity;
+import com.example.muse.adapters.RVAlertAdapter;
+import com.example.muse.model.MAlert;
 
 import java.util.Objects;
 
 public class AlertsFragment extends Fragment {
+
+    private RecyclerView recyclerView;
 
     public AlertsFragment() {
         // Required empty public constructor
@@ -44,6 +52,26 @@ public class AlertsFragment extends Fragment {
         int flags = window.getDecorView().getSystemUiVisibility(); // get current flag
         flags &= ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR; // use XOR here for remove LIGHT_STATUS_BAR from flags
         window.getDecorView().setSystemUiVisibility(flags);
+
+
+        recyclerView = view.findViewById(R.id.FAlerts_rv);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        RVAlertAdapter adapter=new RVAlertAdapter(getContext());
+        adapter.addItem(new MAlert(ContextCompat.getDrawable(requireContext(), R.drawable.ic_air_conditioner)
+                ,StartActivity.AIR, requireActivity().getResources().getString(R.string.txt_has_been_on_for_more_3_hrs)));
+        adapter.addItem(new MAlert(ContextCompat.getDrawable(requireContext(), R.drawable.ic_tv)
+                ,StartActivity.TV, requireActivity().getResources().getString(R.string.txt_has_been_on_for_more_3_hrs)));
+        adapter.addItem(new MAlert(ContextCompat.getDrawable(requireContext(), R.drawable.ic_fridge)
+                ,StartActivity.FRIDGE,requireActivity().getResources().getString(R.string.txt_has_been_on_for_more_3_hrs)));
+        adapter.addItem(new MAlert(ContextCompat.getDrawable(requireContext(), R.drawable.ic_tv)
+                ,StartActivity.TV,requireActivity().getResources().getString(R.string.txt_has_been_on_for_more_3_hrs)));
+        adapter.addItem(new MAlert(ContextCompat.getDrawable(requireContext(), R.drawable.ic_air_conditioner)
+                ,StartActivity.AIR,requireActivity().getResources().getString(R.string.txt_has_been_on_for_more_3_hrs)));
+        adapter.addItem(new MAlert(ContextCompat.getDrawable(requireContext(), R.drawable.ic_fridge)
+                ,StartActivity.FRIDGE,requireActivity().getResources().getString(R.string.txt_has_been_on_for_more_3_hrs)));
+        recyclerView.setAdapter(adapter);
 
         view.findViewById(R.id.FAlerts_fab_add).setOnClickListener(v -> Toast.makeText(getContext(), "Soon", Toast.LENGTH_SHORT).show());
     }
