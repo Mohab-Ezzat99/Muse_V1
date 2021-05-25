@@ -59,7 +59,6 @@
         app:layout_constraintTop_toTopOf="@+id/textView8">
 
         <Spinner
-            android:theme="@style/SpinnerStyle"
             android:id="@+id/goalBotSheet_spinner_devices"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -69,6 +68,7 @@
             android:background="@android:color/transparent"
             android:entries="@array/spinner_devices"
             android:gravity="center"
+            android:popupBackground="?attr/colorOnPrimary"
             android:spinnerMode="dropdown" />
 
         <ImageView
@@ -79,7 +79,7 @@
             android:layout_gravity="center"
             android:contentDescription="@string/txt_null"
             android:src="@drawable/ic_arrow_down"
-            app:tint="@color/black" />
+            app:tint="?attr/colorOnSecondary" />
 
     </RelativeLayout>
 
@@ -107,16 +107,15 @@
         app:layout_constraintTop_toTopOf="@+id/textView11">
 
         <Spinner
-            android:theme="@style/SpinnerStyle"
             android:id="@+id/goalBotSheet_spinner_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_gravity="center"
             android:layout_marginLeft="5dp"
             android:background="@android:color/transparent"
             android:entries="@array/spinner_time"
             android:gravity="center"
+            android:popupBackground="?attr/colorOnPrimary"
             android:spinnerMode="dropdown" />
 
         <ImageView
@@ -127,7 +126,7 @@
             android:layout_gravity="center"
             android:contentDescription="@string/txt_null"
             android:src="@drawable/ic_arrow_down"
-            app:tint="@color/black" />
+            app:tint="?attr/colorOnSecondary" />
 
     </RelativeLayout>
 
@@ -153,7 +152,6 @@
         app:layout_constraintTop_toTopOf="@+id/textView12">
 
         <Spinner
-            android:theme="@style/SpinnerStyle"
             android:id="@+id/goalBotSheet_spinner_values"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -163,6 +161,7 @@
             android:background="@android:color/transparent"
             android:entries="@array/spinner_consumption"
             android:gravity="center"
+            android:popupBackground="?attr/colorOnPrimary"
             android:spinnerMode="dropdown" />
 
         <ImageView
@@ -173,7 +172,7 @@
             android:layout_gravity="center"
             android:contentDescription="@string/txt_null"
             android:src="@drawable/ic_arrow_down"
-            app:tint="@color/black" />
+            app:tint="?attr/colorOnSecondary" />
 
     </RelativeLayout>
 
@@ -186,7 +185,7 @@
         android:backgroundTint="@color/orange"
         android:text="@string/BTxt_submit"
         android:textAllCaps="false"
-        android:textColor="@color/nice_black"
+        android:textColor="?attr/colorOnSecondary"
         android:textSize="@dimen/_12ssp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/relativeLayout3"

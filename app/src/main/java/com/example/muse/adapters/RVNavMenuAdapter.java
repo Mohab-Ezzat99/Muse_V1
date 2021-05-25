@@ -34,8 +34,8 @@ public class RVNavMenuAdapter extends RecyclerView.Adapter<RVNavMenuAdapter.NMVi
     public void onBindViewHolder(@NonNull NMViewHolder holder, int position) {
         MNavMenu MNavMenu = MNavMenus.get(position);
         holder.iv_icon.setImageDrawable(MNavMenu.getIcon());
-        holder.name=MNavMenu.getName();
-        holder.tv_name.setText(holder.name);
+        holder.tv_name.setText(MNavMenu.getName());
+        holder.pos=position;
         if (position == 3) {
             holder.switchCompat.setVisibility(View.VISIBLE);
             if(SaveState.getDarkModeState())
@@ -59,7 +59,7 @@ public class RVNavMenuAdapter extends RecyclerView.Adapter<RVNavMenuAdapter.NMVi
     }
 
     public interface OnItemClickListener {
-        void onItemClick(String name);
+        void onItemClick(int position);
         void isDarkModeChecked(boolean isChecked);
     }
 
@@ -68,7 +68,7 @@ public class RVNavMenuAdapter extends RecyclerView.Adapter<RVNavMenuAdapter.NMVi
         ImageView iv_icon;
         TextView tv_name;
         SwitchCompat switchCompat;
-        String name;
+        int pos;
         boolean isDarkModeChecked;
 
         public NMViewHolder(@NonNull View itemView) {
@@ -77,7 +77,7 @@ public class RVNavMenuAdapter extends RecyclerView.Adapter<RVNavMenuAdapter.NMVi
             tv_name = itemView.findViewById(R.id.itemNM_name);
             switchCompat = itemView.findViewById(R.id.itemNM_switch);
 
-            itemView.setOnClickListener(v -> listener.onItemClick(name));
+            itemView.setOnClickListener(v -> listener.onItemClick(pos));
             switchCompat.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 isDarkModeChecked=isChecked;
                 listener.isDarkModeChecked(isDarkModeChecked);

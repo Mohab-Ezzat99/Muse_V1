@@ -15,8 +15,8 @@
 
         <ImageView
             android:id="@+id/register_iv"
-            android:layout_width="@dimen/_64sdp"
-            android:layout_height="@dimen/_64sdp"
+            android:layout_width="@dimen/_74sdp"
+            android:layout_height="@dimen/_74sdp"
             android:contentDescription="@string/txt_null"
             android:src="@drawable/ic_light"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -42,7 +42,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/itl_fullName"
             style="@style/TextInputLayoutStyle"
-            android:layout_width="@dimen/_220sdp"
+            android:layout_width="@dimen/_230sdp"
             android:layout_height="wrap_content"
             android:hint="@string/hint_full_name"
             android:textColorHint="@color/white"
@@ -68,7 +68,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/itl_email"
             style="@style/TextInputLayoutStyle"
-            android:layout_width="@dimen/_220sdp"
+            android:layout_width="@dimen/_230sdp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             android:hint="@string/hint_email"

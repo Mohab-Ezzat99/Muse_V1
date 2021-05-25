@@ -11,9 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.muse.StartActivity;
 import com.example.muse.utility.NonSwipeableViewPager;
 import com.example.muse.R;
 import com.example.muse.adapters.VPOnBoardAdapter;
+import com.example.muse.utility.SaveState;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -28,6 +30,7 @@ public class OnBoardFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).hide();
         return inflater.inflate(R.layout.fragment_on_board, container, false);
     }
 
@@ -35,7 +38,11 @@ public class OnBoardFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).hide();
+        //StatusBar color
+        if (SaveState.getDarkModeState())
+            StartActivity.setupBackgroundStatusBar(getResources().getColor(R.color.nice_black, null));
+        else
+            StartActivity.setupLightStatusBar(getResources().getColor(R.color.white, null));
 
         NonSwipeableViewPager viewPager=view.findViewById(R.id.onBoard_vp);
         ArrayList<Fragment> screens=new ArrayList<>();

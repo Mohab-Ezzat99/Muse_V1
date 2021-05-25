@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,6 +15,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.example.muse.R;
+import com.example.muse.StartActivity;
 import com.example.muse.utility.SaveState;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
@@ -45,20 +44,22 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if(SaveState.getDarkModeState())
-            setupDarkStatusBar();
+        //StatusBar color
+        if (SaveState.getDarkModeState())
+            StartActivity.setupBackgroundStatusBar(getResources().getColor(R.color.nice_black, null));
         else
-            setupLightStatusBar();
+            StartActivity.setupLightStatusBar(getResources().getColor(R.color.white, null));
 
-        navControllerChart = Navigation.findNavController(requireActivity(), R.id.FHome_fragment);
-        chipNavigationBar =view.findViewById(R.id.FHome_chipNav);
-        chipNavigationBar.setItemSelected(R.id.dayFragment,true);
-
+        //iv_custom
         view.findViewById(R.id.FHome_iv_cat).setOnClickListener(v -> Toast.makeText(getContext(), "Soon", Toast.LENGTH_SHORT).show());
 
+        //chipNav
+        navControllerChart = Navigation.findNavController(requireActivity(), R.id.FHome_fragment);
+        chipNavigationBar = view.findViewById(R.id.FHome_chipNav);
+        chipNavigationBar.setItemSelected(R.id.dayFragment, true);
         chipNavigationBar.setOnItemSelectedListener(i -> {
-            switch (i){
-                case R.id.dayFragment :
+            switch (i) {
+                case R.id.dayFragment:
                     navControllerChart.popBackStack();
                     navControllerChart.navigate(R.id.chartDayFragment);
                     return;
@@ -78,21 +79,5 @@ public class HomeFragment extends Fragment {
                     navControllerChart.navigate(R.id.chartYearFragment);
             }
         });
-    }
-
-    public void setupLightStatusBar() {
-        // status bar color
-        Window window = requireActivity().getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(getResources().getColor(R.color.white, null));
-        int flag = window.getDecorView().getSystemUiVisibility() | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
-        window.getDecorView().setSystemUiVisibility(flag);
-    }
-
-    public void setupDarkStatusBar() {
-        // status bar color
-        Window window = requireActivity().getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(getResources().getColor(R.color.nice_black, null));
     }
 }
