@@ -46,7 +46,7 @@ public class StartActivity extends AppCompatActivity {
         //color secondary for dark mode
         TypedValue typedValue = new TypedValue();
         Resources.Theme theme = this.getTheme();
-        theme.resolveAttribute(R.attr.colorOnSecondary, typedValue, true);
+        theme.resolveAttribute(R.attr.colorPrimaryVariant, typedValue, true);
         color = typedValue.data;
 
         window = this.getWindow();

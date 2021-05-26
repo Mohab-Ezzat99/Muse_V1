@@ -58,7 +58,7 @@
         android:id="@+id/FDevices_fab_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/cyan"
+        android:backgroundTint="?attr/colorPrimaryVariant"
         android:clickable="true"
         android:contentDescription="@string/txt_null"
         android:focusable="true"

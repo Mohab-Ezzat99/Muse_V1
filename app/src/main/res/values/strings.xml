@@ -154,5 +154,6 @@
     <string name="tit_fridge">Fridge</string>
     <string name="tit_tv">TV</string>
     <string name="tit_another_device">Another device</string>
+    <string name="txt_for_smart_amp_easy_life"><![CDATA[For smart & easy life]]></string>
 
 </resources>

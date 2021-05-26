@@ -9,16 +9,11 @@
     <color name="black">#000000</color>
     <color name="gray">#838383</color>
     <color name="white">#ffffff</color>
-
-    <color name="cyan">#00b8d4</color>
-    <color name="cyan_h">#00e5ff</color>
-    <color name="cyan_m">#18ffff</color>
-    <color name="cyan_l">#84ffff</color>
+    <color name="white_muse">#E4F0FA</color>
 
     <color name="blue">#03A9F4</color>
     <color name="blue_h">#E61565C0</color>
     <color name="lime">#d4e157</color>
-    <color name="yellow_l">#ffea00</color>
     <color name="yellow_h">#fdd835</color>
     <color name="green">#93FF4F</color>
     <color name="orange">#FF9800</color>

@@ -50,7 +50,7 @@ public class DevicesFragment extends Fragment implements OnADItemListener {
         super.onViewCreated(view, savedInstanceState);
 
         //StatusBar color
-        StartActivity.setupBackgroundStatusBar(getResources().getColor(R.color.cyan, null));
+        StartActivity.setupBackgroundStatusBar(StartActivity.color);
 
         FloatingActionButton fab_add = view.findViewById(R.id.FDevices_fab_add);
         fab_add.setOnClickListener(v -> showBottomSheet(view));

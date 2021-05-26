@@ -46,7 +46,7 @@ public class AlertsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //StatusBar color
-        StartActivity.setupBackgroundStatusBar(getResources().getColor(R.color.cyan, null));
+        StartActivity.setupBackgroundStatusBar(StartActivity.color);
 
 
         recyclerView = view.findViewById(R.id.FAlerts_rv);

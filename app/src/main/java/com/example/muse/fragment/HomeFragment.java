@@ -48,7 +48,7 @@ public class HomeFragment extends Fragment {
         if (SaveState.getDarkModeState())
             StartActivity.setupBackgroundStatusBar(getResources().getColor(R.color.nice_black, null));
         else
-            StartActivity.setupLightStatusBar(getResources().getColor(R.color.white, null));
+            StartActivity.setupLightStatusBar(getResources().getColor(R.color.white_muse, null));
 
         //iv_custom
         view.findViewById(R.id.FHome_iv_cat).setOnClickListener(v -> Toast.makeText(getContext(), "Soon", Toast.LENGTH_SHORT).show());

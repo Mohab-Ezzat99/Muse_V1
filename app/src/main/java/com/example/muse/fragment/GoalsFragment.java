@@ -49,7 +49,7 @@ public class GoalsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //StatusBar color
-        StartActivity.setupBackgroundStatusBar(getResources().getColor(R.color.cyan, null));
+        StartActivity.setupBackgroundStatusBar(StartActivity.color);
 
         FloatingActionButton fab_add = view.findViewById(R.id.FGoals_fab_add);
         fab_add.setOnClickListener(v -> showBottomSheet(view));

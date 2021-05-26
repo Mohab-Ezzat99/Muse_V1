@@ -7,7 +7,7 @@
         android:id="@+id/dayFragment"
         android:icon="@drawable/ic_d"
         android:title="@string/tit_day"
-        app:cnb_backgroundColor="@color/cyan"
+        app:cnb_backgroundColor="?attr/colorPrimaryVariant"
         app:cnb_iconColor="@color/white"
         app:cnb_textColor="@color/white" />
 
@@ -15,7 +15,7 @@
         android:id="@+id/weekFragment"
         android:icon="@drawable/ic_w"
         android:title="@string/tit_week"
-        app:cnb_backgroundColor="@color/cyan"
+        app:cnb_backgroundColor="?attr/colorPrimaryVariant"
         app:cnb_iconColor="@color/white"
         app:cnb_textColor="@color/white" />
 
@@ -23,7 +23,7 @@
         android:id="@+id/monthFragment"
         android:icon="@drawable/ic_m"
         android:title="@string/tit_month"
-        app:cnb_backgroundColor="@color/cyan"
+        app:cnb_backgroundColor="?attr/colorPrimaryVariant"
         app:cnb_iconColor="@color/white"
         app:cnb_textColor="@color/white" />
 
@@ -31,7 +31,7 @@
         android:id="@+id/yearFragment"
         android:icon="@drawable/ic_y"
         android:title="@string/tit_year"
-        app:cnb_backgroundColor="@color/cyan"
+        app:cnb_backgroundColor="?attr/colorPrimaryVariant"
         app:cnb_iconColor="@color/white"
         app:cnb_textColor="@color/white" />
 </menu>

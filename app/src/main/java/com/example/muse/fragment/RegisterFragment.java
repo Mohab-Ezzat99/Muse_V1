@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.example.muse.R;
 import com.example.muse.StartActivity;
+import com.example.muse.utility.SaveState;
 
 import java.util.Objects;
 
@@ -32,9 +33,9 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).hide();
         return inflater.inflate(R.layout.fragment_register, container, false);
     }
 
@@ -42,7 +43,11 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).hide();
+        //StatusBar color
+        if (SaveState.getDarkModeState())
+            StartActivity.setupBackgroundStatusBar(getResources().getColor(R.color.nice_black, null));
+        else
+            StartActivity.setupLightStatusBar(getResources().getColor(R.color.white_muse, null));
 
         tv_login=view.findViewById(R.id.register_tv_login);
         btn_register=view.findViewById(R.id.register_btn_register);

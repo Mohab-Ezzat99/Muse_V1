@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/_4sdp"
-    android:background="@drawable/shape_cyan_complete"
+    android:background="@drawable/shape_blue_complete"
     android:padding="@dimen/_4sdp">
 
     <ImageView
@@ -22,7 +22,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias=".05"
         app:tint="@color/white" />
-
     <TextView
         android:id="@+id/itemAG_tv_name"
         android:layout_width="wrap_content"

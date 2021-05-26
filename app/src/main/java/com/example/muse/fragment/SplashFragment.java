@@ -24,7 +24,7 @@ public class SplashFragment extends Fragment {
 
     private Animation anim_left;
     private ImageView iv;
-    private TextView tv;
+    private TextView tv_name,tv_desc;
 
     public SplashFragment() {
         // Required empty public constructor
@@ -52,15 +52,17 @@ public class SplashFragment extends Fragment {
 
         anim_left = AnimationUtils.loadAnimation(getContext(), R.anim.anim_left);
         iv = view.findViewById(R.id.splash_iv_light);
-        tv = view.findViewById(R.id.splash_tv_muse);
+        tv_name = view.findViewById(R.id.splash_tv_muse);
+        tv_desc = view.findViewById(R.id.splash_tv_desc);
         iv.setAnimation(anim_left);
-        tv.setAnimation(anim_left);
+        tv_name.setAnimation(anim_left);
+        tv_desc.setAnimation(anim_left);
 
 
         new Handler().postDelayed(() -> {
             if(isAdded())
                 Navigation.findNavController(requireActivity(),R.id.start_fragment).navigate(R.id.action_splashFragment_to_loginFragment);
-        },1000);
+        },1200);
 
     }
 }

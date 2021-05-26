@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.core.content.ContextCompat;
 
 import com.example.muse.R;
+import com.example.muse.StartActivity;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
@@ -30,6 +31,7 @@ public class DataCharts {
         LineDataSet lineDataSet = new LineDataSet(yEntries, null);
         lineDataSet.setForm(Legend.LegendForm.NONE);
         lineDataSet.setFillAlpha(180);
+        lineDataSet.setFillColor(StartActivity.color);
         lineDataSet.setDrawFilled(true);
         lineDataSet.setLineWidth(1.5f);
         lineDataSet.setValueTextSize(10f);
@@ -55,7 +57,7 @@ public class DataCharts {
 
         //collect values in a set
         BarDataSet barDataSet = new BarDataSet(yEntries, null);
-        barDataSet.setColors(ContextCompat.getColor(context,R.color.cyan));
+        barDataSet.setColors(StartActivity.color);
         barDataSet.setValueTextSize(12f);
         barDataSet.setValueTextColor(ContextCompat.getColor(context, R.color.red));
 

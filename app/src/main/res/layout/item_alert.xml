@@ -19,6 +19,7 @@
             android:layout_height="@dimen/_20sdp"
             android:layout_margin="@dimen/_8sdp"
             android:contentDescription="@string/txt_null"
+            app:tint="?attr/colorPrimaryVariant"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="VectorDrawableCompat" />
