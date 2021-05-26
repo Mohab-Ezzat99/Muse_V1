@@ -1,15 +1,12 @@
 package com.example.muse.fragment;
 
 import android.annotation.SuppressLint;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.muse.StartActivity;
@@ -18,8 +15,6 @@ import com.example.muse.R;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
-
-import java.util.Objects;
 
 public class ChartDayFragment extends Fragment {
 
@@ -60,14 +55,14 @@ public class ChartDayFragment extends Fragment {
         YAxis yAxis = lineChart.getAxisLeft();
         yAxis.setAxisMaximum(10f);
         yAxis.setAxisMinimum(0f);
-        yAxis.setTextColor(StartActivity.color);
+        yAxis.setTextColor(StartActivity.colorPrimaryVarient);
         yAxis.setLabelCount(6, true);
         yAxis.setDrawLimitLinesBehindData(true);
 
         // x axis edit
         String[] values = new String[]{"", "4 am", "8 am", "12 pm", "4 pm", "8 pm", "12 am"};
         XAxis xAxis = lineChart.getXAxis();
-        xAxis.setTextColor(StartActivity.color);
+        xAxis.setTextColor(StartActivity.colorPrimaryVarient);
         xAxis.setValueFormatter(new DataCharts.XAxisFormat(values));
         xAxis.setGranularity(1f);
     }

@@ -9,6 +9,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -25,7 +26,7 @@ public class StartActivity extends AppCompatActivity {
     public NavController navControllerStart;
     public Toolbar toolbar;
     public SaveState saveState;
-    public static int color;
+    public static int colorPrimaryVarient;
 
     private static Window window;
 
@@ -35,7 +36,9 @@ public class StartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_start);
 
         saveState=new SaveState(this);
+        window = this.getWindow();
         navControllerStart = Navigation.findNavController(this, R.id.start_fragment);
+        setupMode();
 
         // toolbar
         toolbar =findViewById(R.id.start_tool);
@@ -43,13 +46,11 @@ public class StartActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         activeActionBar(this);
 
-        //color secondary for dark mode
+        //colorPrimaryVariant for dark mode
         TypedValue typedValue = new TypedValue();
         Resources.Theme theme = this.getTheme();
         theme.resolveAttribute(R.attr.colorPrimaryVariant, typedValue, true);
-        color = typedValue.data;
-
-        window = this.getWindow();
+        colorPrimaryVarient = typedValue.data;
     }
 
     @Override
@@ -79,5 +80,13 @@ public class StartActivity extends AppCompatActivity {
         int flags = window.getDecorView().getSystemUiVisibility(); // get current flag
         flags &= ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR; // use XOR here for remove LIGHT_STATUS_BAR from flags
         window.getDecorView().setSystemUiVisibility(flags);
+    }
+
+    public static void setupMode() {
+        if (SaveState.getDarkModeState()) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }
+        else
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
     }
 }

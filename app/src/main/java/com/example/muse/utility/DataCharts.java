@@ -15,7 +15,6 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 
@@ -31,7 +30,7 @@ public class DataCharts {
         LineDataSet lineDataSet = new LineDataSet(yEntries, null);
         lineDataSet.setForm(Legend.LegendForm.NONE);
         lineDataSet.setFillAlpha(180);
-        lineDataSet.setFillColor(StartActivity.color);
+        lineDataSet.setFillColor(StartActivity.colorPrimaryVarient);
         lineDataSet.setDrawFilled(true);
         lineDataSet.setLineWidth(1.5f);
         lineDataSet.setValueTextSize(10f);
@@ -57,7 +56,7 @@ public class DataCharts {
 
         //collect values in a set
         BarDataSet barDataSet = new BarDataSet(yEntries, null);
-        barDataSet.setColors(StartActivity.color);
+        barDataSet.setColors(StartActivity.colorPrimaryVarient);
         barDataSet.setValueTextSize(12f);
         barDataSet.setValueTextColor(ContextCompat.getColor(context, R.color.red));
 

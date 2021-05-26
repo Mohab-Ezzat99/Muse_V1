@@ -55,13 +55,13 @@ public class ChartWeekFragment extends Fragment {
         // x axis edit
         String[] values = new String[]{"Fri", "Sat", "Sun", "Mon", "Tue", "Wed", "Thu"};
         XAxis xAxis = barChart.getXAxis();
-        xAxis.setTextColor(StartActivity.color);
+        xAxis.setTextColor(StartActivity.colorPrimaryVarient);
         xAxis.setValueFormatter(new DataCharts.XAxisFormat(values));
         xAxis.setGranularity(1f);
 
         // y axis edit
         YAxis yAxis = barChart.getAxisLeft();
-        yAxis.setTextColor(StartActivity.color);
+        yAxis.setTextColor(StartActivity.colorPrimaryVarient);
         yAxis.setAxisMaximum(10f);
         yAxis.setAxisMinimum(0f);
         yAxis.setLabelCount(6, true);

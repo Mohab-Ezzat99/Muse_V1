@@ -4,11 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     tools:context=".StartActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
@@ -106,28 +108,28 @@
         </androidx.cardview.widget.CardView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            style="@style/Widget.MaterialComponents.FloatingActionButton"
             android:id="@+id/selectedD_fab"
+            style="@style/Widget.MaterialComponents.FloatingActionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="?attr/colorOnPrimary"
             android:clickable="true"
             android:contentDescription="@string/txt_null"
             android:focusable="true"
-            app:tint="?attr/colorPrimaryVariant"
             app:layout_constraintBottom_toBottomOf="@+id/cardView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/cardView"
             app:layout_constraintTop_toTopOf="@+id/cardView"
-            app:srcCompat="@drawable/ic_settings" />
+            app:srcCompat="@drawable/ic_settings"
+            app:tint="?attr/colorPrimaryVariant" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:cardCornerRadius="@dimen/_10sdp"
-            app:cardElevation="@dimen/_8sdp"
+            app:cardElevation="@dimen/_3sdp"
             app:cardUseCompatPadding="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -144,10 +146,10 @@
                     android:layout_height="@dimen/_20sdp"
                     android:layout_margin="@dimen/_8sdp"
                     android:contentDescription="@string/txt_null"
-                    app:tint="?attr/colorPrimaryVariant"
                     android:src="@drawable/ic_notification"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:tint="?attr/colorPrimaryVariant"
                     tools:ignore="VectorDrawableCompat" />
 
                 <TextView
@@ -188,126 +190,6 @@
 
         </androidx.cardview.widget.CardView>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_4sdp"
-            android:background="@drawable/shape_blue_complete"
-            android:padding="@dimen/_8sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardView2">
-
-            <TextView
-                android:id="@+id/tv_tit_cons"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
-                android:text="@string/txt_insights"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_16ssp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-            <TextView
-                android:id="@+id/tv_current"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_4sdp"
-                android:text="@string/txt_current"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_14sdp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_tit_cons" />
-
-            <TextView
-                android:id="@+id/tv_currentV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_4sdp"
-                android:text="@string/txt_20_w_12egp"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_14sdp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tv_current" />
-
-
-            <TextView
-                android:id="@+id/tv_average"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_4sdp"
-                android:text="@string/txt_average"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_14sdp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_current" />
-
-            <TextView
-                android:id="@+id/tv_averageV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_4sdp"
-                android:text="@string/txt_200_w_120egp"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_14sdp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tv_average" />
-
-            <TextView
-                android:id="@+id/tv_perM"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_4sdp"
-                android:text="@string/txt_per_month"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_14sdp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_average" />
-
-            <TextView
-                android:id="@+id/tv_perMV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_4sdp"
-                android:text="@string/txt_30_kw_390egp"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_14sdp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tv_perM" />
-
-            <TextView
-                android:id="@+id/tv_est"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_4sdp"
-                android:text="@string/txt_estimation"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_14sdp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_perM" />
-
-            <TextView
-                android:id="@+id/tv_estV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_4sdp"
-                android:text="@string/txt_20_kw_260egp"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_14sdp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tv_est" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.ismaeldivita.chipnavigation.ChipNavigationBar
             android:id="@+id/selectedD_chipNav"
@@ -329,10 +211,10 @@
             android:background="@drawable/shape_blue_circle_stroke"
             android:contentDescription="@string/txt_null"
             android:padding="@dimen/_8sdp"
-            app:layout_constraintHorizontal_bias=".9"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias=".9"
             app:layout_constraintStart_toEndOf="@+id/selectedD_chipNav"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
             app:srcCompat="@drawable/ic_calendar" />
 
         <fragment
@@ -342,202 +224,155 @@
             android:layout_height="0dp"
             android:layout_margin="@dimen/_4sdp"
             app:defaultNavHost="true"
-            app:navGraph="@navigation/nav_chart"
+            app:layout_constraintHeight_percent=".4"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent=".3"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/selectedD_chipNav"
-            app:layout_constraintVertical_bias="0"
+            app:layout_constraintTop_toBottomOf="@+id/selectedD_iv_cat"
+            app:layout_constraintVertical_bias="1"
+            app:navGraph="@navigation/nav_chart"
             tools:ignore="FragmentTagUsage" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout4"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_4sdp"
-            android:background="@drawable/shape_blue_complete"
-            android:padding="@dimen/_4sdp"
+            android:paddingHorizontal="@dimen/_4sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/selectedD_fragment">
+            app:layout_constraintTop_toBottomOf="@+id/cardView2">
 
-            <ImageView
-                android:id="@+id/selectedD_goal_iv_icon"
-                android:layout_width="@dimen/_24sdp"
-                android:layout_height="@dimen/_24sdp"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:layout_marginBottom="@dimen/_8sdp"
-                android:contentDescription="@string/txt_null"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias=".05"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias=".05"
-                app:tint="@color/white" />
-
-            <TextView
-                android:id="@+id/selectedD_goal_tv_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_8sdp"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_16sdp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/selectedD_goal_iv_icon"
-                app:layout_constraintStart_toEndOf="@+id/selectedD_goal_iv_icon"
-                app:layout_constraintTop_toTopOf="@+id/selectedD_goal_iv_icon" />
-
-            <ImageView
-                android:id="@+id/selectedD_iv_result"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:layout_marginBottom="@dimen/_8sdp"
-                android:contentDescription="@string/txt_null"
-                android:src="@drawable/ic_checked"
-                app:layout_constraintBottom_toBottomOf="@+id/selectedD_goal_iv_icon"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias=".95"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/selectedD_goal_iv_icon" />
-
-            <TextView
-                android:id="@+id/TUse1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:layout_marginBottom="@dimen/_8sdp"
-                android:text="@string/txt_used"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_14sdp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/selectedD_goal_iv_icon"
-                app:layout_constraintTop_toBottomOf="@+id/selectedD_goal_iv_icon" />
-
-            <TextView
-                android:id="@+id/TUse1V"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/selectedD_cv_insight"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="end"
-                android:text="@string/txt_100kw_1500kw"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_14sdp"
-                app:layout_constraintBottom_toBottomOf="@+id/TUse1"
-                app:layout_constraintEnd_toEndOf="@+id/selectedD_iv_result"
-                app:layout_constraintTop_toTopOf="@+id/TUse1" />
+                app:cardCornerRadius="@dimen/_10sdp"
+                app:cardElevation="@dimen/_3sdp"
+                app:cardUseCompatPadding="true">
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/_8sdp">
 
-            <TextView
-                android:id="@+id/TPre1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:layout_marginBottom="@dimen/_8sdp"
-                android:text="@string/txt_predicted"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_14sdp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/TUse1"
-                app:layout_constraintTop_toBottomOf="@+id/TUse1" />
+                    <ImageView
+                        android:id="@+id/itemBD_iv"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:contentDescription="@string/txt_null"
+                        android:src="@drawable/ic_high_light"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHeight_percent=".45"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias=".3"
+                        app:layout_constraintWidth_percent=".5"
+                        app:tint="?attr/colorPrimaryVariant" />
 
-            <TextView
-                android:id="@+id/selectedD_TPre1V"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                    <TextView
+                        android:id="@+id/itemBD_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:text="@string/txt_insights"
+                        android:textColor="?attr/colorOnSecondary"
+                        android:textSize="@dimen/_14ssp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/itemBD_iv" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/selectedD_cv_goal"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="end"
-                android:text="@string/txt_goal_will_be_achieved"
-                android:textColor="@color/green"
-                android:textSize="@dimen/_14sdp"
-                app:layout_constraintBottom_toBottomOf="@+id/TPre1"
-                app:layout_constraintEnd_toEndOf="@+id/TUse1V"
-                app:layout_constraintTop_toTopOf="@+id/TPre1" />
+                app:cardCornerRadius="@dimen/_10sdp"
+                app:cardElevation="@dimen/_3sdp"
+                app:cardUseCompatPadding="true">
 
-            <TextView
-                android:id="@+id/TBar1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:layout_marginBottom="@dimen/_8sdp"
-                android:text="@string/txt_used_100kw"
-                android:textColor="@color/orange"
-                android:textSize="@dimen/_14ssp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/TBar1V"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TPre1" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/_8sdp">
 
-            <TextView
-                android:id="@+id/TBar1V"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/txt_estimated_200kw"
-                android:textColor="@color/orange"
-                android:textSize="@dimen/_14ssp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/TBar1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/TBar1"
-                app:layout_constraintTop_toTopOf="@+id/TBar1" />
+                    <ImageView
+                        android:id="@+id/itemBD_iv2"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:contentDescription="@string/txt_null"
+                        android:src="@drawable/ic_goal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHeight_percent=".45"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias=".3"
+                        app:layout_constraintWidth_percent=".5"
+                        app:tint="?attr/colorPrimaryVariant" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                    <TextView
+                        android:id="@+id/itemBD_tv2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:text="@string/tit_goal"
+                        android:textColor="?attr/colorOnSecondary"
+                        android:textSize="@dimen/_14ssp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/itemBD_iv2" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_4sdp"
-            android:background="@drawable/shape_blue_complete"
-            android:padding="@dimen/_4sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout4">
+            </androidx.cardview.widget.CardView>
 
-            <TextView
-                android:id="@+id/tv_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_8sdp"
-                android:text="@string/txt_schedule"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_16sdp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/selectedD_cv_schedule"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:cardCornerRadius="@dimen/_10sdp"
+                app:cardElevation="@dimen/_3sdp"
+                app:cardUseCompatPadding="true">
 
-            <TextView
-                android:id="@+id/selectedD_schedule_tv_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:layout_marginBottom="@dimen/_8sdp"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_14ssp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/tv_name"
-                app:layout_constraintTop_toBottomOf="@+id/tv_name"
-                app:layout_constraintVertical_bias="0" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/_8sdp">
 
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_4sdp"
-                android:text="@string/txt_is_set_to_turn_off_at_2_00_am_everyday"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_14ssp"
-                app:layout_constraintBottom_toBottomOf="@+id/selectedD_schedule_tv_name"
-                app:layout_constraintStart_toEndOf="@+id/selectedD_schedule_tv_name"
-                app:layout_constraintTop_toTopOf="@+id/selectedD_schedule_tv_name" />
+                    <ImageView
+                        android:id="@+id/itemBD_iv3"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:contentDescription="@string/txt_null"
+                        android:src="@drawable/ic_schedules"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHeight_percent=".45"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias=".3"
+                        app:layout_constraintWidth_percent=".5"
+                        app:tint="?attr/colorPrimaryVariant" />
 
+                    <TextView
+                        android:id="@+id/itemBD_tv3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:text="@string/txt_schedule"
+                        android:textColor="?attr/colorOnSecondary"
+                        android:textSize="@dimen/_14ssp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/itemBD_iv3" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -7,11 +7,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -46,13 +46,13 @@ public class MenuFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //StatusBar color
-        StartActivity.setupBackgroundStatusBar(StartActivity.color);
+        StartActivity.setupBackgroundStatusBar(StartActivity.colorPrimaryVarient);
 
         RecyclerView recyclerView = view.findViewById(R.id.FMenu_rv);
         RVNavMenuAdapter adapter = new RVNavMenuAdapter();
         adapter.addItem(new MNavMenu(getResources().getDrawable(R.drawable.ic_schedules, null), "Schedules"));
         adapter.addItem(new MNavMenu(getResources().getDrawable(R.drawable.ic_report, null), "Report"));
-        adapter.addItem(new MNavMenu(getResources().getDrawable(R.drawable.ic_settings, null), "Settings"));
+        adapter.addItem(new MNavMenu(getResources().getDrawable(R.drawable.ic_dollar, null), "Billing"));
         adapter.addItem(new MNavMenu(getResources().getDrawable(R.drawable.ic_moon, null), "Dark mode"));
         adapter.addItem(new MNavMenu(getResources().getDrawable(R.drawable.ic_contactus, null), "Contact us"));
         adapter.addItem(new MNavMenu(getResources().getDrawable(R.drawable.ic_logout, null), "Logout"));
@@ -68,12 +68,14 @@ public class MenuFragment extends Fragment {
             public void onItemClick(int position) {
                 //item click
                 switch (position) {
-//                    //Schedules
-//                    case 0:
-//                    //Report
-//                    case 1:
-//                    //Settings
-//                    case 2:
+                    //Schedules
+                    case 0:
+                    //Report
+                    case 1:
+                    //Billing
+                    case 2:
+                        Toast.makeText(getContext(), "Soon", Toast.LENGTH_SHORT).show();
+                        break;
                     //Contact us
                     case 4:
                         Uri callUri = Uri.parse("tel:01205186367");
@@ -90,12 +92,8 @@ public class MenuFragment extends Fragment {
 
             @Override
             public void isDarkModeChecked(boolean isChecked) {
-                if (isChecked) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                }
-                else
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 SaveState.setDarkModeState(isChecked);
+                StartActivity.setupMode();
             }
         });
     }
