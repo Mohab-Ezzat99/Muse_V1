@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E4F0FA"
+    android:background="@color/white_muse"
     android:clickable="false"
     tools:context=".StartActivity">
 
@@ -13,6 +13,7 @@
         android:id="@+id/splash_iv_light"
         android:layout_width="@dimen/_170sdp"
         android:layout_height="@dimen/_170sdp"
+        app:layout_constraintVertical_bias=".45"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

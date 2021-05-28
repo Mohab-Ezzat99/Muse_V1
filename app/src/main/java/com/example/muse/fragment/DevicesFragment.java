@@ -50,7 +50,7 @@ public class DevicesFragment extends Fragment implements OnADItemListener {
         super.onViewCreated(view, savedInstanceState);
 
         //StatusBar color
-        StartActivity.setupBackgroundStatusBar(StartActivity.colorPrimaryVarient);
+        StartActivity.setupBackgroundStatusBar(StartActivity.colorPrimaryVariant);
 
         FloatingActionButton fab_add = view.findViewById(R.id.FDevices_fab_add);
         fab_add.setOnClickListener(v -> showBottomSheet(view));
@@ -105,22 +105,22 @@ public class DevicesFragment extends Fragment implements OnADItemListener {
         switch (name) {
             case StartActivity.TV:
                 addDeviceAdapter.addItem(new MAddDevice(getResources().getDrawable(R.drawable.ic_tv, null),
-                        true, StartActivity.TV, "50", 50));
+                        true, StartActivity.TV, "50%", 50));
                 break;
 
             case StartActivity.FRIDGE:
                 addDeviceAdapter.addItem(new MAddDevice(getResources().getDrawable(R.drawable.ic_fridge, null),
-                        true, StartActivity.FRIDGE, "50", 50));
+                        true, StartActivity.FRIDGE, "50%", 50));
                 break;
 
             case StartActivity.AIR:
                 addDeviceAdapter.addItem(new MAddDevice(getResources().getDrawable(R.drawable.ic_air_conditioner, null),
-                        true, StartActivity.AIR, "50", 50));
+                        true, StartActivity.AIR, "50%", 50));
                 break;
 
             case StartActivity.DEVICE:
                 addDeviceAdapter.addItem(new MAddDevice(getResources().getDrawable(R.drawable.ic_plug, null),
-                        true, StartActivity.DEVICE, "50", 50));
+                        true, StartActivity.DEVICE, "50%", 50));
                 break;
         }
         // visibility

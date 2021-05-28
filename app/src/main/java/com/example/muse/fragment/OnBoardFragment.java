@@ -42,7 +42,7 @@ public class OnBoardFragment extends Fragment {
         if (SaveState.getDarkModeState())
             StartActivity.setupBackgroundStatusBar(getResources().getColor(R.color.nice_black, null));
         else
-            StartActivity.setupLightStatusBar(getResources().getColor(R.color.white, null));
+            StartActivity.setupLightStatusBar(getResources().getColor(R.color.white_muse, null));
 
         NonSwipeableViewPager viewPager=view.findViewById(R.id.onBoard_vp);
         ArrayList<Fragment> screens=new ArrayList<>();

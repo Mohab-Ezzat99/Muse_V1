@@ -26,7 +26,8 @@ public class StartActivity extends AppCompatActivity {
     public NavController navControllerStart;
     public Toolbar toolbar;
     public SaveState saveState;
-    public static int colorPrimaryVarient;
+    public static int colorPrimaryVariant;
+    public static int colorSecondaryVariant;
 
     private static Window window;
 
@@ -46,11 +47,9 @@ public class StartActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         activeActionBar(this);
 
-        //colorPrimaryVariant for dark mode
-        TypedValue typedValue = new TypedValue();
-        Resources.Theme theme = this.getTheme();
-        theme.resolveAttribute(R.attr.colorPrimaryVariant, typedValue, true);
-        colorPrimaryVarient = typedValue.data;
+        //get some colors
+        colorPrimaryVariant =fetchColor(R.attr.colorPrimaryVariant);
+        colorSecondaryVariant=fetchColor(R.attr.colorSecondaryVariant);
     }
 
     @Override
@@ -88,5 +87,13 @@ public class StartActivity extends AppCompatActivity {
         }
         else
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+    }
+
+    public int fetchColor(int color){
+        //colorPrimaryVariant for dark mode
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = this.getTheme();
+        theme.resolveAttribute(color, typedValue, true);
+        return typedValue.data;
     }
 }

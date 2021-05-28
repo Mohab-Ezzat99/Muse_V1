@@ -46,7 +46,7 @@ public class MenuFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //StatusBar color
-        StartActivity.setupBackgroundStatusBar(StartActivity.colorPrimaryVarient);
+        StartActivity.setupBackgroundStatusBar(StartActivity.colorPrimaryVariant);
 
         RecyclerView recyclerView = view.findViewById(R.id.FMenu_rv);
         RVNavMenuAdapter adapter = new RVNavMenuAdapter();

@@ -55,14 +55,14 @@ public class ChartDayFragment extends Fragment {
         YAxis yAxis = lineChart.getAxisLeft();
         yAxis.setAxisMaximum(10f);
         yAxis.setAxisMinimum(0f);
-        yAxis.setTextColor(StartActivity.colorPrimaryVarient);
+        yAxis.setTextColor(StartActivity.colorPrimaryVariant);
         yAxis.setLabelCount(6, true);
         yAxis.setDrawLimitLinesBehindData(true);
 
         // x axis edit
         String[] values = new String[]{"", "4 am", "8 am", "12 pm", "4 pm", "8 pm", "12 am"};
         XAxis xAxis = lineChart.getXAxis();
-        xAxis.setTextColor(StartActivity.colorPrimaryVarient);
+        xAxis.setTextColor(StartActivity.colorPrimaryVariant);
         xAxis.setValueFormatter(new DataCharts.XAxisFormat(values));
         xAxis.setGranularity(1f);
     }

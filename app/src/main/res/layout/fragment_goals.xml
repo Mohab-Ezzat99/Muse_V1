@@ -59,7 +59,7 @@
         android:id="@+id/FGoals_fab_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="?attr/colorPrimaryVariant"
+        android:backgroundTint="?attr/colorSecondaryVariant"
         android:clickable="true"
         android:contentDescription="@string/txt_null"
         android:focusable="true"

@@ -1,9 +1,7 @@
 package com.example.muse.utility;
 
 import android.content.Context;
-
 import androidx.core.content.ContextCompat;
-
 import com.example.muse.R;
 import com.example.muse.StartActivity;
 import com.github.mikephil.charting.components.Legend;
@@ -15,7 +13,6 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-
 import java.util.ArrayList;
 
 public class DataCharts {
@@ -30,10 +27,10 @@ public class DataCharts {
         LineDataSet lineDataSet = new LineDataSet(yEntries, null);
         lineDataSet.setForm(Legend.LegendForm.NONE);
         lineDataSet.setFillAlpha(180);
-        lineDataSet.setFillColor(StartActivity.colorPrimaryVarient);
+        lineDataSet.setFillColor(StartActivity.colorSecondaryVariant);
         lineDataSet.setDrawFilled(true);
         lineDataSet.setLineWidth(1.5f);
-        lineDataSet.setValueTextSize(10f);
+        lineDataSet.setValueTextSize(12f);
         lineDataSet.setDrawCircleHole(false);
         lineDataSet.setCircleRadius(2f);
         lineDataSet.setCircleColor(ContextCompat.getColor(context, R.color.red));
@@ -56,7 +53,7 @@ public class DataCharts {
 
         //collect values in a set
         BarDataSet barDataSet = new BarDataSet(yEntries, null);
-        barDataSet.setColors(StartActivity.colorPrimaryVarient);
+        barDataSet.setColors(StartActivity.colorSecondaryVariant);
         barDataSet.setValueTextSize(12f);
         barDataSet.setValueTextColor(ContextCompat.getColor(context, R.color.red));
 
