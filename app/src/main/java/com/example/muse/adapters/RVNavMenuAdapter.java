@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,14 +12,14 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.muse.R;
-import com.example.muse.model.MNavMenu;
+import com.example.muse.model.NavMenuModel;
 import com.example.muse.utility.SaveState;
 
 import java.util.ArrayList;
 
 public class RVNavMenuAdapter extends RecyclerView.Adapter<RVNavMenuAdapter.NMViewHolder> {
 
-    private ArrayList<MNavMenu> MNavMenus = new ArrayList<>();
+    private ArrayList<NavMenuModel> NavMenuModels = new ArrayList<>();
     private OnItemClickListener listener;
 
     @SuppressLint("InflateParams")
@@ -32,9 +31,9 @@ public class RVNavMenuAdapter extends RecyclerView.Adapter<RVNavMenuAdapter.NMVi
 
     @Override
     public void onBindViewHolder(@NonNull NMViewHolder holder, int position) {
-        MNavMenu MNavMenu = MNavMenus.get(position);
-        holder.iv_icon.setImageDrawable(MNavMenu.getIcon());
-        holder.tv_name.setText(MNavMenu.getName());
+        NavMenuModel NavMenuModel = NavMenuModels.get(position);
+        holder.iv_icon.setImageDrawable(NavMenuModel.getIcon());
+        holder.tv_name.setText(NavMenuModel.getName());
         holder.pos=position;
         if (position == 3) {
             holder.switchCompat.setVisibility(View.VISIBLE);
@@ -45,11 +44,11 @@ public class RVNavMenuAdapter extends RecyclerView.Adapter<RVNavMenuAdapter.NMVi
 
     @Override
     public int getItemCount() {
-        return MNavMenus.size();
+        return NavMenuModels.size();
     }
 
-    public void addItem(MNavMenu MNavMenu) {
-        this.MNavMenus.add(MNavMenu);
+    public void addItem(NavMenuModel NavMenuModel) {
+        this.NavMenuModels.add(NavMenuModel);
         notifyDataSetChanged();
 
     }

@@ -13,12 +13,12 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.muse.R;
-import com.example.muse.model.MAddGoal;
+import com.example.muse.model.DeviceModel;
 
 import java.util.ArrayList;
 
 public class RVAddGoalAdapter extends RecyclerView.Adapter<RVAddGoalAdapter.AGViewHolder> {
-    private ArrayList<MAddGoal> MAddGoals = new ArrayList<>();
+    private ArrayList<DeviceModel> deviceModels = new ArrayList<>();
     private Context context;
 
     public RVAddGoalAdapter(Context context) {
@@ -34,9 +34,9 @@ public class RVAddGoalAdapter extends RecyclerView.Adapter<RVAddGoalAdapter.AGVi
 
     @Override
     public void onBindViewHolder(@NonNull AGViewHolder holder, int position) {
-        MAddGoal MAddGoal = MAddGoals.get(position);
-        holder.tv_name.setText(MAddGoal.getName());
-        switch (MAddGoal.getName()) {
+        DeviceModel deviceModel = deviceModels.get(position);
+        holder.tv_name.setText(deviceModel.getName());
+        switch (deviceModel.getName()) {
             case "TV":
                 holder.iv_icon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_tv));
                 break;
@@ -63,18 +63,18 @@ public class RVAddGoalAdapter extends RecyclerView.Adapter<RVAddGoalAdapter.AGVi
 
     @Override
     public int getItemCount() {
-        return MAddGoals.size();
+        return deviceModels.size();
     }
 
-    public void addItem(MAddGoal itemAD) {
-        this.MAddGoals.add(itemAD);
+    public void addItem(DeviceModel itemAD) {
+        this.deviceModels.add(itemAD);
         notifyDataSetChanged();
     }
 
     class AGViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView iv_icon, iv_done;
-        TextView tv_name, tv_status;
+        private ImageView iv_icon, iv_done;
+        private TextView tv_name, tv_status;
 
         public AGViewHolder(@NonNull View itemView) {
             super(itemView);

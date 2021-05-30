@@ -1,9 +1,12 @@
 package com.example.muse.fragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
@@ -17,10 +20,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.muse.R;
 import com.example.muse.StartActivity;
 import com.example.muse.adapters.RVAddGoalAdapter;
-import com.example.muse.model.MAddGoal;
+import com.example.muse.model.DeviceModel;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class GoalsFragment extends Fragment {
@@ -59,6 +63,7 @@ public class GoalsFragment extends Fragment {
         recyclerView.setAdapter(adapter);
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     public void showBottomSheet(View view) {
         //init
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireContext(), R.style.BottomSheetDialogTheme);
@@ -66,9 +71,22 @@ public class GoalsFragment extends Fragment {
 
         //catch spinner
         Spinner spinner_device = bottom_sheet.findViewById(R.id.goalBotSheet_spinner_devices);
-        bottom_sheet.findViewById(R.id.goalBotSheet_btn_submit).setOnClickListener(v1 -> {
+        ArrayList<String> values = new ArrayList<>();
+        values.add("Devices");
+        values.add(StartActivity.DEVICE);
+
+        String[] strings = new String[values.size()];
+        for (int i = 0; i < values.size(); i++)
+            strings[i] = values.get(i);
+
+        ArrayAdapter<String> stringsAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, strings);
+        stringsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_device.setAdapter(stringsAdapter);
+
+        Button btn_submit = bottom_sheet.findViewById(R.id.goalBotSheet_btn_submit);
+        btn_submit.setOnClickListener(v1 -> {
             // add item to rv
-            adapter.addItem(new MAddGoal(spinner_device.getSelectedItem().toString().trim()));
+            adapter.addItem(new DeviceModel(getResources().getDrawable(R.drawable.ic_plug, null),StartActivity.DEVICE));
 
             // visibility
             not_add.setVisibility(View.GONE);

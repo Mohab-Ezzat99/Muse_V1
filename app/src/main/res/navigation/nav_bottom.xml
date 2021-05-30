@@ -18,16 +18,22 @@
         <action
             android:id="@+id/action_devicesFragment_to_selectedDeviceFragment"
             app:destination="@id/selectedDeviceFragment" />
+        <action
+            android:id="@+id/action_devicesFragment_to_alertsFragment"
+            app:destination="@id/alertsFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/selectedDeviceFragment"
         android:name="com.example.muse.fragment.SelectedDeviceFragment"
-        android:label="{name}"
         tools:layout="@layout/fragment_selected_device">
+        <action
+            android:id="@+id/action_selectedDeviceFragment_to_deviceSettingFragment"
+            app:destination="@id/deviceSettingFragment" />
+
         <argument
-            android:name="name"
-            app:argType="string" />
+            android:name="selected_device"
+            app:argType="com.example.muse.model.DeviceModel" />
     </fragment>
     <fragment
         android:id="@+id/goalFragment"
@@ -38,10 +44,45 @@
         android:id="@+id/menuFragment"
         android:name="com.example.muse.fragment.MenuFragment"
         android:label="@string/tit_menu"
-        tools:layout="@layout/fragment_menu" />
+        tools:layout="@layout/fragment_menu" >
+        <action
+            android:id="@+id/action_menuFragment_to_reportFragment"
+            app:destination="@id/reportFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_billingFragment"
+            app:destination="@id/billingFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_schedulesFragment"
+            app:destination="@id/schedulesFragment" />
+    </fragment>
     <fragment
         android:id="@+id/alertsFragment"
         android:name="com.example.muse.fragment.AlertsFragment"
         android:label="@string/tit_alerts"
-        tools:layout="@layout/fragment_alerts" />
+        tools:layout="@layout/fragment_alerts" >
+
+        <argument
+            android:name="alert_device"
+            app:argType="com.example.muse.model.DeviceModel" />
+    </fragment>
+    <fragment
+        android:id="@+id/reportFragment"
+        android:name="com.example.muse.fragment.ReportFragment"
+        android:label="@string/txt_report"
+        tools:layout="@layout/fragment_report" />
+    <fragment
+        android:id="@+id/billingFragment"
+        android:name="com.example.muse.fragment.BillingFragment"
+        android:label="@string/txt_billing"
+        tools:layout="@layout/fragment_billing" />
+    <fragment
+        android:id="@+id/schedulesFragment"
+        android:name="com.example.muse.fragment.SchedulesFragment"
+        android:label="@string/txt_schedule"
+        tools:layout="@layout/fragment_schedules" />
+    <fragment
+        android:id="@+id/deviceSettingFragment"
+        android:name="com.example.muse.fragment.DeviceSettingFragment"
+        android:label="@string/txt_deviceSettings"
+        tools:layout="@layout/fragment_device_setting" />
 </navigation>

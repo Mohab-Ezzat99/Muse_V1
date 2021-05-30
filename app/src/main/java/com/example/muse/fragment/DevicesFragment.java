@@ -20,14 +20,13 @@ import com.example.muse.StartActivity;
 import com.example.muse.adapters.RVAddDeviceAdapter;
 import com.example.muse.adapters.RVDeviceBotAdapter;
 import com.example.muse.interfaces.OnADItemListener;
-import com.example.muse.model.MAddDevice;
-import com.example.muse.model.MBottomDevice;
+import com.example.muse.model.DeviceModel;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Objects;
 
-public class DevicesFragment extends Fragment implements OnADItemListener {
+public class DevicesFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private RVAddDeviceAdapter addDeviceAdapter;
@@ -61,12 +60,10 @@ public class DevicesFragment extends Fragment implements OnADItemListener {
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
         // adapter with click listener
-        addDeviceAdapter = new RVAddDeviceAdapter(name -> {
-            DevicesFragmentDirections.ActionDevicesFragmentToSelectedDeviceFragment action
-                    =DevicesFragmentDirections.actionDevicesFragmentToSelectedDeviceFragment(name);
-            Navigation.findNavController(requireActivity(),R.id.main_fragment).navigate(action);
-        });
+        addDeviceAdapter = new RVAddDeviceAdapter();
         recyclerView.setAdapter(addDeviceAdapter);
+        addDeviceAdapter.setListener(device -> Navigation.findNavController(requireActivity(),R.id.main_fragment)
+                .navigate(DevicesFragmentDirections.actionDevicesFragmentToSelectedDeviceFragment(device)));
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -82,50 +79,28 @@ public class DevicesFragment extends Fragment implements OnADItemListener {
 
 
         // adapter with click listener
-        RVDeviceBotAdapter botAdapter = new RVDeviceBotAdapter(this);
-        botAdapter.addItem(new MBottomDevice(getResources().getDrawable(R.drawable.ic_tv, null),
+        RVDeviceBotAdapter botAdapter = new RVDeviceBotAdapter();
+        botAdapter.addItem(new DeviceModel(getResources().getDrawable(R.drawable.ic_tv, null),
                 getResources().getString(R.string.tit_tv)));
-        botAdapter.addItem(new MBottomDevice(getResources().getDrawable(R.drawable.ic_fridge, null),
+        botAdapter.addItem(new DeviceModel(getResources().getDrawable(R.drawable.ic_fridge, null),
                 getResources().getString(R.string.tit_fridge)));
-        botAdapter.addItem(new MBottomDevice(getResources().getDrawable(R.drawable.ic_air_conditioner, null),
+        botAdapter.addItem(new DeviceModel(getResources().getDrawable(R.drawable.ic_air_conditioner, null),
                 getResources().getString(R.string.tit_air_conditioner)));
-        botAdapter.addItem(new MBottomDevice(getResources().getDrawable(R.drawable.ic_plug, null),
+        botAdapter.addItem(new DeviceModel(getResources().getDrawable(R.drawable.ic_plug, null),
                 getResources().getString(R.string.tit_another_device)));
         rv.setAdapter(botAdapter);
+        botAdapter.setListener(device -> {
+            device.initDevice("50%", 50, true);
+            addDeviceAdapter.addItem(device);
 
+            // visibility
+            not_add.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+            bottomSheetDialog.dismiss();
+        });
 
         //launch bottom sheet
         bottomSheetDialog.setContentView(bottom_sheet);
         bottomSheetDialog.show();
-    }
-
-    @SuppressLint("UseCompatLoadingForDrawables")
-    @Override
-    public void OnItemClick(String name) {
-        switch (name) {
-            case StartActivity.TV:
-                addDeviceAdapter.addItem(new MAddDevice(getResources().getDrawable(R.drawable.ic_tv, null),
-                        true, StartActivity.TV, "50%", 50));
-                break;
-
-            case StartActivity.FRIDGE:
-                addDeviceAdapter.addItem(new MAddDevice(getResources().getDrawable(R.drawable.ic_fridge, null),
-                        true, StartActivity.FRIDGE, "50%", 50));
-                break;
-
-            case StartActivity.AIR:
-                addDeviceAdapter.addItem(new MAddDevice(getResources().getDrawable(R.drawable.ic_air_conditioner, null),
-                        true, StartActivity.AIR, "50%", 50));
-                break;
-
-            case StartActivity.DEVICE:
-                addDeviceAdapter.addItem(new MAddDevice(getResources().getDrawable(R.drawable.ic_plug, null),
-                        true, StartActivity.DEVICE, "50%", 50));
-                break;
-        }
-        // visibility
-        not_add.setVisibility(View.GONE);
-        recyclerView.setVisibility(View.VISIBLE);
-        bottomSheetDialog.dismiss();
     }
 }

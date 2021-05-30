@@ -16,7 +16,7 @@
     <color name="green">#93FF4F</color>
     <color name="orange">#FF9800</color>
     <color name="red">#FF5B50</color>
-    <color name="move">#9c27b0</color>
-    <color name="move_l">#e040fb</color>
+    <color name="move">#673ab7</color>
+    <color name="move_l">#651fff</color>
 
 </resources>

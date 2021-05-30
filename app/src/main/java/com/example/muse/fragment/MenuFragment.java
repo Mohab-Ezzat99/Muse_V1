@@ -21,7 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.muse.R;
 import com.example.muse.StartActivity;
 import com.example.muse.adapters.RVNavMenuAdapter;
-import com.example.muse.model.MNavMenu;
+import com.example.muse.model.NavMenuModel;
 import com.example.muse.utility.SaveState;
 
 import java.util.Objects;
@@ -50,12 +50,12 @@ public class MenuFragment extends Fragment {
 
         RecyclerView recyclerView = view.findViewById(R.id.FMenu_rv);
         RVNavMenuAdapter adapter = new RVNavMenuAdapter();
-        adapter.addItem(new MNavMenu(getResources().getDrawable(R.drawable.ic_schedules, null), "Schedules"));
-        adapter.addItem(new MNavMenu(getResources().getDrawable(R.drawable.ic_report, null), "Report"));
-        adapter.addItem(new MNavMenu(getResources().getDrawable(R.drawable.ic_dollar, null), "Billing"));
-        adapter.addItem(new MNavMenu(getResources().getDrawable(R.drawable.ic_moon, null), "Dark mode"));
-        adapter.addItem(new MNavMenu(getResources().getDrawable(R.drawable.ic_contactus, null), "Contact us"));
-        adapter.addItem(new MNavMenu(getResources().getDrawable(R.drawable.ic_logout, null), "Logout"));
+        adapter.addItem(new NavMenuModel(getResources().getDrawable(R.drawable.ic_schedules, null), "Schedules"));
+        adapter.addItem(new NavMenuModel(getResources().getDrawable(R.drawable.ic_report, null), "Report"));
+        adapter.addItem(new NavMenuModel(getResources().getDrawable(R.drawable.ic_dollar, null), "Billing"));
+        adapter.addItem(new NavMenuModel(getResources().getDrawable(R.drawable.ic_moon, null), "Dark mode"));
+        adapter.addItem(new NavMenuModel(getResources().getDrawable(R.drawable.ic_contactus, null), "Contact us"));
+        adapter.addItem(new NavMenuModel(getResources().getDrawable(R.drawable.ic_logout, null), "Logout"));
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
@@ -70,11 +70,18 @@ public class MenuFragment extends Fragment {
                 switch (position) {
                     //Schedules
                     case 0:
+                        Navigation.findNavController(requireActivity(),R.id.main_fragment)
+                                .navigate(R.id.action_menuFragment_to_schedulesFragment);
+                        break;
                     //Report
                     case 1:
+                        Navigation.findNavController(requireActivity(),R.id.main_fragment)
+                                .navigate(R.id.action_menuFragment_to_reportFragment);
+                        break;
                     //Billing
                     case 2:
-                        Toast.makeText(getContext(), "Soon", Toast.LENGTH_SHORT).show();
+                        Navigation.findNavController(requireActivity(),R.id.main_fragment)
+                                .navigate(R.id.action_menuFragment_to_billingFragment);
                         break;
                     //Contact us
                     case 4:

@@ -2,11 +2,11 @@ package com.example.muse.model;
 
 import android.graphics.drawable.Drawable;
 
-public class MBottomDevice {
+public class NavMenuModel {
     private Drawable icon;
     private String name;
 
-    public MBottomDevice(Drawable icon, String name) {
+    public NavMenuModel(Drawable icon, String name) {
         this.icon = icon;
         this.name = name;
     }

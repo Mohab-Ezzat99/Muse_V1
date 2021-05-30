@@ -12,17 +12,13 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.muse.R;
 import com.example.muse.interfaces.OnADItemListener;
-import com.example.muse.model.MAddDevice;
+import com.example.muse.model.DeviceModel;
 import java.util.ArrayList;
 
 public class RVAddDeviceAdapter extends RecyclerView.Adapter<RVAddDeviceAdapter.ADViewHolder> {
 
-    private ArrayList<MAddDevice> MAddDevices =new ArrayList<>();
+    private ArrayList<DeviceModel> DeviceModels =new ArrayList<>();
     private OnADItemListener listener;
-
-    public RVAddDeviceAdapter(OnADItemListener listener) {
-        this.listener = listener;
-    }
 
     @SuppressLint("InflateParams")
     @NonNull
@@ -33,23 +29,27 @@ public class RVAddDeviceAdapter extends RecyclerView.Adapter<RVAddDeviceAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ADViewHolder holder, int position) {
-        MAddDevice MAddDevice = MAddDevices.get(position);
-        holder.iv_icon.setImageDrawable(MAddDevice.getImage());
-        holder.switchCompat.setChecked(MAddDevice.isChecked());
-        holder.name=MAddDevice.getDevice();
-        holder.tv_device.setText(holder.name);
-        holder.tv_percent.setText(MAddDevice.getPercent());
-        holder.progressBar.setProgress(MAddDevice.getProgress());
+        DeviceModel deviceModel = DeviceModels.get(position);
+        holder.device= deviceModel;
+        holder.iv_icon.setImageDrawable(deviceModel.getIcon());
+        holder.switchCompat.setChecked(deviceModel.isOn());
+        holder.tv_device.setText(deviceModel.getName());
+        holder.tv_percent.setText(deviceModel.getPercent());
+        holder.progressBar.setProgress(deviceModel.getProgress());
     }
 
     @Override
     public int getItemCount() {
-        return MAddDevices.size();
+        return DeviceModels.size();
     }
 
-    public void addItem(MAddDevice MAddDevice){
-        this.MAddDevices.add(MAddDevice);
+    public void addItem(DeviceModel DeviceModel){
+        this.DeviceModels.add(DeviceModel);
         notifyDataSetChanged();
+    }
+
+    public void setListener(OnADItemListener listener) {
+        this.listener = listener;
     }
 
     class ADViewHolder extends RecyclerView.ViewHolder {
@@ -58,7 +58,7 @@ public class RVAddDeviceAdapter extends RecyclerView.Adapter<RVAddDeviceAdapter.
         SwitchCompat switchCompat;
         TextView tv_device,tv_percent;
         ProgressBar progressBar;
-        String name;
+        DeviceModel device;
 
         public ADViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -68,7 +68,7 @@ public class RVAddDeviceAdapter extends RecyclerView.Adapter<RVAddDeviceAdapter.
             tv_percent=itemView.findViewById(R.id.itemAD_tv_percent);
             progressBar=itemView.findViewById(R.id.itemAD_pb);
 
-            itemView.setOnClickListener(v -> listener.OnItemClick(name));
+            itemView.setOnClickListener(v -> listener.OnItemClick(device));
         }
     }
 }

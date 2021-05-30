@@ -15,13 +15,13 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.muse.R;
-import com.example.muse.model.MAlert;
+import com.example.muse.model.DeviceModel;
 
 import java.util.ArrayList;
 
 public class RVAlertAdapter extends RecyclerView.Adapter<RVAlertAdapter.AlertViewHolder> {
 
-    private ArrayList<MAlert> mAlerts = new ArrayList<>();
+    private ArrayList<DeviceModel> mDevice = new ArrayList<>();
     private Context context;
 
     public RVAlertAdapter(Context context) {
@@ -37,9 +37,9 @@ public class RVAlertAdapter extends RecyclerView.Adapter<RVAlertAdapter.AlertVie
 
     @Override
     public void onBindViewHolder(@NonNull AlertViewHolder holder, int position) {
-        MAlert mAlert = mAlerts.get(position);
+        DeviceModel mAlert = mDevice.get(position);
         holder.tv_name.setText(mAlert.getName());
-        holder.tv_message.setText(mAlert.getMessage());
+        holder.tv_message.setText(mAlert.getAlertMessage());
         switch (mAlert.getName()) {
             case "TV":
                 holder.iv_icon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_tv));
@@ -57,11 +57,11 @@ public class RVAlertAdapter extends RecyclerView.Adapter<RVAlertAdapter.AlertVie
 
     @Override
     public int getItemCount() {
-        return mAlerts.size();
+        return mDevice.size();
     }
 
-    public void addItem(MAlert mAlert) {
-        this.mAlerts.add(mAlert);
+    public void addItem(DeviceModel mAlert) {
+        this.mDevice.add(mAlert);
         notifyDataSetChanged();
     }
 

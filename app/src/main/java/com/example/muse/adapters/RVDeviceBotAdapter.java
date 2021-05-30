@@ -10,16 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.muse.R;
 import com.example.muse.interfaces.OnADItemListener;
-import com.example.muse.model.MBottomDevice;
+import com.example.muse.model.DeviceModel;
+
 import java.util.ArrayList;
 
 public class RVDeviceBotAdapter extends RecyclerView.Adapter<RVDeviceBotAdapter.DBViewHolder> {
-    private final ArrayList<MBottomDevice> mBottomDevices =new ArrayList<>();
-    private final OnADItemListener listener;
-
-    public RVDeviceBotAdapter(OnADItemListener listener) {
-        this.listener = listener;
-    }
+    private ArrayList<DeviceModel> mDevice =new ArrayList<>();
+    private OnADItemListener listener;
 
     @SuppressLint("InflateParams")
     @NonNull
@@ -30,34 +27,38 @@ public class RVDeviceBotAdapter extends RecyclerView.Adapter<RVDeviceBotAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull DBViewHolder holder, int position) {
-        MBottomDevice mBottomDevice = mBottomDevices.get(position);
+        DeviceModel mBottomDevice = mDevice.get(position);
+        holder.device=mBottomDevice;
         holder.iv_icon.setImageDrawable(mBottomDevice.getIcon());
-        holder.name= mBottomDevice.getName();
-        holder.tv_device.setText(holder.name);
+        holder.tv_device.setText(mBottomDevice.getName());
     }
 
     @Override
     public int getItemCount() {
-        return mBottomDevices.size();
+        return mDevice.size();
     }
 
-    public void addItem(MBottomDevice mBottomDevice){
-        this.mBottomDevices.add(mBottomDevice);
+    public void addItem(DeviceModel mBottomDevice){
+        this.mDevice.add(mBottomDevice);
         notifyDataSetChanged();
+    }
+
+    public void setListener(OnADItemListener listener) {
+        this.listener= listener;
     }
 
     class DBViewHolder extends RecyclerView.ViewHolder {
 
         ImageView iv_icon;
         TextView tv_device;
-        String name;
+        DeviceModel device;
 
         public DBViewHolder(@NonNull View itemView) {
             super(itemView);
             iv_icon=itemView.findViewById(R.id.itemBD_iv);
             tv_device=itemView.findViewById(R.id.itemBD_tv);
 
-            itemView.setOnClickListener(v -> listener.OnItemClick(name));
+            itemView.setOnClickListener(v -> listener.OnItemClick(device));
         }
     }
 }

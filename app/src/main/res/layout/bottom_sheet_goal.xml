@@ -66,7 +66,6 @@
             android:layout_gravity="center"
             android:layout_marginLeft="5dp"
             android:background="@android:color/transparent"
-            android:entries="@array/spinner_devices"
             android:gravity="center"
             android:popupBackground="?attr/colorOnPrimary"
             android:spinnerMode="dropdown" />

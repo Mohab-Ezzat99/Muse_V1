@@ -13,13 +13,6 @@
     <string name="txt_to_be">To be</string>
     <string name="BTxt_submit">Submit</string>
 
-    <string-array name="spinner_devices">
-        <item>Device</item>
-        <item>Air Conditioner</item>
-        <item>TV</item>
-        <item>Fridge</item>
-    </string-array>
-
     <string-array name="spinner_time">
         <item>Time</item>
         <item>Day</item>
@@ -136,7 +129,7 @@
     <!--_________________________________________________________________________________________-->
     <!--fragment selected device-->
     <string name="txt_50">50%</string>
-    <string name="txt_has_been_on_for_more_3_hrs">has been on for more 3 hrs!</string>
+    <string name="txt_turn_on_for_more_3_hrs">turn on for more 3 hrs!</string>
     <string name="txt_schedule">Schedule</string>
     <string name="txt_is_set_to_turn_off_at_2_00_am_everyday">is set to turn off at 2:00 am everyday</string>
 
@@ -155,5 +148,10 @@
     <string name="tit_tv">TV</string>
     <string name="tit_another_device">Another device</string>
     <string name="txt_for_smart_amp_easy_life"><![CDATA[For smart & easy life]]></string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="txt_billing">Billing</string>
+    <string name="txt_report">Report</string>
+    <string name="txt_deviceSettings">Device settings</string>
+    <string name="txt_no_devices_yet">No devices yet</string>
 
 </resources>
