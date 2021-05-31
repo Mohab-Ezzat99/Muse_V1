@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
@@ -27,6 +28,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
     private TextView tv_login;
     private Button btn_register;
+    private NavController navController;
 
     public RegisterFragment() {
         // Required empty public constructor
@@ -37,6 +39,12 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).hide();
         return inflater.inflate(R.layout.fragment_register, container, false);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        navController=Navigation.findNavController(requireActivity(),R.id.start_fragment);
     }
 
     @Override
@@ -59,7 +67,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 new OnBackPressedCallback(true) {
                     @Override
                     public void handleOnBackPressed() {
-                        Navigation.findNavController(requireActivity(),R.id.start_fragment).navigate(R.id.action_registerFragment_to_loginFragment);
+                        navController.navigate(R.id.action_registerFragment_to_loginFragment);
                     }
                 });
     }
@@ -70,10 +78,10 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
 
             case R.id.register_tv_login:
-                Navigation.findNavController(requireActivity(),R.id.start_fragment).navigate(R.id.action_registerFragment_to_loginFragment);
+                navController.navigate(R.id.action_registerFragment_to_loginFragment);
                 break;
             case R.id.register_btn_register:
-                Navigation.findNavController(requireActivity(),R.id.start_fragment).navigate(R.id.action_registerFragment_to_onBoardFragment);
+                navController.navigate(R.id.action_registerFragment_to_onBoardFragment);
                 break;
         }
     }

@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white_muse"
     android:clickable="false"
     tools:context=".StartActivity">
 
@@ -24,14 +23,13 @@
         android:id="@+id/splash_tv_desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
         android:fontFamily="serif"
         android:text="@string/txt_for_smart_amp_easy_life"
-        android:textColor="@color/nice_black"
+        android:textColor="?attr/colorOnSecondary"
         android:textSize="@dimen/_14ssp"
-        app:layout_constraintBottom_toBottomOf="@+id/splash_iv_light"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="1"
-        app:layout_constraintTop_toTopOf="@+id/splash_iv_light" />
+        app:layout_constraintTop_toBottomOf="@+id/splash_iv_light"
+        app:layout_constraintVertical_bias=".05" />
 </androidx.constraintlayout.widget.ConstraintLayout>

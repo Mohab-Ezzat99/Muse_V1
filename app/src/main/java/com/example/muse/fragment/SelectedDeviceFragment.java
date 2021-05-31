@@ -105,12 +105,13 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
         });
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private void displayItem() {
-        iv_icon.setImageDrawable(device.getIcon());
+        iv_icon.setImageDrawable(getResources().getDrawable(device.getIcon(),null));
         tv_name.setText(device.getName());
     }
 
-    @SuppressLint("NonConstantResourceId")
+    @SuppressLint({"NonConstantResourceId", "UseCompatLoadingForDrawables"})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -123,7 +124,7 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
                 View view = displayDialog(R.layout.dialog_goal);
                 ImageView iv_icon = view.findViewById(R.id.dialogGoal_iv_icon);
                 TextView tv_name = view.findViewById(R.id.dialogGoal_tv_name);
-                iv_icon.setImageDrawable(device.getIcon());
+                iv_icon.setImageDrawable(getResources().getDrawable(device.getIcon(),null));
                 tv_name.setText(device.getName());
                 break;
 

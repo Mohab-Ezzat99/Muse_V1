@@ -1,24 +1,29 @@
 package com.example.muse.model;
 
-import android.graphics.drawable.Drawable;
-
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 import java.io.Serializable;
 
+@Entity(tableName = "devices_table")
 public class DeviceModel implements Serializable {
 
+    @PrimaryKey(autoGenerate = true)
+    private int id;
     private String name;
-    private Drawable icon;
+    private int icon;
     private String percent;
     private int progress;
     private boolean isOn;
     private String alertMessage;
-    public static long id = 0;
+    private boolean hasGoal;
+
+    public DeviceModel() {
+    }
 
     //add new device
-    public DeviceModel(Drawable icon,String name) {
+    public DeviceModel(int icon,String name) {
         this.name = name;
         this.icon = icon;
-        id++;
     }
 
     //init device
@@ -36,11 +41,11 @@ public class DeviceModel implements Serializable {
         this.name = name;
     }
 
-    public Drawable getIcon() {
+    public int getIcon() {
         return icon;
     }
 
-    public void setIcon(Drawable icon) {
+    public void setIcon(int icon) {
         this.icon = icon;
     }
 
@@ -76,11 +81,19 @@ public class DeviceModel implements Serializable {
         this.alertMessage = alertMessage;
     }
 
-    public static long getId() {
+    public int getId() {
         return id;
     }
 
-    public static void setId(long id) {
-        DeviceModel.id = id;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public boolean isHasGoal() {
+        return hasGoal;
+    }
+
+    public void setHasGoal(boolean hasGoal) {
+        this.hasGoal = hasGoal;
     }
 }

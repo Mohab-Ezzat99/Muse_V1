@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.Group;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,6 +22,7 @@ import com.example.muse.StartActivity;
 import com.example.muse.adapters.RVAlertAdapter;
 import com.example.muse.model.DeviceModel;
 
+import java.util.List;
 import java.util.Objects;
 
 public class AlertsFragment extends Fragment {
@@ -54,5 +56,15 @@ public class AlertsFragment extends Fragment {
 
         RVAlertAdapter adapter=new RVAlertAdapter(getContext());
         recyclerView.setAdapter(adapter);
+
+        StartActivity.museViewModel.getAllDevices().observe(getViewLifecycleOwner(), deviceModels -> {
+            if(deviceModels.size()!=0)
+            {
+                // visibility
+                not_add.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+            }
+            adapter.setList(deviceModels);
+        });
     }
 }

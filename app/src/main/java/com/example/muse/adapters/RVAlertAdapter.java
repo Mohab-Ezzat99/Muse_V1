@@ -18,10 +18,11 @@ import com.example.muse.R;
 import com.example.muse.model.DeviceModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RVAlertAdapter extends RecyclerView.Adapter<RVAlertAdapter.AlertViewHolder> {
 
-    private ArrayList<DeviceModel> mDevice = new ArrayList<>();
+    private List<DeviceModel> mDevice;
     private Context context;
 
     public RVAlertAdapter(Context context) {
@@ -35,29 +36,23 @@ public class RVAlertAdapter extends RecyclerView.Adapter<RVAlertAdapter.AlertVie
         return new AlertViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_alert, parent, false));
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     public void onBindViewHolder(@NonNull AlertViewHolder holder, int position) {
         DeviceModel mAlert = mDevice.get(position);
         holder.tv_name.setText(mAlert.getName());
         holder.tv_message.setText(mAlert.getAlertMessage());
-        switch (mAlert.getName()) {
-            case "TV":
-                holder.iv_icon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_tv));
-                break;
-            case "Air Conditioner":
-                holder.iv_icon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_air_conditioner));
-                break;
-            case "Fridge":
-                holder.iv_icon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_fridge));
-                break;
-            default:
-                holder.iv_icon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_plug));
-                break;
-        }    }
+        holder.iv_icon.setImageDrawable(context.getResources().getDrawable(mAlert.getIcon(),null));
+    }
 
     @Override
     public int getItemCount() {
         return mDevice.size();
+    }
+
+    public void setList(List<DeviceModel> mDevice) {
+        this.mDevice = mDevice;
+        notifyDataSetChanged();
     }
 
     public void addItem(DeviceModel mAlert) {

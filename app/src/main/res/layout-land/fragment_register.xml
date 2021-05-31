@@ -14,8 +14,8 @@
 
         <ImageView
             android:id="@+id/register_iv"
-            android:layout_width="@dimen/_90sdp"
-            android:layout_height="@dimen/_90sdp"
+            android:layout_width="@dimen/_85sdp"
+            android:layout_height="@dimen/_85sdp"
             android:contentDescription="@string/txt_null"
             android:src="@drawable/ic_light"
             app:layout_constraintBottom_toBottomOf="parent"

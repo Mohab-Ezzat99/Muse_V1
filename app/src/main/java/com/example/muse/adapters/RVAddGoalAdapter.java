@@ -16,9 +16,10 @@ import com.example.muse.R;
 import com.example.muse.model.DeviceModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RVAddGoalAdapter extends RecyclerView.Adapter<RVAddGoalAdapter.AGViewHolder> {
-    private ArrayList<DeviceModel> deviceModels = new ArrayList<>();
+    private List<DeviceModel> deviceModels = new ArrayList<>();
     private Context context;
 
     public RVAddGoalAdapter(Context context) {
@@ -32,24 +33,12 @@ public class RVAddGoalAdapter extends RecyclerView.Adapter<RVAddGoalAdapter.AGVi
         return new AGViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_add_goal, parent, false));
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     public void onBindViewHolder(@NonNull AGViewHolder holder, int position) {
         DeviceModel deviceModel = deviceModels.get(position);
         holder.tv_name.setText(deviceModel.getName());
-        switch (deviceModel.getName()) {
-            case "TV":
-                holder.iv_icon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_tv));
-                break;
-            case "Air Conditioner":
-                holder.iv_icon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_air_conditioner));
-                break;
-            case "Fridge":
-                holder.iv_icon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_fridge));
-                break;
-            default:
-                holder.iv_icon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_plug));
-                break;
-        }
+        holder.iv_icon.setImageDrawable(context.getResources().getDrawable(deviceModel.getIcon(),null));
 
         if (position % 2 == 0) {
             holder.iv_done.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_checked));
@@ -68,6 +57,11 @@ public class RVAddGoalAdapter extends RecyclerView.Adapter<RVAddGoalAdapter.AGVi
 
     public void addItem(DeviceModel itemAD) {
         this.deviceModels.add(itemAD);
+        notifyDataSetChanged();
+    }
+
+    public void setList(List<DeviceModel> deviceModels) {
+        this.deviceModels = deviceModels;
         notifyDataSetChanged();
     }
 

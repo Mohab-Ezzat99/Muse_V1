@@ -1,6 +1,7 @@
 package com.example.muse.adapters;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,11 @@ public class RVNavMenuAdapter extends RecyclerView.Adapter<RVNavMenuAdapter.NMVi
 
     private ArrayList<NavMenuModel> NavMenuModels = new ArrayList<>();
     private OnItemClickListener listener;
+    private Context context;
+
+    public RVNavMenuAdapter(Context context) {
+        this.context = context;
+    }
 
     @SuppressLint("InflateParams")
     @NonNull
@@ -29,10 +35,11 @@ public class RVNavMenuAdapter extends RecyclerView.Adapter<RVNavMenuAdapter.NMVi
         return new NMViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_nav_menu, parent, false));
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     public void onBindViewHolder(@NonNull NMViewHolder holder, int position) {
         NavMenuModel NavMenuModel = NavMenuModels.get(position);
-        holder.iv_icon.setImageDrawable(NavMenuModel.getIcon());
+        holder.iv_icon.setImageDrawable(context.getResources().getDrawable(NavMenuModel.getIcon(),null));
         holder.tv_name.setText(NavMenuModel.getName());
         holder.pos=position;
         if (position == 3) {

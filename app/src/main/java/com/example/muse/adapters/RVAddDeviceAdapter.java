@@ -1,6 +1,7 @@
 package com.example.muse.adapters;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +14,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.muse.R;
 import com.example.muse.interfaces.OnADItemListener;
 import com.example.muse.model.DeviceModel;
-import java.util.ArrayList;
+import java.util.List;
 
 public class RVAddDeviceAdapter extends RecyclerView.Adapter<RVAddDeviceAdapter.ADViewHolder> {
 
-    private ArrayList<DeviceModel> DeviceModels =new ArrayList<>();
+    private List<DeviceModel> DeviceModels;
     private OnADItemListener listener;
+    private Context context;
+
+    public RVAddDeviceAdapter(Context context) {
+        this.context = context;
+    }
 
     @SuppressLint("InflateParams")
     @NonNull
@@ -27,11 +33,12 @@ public class RVAddDeviceAdapter extends RecyclerView.Adapter<RVAddDeviceAdapter.
         return new ADViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_add_device, null, false));
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     public void onBindViewHolder(@NonNull ADViewHolder holder, int position) {
         DeviceModel deviceModel = DeviceModels.get(position);
         holder.device= deviceModel;
-        holder.iv_icon.setImageDrawable(deviceModel.getIcon());
+        holder.iv_icon.setImageDrawable(context.getResources().getDrawable(deviceModel.getIcon(), null));
         holder.switchCompat.setChecked(deviceModel.isOn());
         holder.tv_device.setText(deviceModel.getName());
         holder.tv_percent.setText(deviceModel.getPercent());
@@ -48,17 +55,22 @@ public class RVAddDeviceAdapter extends RecyclerView.Adapter<RVAddDeviceAdapter.
         notifyDataSetChanged();
     }
 
+    public void setDeviceModels(List<DeviceModel> deviceModels) {
+        this.DeviceModels = deviceModels;
+        notifyDataSetChanged();
+    }
+
     public void setListener(OnADItemListener listener) {
         this.listener = listener;
     }
 
     class ADViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView iv_icon;
-        SwitchCompat switchCompat;
-        TextView tv_device,tv_percent;
-        ProgressBar progressBar;
-        DeviceModel device;
+        private ImageView iv_icon;
+        private SwitchCompat switchCompat;
+        private TextView tv_device,tv_percent;
+        private ProgressBar progressBar;
+        private DeviceModel device;
 
         public ADViewHolder(@NonNull View itemView) {
             super(itemView);

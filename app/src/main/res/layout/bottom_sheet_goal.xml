@@ -4,7 +4,7 @@
     android:id="@+id/goalBotSheet"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/shape_blue_up">
+    android:background="@drawable/shape_move_up">
 
     <TextView
         android:id="@+id/textView3"
@@ -22,8 +22,9 @@
     <View
         android:id="@+id/view"
         android:layout_width="0dp"
-        android:layout_height="@dimen/_1sdp"
+        android:layout_height="@dimen/_2sdp"
         android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginHorizontal="@dimen/_2sdp"
         android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

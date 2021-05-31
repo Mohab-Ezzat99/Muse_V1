@@ -35,8 +35,13 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).hide();
         return inflater.inflate(R.layout.fragment_home, container, false);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        navControllerChart = Navigation.findNavController(requireActivity(), R.id.FHome_fragment);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -50,11 +55,12 @@ public class HomeFragment extends Fragment {
         else
             StartActivity.setupLightStatusBar(getResources().getColor(R.color.white_muse, null));
 
+        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).hide();
+
         //iv_custom
         view.findViewById(R.id.FHome_iv_cat).setOnClickListener(v -> Toast.makeText(getContext(), "Soon", Toast.LENGTH_SHORT).show());
 
         //chipNav
-        navControllerChart = Navigation.findNavController(requireActivity(), R.id.FHome_fragment);
         chipNavigationBar = view.findViewById(R.id.FHome_chipNav);
         chipNavigationBar.setItemSelected(R.id.dayFragment, true);
         chipNavigationBar.setOnItemSelectedListener(i -> {

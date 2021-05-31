@@ -33,15 +33,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_16sdp"
-            android:layout_marginEnd="@dimen/_8sdp"
-            android:layout_marginBottom="@dimen/_8sdp"
             android:thumb="@drawable/selector_thumb"
             app:layout_constraintBottom_toBottomOf="@+id/itemAD_iv_icon"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias=".2"
+            app:layout_constraintHorizontal_bias=".85"
             app:layout_constraintStart_toEndOf="@+id/itemAD_iv_icon"
             app:layout_constraintTop_toTopOf="@+id/itemAD_iv_icon"
-            app:layout_constraintVertical_bias="0"
             app:track="@drawable/selector_track"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
 
@@ -59,7 +56,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias=".05"
-            app:srcCompat="@drawable/ic_plug"
+            app:srcCompat="@drawable/ic_tv"
             app:tint="?attr/colorPrimaryVariant" />
 
         <TextView

@@ -11,16 +11,27 @@ import android.view.WindowManager;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
 import com.example.muse.utility.SaveState;
+import com.example.muse.viewmodels.MuseViewModel;
 
 public class StartActivity extends AppCompatActivity {
     public static final String TV = "TV";
     public static final String FRIDGE = "Fridge";
     public static final String AIR = "Air Conditioner";
+    public static final String PC = "PC";
+    public static final String CLOTHES_DRYER = "Clothes dryer";
+    public static final String FREEZER = "Freezer";
+    public static final String COFFEE_MAKER = "Coffee maker";
+    public static final String DISHWASHER = "Dishwasher";
+    public static final String FAN_HEATER = "Fan heater";
+    public static final String TOASTER = "Toaster";
+    public static final String WATER_DISPENSER = "Water dispenser";
     public static final String DEVICE = "Another device";
 
     public NavController navControllerStart;
@@ -30,6 +41,7 @@ public class StartActivity extends AppCompatActivity {
     public static int colorSecondaryVariant;
 
     private static Window window;
+    public static MuseViewModel museViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,14 +54,16 @@ public class StartActivity extends AppCompatActivity {
         setupMode();
 
         // toolbar
-        toolbar =findViewById(R.id.start_tool);
+        toolbar = findViewById(R.id.start_tool);
         toolbar.setTitleTextAppearance(this, R.style.ToolbarTitleStyle);
         setSupportActionBar(toolbar);
         activeActionBar(this);
 
+        museViewModel = new ViewModelProvider(this).get(MuseViewModel.class);
+
         //get some colors
-        colorPrimaryVariant =fetchColor(R.attr.colorPrimaryVariant);
-        colorSecondaryVariant=fetchColor(R.attr.colorSecondaryVariant);
+        colorPrimaryVariant = fetchColor(R.attr.colorPrimaryVariant);
+        colorSecondaryVariant = fetchColor(R.attr.colorSecondaryVariant);
     }
 
     @Override
