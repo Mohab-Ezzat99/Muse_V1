@@ -13,14 +13,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.example.muse.R;
-import com.example.muse.StartActivity;
 import com.example.muse.model.DeviceModel;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
@@ -136,7 +134,7 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
 
             case R.id.selectedD_iv_setting:
                 Navigation.findNavController(requireActivity(), R.id.main_fragment)
-                        .navigate(R.id.action_selectedDeviceFragment_to_deviceSettingFragment);
+                        .navigate(SelectedDeviceFragmentDirections.actionSelectedDeviceFragmentToDeviceSettingFragment(device));
                 break;
 
             case R.id.selectedD_iv_cat:

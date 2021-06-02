@@ -81,7 +81,6 @@ public class DevicesFragment extends Fragment {
         });
     }
 
-    @SuppressLint("UseCompatLoadingForDrawables")
     public void showBottomSheet(View view) {
         //init
         bottomSheetDialog = new BottomSheetDialog(requireContext(), R.style.BottomSheetDialogTheme);

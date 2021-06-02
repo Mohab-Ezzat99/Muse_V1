@@ -42,7 +42,6 @@
             android:inputType="textEmailAddress"
             android:maxLength="30"
             android:textColor="?attr/colorOnSecondary" />
-
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout

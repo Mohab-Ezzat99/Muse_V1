@@ -27,9 +27,8 @@
         android:text="@string/txt_for_smart_amp_easy_life"
         android:textColor="?attr/colorOnSecondary"
         android:textSize="@dimen/_14ssp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/splash_iv_light"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/splash_iv_light"
         app:layout_constraintVertical_bias=".05" />
 </androidx.constraintlayout.widget.ConstraintLayout>

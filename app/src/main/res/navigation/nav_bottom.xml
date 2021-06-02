@@ -84,5 +84,11 @@
         android:id="@+id/deviceSettingFragment"
         android:name="com.example.muse.fragment.DeviceSettingFragment"
         android:label="@string/txt_deviceSettings"
-        tools:layout="@layout/fragment_device_setting" />
+        tools:layout="@layout/fragment_device_setting">
+
+        <argument
+            android:name="device_setting"
+            app:argType="com.example.muse.model.DeviceModel" />
+    </fragment>
+
 </navigation>
