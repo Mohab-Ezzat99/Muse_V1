@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:fitsSystemWindows="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
@@ -9,8 +10,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:contentDescription="@string/txt_null"
@@ -25,7 +25,7 @@
             app:layout_constraintVertical_bias="0.1" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/itl_fullName"
+            android:id="@+id/register_itl_fullName"
             style="@style/TextInputLayoutStyle"
             android:layout_width="@dimen/_270sdp"
             android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/register_iv"
-            app:layout_constraintVertical_bias="0.05">
+            app:layout_constraintVertical_bias="0">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/register_et_fullName"
@@ -51,7 +51,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/itl_device"
+            android:id="@+id/register_itl_device"
             style="@style/TextInputLayoutStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -59,9 +59,9 @@
             android:hint="@string/hint_device_id"
             android:textColorHint="@color/gray"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/itl_fullName"
-            app:layout_constraintStart_toStartOf="@+id/itl_fullName"
-            app:layout_constraintTop_toBottomOf="@+id/itl_fullName"
+            app:layout_constraintEnd_toEndOf="@+id/register_itl_fullName"
+            app:layout_constraintStart_toStartOf="@+id/register_itl_fullName"
+            app:layout_constraintTop_toBottomOf="@+id/register_itl_fullName"
             app:layout_constraintVertical_bias="0.0">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -78,7 +78,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/itl_email"
+            android:id="@+id/register_itl_email"
             style="@style/TextInputLayoutStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -86,9 +86,9 @@
             android:hint="@string/hint_email"
             android:textColorHint="@color/gray"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/itl_fullName"
-            app:layout_constraintStart_toStartOf="@+id/itl_fullName"
-            app:layout_constraintTop_toBottomOf="@+id/itl_device"
+            app:layout_constraintEnd_toEndOf="@+id/register_itl_fullName"
+            app:layout_constraintStart_toStartOf="@+id/register_itl_fullName"
+            app:layout_constraintTop_toBottomOf="@+id/register_itl_device"
             app:layout_constraintVertical_bias="0.0"
             >
 
@@ -105,16 +105,16 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/itl_password"
+            android:id="@+id/register_itl_password"
             style="@style/TextInputLayoutStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_12sdp"
             android:hint="@string/hint_password"
             android:textColorHint="@color/gray"
-            app:layout_constraintEnd_toEndOf="@+id/itl_fullName"
-            app:layout_constraintStart_toStartOf="@+id/itl_fullName"
-            app:layout_constraintTop_toBottomOf="@+id/itl_email"
+            app:layout_constraintEnd_toEndOf="@+id/register_itl_fullName"
+            app:layout_constraintStart_toStartOf="@+id/register_itl_fullName"
+            app:layout_constraintTop_toBottomOf="@+id/register_itl_email"
             app:passwordToggleEnabled="true"
             app:passwordToggleTint="?attr/colorPrimaryVariant">
 
@@ -131,16 +131,16 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/itl_confPassword"
+            android:id="@+id/register_itl_confPassword"
             style="@style/TextInputLayoutStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_12sdp"
             android:hint="@string/hint_confirm_password"
             android:textColorHint="@color/gray"
-            app:layout_constraintEnd_toEndOf="@+id/itl_fullName"
-            app:layout_constraintStart_toStartOf="@+id/itl_fullName"
-            app:layout_constraintTop_toBottomOf="@+id/itl_password"
+            app:layout_constraintEnd_toEndOf="@+id/register_itl_fullName"
+            app:layout_constraintStart_toStartOf="@+id/register_itl_fullName"
+            app:layout_constraintTop_toBottomOf="@+id/register_itl_password"
             app:passwordToggleEnabled="true"
             app:passwordToggleTint="?attr/colorPrimaryVariant">
 
@@ -167,9 +167,9 @@
             android:textColor="@color/white_muse"
             android:textSize="@dimen/_12ssp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/itl_fullName"
-            app:layout_constraintStart_toStartOf="@+id/itl_fullName"
-            app:layout_constraintTop_toBottomOf="@+id/itl_confPassword" />
+            app:layout_constraintEnd_toEndOf="@+id/register_itl_fullName"
+            app:layout_constraintStart_toStartOf="@+id/register_itl_fullName"
+            app:layout_constraintTop_toBottomOf="@+id/register_itl_confPassword" />
 
         <TextView
             android:id="@+id/textView2"

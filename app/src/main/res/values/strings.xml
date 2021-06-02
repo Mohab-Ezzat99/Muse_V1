@@ -159,5 +159,8 @@
     <string name="txt_add_schedule">Add schedule</string>
     <string name="tit_delete">Delete</string>
     <string name="tit_save">Save</string>
-
+    <string name="hint_enter_your_email">Enter your email</string>
+    <string name="txt_reset_password">Reset Password!</string>
+    <string name="txt_submit">Submit</string>
+    <string name="txt_cancel">Cancel</string>
 </resources>

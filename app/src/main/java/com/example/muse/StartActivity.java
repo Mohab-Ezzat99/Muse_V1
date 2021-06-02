@@ -1,6 +1,7 @@
 package com.example.muse;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.TypedValue;
@@ -19,6 +20,8 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.muse.utility.SaveState;
 import com.example.muse.viewmodels.MuseViewModel;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class StartActivity extends AppCompatActivity {
     public static final String TV = "TV";
@@ -43,6 +46,9 @@ public class StartActivity extends AppCompatActivity {
     private static Window window;
     public static MuseViewModel museViewModel;
 
+    public static FirebaseAuth mAuth;
+    public static FirebaseApp firebaseApp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +66,8 @@ public class StartActivity extends AppCompatActivity {
         activeActionBar(this);
 
         museViewModel = new ViewModelProvider(this).get(MuseViewModel.class);
+        firebaseApp = FirebaseApp.initializeApp(this);
+        mAuth = FirebaseAuth.getInstance();
 
         //get some colors
         colorPrimaryVariant = fetchColor(R.attr.colorPrimaryVariant);

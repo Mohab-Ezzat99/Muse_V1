@@ -99,6 +99,7 @@ public class MenuFragment extends Fragment {
                         break;
                     //Logout
                     case 5:
+                        StartActivity.mAuth.signOut();
                         navController_start.popBackStack();
                         navController_start.navigate(R.id.loginFragment);
                         break;
