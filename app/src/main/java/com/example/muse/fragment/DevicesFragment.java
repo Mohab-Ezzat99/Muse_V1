@@ -1,28 +1,28 @@
 package com.example.muse.fragment;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.muse.R;
 import com.example.muse.StartActivity;
 import com.example.muse.adapters.RVAddDeviceAdapter;
 import com.example.muse.adapters.RVDeviceBotAdapter;
 import com.example.muse.model.DeviceModel;
-import com.example.muse.viewmodels.MuseViewModel;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.Objects;
 
 public class DevicesFragment extends Fragment {
@@ -112,9 +112,9 @@ public class DevicesFragment extends Fragment {
             //init device
             device.initDevice("50%", 50, true);
             device.setAlertMessage("turn on for more 3h!");
+            device.setHasAlert(true);
 
             //add to list & room
-            addDeviceAdapter.addItem(device);
             StartActivity.museViewModel.insertDevice(device);
             bottomSheetDialog.dismiss();
         });

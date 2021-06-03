@@ -7,14 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.muse.R;
 import com.example.muse.model.DeviceModel;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,7 +62,7 @@ public class RVAddGoalAdapter extends RecyclerView.Adapter<RVAddGoalAdapter.AGVi
         notifyDataSetChanged();
     }
 
-    class AGViewHolder extends RecyclerView.ViewHolder {
+    static class AGViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView iv_icon, iv_done;
         private TextView tv_name, tv_status;

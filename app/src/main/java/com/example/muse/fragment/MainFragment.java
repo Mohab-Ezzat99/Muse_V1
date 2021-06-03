@@ -58,14 +58,5 @@ public class MainFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //bottom nav
-
-        //set English
-        Configuration config = requireContext().getResources().getConfiguration();
-        Locale locale = new Locale("en");
-        Locale.setDefault(locale);
-        config.locale = locale;
-        requireContext().getResources().updateConfiguration(config,
-                requireContext().getResources().getDisplayMetrics());
     }
 }

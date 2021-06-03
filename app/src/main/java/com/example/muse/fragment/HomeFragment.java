@@ -58,7 +58,7 @@ public class HomeFragment extends Fragment {
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).hide();
 
         //iv_custom
-        view.findViewById(R.id.FHome_iv_cat).setOnClickListener(v -> Toast.makeText(getContext(), "Soon", Toast.LENGTH_SHORT).show());
+        view.findViewById(R.id.FHome_iv_custom).setOnClickListener(v -> Toast.makeText(getContext(), "Soon", Toast.LENGTH_SHORT).show());
 
         //chipNav
         chipNavigationBar = view.findViewById(R.id.FHome_chipNav);

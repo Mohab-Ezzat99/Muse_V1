@@ -19,7 +19,6 @@ import com.example.muse.utility.SaveState;
 import java.util.ArrayList;
 
 public class RVNavMenuAdapter extends RecyclerView.Adapter<RVNavMenuAdapter.NMViewHolder> {
-
     private ArrayList<NavMenuModel> NavMenuModels = new ArrayList<>();
     private OnItemClickListener listener;
     private Context context;
@@ -42,10 +41,14 @@ public class RVNavMenuAdapter extends RecyclerView.Adapter<RVNavMenuAdapter.NMVi
         holder.iv_icon.setImageDrawable(context.getResources().getDrawable(NavMenuModel.getIcon(),null));
         holder.tv_name.setText(NavMenuModel.getName());
         holder.pos=position;
-        if (position == 3) {
+        if (position == 3 || position == 4) {
             holder.switchCompat.setVisibility(View.VISIBLE);
-            if(SaveState.getDarkModeState())
-                holder.switchCompat.setChecked(true);
+            //dark mode
+            if (position == 4)
+                holder.switchCompat.setChecked(SaveState.getDarkModeState());
+                //notification
+            else
+                holder.switchCompat.setChecked(SaveState.getNotificationState());
         }
     }
 
@@ -66,16 +69,17 @@ public class RVNavMenuAdapter extends RecyclerView.Adapter<RVNavMenuAdapter.NMVi
 
     public interface OnItemClickListener {
         void onItemClick(int position);
+
         void isDarkModeChecked(boolean isChecked);
+
+        void isNotificationChecked(boolean isChecked);
     }
 
     public class NMViewHolder extends RecyclerView.ViewHolder {
-
-        ImageView iv_icon;
-        TextView tv_name;
-        SwitchCompat switchCompat;
-        int pos;
-        boolean isDarkModeChecked;
+        private ImageView iv_icon;
+        private TextView tv_name;
+        private SwitchCompat switchCompat;
+        private int pos;
 
         public NMViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -84,9 +88,14 @@ public class RVNavMenuAdapter extends RecyclerView.Adapter<RVNavMenuAdapter.NMVi
             switchCompat = itemView.findViewById(R.id.itemNM_switch);
 
             itemView.setOnClickListener(v -> listener.onItemClick(pos));
+
             switchCompat.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                isDarkModeChecked=isChecked;
-                listener.isDarkModeChecked(isDarkModeChecked);
+                //dark mode
+                if (pos == 4)
+                    listener.isDarkModeChecked(isChecked);
+                    //notification
+                else
+                    listener.isNotificationChecked(isChecked);
             });
         }
     }

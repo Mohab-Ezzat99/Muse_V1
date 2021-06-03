@@ -123,16 +123,16 @@
             android:background="@drawable/shape_blue_circle_stroke"
             android:isScrollContainer="true"
             app:cnb_menuResource="@menu/menu_nav_chart"
-            app:layout_constraintBottom_toBottomOf="@+id/selectedD_iv_cat"
+            app:layout_constraintBottom_toBottomOf="@+id/selectedD_iv_custom"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/selectedD_iv_cat" />
+            app:layout_constraintTop_toTopOf="@+id/selectedD_iv_custom" />
 
         <ImageView
-            android:id="@+id/selectedD_iv_cat"
+            android:id="@+id/selectedD_iv_custom"
             android:layout_width="@dimen/_34sdp"
             android:layout_height="@dimen/_34sdp"
             android:layout_margin="@dimen/_4sdp"
-            android:background="@drawable/shape_blue_circle_stroke"
+            android:background="@drawable/shape_blue_circle_fill"
             android:contentDescription="@string/txt_null"
             android:padding="@dimen/_8sdp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -152,7 +152,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/selectedD_iv_cat"
+            app:layout_constraintTop_toBottomOf="@+id/selectedD_iv_custom"
             app:layout_constraintVertical_bias="0"
             app:navGraph="@navigation/nav_chart"
             tools:ignore="FragmentTagUsage" />

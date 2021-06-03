@@ -64,6 +64,7 @@ public class MenuFragment extends Fragment {
         adapter.addItem(new NavMenuModel(R.drawable.ic_schedules, "Schedules"));
         adapter.addItem(new NavMenuModel(R.drawable.ic_report, "Report"));
         adapter.addItem(new NavMenuModel(R.drawable.ic_dollar, "Billing"));
+        adapter.addItem(new NavMenuModel(R.drawable.ic_notification, "Notifications"));
         adapter.addItem(new NavMenuModel(R.drawable.ic_moon, "Dark mode"));
         adapter.addItem(new NavMenuModel(R.drawable.ic_contactus, "Contact us"));
         adapter.addItem(new NavMenuModel(R.drawable.ic_logout, "Logout"));
@@ -110,6 +111,11 @@ public class MenuFragment extends Fragment {
             public void isDarkModeChecked(boolean isChecked) {
                 SaveState.setDarkModeState(isChecked);
                 StartActivity.setupMode();
+            }
+
+            @Override
+            public void isNotificationChecked(boolean isChecked) {
+                SaveState.setNotificationState(isChecked);
             }
         });
     }

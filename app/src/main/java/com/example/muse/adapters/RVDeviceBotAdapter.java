@@ -10,13 +10,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.muse.R;
-import com.example.muse.interfaces.OnADItemListener;
+import com.example.muse.interfaces.OnDeviceItemListener;
 import com.example.muse.model.DeviceModel;
 import java.util.ArrayList;
 
 public class RVDeviceBotAdapter extends RecyclerView.Adapter<RVDeviceBotAdapter.DBViewHolder> {
     private ArrayList<DeviceModel> mDevice =new ArrayList<>();
-    private OnADItemListener listener;
+    private OnDeviceItemListener listener;
     private Context context;
 
     public RVDeviceBotAdapter(Context context) {
@@ -49,12 +49,11 @@ public class RVDeviceBotAdapter extends RecyclerView.Adapter<RVDeviceBotAdapter.
         notifyDataSetChanged();
     }
 
-    public void setListener(OnADItemListener listener) {
+    public void setListener(OnDeviceItemListener listener) {
         this.listener= listener;
     }
 
     class DBViewHolder extends RecyclerView.ViewHolder {
-
         ImageView iv_icon;
         TextView tv_device;
         DeviceModel device;

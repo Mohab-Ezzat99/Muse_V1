@@ -65,7 +65,7 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
         cv_insight = view.findViewById(R.id.selectedD_cv_insight);
         cv_goal = view.findViewById(R.id.selectedD_cv_goal);
         cv_schedules = view.findViewById(R.id.selectedD_cv_schedule);
-        iv_calender = view.findViewById(R.id.selectedD_iv_cat);
+        iv_calender = view.findViewById(R.id.selectedD_iv_custom);
         iv_setting = view.findViewById(R.id.selectedD_iv_setting);
         displayItem();
 
@@ -137,7 +137,7 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
                         .navigate(SelectedDeviceFragmentDirections.actionSelectedDeviceFragmentToDeviceSettingFragment(device));
                 break;
 
-            case R.id.selectedD_iv_cat:
+            case R.id.selectedD_iv_custom:
                 Toast.makeText(getContext(), "Soon", Toast.LENGTH_SHORT).show();
                 break;
         }

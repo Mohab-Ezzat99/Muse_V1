@@ -4,11 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
-
 import java.util.ArrayList;
 
 public class VPOnBoardAdapter extends FragmentStatePagerAdapter {
-
     ArrayList<Fragment> screens=new ArrayList<>();
 
     public VPOnBoardAdapter(@NonNull FragmentManager fm, int behavior) {

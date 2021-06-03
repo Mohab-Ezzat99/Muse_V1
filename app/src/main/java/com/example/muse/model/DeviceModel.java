@@ -16,6 +16,7 @@ public class DeviceModel implements Serializable {
     private boolean isOn;
     private String alertMessage;
     private boolean hasGoal;
+    private boolean hasAlert;
 
     public DeviceModel() {
     }
@@ -95,5 +96,13 @@ public class DeviceModel implements Serializable {
 
     public void setHasGoal(boolean hasGoal) {
         this.hasGoal = hasGoal;
+    }
+
+    public boolean isHasAlert() {
+        return hasAlert;
+    }
+
+    public void setHasAlert(boolean hasAlert) {
+        this.hasAlert = hasAlert;
     }
 }

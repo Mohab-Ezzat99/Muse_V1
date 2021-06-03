@@ -31,15 +31,19 @@ public class MuseViewModel extends AndroidViewModel {
         repository.deleteDevice(device);
     }
 
-    public void deleteAllDevice(){
+    public void deleteAllDevice() {
         repository.deleteAllDevices();
     }
 
-    public LiveData<List<DeviceModel>> getAllDevices(){
+    public LiveData<List<DeviceModel>> getAllDevices() {
         return repository.getAllDevices();
     }
 
-    public LiveData<List<DeviceModel>> getDevicesGoals(){
+    public LiveData<List<DeviceModel>> getDevicesGoals() {
         return repository.getDevicesGoals();
+    }
+
+    public LiveData<List<DeviceModel>> getDevicesAlerts() {
+        return repository.getDevicesAlerts();
     }
 }

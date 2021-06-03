@@ -8,18 +8,20 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.muse.R;
-import com.example.muse.interfaces.OnADItemListener;
+import com.example.muse.interfaces.OnDeviceItemListener;
 import com.example.muse.model.DeviceModel;
+
 import java.util.List;
 
 public class RVAddDeviceAdapter extends RecyclerView.Adapter<RVAddDeviceAdapter.ADViewHolder> {
-
     private List<DeviceModel> DeviceModels;
-    private OnADItemListener listener;
+    private OnDeviceItemListener listener;
     private Context context;
 
     public RVAddDeviceAdapter(Context context) {
@@ -60,7 +62,7 @@ public class RVAddDeviceAdapter extends RecyclerView.Adapter<RVAddDeviceAdapter.
         notifyDataSetChanged();
     }
 
-    public void setListener(OnADItemListener listener) {
+    public void setListener(OnDeviceItemListener listener) {
         this.listener = listener;
     }
 
@@ -74,11 +76,11 @@ public class RVAddDeviceAdapter extends RecyclerView.Adapter<RVAddDeviceAdapter.
 
         public ADViewHolder(@NonNull View itemView) {
             super(itemView);
-            iv_icon=itemView.findViewById(R.id.itemAD_iv_icon);
-            switchCompat=itemView.findViewById(R.id.itemAD_switch);
-            tv_device=itemView.findViewById(R.id.itemAD_tv_device);
-            tv_percent=itemView.findViewById(R.id.itemAD_tv_percent);
-            progressBar=itemView.findViewById(R.id.itemAD_pb);
+            iv_icon = itemView.findViewById(R.id.itemAD_iv_icon);
+            switchCompat = itemView.findViewById(R.id.itemAD_switch);
+            tv_device = itemView.findViewById(R.id.itemAD_tv_device);
+            tv_percent = itemView.findViewById(R.id.itemAD_tv_percent);
+            progressBar = itemView.findViewById(R.id.itemAD_pb);
 
             itemView.setOnClickListener(v -> listener.OnItemClick(device));
         }

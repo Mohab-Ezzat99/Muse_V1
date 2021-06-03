@@ -19,6 +19,7 @@ public class SaveState {
     public static final String DEVICE_ID="Device ID";
     public static final String EMAIL="Email";
     public static final String DARK_MODE="dark_mode";
+    public static final String NOTIFICATION="notification";
 
     @SuppressLint("CommitPrefEdits")
     public SaveState(Context context) {
@@ -34,6 +35,15 @@ public class SaveState {
 
     public static boolean getDarkModeState(){
         return sharedPreferences.getBoolean(DARK_MODE,false);
+    }
+
+    public static void setNotificationState(boolean b){
+        editor.putBoolean(NOTIFICATION,b);
+        editor.apply();
+    }
+
+    public static boolean getNotificationState(){
+        return sharedPreferences.getBoolean(NOTIFICATION,true);
     }
 
     public static boolean checkConnection(Context context) {

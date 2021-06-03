@@ -152,7 +152,7 @@
     <string name="txt_billing">Billing</string>
     <string name="txt_report">Report</string>
     <string name="txt_deviceSettings">Device settings</string>
-    <string name="txt_no_devices_yet">No devices yet</string>
+    <string name="txt_there_are_no_alerts">There are no alerts</string>
     <string name="txt_icon">Icon</string>
     <string name="hint_device_name">Device name</string>
     <string name="txt_custom_alert">Custom alert</string>

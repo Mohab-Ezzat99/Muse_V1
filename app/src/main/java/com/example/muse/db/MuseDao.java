@@ -6,7 +6,6 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
-
 import com.example.muse.model.DeviceModel;
 import java.util.List;
 
@@ -29,4 +28,7 @@ public interface MuseDao {
 
     @Query("select * from devices_table where hasGoal=1")
     LiveData<List<DeviceModel>> getDevicesGoals();
+
+    @Query("select * from devices_table where hasAlert=1")
+    LiveData<List<DeviceModel>> getDevicesAlerts();
 }

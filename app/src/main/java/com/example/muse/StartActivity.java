@@ -1,14 +1,13 @@
 package com.example.muse;
 
 import android.content.Context;
-import android.content.Intent;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
@@ -17,11 +16,11 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-
 import com.example.muse.utility.SaveState;
 import com.example.muse.viewmodels.MuseViewModel;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
+import java.util.Locale;
 
 public class StartActivity extends AppCompatActivity {
     public static final String TV = "TV";
@@ -39,10 +38,10 @@ public class StartActivity extends AppCompatActivity {
 
     public NavController navControllerStart;
     public Toolbar toolbar;
-    public SaveState saveState;
     public static int colorPrimaryVariant;
     public static int colorSecondaryVariant;
 
+    public SaveState saveState;
     private static Window window;
     public static MuseViewModel museViewModel;
 
@@ -53,6 +52,14 @@ public class StartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+
+        //set English
+        Configuration config = this.getResources().getConfiguration();
+        Locale locale = new Locale("en");
+        Locale.setDefault(locale);
+        config.locale = locale;
+        this.getResources().updateConfiguration(config,
+                this.getResources().getDisplayMetrics());
 
         saveState=new SaveState(this);
         window = this.getWindow();

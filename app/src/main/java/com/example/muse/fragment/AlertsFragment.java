@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.example.muse.R;
 import com.example.muse.StartActivity;
 import com.example.muse.adapters.RVAlertAdapter;
+import com.example.muse.interfaces.OnDeviceItemListener;
 import com.example.muse.model.DeviceModel;
 
 import java.util.List;
@@ -57,12 +58,22 @@ public class AlertsFragment extends Fragment {
         RVAlertAdapter adapter=new RVAlertAdapter(getContext());
         recyclerView.setAdapter(adapter);
 
-        StartActivity.museViewModel.getAllDevices().observe(getViewLifecycleOwner(), deviceModels -> {
+        adapter.setListener(device -> {
+            device.setHasAlert(false);
+            StartActivity.museViewModel.updateDevice(device);
+        });
+
+        StartActivity.museViewModel.getDevicesAlerts().observe(getViewLifecycleOwner(), deviceModels -> {
             if(deviceModels.size()!=0)
             {
                 // visibility
                 not_add.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
+            }
+            else {
+                // visibility
+                not_add.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
             }
             adapter.setList(deviceModels);
         });
