@@ -17,6 +17,8 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.example.muse.R;
+import com.example.muse.StartActivity;
+import com.example.muse.utility.SaveState;
 
 import java.util.Objects;
 
@@ -41,26 +43,23 @@ public class SplashFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).hide();
+
+        //StatusBar color
+        if (SaveState.getDarkModeState())
+            StartActivity.setupBackgroundStatusBar(getResources().getColor(R.color.nice_black, null));
+        else
+            StartActivity.setupLightStatusBar(getResources().getColor(R.color.white_muse, null));
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        requireActivity().getWindow().getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-
-
         anim_left = AnimationUtils.loadAnimation(getContext(), R.anim.anim_left);
         iv = view.findViewById(R.id.splash_iv_light);
         tv_desc = view.findViewById(R.id.splash_tv_desc);
         iv.setAnimation(anim_left);
         tv_desc.setAnimation(anim_left);
-
 
         new Handler().postDelayed(() -> {
             if(isAdded())

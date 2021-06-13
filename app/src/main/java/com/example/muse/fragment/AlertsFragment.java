@@ -58,9 +58,17 @@ public class AlertsFragment extends Fragment {
         RVAlertAdapter adapter=new RVAlertAdapter(getContext());
         recyclerView.setAdapter(adapter);
 
-        adapter.setListener(device -> {
-            device.setHasAlert(false);
-            StartActivity.museViewModel.updateDevice(device);
+        adapter.setListener(new OnDeviceItemListener() {
+            @Override
+            public void OnItemClick(DeviceModel device) {
+                device.setHasAlert(false);
+                StartActivity.museViewModel.updateDevice(device);
+            }
+
+            @Override
+            public void OnItemLongClick(View view, DeviceModel device) {
+
+            }
         });
 
         StartActivity.museViewModel.getDevicesAlerts().observe(getViewLifecycleOwner(), deviceModels -> {

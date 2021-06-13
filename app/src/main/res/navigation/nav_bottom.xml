@@ -21,6 +21,9 @@
         <action
             android:id="@+id/action_devicesFragment_to_alertsFragment"
             app:destination="@id/alertsFragment" />
+        <action
+            android:id="@+id/action_devicesFragment_to_deviceSettingFragment"
+            app:destination="@id/deviceSettingFragment" />
     </fragment>
 
     <fragment

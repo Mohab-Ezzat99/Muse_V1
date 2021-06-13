@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,6 +56,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         return inflater.inflate(R.layout.fragment_register, container, false);
     }
 
@@ -120,11 +122,11 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     }
 
     public void setupRegister() {
-        full_name = et_fullName.getText().toString().trim();
-        device_id = et_deviceId.getText().toString().trim();
-        email = et_email.getText().toString().trim();
-        password = et_password.getText().toString().trim();
-        confirm_password = et_confirm.getText().toString().trim();
+        full_name = Objects.requireNonNull(et_fullName.getText()).toString().trim();
+        device_id = Objects.requireNonNull(et_deviceId.getText()).toString().trim();
+        email = Objects.requireNonNull(et_email.getText()).toString().trim();
+        password = Objects.requireNonNull(et_password.getText()).toString().trim();
+        confirm_password = Objects.requireNonNull(et_confirm.getText()).toString().trim();
 
         if (TextUtils.isEmpty(full_name)) {
             itl_fullName.setError("Full Name is required");
@@ -163,7 +165,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         } else
             itl_confirm.setError(null);
 
-        if (SaveState.checkConnection(getContext())) {
+        if (SaveState.checkConnection(requireContext())) {
             Toast.makeText(getContext(), "No Internet", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -174,7 +176,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
         StartActivity.mAuth.fetchSignInMethodsForEmail(email).addOnSuccessListener(signInMethodQueryResult -> StartActivity.mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task1 -> {
             if (task1.isSuccessful()) {
-                user_id = StartActivity.mAuth.getCurrentUser().getUid();
+                user_id = Objects.requireNonNull(StartActivity.mAuth.getCurrentUser()).getUid();
                 documentReference = db.collection(SaveState.USERS).document(user_id);
                 map.put(SaveState.USER_ID, user_id);
                 map.put(SaveState.FULL_NAME, full_name);

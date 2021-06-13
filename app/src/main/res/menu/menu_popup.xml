@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/popup_delete"
+        android:icon="@drawable/ic_delete"
+        android:title="@string/tit_delete"
+        app:iconTint="?attr/colorPrimaryVariant" />
+
+    <item
+        android:id="@+id/popup_settings"
+        android:icon="@drawable/ic_settings"
+        android:title="@string/txt_deviceSettings"
+        app:iconTint="?attr/colorPrimaryVariant" />
+</menu>

@@ -1,10 +1,14 @@
 package com.example.muse.fragment;
 
 import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,6 +23,7 @@ import com.example.muse.StartActivity;
 import com.example.muse.utility.SaveState;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
+import java.util.Calendar;
 import java.util.Objects;
 
 
@@ -26,6 +31,8 @@ public class HomeFragment extends Fragment {
 
     private ChipNavigationBar chipNavigationBar;
     private NavController navControllerChart;
+    private ImageView iv_custom;
+    private int day, month, year;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -58,7 +65,20 @@ public class HomeFragment extends Fragment {
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).hide();
 
         //iv_custom
-        view.findViewById(R.id.FHome_iv_custom).setOnClickListener(v -> Toast.makeText(getContext(), "Soon", Toast.LENGTH_SHORT).show());
+        Calendar calendar = Calendar.getInstance();
+        day = calendar.get(Calendar.DAY_OF_MONTH);
+        month = calendar.get(Calendar.MONTH);
+        year = calendar.get(Calendar.YEAR);
+
+        iv_custom = view.findViewById(R.id.FHome_iv_custom);
+        iv_custom.setOnClickListener(v -> {
+            DatePickerDialog datePickerDialog = new DatePickerDialog(getContext()
+                    , android.R.style.Theme_Holo_Light_Dialog_MinWidth, (view1, year, month, dayOfMonth) -> Toast.makeText(getContext(), dayOfMonth + "/" + (++month) + "/" + year, Toast.LENGTH_SHORT).show(), year, month, day);
+            datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            datePickerDialog.show();
+            datePickerDialog.getButton(DatePickerDialog.BUTTON_POSITIVE).setBackground(null);
+            datePickerDialog.getButton(DatePickerDialog.BUTTON_NEGATIVE).setBackground(null);
+        });
 
         //chipNav
         chipNavigationBar = view.findViewById(R.id.FHome_chipNav);

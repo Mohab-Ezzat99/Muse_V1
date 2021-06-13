@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -48,7 +49,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        requireActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         return inflater.inflate(R.layout.fragment_login, container, false);
     }
 
@@ -107,7 +108,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     }
 
     public void setupForgotPassword() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext(),R.style.DialogStyle);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(requireContext(),R.style.DialogStyle);
         final View view = LayoutInflater.from(getContext()).inflate(R.layout.custom_dialog, null, false);
         builder.setView(view);
         final AlertDialog alertDialog = builder.create();
@@ -119,13 +120,13 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         final ProgressBar pb = view.findViewById(R.id.dialog_pb);
 
         tv_submit.setOnClickListener(v1 -> {
-            String reset_email = et_resetEmail.getText().toString();
+            String reset_email = Objects.requireNonNull(et_resetEmail.getText()).toString();
             if (TextUtils.isEmpty(reset_email)) {
                 Toast.makeText(getContext(), "Email is required", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            if (SaveState.checkConnection(getContext())) {
+            if (SaveState.checkConnection(requireContext())) {
                 Toast.makeText(getContext(), "No Internet", Toast.LENGTH_SHORT).show();
             } else {
 
@@ -155,8 +156,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     }
 
     public void setupLogin() {
-        email = et_email.getText().toString().trim();
-        password = et_password.getText().toString().trim();
+        email = Objects.requireNonNull(et_email.getText()).toString().trim();
+        password = Objects.requireNonNull(et_password.getText()).toString().trim();
 
         if (TextUtils.isEmpty(email)) {
             itl_email.setError("Email is required");
@@ -169,7 +170,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             return;
         }
 
-        if (SaveState.checkConnection(getContext())) {
+        if (SaveState.checkConnection(requireContext())) {
             itl_email.setError(null);
             Toast.makeText(getContext(), "No Internet", Toast.LENGTH_SHORT).show();
             return;

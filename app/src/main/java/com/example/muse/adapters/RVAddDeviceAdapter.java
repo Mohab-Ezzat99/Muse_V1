@@ -83,6 +83,10 @@ public class RVAddDeviceAdapter extends RecyclerView.Adapter<RVAddDeviceAdapter.
             progressBar = itemView.findViewById(R.id.itemAD_pb);
 
             itemView.setOnClickListener(v -> listener.OnItemClick(device));
+            itemView.setOnLongClickListener(v -> {
+                listener.OnItemLongClick(v,device);
+                return true;
+            });
         }
     }
 }
