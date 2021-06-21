@@ -91,6 +91,10 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
                 // visibility
                 not_add.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
+            } else {
+                // visibility
+                not_add.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
             }
             addDeviceAdapter.setDeviceModels(deviceModels);
         });

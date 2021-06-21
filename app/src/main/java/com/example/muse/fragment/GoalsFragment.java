@@ -67,6 +67,10 @@ public class GoalsFragment extends Fragment {
                 // visibility
                 not_add.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
+            } else {
+                // visibility
+                not_add.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
             }
             adapter.setList(deviceModels);
         });

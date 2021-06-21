@@ -93,13 +93,13 @@ public class MenuFragment extends Fragment {
                         navController_main.navigate(R.id.action_menuFragment_to_billingFragment);
                         break;
                     //Contact us
-                    case 4:
+                    case 5:
                         Uri callUri = Uri.parse("tel:01205186367");
                         Intent callIntent = new Intent(Intent.ACTION_DIAL, callUri);
                         startActivity(callIntent);
                         break;
                     //Logout
-                    case 5:
+                    case 6:
                         StartActivity.mAuth.signOut();
                         navController_start.popBackStack();
                         navController_start.navigate(R.id.loginFragment);

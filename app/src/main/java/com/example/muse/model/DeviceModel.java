@@ -1,6 +1,7 @@
 package com.example.muse.model;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import java.io.Serializable;
 
@@ -22,6 +23,7 @@ public class DeviceModel implements Serializable {
     }
 
     //add new device
+    @Ignore
     public DeviceModel(int icon,String name) {
         this.name = name;
         this.icon = icon;
