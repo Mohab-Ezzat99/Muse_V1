@@ -30,7 +30,7 @@
         android:layout_marginStart="@dimen/_8sdp"
         android:text="@string/tit_home"
         android:textColor="@color/white"
-        android:textSize="@dimen/_16sdp"
+        android:textSize="@dimen/_16ssp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/dialogGoal_iv_icon"
         app:layout_constraintStart_toEndOf="@+id/dialogGoal_iv_icon"
@@ -58,7 +58,7 @@
         android:layout_marginBottom="@dimen/_8sdp"
         android:text="@string/txt_used"
         android:textColor="@color/white"
-        android:textSize="@dimen/_14sdp"
+        android:textSize="@dimen/_14ssp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/dialogGoal_iv_icon"
         app:layout_constraintTop_toBottomOf="@+id/dialogGoal_iv_icon" />
@@ -71,7 +71,7 @@
         android:gravity="end"
         android:text="@string/txt_100kw_1500kw"
         android:textColor="@color/white"
-        android:textSize="@dimen/_14sdp"
+        android:textSize="@dimen/_14ssp"
         app:layout_constraintBottom_toBottomOf="@+id/TUse1"
         app:layout_constraintEnd_toEndOf="@+id/dialogGoal_iv_result"
         app:layout_constraintTop_toTopOf="@+id/TUse1" />
@@ -85,7 +85,7 @@
         android:layout_marginBottom="@dimen/_8sdp"
         android:text="@string/txt_predicted"
         android:textColor="@color/white"
-        android:textSize="@dimen/_14sdp"
+        android:textSize="@dimen/_14ssp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/TUse1"
         app:layout_constraintTop_toBottomOf="@+id/TUse1" />
@@ -98,7 +98,7 @@
         android:gravity="end"
         android:text="@string/txt_goal_will_be_achieved"
         android:textColor="@color/green"
-        android:textSize="@dimen/_14sdp"
+        android:textSize="@dimen/_14ssp"
         app:layout_constraintBottom_toBottomOf="@+id/TPre1"
         app:layout_constraintEnd_toEndOf="@+id/TUse1V"
         app:layout_constraintTop_toTopOf="@+id/TPre1" />

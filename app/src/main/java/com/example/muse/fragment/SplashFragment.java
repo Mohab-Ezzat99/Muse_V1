@@ -64,7 +64,7 @@ public class SplashFragment extends Fragment {
         new Handler().postDelayed(() -> {
             if(isAdded())
                 Navigation.findNavController(requireActivity(),R.id.start_fragment).navigate(R.id.action_splashFragment_to_loginFragment);
-        },1200);
+        },2000);
 
     }
 }

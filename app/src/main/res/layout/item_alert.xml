@@ -58,5 +58,4 @@
             app:srcCompat="@drawable/ic_close"
             tools:ignore="VectorDrawableCompat" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </androidx.cardview.widget.CardView>

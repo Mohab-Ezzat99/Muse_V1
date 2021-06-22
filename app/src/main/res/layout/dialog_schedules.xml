@@ -14,7 +14,7 @@
         android:layout_margin="@dimen/_8sdp"
         android:text="@string/txt_schedule"
         android:textColor="@color/white"
-        android:textSize="@dimen/_16sdp"
+        android:textSize="@dimen/_16ssp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_8sdp"
-        android:layout_marginBottom="@dimen/_8sdp"
+        android:textStyle="bold"
         android:textColor="@color/white"
         android:textSize="@dimen/_14ssp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -37,12 +37,14 @@
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_4sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_8sdp"
         android:text="@string/txt_is_set_to_turn_off_at_2_00_am_everyday"
         android:textColor="@color/white"
         android:textSize="@dimen/_14ssp"
-        app:layout_constraintBottom_toBottomOf="@+id/dialogSchedule_tv_name"
-        app:layout_constraintStart_toEndOf="@+id/dialogSchedule_tv_name"
-        app:layout_constraintTop_toTopOf="@+id/dialogSchedule_tv_name" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/dialogSchedule_tv_name"
+        app:layout_constraintTop_toBottomOf="@+id/dialogSchedule_tv_name"
+        app:layout_constraintVertical_bias="0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -59,7 +59,8 @@ public class MainFragment extends Fragment {
                 , R.id.devicesFragment
                 , R.id.goalFragment
                 , R.id.alertsFragment
-                , R.id.menuFragment)
+                , R.id.menuFragment
+                , R.id.deviceSettingFragment)
                 .build();
         NavigationUI.setupActionBarWithNavController((AppCompatActivity) requireActivity()
                 , navControllerMain, appBarConfiguration);

@@ -14,7 +14,7 @@
         android:layout_marginTop="@dimen/_8sdp"
         android:text="@string/txt_add_device"
         android:textColor="@color/white"
-        android:textSize="@dimen/_16sdp"
+        android:textSize="@dimen/_16ssp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

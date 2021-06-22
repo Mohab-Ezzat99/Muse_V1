@@ -29,7 +29,7 @@
         android:layout_margin="@dimen/_4sdp"
         android:text="@string/txt_current"
         android:textColor="@color/white"
-        android:textSize="@dimen/_14sdp"
+        android:textSize="@dimen/_14ssp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_tit_cons" />
@@ -41,7 +41,7 @@
         android:layout_marginEnd="@dimen/_4sdp"
         android:text="@string/txt_20_w_12egp"
         android:textColor="@color/white"
-        android:textSize="@dimen/_14sdp"
+        android:textSize="@dimen/_14ssp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_current" />
 
@@ -53,7 +53,7 @@
         android:layout_margin="@dimen/_4sdp"
         android:text="@string/txt_average"
         android:textColor="@color/white"
-        android:textSize="@dimen/_14sdp"
+        android:textSize="@dimen/_14ssp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_current" />
@@ -65,7 +65,7 @@
         android:layout_marginEnd="@dimen/_4sdp"
         android:text="@string/txt_200_w_120egp"
         android:textColor="@color/white"
-        android:textSize="@dimen/_14sdp"
+        android:textSize="@dimen/_14ssp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_average" />
 
@@ -76,7 +76,7 @@
         android:layout_margin="@dimen/_4sdp"
         android:text="@string/txt_per_month"
         android:textColor="@color/white"
-        android:textSize="@dimen/_14sdp"
+        android:textSize="@dimen/_14ssp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_average" />
@@ -88,7 +88,7 @@
         android:layout_marginEnd="@dimen/_4sdp"
         android:text="@string/txt_30_kw_390egp"
         android:textColor="@color/white"
-        android:textSize="@dimen/_14sdp"
+        android:textSize="@dimen/_14ssp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_perM" />
 
@@ -99,7 +99,7 @@
         android:layout_margin="@dimen/_4sdp"
         android:text="@string/txt_estimation"
         android:textColor="@color/white"
-        android:textSize="@dimen/_14sdp"
+        android:textSize="@dimen/_14ssp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_perM" />
@@ -111,7 +111,7 @@
         android:layout_marginEnd="@dimen/_4sdp"
         android:text="@string/txt_20_kw_260egp"
         android:textColor="@color/white"
-        android:textSize="@dimen/_14sdp"
+        android:textSize="@dimen/_14ssp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_est" />
 

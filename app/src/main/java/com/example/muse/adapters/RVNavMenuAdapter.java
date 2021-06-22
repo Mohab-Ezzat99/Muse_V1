@@ -93,7 +93,7 @@ public class RVNavMenuAdapter extends RecyclerView.Adapter<RVNavMenuAdapter.NMVi
                 //dark mode
                 if (pos == 4)
                     listener.isDarkModeChecked(isChecked);
-                    //notification
+                //notification
                 else
                     listener.isNotificationChecked(isChecked);
             });

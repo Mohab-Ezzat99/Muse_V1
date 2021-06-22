@@ -19,6 +19,7 @@
             android:layout_marginStart="@dimen/_4sdp"
             android:background="@drawable/shape_blue_circle_stroke"
             android:isScrollContainer="true"
+            app:cnb_textAppearance="@style/menu_text_style"
             app:cnb_menuResource="@menu/menu_nav_chart"
             app:layout_constraintBottom_toBottomOf="@+id/FHome_iv_custom"
             app:layout_constraintStart_toStartOf="parent"
@@ -85,7 +86,7 @@
                 android:layout_margin="@dimen/_4sdp"
                 android:text="@string/txt_current"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_14sdp"
+                android:textSize="@dimen/_14ssp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_tit_cons" />
@@ -97,7 +98,7 @@
                 android:layout_marginEnd="@dimen/_4sdp"
                 android:text="@string/txt_20_w_12egp"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_14sdp"
+                android:textSize="@dimen/_14ssp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tv_current" />
 
@@ -109,7 +110,7 @@
                 android:layout_margin="@dimen/_4sdp"
                 android:text="@string/txt_average"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_14sdp"
+                android:textSize="@dimen/_14ssp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_current" />
@@ -121,7 +122,7 @@
                 android:layout_marginEnd="@dimen/_4sdp"
                 android:text="@string/txt_200_w_120egp"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_14sdp"
+                android:textSize="@dimen/_14ssp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tv_average" />
 
@@ -132,7 +133,7 @@
                 android:layout_margin="@dimen/_4sdp"
                 android:text="@string/txt_per_month"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_14sdp"
+                android:textSize="@dimen/_14ssp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_average" />
@@ -144,7 +145,7 @@
                 android:layout_marginEnd="@dimen/_4sdp"
                 android:text="@string/txt_30_kw_390egp"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_14sdp"
+                android:textSize="@dimen/_14ssp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tv_perM" />
 
@@ -155,7 +156,7 @@
                 android:layout_margin="@dimen/_4sdp"
                 android:text="@string/txt_estimation"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_14sdp"
+                android:textSize="@dimen/_14ssp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_perM" />
@@ -167,7 +168,7 @@
                 android:layout_marginEnd="@dimen/_4sdp"
                 android:text="@string/txt_20_kw_260egp"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_14sdp"
+                android:textSize="@dimen/_14ssp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tv_est" />
 
@@ -206,7 +207,7 @@
                 android:layout_marginStart="@dimen/_8sdp"
                 android:text="@string/tit_home"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_16sdp"
+                android:textSize="@dimen/_16ssp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/itemAG_iv_icon"
                 app:layout_constraintStart_toEndOf="@+id/itemAG_iv_icon"
@@ -234,7 +235,7 @@
                 android:layout_marginBottom="@dimen/_8sdp"
                 android:text="@string/txt_used"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_14sdp"
+                android:textSize="@dimen/_14ssp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/itemAG_iv_icon"
                 app:layout_constraintTop_toBottomOf="@+id/itemAG_iv_icon" />
@@ -247,7 +248,7 @@
                 android:gravity="end"
                 android:text="@string/txt_100kw_1500kw"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_14sdp"
+                android:textSize="@dimen/_14ssp"
                 app:layout_constraintBottom_toBottomOf="@+id/TUse1"
                 app:layout_constraintEnd_toEndOf="@+id/itemAG_iv_result"
                 app:layout_constraintTop_toTopOf="@+id/TUse1" />
@@ -261,7 +262,7 @@
                 android:layout_marginBottom="@dimen/_8sdp"
                 android:text="@string/txt_predicted"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_14sdp"
+                android:textSize="@dimen/_14ssp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/TUse1"
                 app:layout_constraintTop_toBottomOf="@+id/TUse1" />
@@ -274,7 +275,7 @@
                 android:gravity="end"
                 android:text="@string/txt_goal_will_be_achieved"
                 android:textColor="@color/green"
-                android:textSize="@dimen/_14sdp"
+                android:textSize="@dimen/_14ssp"
                 app:layout_constraintBottom_toBottomOf="@+id/TPre1"
                 app:layout_constraintEnd_toEndOf="@+id/TUse1V"
                 app:layout_constraintTop_toTopOf="@+id/TPre1" />
