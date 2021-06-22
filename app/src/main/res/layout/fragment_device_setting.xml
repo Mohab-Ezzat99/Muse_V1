@@ -49,6 +49,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="@dimen/_8sdp"
                     android:text="@string/txt_icon"
+                    android:textStyle="bold"
                     android:textColor="?attr/colorOnSecondary"
                     android:textSize="@dimen/_14ssp"
                     app:layout_constraintBottom_toBottomOf="parent"

@@ -10,24 +10,22 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_margin="@dimen/_8sdp"
+        android:layout_margin="@dimen/_4sdp"
         android:layout_height="match_parent">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/dialog_itl"
         style="@style/TextInputLayoutStyle"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/_250sdp"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_4sdp"
         android:hint="@string/hint_email"
-        android:padding="8dp"
         android:textColorHint="@color/gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3"
-        app:layout_constraintVertical_bias="0.05"
-        app:layout_constraintWidth_percent=".9">
+        app:layout_constraintVertical_bias="0.05">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/dialog_et_email"
@@ -49,7 +47,7 @@
         android:textColor="?attr/colorOnSecondary"
         android:textSize="@dimen/_16ssp"
         android:textStyle="bold"
-        android:layout_marginVertical="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_8sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -93,6 +91,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
+        android:indeterminateTint="?attr/colorPrimaryVariant"
         app:layout_constraintBottom_toBottomOf="@+id/dialog_tv_cancel"
         app:layout_constraintEnd_toEndOf="@+id/dialog_itl"
         app:layout_constraintStart_toStartOf="@+id/dialog_itl"

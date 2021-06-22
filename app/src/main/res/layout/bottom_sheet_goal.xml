@@ -38,11 +38,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_8sdp"
         android:text="@string/txt_i_want_my"
+        android:layout_marginStart="@dimen/_8sdp"
         android:textColor="@color/white"
         android:textSize="@dimen/_14ssp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias=".1"
+        app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view"
         app:layout_constraintVertical_bias=".05" />
@@ -53,9 +54,10 @@
         android:layout_height="wrap_content"
         android:background="@drawable/shape_orange_circle_fill"
         android:gravity="center_vertical"
+        android:layout_marginEnd="@dimen/_8sdp"
         app:layout_constraintBottom_toBottomOf="@+id/textView8"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias=".9"
+        app:layout_constraintHorizontal_bias="1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView8">
 
@@ -187,6 +189,7 @@
         android:textAllCaps="false"
         android:textColor="?attr/colorOnSecondary"
         android:textSize="@dimen/_12ssp"
+        app:layout_constraintWidth_percent=".7"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/relativeLayout3"
         app:layout_constraintStart_toStartOf="@+id/textView12"

@@ -30,7 +30,7 @@ public class DataCharts {
         lineDataSet.setFillColor(StartActivity.colorSecondaryVariant);
         lineDataSet.setDrawFilled(true);
         lineDataSet.setLineWidth(1.5f);
-        lineDataSet.setValueTextSize(12f);
+        lineDataSet.setValueTextSize(10f);
         lineDataSet.setDrawCircleHole(false);
         lineDataSet.setCircleRadius(2f);
         lineDataSet.setCircleColor(ContextCompat.getColor(context, R.color.red));
@@ -54,7 +54,7 @@ public class DataCharts {
         //collect values in a set
         BarDataSet barDataSet = new BarDataSet(yEntries, null);
         barDataSet.setColors(StartActivity.colorSecondaryVariant);
-        barDataSet.setValueTextSize(12f);
+        barDataSet.setValueTextSize(10f);
         barDataSet.setValueTextColor(ContextCompat.getColor(context, R.color.red));
 
         //assign all data sets to line chart

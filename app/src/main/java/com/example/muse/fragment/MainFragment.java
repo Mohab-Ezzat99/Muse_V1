@@ -45,6 +45,7 @@ public class MainFragment extends Fragment {
         requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
         View view=inflater.inflate(R.layout.fragment_main, container, false);
         bottomNavigationView = view.findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.showBadge(R.id.alertsFragment).setNumber(3);
         return view;
     }
 

@@ -50,7 +50,7 @@
                 android:layout_marginStart="@dimen/_8sdp"
                 android:text="@string/tit_tv"
                 android:textColor="?attr/colorOnSecondary"
-                android:textSize="@dimen/_16ssp"
+                android:textSize="@dimen/_14ssp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/selectedD_iv_icon"
                 app:layout_constraintTop_toTopOf="@+id/selectedD_iv_icon" />

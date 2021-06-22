@@ -2,6 +2,7 @@ package com.example.muse.fragment;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -178,6 +180,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
         progressDialog.setMessage("Please wait...");
         progressDialog.show();
+        ((ProgressBar)progressDialog.findViewById(android.R.id.progress))
+                .getIndeterminateDrawable()
+                .setColorFilter(StartActivity.colorPrimaryVariant, android.graphics.PorterDuff.Mode.SRC_IN);
         progressDialog.setCanceledOnTouchOutside(false);
 
         StartActivity.mAuth.fetchSignInMethodsForEmail(email).addOnSuccessListener(task -> {
