@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -116,7 +117,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 navController.navigate(R.id.action_registerFragment_to_loginFragment);
                 break;
             case R.id.register_btn_register:
-                setupRegister();
+                navController.navigate(R.id.action_registerFragment_to_onBoardFragment);
+                //setupRegister();
                 break;
         }
     }
@@ -172,6 +174,9 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
         progressDialog.setMessage("Please wait...");
         progressDialog.show();
+        ((ProgressBar)progressDialog.findViewById(android.R.id.progress))
+                .getIndeterminateDrawable()
+                .setColorFilter(StartActivity.colorPrimaryVariant, android.graphics.PorterDuff.Mode.SRC_IN);
         progressDialog.setCanceledOnTouchOutside(false);
 
         StartActivity.mAuth.fetchSignInMethodsForEmail(email).addOnSuccessListener(signInMethodQueryResult -> StartActivity.mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task1 -> {

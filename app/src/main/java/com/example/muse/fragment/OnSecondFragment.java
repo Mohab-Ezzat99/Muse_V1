@@ -1,5 +1,6 @@
 package com.example.muse.fragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -26,12 +27,13 @@ public class OnSecondFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_on_second, container, false);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         ViewPager viewPager= requireActivity().findViewById(R.id.onBoard_vp);
 
-        view.findViewById(R.id.onSec_tv_next).setOnClickListener(v -> viewPager.setCurrentItem(2));
+        view.findViewById(R.id.onSecond_tv_next).setOnClickListener(v -> viewPager.setCurrentItem(2));
     }
 }

@@ -1,6 +1,6 @@
 package com.example.muse.fragment;
 
-import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,10 +11,32 @@ import androidx.viewpager.widget.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.muse.R;
+import com.example.muse.StartActivity;
+import com.example.muse.network.ApiService;
+import com.example.muse.network.RetrofitBuilder;
+import com.google.android.material.textfield.TextInputEditText;
+
+import org.jetbrains.annotations.NotNull;
+import org.json.JSONObject;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class OnThirdFragment extends Fragment {
+    public static final String MQTT_SERVER="broker.hivemq.com:1883";
+    private TextInputEditText et_ssid,et_password;
+    private Button btn_submit;
+    private ApiService apiService;
+    private Call<JSONObject> call;
+    private String SSID,password;
+    private ProgressDialog progressDialog;
 
     public OnThirdFragment() {
         // Required empty public constructor
@@ -24,16 +46,48 @@ public class OnThirdFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         return inflater.inflate(R.layout.fragment_on_third, container, false);
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         ViewPager viewPager= requireActivity().findViewById(R.id.onBoard_vp);
+        et_ssid=view.findViewById(R.id.onThird_et_ssid);
+        et_password=view.findViewById(R.id.onThird_et_password);
+        btn_submit=view.findViewById(R.id.onThird_btn_submit);
+        progressDialog = new ProgressDialog(getContext());
 
-        view.findViewById(R.id.onThird_tv_next).setOnClickListener(v -> viewPager.setCurrentItem(3));
+        btn_submit.setOnClickListener(v -> {
+            progressDialog.setMessage("Please wait...");
+            progressDialog.show();
+            ((ProgressBar)progressDialog.findViewById(android.R.id.progress))
+                    .getIndeterminateDrawable()
+                    .setColorFilter(StartActivity.colorPrimaryVariant, android.graphics.PorterDuff.Mode.SRC_IN);
+            progressDialog.setCanceledOnTouchOutside(false);
+
+            SSID=et_ssid.getText().toString().trim();
+            password=et_password.getText().toString().trim();
+
+            apiService= RetrofitBuilder.getInstance().create(ApiService.class);
+            apiService.setMqtt(1,MQTT_SERVER);
+            call=apiService.setWifi(1,SSID,password);
+            call.enqueue(new Callback<JSONObject>() {
+                @Override
+                public void onResponse(@NotNull Call<JSONObject> call, @NotNull Response<JSONObject> response) {
+                    Toast.makeText(getContext(), "Connected Successfully", Toast.LENGTH_SHORT).show();
+                    viewPager.setCurrentItem(3);
+                    progressDialog.dismiss();
+                }
+
+                @Override
+                public void onFailure(@NotNull Call<JSONObject> call, @NotNull Throwable t) {
+                    Toast.makeText(getContext(), "WIFI Failed", Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
+                }
+            });
+        });
     }
 }

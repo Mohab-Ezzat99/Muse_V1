@@ -1,94 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:focusableInTouchMode="true"
+    android:fillViewport="true"
+    android:fitsSystemWindows="true"
+    android:scrollbars="vertical"
     tools:context=".fragment.OnThirdFragment">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="@dimen/_150sdp"
-        android:layout_height="@dimen/_150sdp"
-        android:contentDescription="@string/txt_null"
-        android:src="@drawable/ic_light"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias=".3" />
+        <TextView
+            android:id="@+id/textView16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_wi_fi_connection"
+            android:textColor="?attr/colorOnSecondary"
+            android:textSize="@dimen/_20ssp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias=".2" />
 
-    <TextView
-        android:id="@+id/textView20"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/txt_press_the_red_button_on_your_muse_device"
-        android:textColor="?attr/colorOnSecondary"
-        android:textSize="@dimen/_16ssp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/imageView6"
-        app:layout_constraintStart_toStartOf="@+id/imageView6"
-        app:layout_constraintTop_toBottomOf="@+id/imageView6"
-        app:layout_constraintVertical_bias=".1" />
+        <TextView
+            android:id="@+id/textView17"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_muse_will_be_configured_to_access_this_network"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView16"
+            app:layout_constraintVertical_bias=".05"
+            app:layout_constraintWidth_percent=".7" />
 
-    <TextView
-        android:id="@+id/onThird_tv_next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/txt_next"
-        android:textColor="?attr/colorPrimaryVariant"
-        android:textSize="@dimen/_20ssp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias=".9"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias=".95" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/itl_ssid"
+            style="@style/TextInputLayoutStyle"
+            android:layout_width="@dimen/_270sdp"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_ssid"
+            android:textColorHint="@color/gray"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView17"
+            app:layout_constraintVertical_bias="0.05">
 
-    <View
-        android:id="@+id/View16"
-        android:layout_width="@dimen/_8sdp"
-        android:layout_height="@dimen/_8sdp"
-        android:background="@drawable/shape_blue_circle_stroke"
-        app:layout_constraintBottom_toBottomOf="@+id/onThird_tv_next"
-        app:layout_constraintEnd_toStartOf="@+id/onThird_tv_next"
-        app:layout_constraintHorizontal_bias=".15"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/onThird_tv_next" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/onThird_et_ssid"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:drawableStart="@drawable/ic_wifi"
+                android:drawableLeft="@drawable/ic_wifi"
+                android:drawablePadding="@dimen/_8sdp"
+                android:inputType="textEmailAddress"
+                android:maxLength="30"
+                android:textColor="?attr/colorOnSecondary" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <View
-        android:id="@+id/View18"
-        android:layout_width="@dimen/_8sdp"
-        android:layout_height="@dimen/_8sdp"
-        android:layout_marginStart="@dimen/_4sdp"
-        android:background="@drawable/shape_blue_circle_stroke"
-        app:layout_constraintBottom_toBottomOf="@+id/onThird_tv_next"
-        app:layout_constraintHorizontal_bias=".15"
-        app:layout_constraintStart_toEndOf="@+id/View16"
-        app:layout_constraintTop_toTopOf="@+id/onThird_tv_next" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/itl_password"
+            style="@style/TextInputLayoutStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:hint="@string/hint_password"
+            android:textColorHint="@color/gray"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/itl_ssid"
+            app:layout_constraintStart_toStartOf="@+id/itl_ssid"
+            app:layout_constraintTop_toBottomOf="@+id/itl_ssid"
+            app:layout_constraintVertical_bias=".01"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="?attr/colorPrimaryVariant">
 
-    <View
-        android:id="@+id/View17"
-        android:layout_width="@dimen/_8sdp"
-        android:layout_height="@dimen/_8sdp"
-        android:layout_marginStart="@dimen/_4sdp"
-        android:background="@drawable/shape_blue_circle_fill"
-        app:layout_constraintBottom_toBottomOf="@+id/onThird_tv_next"
-        app:layout_constraintHorizontal_bias=".15"
-        app:layout_constraintStart_toEndOf="@+id/View18"
-        app:layout_constraintTop_toTopOf="@+id/onThird_tv_next" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/onThird_et_password"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:drawableStart="@drawable/ic_password"
+                android:drawableLeft="@drawable/ic_password"
+                android:drawablePadding="8dp"
+                android:inputType="textPassword"
+                android:maxLength="20"
+                android:textColor="?attr/colorOnSecondary" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <View
-        android:id="@+id/View1"
-        android:layout_width="@dimen/_8sdp"
-        android:layout_height="@dimen/_8sdp"
-        android:layout_marginStart="@dimen/_4sdp"
-        android:background="@drawable/shape_blue_circle_stroke"
-        app:layout_constraintBottom_toBottomOf="@+id/onThird_tv_next"
-        app:layout_constraintStart_toEndOf="@+id/View17"
-        app:layout_constraintTop_toTopOf="@+id/onThird_tv_next" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/onThird_btn_submit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:backgroundTint="?attr/colorPrimaryVariant"
+            android:paddingVertical="@dimen/_8sdp"
+            android:text="@string/txt_submit"
+            android:textAllCaps="false"
+            android:textColor="@color/white_muse"
+            android:textSize="@dimen/_12ssp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/itl_password"
+            app:layout_constraintStart_toStartOf="@+id/itl_password"
+            app:layout_constraintTop_toBottomOf="@+id/itl_password"
+            app:layout_constraintVertical_bias=".01" />
+
+        <View
+            android:id="@+id/View16"
+            android:layout_width="@dimen/_8sdp"
+            android:layout_height="@dimen/_8sdp"
+            android:layout_margin="@dimen/_24sdp"
+            app:layout_constraintVertical_bias="1"
+            android:background="@drawable/shape_blue_circle_stroke"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/onThird_btn_submit" />
+
+        <View
+            android:id="@+id/View18"
+            android:layout_width="@dimen/_8sdp"
+            android:layout_height="@dimen/_8sdp"
+            android:layout_marginStart="@dimen/_4sdp"
+            android:background="@drawable/shape_blue_circle_stroke"
+            app:layout_constraintBottom_toBottomOf="@+id/View16"
+            app:layout_constraintStart_toEndOf="@+id/View16"
+            app:layout_constraintTop_toTopOf="@+id/View16" />
+
+        <View
+            android:id="@+id/View17"
+            android:layout_width="@dimen/_8sdp"
+            android:layout_height="@dimen/_8sdp"
+            android:layout_marginStart="@dimen/_4sdp"
+            android:background="@drawable/shape_blue_circle_fill"
+            app:layout_constraintBottom_toBottomOf="@+id/View18"
+            app:layout_constraintStart_toEndOf="@+id/View18"
+            app:layout_constraintTop_toTopOf="@+id/View18" />
+
+        <View
+            android:id="@+id/View1"
+            android:layout_width="@dimen/_8sdp"
+            android:layout_height="@dimen/_8sdp"
+            android:layout_marginStart="@dimen/_4sdp"
+            android:background="@drawable/shape_blue_circle_stroke"
+            app:layout_constraintBottom_toBottomOf="@+id/View17"
+            app:layout_constraintStart_toEndOf="@+id/View17"
+            app:layout_constraintTop_toTopOf="@+id/View17" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

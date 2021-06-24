@@ -114,7 +114,8 @@
     <!--_________________________________________________________________________________________-->
     <!--fragment on third-->
     <string name="txt_press_the_red_button_on_your_muse_device">
-        Press the red button on your Muse device</string>
+        First,long press the red button on your Muse device.
+    \n\nSecond,choose&amp;connect to Muse wifi network.</string>
 
     <!--_________________________________________________________________________________________-->
     <!--fragment register-->
@@ -163,4 +164,5 @@
     <string name="txt_reset_password">Reset Password!</string>
     <string name="txt_submit">Submit</string>
     <string name="txt_cancel">Cancel</string>
+    <string name="hint_ssid">SSID</string>
 </resources>
