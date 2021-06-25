@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:backgroundTint="?attr/colorAccent"
     app:cardElevation="@dimen/_6sdp"
     app:cardCornerRadius="@dimen/_30sdp"
     app:cardUseCompatPadding="true">
@@ -58,7 +59,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias=".05"
             app:srcCompat="@drawable/ic_tv"
-            app:tint="?attr/colorPrimaryVariant" />
+            app:tint="?attr/colorOnSecondary" />
 
         <TextView
             android:id="@+id/itemAD_tv_device"
@@ -69,6 +70,7 @@
             android:layout_marginBottom="@dimen/_8sdp"
             android:textColor="?attr/colorOnSecondary"
             android:textSize="@dimen/_12ssp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/itemAD_switch"
             app:layout_constraintHorizontal_bias="0"

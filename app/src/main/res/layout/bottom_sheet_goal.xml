@@ -4,7 +4,7 @@
     android:id="@+id/goalBotSheet"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/shape_move_up">
+    android:background="@drawable/shape_up">
 
     <TextView
         android:id="@+id/textView3"

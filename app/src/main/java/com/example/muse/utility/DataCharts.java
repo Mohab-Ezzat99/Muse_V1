@@ -26,15 +26,15 @@ public class DataCharts {
         //collect values in a set
         LineDataSet lineDataSet = new LineDataSet(yEntries, null);
         lineDataSet.setForm(Legend.LegendForm.NONE);
-        lineDataSet.setFillAlpha(180);
-        lineDataSet.setFillColor(StartActivity.colorSecondaryVariant);
+        lineDataSet.setFillAlpha(120);
+        lineDataSet.setFillDrawable(ContextCompat.getDrawable(context, R.drawable.shape_line));
         lineDataSet.setDrawFilled(true);
         lineDataSet.setLineWidth(1.5f);
-        lineDataSet.setValueTextSize(10f);
+        lineDataSet.setValueTextSize(12f);
         lineDataSet.setDrawCircleHole(false);
         lineDataSet.setCircleRadius(2f);
-        lineDataSet.setCircleColor(ContextCompat.getColor(context, R.color.red));
-        lineDataSet.setValueTextColor(ContextCompat.getColor(context, R.color.red));
+        lineDataSet.setCircleColor(StartActivity.colorOnSecondary);
+        lineDataSet.setValueTextColor(StartActivity.colorOnSecondary);
         lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
 
         //list of data sets which everyone makes a line
@@ -53,9 +53,10 @@ public class DataCharts {
 
         //collect values in a set
         BarDataSet barDataSet = new BarDataSet(yEntries, null);
-        barDataSet.setColors(StartActivity.colorSecondaryVariant);
+        barDataSet.setGradientColor(StartActivity.colorOnPrimary
+                ,StartActivity.colorPrimaryVariant);
         barDataSet.setValueTextSize(10f);
-        barDataSet.setValueTextColor(ContextCompat.getColor(context, R.color.red));
+        barDataSet.setValueTextColor(StartActivity.colorOnSecondary);
 
         //assign all data sets to line chart
         return new BarData(barDataSet);

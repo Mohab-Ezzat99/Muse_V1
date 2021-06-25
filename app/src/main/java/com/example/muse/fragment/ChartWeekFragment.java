@@ -58,6 +58,7 @@ public class ChartWeekFragment extends Fragment {
         xAxis.setTextColor(StartActivity.colorPrimaryVariant);
         xAxis.setValueFormatter(new DataCharts.XAxisFormat(values));
         xAxis.setGranularity(1f);
+        xAxis.setDrawGridLines(false);
 
         // y axis edit
         YAxis yAxis = barChart.getAxisLeft();
@@ -66,5 +67,6 @@ public class ChartWeekFragment extends Fragment {
         yAxis.setAxisMinimum(0f);
         yAxis.setLabelCount(6, true);
         yAxis.setDrawLimitLinesBehindData(true);
+        yAxis.setDrawGridLines(false);
     }
 }

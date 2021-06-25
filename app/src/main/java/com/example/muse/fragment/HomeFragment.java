@@ -2,6 +2,7 @@ package com.example.muse.fragment;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -76,7 +77,7 @@ public class HomeFragment extends Fragment {
                     , android.R.style.Theme_Holo_Light_Dialog_MinWidth, (view1, year, month, dayOfMonth) -> Toast.makeText(getContext(), dayOfMonth + "/" + (++month) + "/" + year, Toast.LENGTH_SHORT).show(), year, month, day);
             datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             datePickerDialog.show();
-            datePickerDialog.getButton(DatePickerDialog.BUTTON_POSITIVE).setBackground(null);
+            datePickerDialog.findViewById(Resources.getSystem().getIdentifier("day", "id", "android")).setVisibility(View.GONE);            datePickerDialog.getButton(DatePickerDialog.BUTTON_POSITIVE).setBackground(null);
             datePickerDialog.getButton(DatePickerDialog.BUTTON_NEGATIVE).setBackground(null);
         });
 

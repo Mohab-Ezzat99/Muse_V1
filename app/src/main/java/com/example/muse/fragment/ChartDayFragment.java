@@ -15,6 +15,7 @@ import com.example.muse.R;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
 public class ChartDayFragment extends Fragment {
 
@@ -50,20 +51,24 @@ public class ChartDayFragment extends Fragment {
         lineChart.getAxisRight().setEnabled(false);
         lineChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
         lineChart.setAutoScaleMinMaxEnabled(true);
+        lineChart.animateY(1000);
 
         // y axis edit
+        String[] yValues = new String[]{"", "5 W", "10 W", "15 W", "20 W", "25 W", "30 W"};
         YAxis yAxis = lineChart.getAxisLeft();
-        yAxis.setAxisMaximum(10f);
         yAxis.setAxisMinimum(0f);
+        yAxis.setLabelCount(5);
         yAxis.setTextColor(StartActivity.colorPrimaryVariant);
-        yAxis.setLabelCount(6, true);
+        yAxis.setValueFormatter(new IndexAxisValueFormatter(yValues));
         yAxis.setDrawLimitLinesBehindData(true);
+        yAxis.setDrawGridLines(false);
 
         // x axis edit
-        String[] values = new String[]{"", "4 am", "8 am", "12 pm", "4 pm", "8 pm", "12 am"};
+        String[] xValues = new String[]{"", "4 am", "8 am", "12 pm", "4 pm", "8 pm", "12 am"};
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setTextColor(StartActivity.colorPrimaryVariant);
-        xAxis.setValueFormatter(new DataCharts.XAxisFormat(values));
+        xAxis.setValueFormatter(new DataCharts.XAxisFormat(xValues));
         xAxis.setGranularity(1f);
+        xAxis.setDrawGridLines(false);
     }
 }

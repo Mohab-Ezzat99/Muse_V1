@@ -5,13 +5,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     app:cardElevation="@dimen/_3sdp"
+    android:backgroundTint="?attr/colorAccent"
     app:cardCornerRadius="@dimen/_10sdp"
     app:cardUseCompatPadding="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/_8sdp">
+        android:layout_marginVertical="@dimen/_4sdp"
+        android:layout_marginHorizontal="@dimen/_6sdp"
+        android:padding="@dimen/_4sdp">
 
         <ImageView
             android:id="@+id/itemAlert_iv_device"

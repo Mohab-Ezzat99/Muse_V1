@@ -39,7 +39,8 @@ public class StartActivity extends AppCompatActivity {
     public NavController navControllerStart;
     public Toolbar toolbar;
     public static int colorPrimaryVariant;
-    public static int colorSecondaryVariant;
+    public static int colorOnPrimary;
+    public static int colorOnSecondary;
 
     public SaveState saveState;
     private static Window window;
@@ -78,7 +79,8 @@ public class StartActivity extends AppCompatActivity {
 
         //get some colors
         colorPrimaryVariant = fetchColor(R.attr.colorPrimaryVariant);
-        colorSecondaryVariant = fetchColor(R.attr.colorSecondaryVariant);
+        colorOnPrimary = fetchColor(R.attr.colorOnPrimary);
+        colorOnSecondary = fetchColor(R.attr.colorOnSecondary);
     }
 
     @Override

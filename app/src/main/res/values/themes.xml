@@ -5,10 +5,11 @@
         <item name="colorPrimary">@color/blue_h</item>
         <item name="colorPrimaryVariant">@color/blue_h</item>
         <item name="colorOnPrimary">@color/white_muse</item>
+        <item name="colorAccent">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/move</item>
-        <item name="colorOnSecondary">@color/nice_black</item>
+        <item name="colorOnSecondary">@color/black_l</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/white_muse</item>
         <!-- Customize your theme here. -->
