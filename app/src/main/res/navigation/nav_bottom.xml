@@ -46,7 +46,7 @@
     <fragment
         android:id="@+id/menuFragment"
         android:name="com.example.muse.fragment.MenuFragment"
-        android:label="@string/tit_menu"
+        android:label="@string/tit_more"
         tools:layout="@layout/fragment_menu" >
         <action
             android:id="@+id/action_menuFragment_to_reportFragment"

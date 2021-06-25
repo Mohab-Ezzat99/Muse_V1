@@ -6,15 +6,20 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.transition.AutoTransition;
+import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -34,6 +39,9 @@ public class HomeFragment extends Fragment {
     private NavController navControllerChart;
     private ImageView iv_custom;
     private int day, month, year;
+    private ConstraintLayout constLayout_expand;
+    private CardView cv_insight;
+    private ImageView iv_arrow;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -104,6 +112,24 @@ public class HomeFragment extends Fragment {
                 case R.id.yearFragment:
                     navControllerChart.popBackStack();
                     navControllerChart.navigate(R.id.chartYearFragment);
+            }
+        });
+
+        constLayout_expand=view.findViewById(R.id.constLayoutExpanded);
+        iv_arrow=view.findViewById(R.id.home_iv_arrow);
+        cv_insight=view.findViewById(R.id.home_cv_insight);
+
+        iv_arrow.setOnClickListener(v -> {
+            if(constLayout_expand.getVisibility()== View.GONE){
+                TransitionManager.beginDelayedTransition(cv_insight,new AutoTransition());
+                constLayout_expand.setVisibility(View.VISIBLE);
+                iv_arrow.setBackgroundResource(R.drawable.ic_arrow_up);
+            }
+            else
+            {
+                TransitionManager.beginDelayedTransition(cv_insight,new AutoTransition());
+                constLayout_expand.setVisibility(View.GONE);
+                iv_arrow.setBackgroundResource(R.drawable.ic_arrow_down);
             }
         });
     }

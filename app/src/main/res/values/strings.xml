@@ -21,6 +21,11 @@
         <item>Year</item>
     </string-array>
 
+    <string-array name="unit">
+        <item>Watt</item>
+        <item>EGP</item>
+    </string-array>
+
     <string-array name="spinner_consumption">
         <item>Value</item>
         <item>100KW</item>
@@ -140,7 +145,7 @@
     <string name="tit_devices">Devices</string>
     <string name="tit_goal">Goal</string>
     <string name="tit_alerts">Alerts</string>
-    <string name="tit_menu">Menu</string>
+    <string name="tit_more">More</string>
 
     <!--_________________________________________________________________________________________-->
     <!--Devices-->
