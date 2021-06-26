@@ -64,20 +64,20 @@
     <!--fragment home-->
     <string name="txt_insights">Insights</string>
     <string name="txt_current">Current</string>
-    <string name="txt_20_w_12egp">20 w/12EGP</string>
+    <string name="txt_20_w_12egp">20 W</string>
     <string name="txt_average">Average</string>
-    <string name="txt_200_w_120egp">200 w/120EGP</string>
+    <string name="txt_200_w_120egp">200 W</string>
     <string name="txt_per_month">Per month</string>
-    <string name="txt_30_kw_390egp">30 kw/390EGP</string>
+    <string name="txt_30_kw_390egp">30 KW</string>
     <string name="txt_estimation">Estimation</string>
-    <string name="txt_20_kw_260egp">20 kw/260EGP</string>
+    <string name="txt_20_kw_260egp">20 KW</string>
     <string name="txt_used">Used</string>
-    <string name="txt_100kw_1500kw">100kw/1500kw</string>
+    <string name="txt_100kw_1500kw">100 KW</string>
     <string name="txt_predicted">Predicted</string>
     <string name="txt_goal_will_be_achieved">Goal will be achieve</string>
     <string name="txt_goal_will_not_achieved">Goal won\'t achieve</string>
-    <string name="txt_used_100kw">Used :100kw</string>
-    <string name="txt_estimated_200kw">Estimated :200kw</string>
+    <string name="txt_used_100kw">Used :100 KW</string>
+    <string name="txt_estimated_200kw">Estimated :200 KW</string>
 
     <!--_________________________________________________________________________________________-->
     <!--fragment login-->
@@ -170,4 +170,5 @@
     <string name="txt_submit">Submit</string>
     <string name="txt_cancel">Cancel</string>
     <string name="hint_ssid">SSID</string>
+    <string name="tit_settings">settings</string>
 </resources>

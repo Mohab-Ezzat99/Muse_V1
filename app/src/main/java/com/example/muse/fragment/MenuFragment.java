@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -57,13 +58,9 @@ public class MenuFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
-
         RecyclerView recyclerView = view.findViewById(R.id.FMenu_rv);
         RVNavMenuAdapter adapter = new RVNavMenuAdapter(getContext());
         adapter.addItem(new NavMenuModel(R.drawable.ic_schedules, "Schedules"));
-        adapter.addItem(new NavMenuModel(R.drawable.ic_report, "Report"));
-        adapter.addItem(new NavMenuModel(R.drawable.ic_dollar, "Billing"));
         adapter.addItem(new NavMenuModel(R.drawable.ic_notification, "Notifications"));
         adapter.addItem(new NavMenuModel(R.drawable.ic_moon, "Dark mode"));
         adapter.addItem(new NavMenuModel(R.drawable.ic_contactus, "Contact us"));
@@ -84,22 +81,14 @@ public class MenuFragment extends Fragment {
                     case 0:
                         navController_main.navigate(R.id.action_menuFragment_to_schedulesFragment);
                         break;
-                    //Report
-                    case 1:
-                        navController_main.navigate(R.id.action_menuFragment_to_reportFragment);
-                        break;
-                    //Billing
-                    case 2:
-                        navController_main.navigate(R.id.action_menuFragment_to_billingFragment);
-                        break;
                     //Contact us
-                    case 5:
+                    case 3:
                         Uri callUri = Uri.parse("tel:01205186367");
                         Intent callIntent = new Intent(Intent.ACTION_DIAL, callUri);
                         startActivity(callIntent);
                         break;
                     //Logout
-                    case 6:
+                    case 4:
                         StartActivity.mAuth.signOut();
                         navController_start.popBackStack();
                         navController_start.navigate(R.id.loginFragment);

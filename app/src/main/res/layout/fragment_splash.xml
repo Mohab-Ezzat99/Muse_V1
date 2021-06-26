@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clickable="false"
+    android:background="@drawable/gradient_screen"
     tools:context=".StartActivity">
 
     <ImageView

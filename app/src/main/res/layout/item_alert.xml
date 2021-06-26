@@ -4,25 +4,24 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:cardElevation="@dimen/_3sdp"
+    app:cardCornerRadius="@dimen/_6sdp"
     android:backgroundTint="?attr/colorAccent"
-    app:cardCornerRadius="@dimen/_10sdp"
+    app:cardElevation="@dimen/_2sdp"
     app:cardUseCompatPadding="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginVertical="@dimen/_4sdp"
-        android:layout_marginHorizontal="@dimen/_6sdp"
-        android:padding="@dimen/_4sdp">
+        android:padding="@dimen/_8sdp">
 
         <ImageView
             android:id="@+id/itemAlert_iv_device"
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp"
+            android:layout_width="@dimen/_34sdp"
+            android:layout_height="@dimen/_34sdp"
             android:layout_margin="@dimen/_8sdp"
             android:contentDescription="@string/txt_null"
             app:tint="?attr/colorPrimaryVariant"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="VectorDrawableCompat" />
@@ -35,6 +34,7 @@
             android:layout_marginLeft="@dimen/_8sdp"
             android:textColor="?attr/colorOnSecondary"
             android:textSize="@dimen/_14ssp"
+            app:layout_constraintVertical_bias="0"
             app:layout_constraintBottom_toBottomOf="@+id/itemAlert_iv_device"
             app:layout_constraintStart_toEndOf="@+id/itemAlert_iv_device"
             app:layout_constraintTop_toTopOf="@+id/itemAlert_iv_device" />
@@ -43,11 +43,9 @@
             android:id="@+id/itemAlert_tv_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:layout_marginBottom="@dimen/_8sdp"
             android:textSize="@dimen/_14ssp"
-            app:layout_constraintStart_toStartOf="@+id/itemAlert_iv_device"
-            app:layout_constraintTop_toBottomOf="@+id/itemAlert_iv_device" />
+            app:layout_constraintStart_toStartOf="@+id/itemAlert_tv_name"
+            app:layout_constraintTop_toBottomOf="@+id/itemAlert_tv_name" />
 
         <ImageView
             android:id="@+id/itemAlert_iv_close"

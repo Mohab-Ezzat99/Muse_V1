@@ -6,24 +6,20 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.Group;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.muse.R;
 import com.example.muse.StartActivity;
 import com.example.muse.adapters.RVAlertAdapter;
-import com.example.muse.interfaces.OnDeviceItemListener;
+import com.example.muse.adapters.OnDeviceItemListener;
 import com.example.muse.model.DeviceModel;
 
-import java.util.List;
 import java.util.Objects;
 
 public class AlertsFragment extends Fragment {

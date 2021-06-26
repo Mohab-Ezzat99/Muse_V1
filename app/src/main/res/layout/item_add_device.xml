@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:backgroundTint="?attr/colorAccent"
     app:cardElevation="@dimen/_6sdp"
-    app:cardCornerRadius="@dimen/_30sdp"
+    app:cardCornerRadius="@dimen/_24sdp"
     app:cardUseCompatPadding="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,11 +18,11 @@
             android:id="@+id/itemAD_pb"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_6sdp"
             android:layout_marginTop="@dimen/_4sdp"
             android:layout_marginBottom="@dimen/_8sdp"
             android:progress="50"
-            android:progressTint="?attr/colorPrimaryVariant"
+            android:progressDrawable="@drawable/shape_progress"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/itemAD_switch"
             app:layout_constraintStart_toStartOf="@+id/itemAD_iv_icon"

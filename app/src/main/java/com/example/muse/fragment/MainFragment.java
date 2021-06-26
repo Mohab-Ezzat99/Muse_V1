@@ -45,7 +45,7 @@ public class MainFragment extends Fragment {
         requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
         View view=inflater.inflate(R.layout.fragment_main, container, false);
         bottomNavigationView = view.findViewById(R.id.bottomNavigationView);
-        bottomNavigationView.showBadge(R.id.alertsFragment).setNumber(3);
+//        bottomNavigationView.showBadge(R.id.alertsFragment).setNumber(3);
         return view;
     }
 
@@ -60,8 +60,7 @@ public class MainFragment extends Fragment {
                 , R.id.devicesFragment
                 , R.id.goalFragment
                 , R.id.alertsFragment
-                , R.id.menuFragment
-                , R.id.deviceSettingFragment)
+                , R.id.menuFragment)
                 .build();
         NavigationUI.setupActionBarWithNavController((AppCompatActivity) requireActivity()
                 , navControllerMain, appBarConfiguration);

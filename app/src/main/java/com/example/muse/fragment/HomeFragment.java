@@ -26,6 +26,8 @@ import androidx.navigation.Navigation;
 
 import com.example.muse.R;
 import com.example.muse.StartActivity;
+import com.example.muse.network.ApiService;
+import com.example.muse.network.RetrofitBuilder;
 import com.example.muse.utility.SaveState;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
@@ -58,6 +60,7 @@ public class HomeFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         navControllerChart = Navigation.findNavController(requireActivity(), R.id.FHome_fragment);
+        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).hide();
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -71,8 +74,6 @@ public class HomeFragment extends Fragment {
         else
             StartActivity.setupLightStatusBar(getResources().getColor(R.color.white_muse, null));
 
-        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).hide();
-
         //iv_custom
         Calendar calendar = Calendar.getInstance();
         day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -85,7 +86,8 @@ public class HomeFragment extends Fragment {
                     , android.R.style.Theme_Holo_Light_Dialog_MinWidth, (view1, year, month, dayOfMonth) -> Toast.makeText(getContext(), dayOfMonth + "/" + (++month) + "/" + year, Toast.LENGTH_SHORT).show(), year, month, day);
             datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             datePickerDialog.show();
-            datePickerDialog.findViewById(Resources.getSystem().getIdentifier("day", "id", "android")).setVisibility(View.GONE);            datePickerDialog.getButton(DatePickerDialog.BUTTON_POSITIVE).setBackground(null);
+//            datePickerDialog.findViewById(Resources.getSystem().getIdentifier("day", "id", "android")).setVisibility(View.GONE);            datePickerDialog.getButton(DatePickerDialog.BUTTON_POSITIVE).setBackground(null);
+            datePickerDialog.getButton(DatePickerDialog.BUTTON_POSITIVE).setBackground(null);
             datePickerDialog.getButton(DatePickerDialog.BUTTON_NEGATIVE).setBackground(null);
         });
 

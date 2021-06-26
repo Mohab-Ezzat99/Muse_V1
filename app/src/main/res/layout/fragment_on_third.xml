@@ -7,6 +7,7 @@
     android:fillViewport="true"
     android:fitsSystemWindows="true"
     android:scrollbars="vertical"
+    android:background="@drawable/gradient_screen"
     tools:context=".fragment.OnThirdFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout

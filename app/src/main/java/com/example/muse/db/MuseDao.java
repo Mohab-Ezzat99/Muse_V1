@@ -20,9 +20,6 @@ public interface MuseDao {
     @Delete
     void deleteDevice(DeviceModel device);
 
-    @Query("delete from devices_table")
-    void deleteAllDevice();
-
     @Query("select * from devices_table")
     LiveData<List<DeviceModel>> getAllDevices();
 

@@ -5,7 +5,12 @@ import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.transition.AutoTransition;
+import android.transition.TransitionManager;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -17,11 +22,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.example.muse.R;
+import com.example.muse.StartActivity;
 import com.example.muse.model.DeviceModel;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
@@ -35,11 +42,14 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
     private ChipNavigationBar chipNavigationBar;
     private NavController navControllerChart;
     private TextView tv_name;
-    private ImageView iv_icon, iv_setting;
-    private CardView cv_insight, cv_goal, cv_schedules;
+    private ImageView iv_icon;
+    private CardView  cv_goal, cv_schedules;
     private ImageView iv_custom;
     private DeviceModel device;
     private int day, month, year;
+    private ConstraintLayout constLayout_expand;
+    private CardView cv_insight;
+    private ImageView iv_arrow;
 
     public SelectedDeviceFragment() {
         // Required empty public constructor
@@ -54,10 +64,16 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
             SelectedDeviceFragmentArgs args = SelectedDeviceFragmentArgs.fromBundle(getArguments());
             device=args.getSelectedDevice();
         }
+        setHasOptionsMenu(true);
+        return inflater.inflate(R.layout.fragment_selected_device, container, false);
+    }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).show();
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle(device.getName());
-        return inflater.inflate(R.layout.fragment_selected_device, container, false);
+        navControllerChart = Navigation.findNavController(requireActivity(), R.id.selectedD_fragment);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -67,18 +83,14 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
 
         tv_name = view.findViewById(R.id.selectedD_tv_name);
         iv_icon = view.findViewById(R.id.selectedD_iv_icon);
-        cv_insight = view.findViewById(R.id.selectedD_cv_insight);
         cv_goal = view.findViewById(R.id.selectedD_cv_goal);
         cv_schedules = view.findViewById(R.id.selectedD_cv_schedule);
         iv_custom = view.findViewById(R.id.selectedD_iv_custom);
-        iv_setting = view.findViewById(R.id.selectedD_iv_setting);
         displayItem();
 
-        cv_insight.setOnClickListener(this);
         cv_goal.setOnClickListener(this);
         cv_schedules.setOnClickListener(this);
         iv_custom.setOnClickListener(this);
-        iv_setting.setOnClickListener(this);
 
         //iv_custom
         Calendar calendar = Calendar.getInstance();
@@ -86,7 +98,6 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
         month = calendar.get(Calendar.MONTH);
         year = calendar.get(Calendar.YEAR);
 
-        navControllerChart = Navigation.findNavController(requireActivity(), R.id.selectedD_fragment);
         chipNavigationBar =view.findViewById(R.id.selectedD_chipNav);
         chipNavigationBar.setItemSelected(R.id.dayFragment,true);
 
@@ -112,22 +123,52 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
                     navControllerChart.navigate(R.id.chartYearFragment);
             }
         });
+
+        constLayout_expand=view.findViewById(R.id.selectedD_constLayoutExpanded);
+        iv_arrow=view.findViewById(R.id.selectedD_iv_arrow);
+        cv_insight=view.findViewById(R.id.selectedD_cv_insight);
+
+        iv_arrow.setOnClickListener(v -> {
+            if(constLayout_expand.getVisibility()== View.GONE){
+                TransitionManager.beginDelayedTransition(cv_insight,new AutoTransition());
+                constLayout_expand.setVisibility(View.VISIBLE);
+                iv_arrow.setBackgroundResource(R.drawable.ic_arrow_up);
+            }
+            else
+            {
+                TransitionManager.beginDelayedTransition(cv_insight,new AutoTransition());
+                constLayout_expand.setVisibility(View.GONE);
+                iv_arrow.setBackgroundResource(R.drawable.ic_arrow_down);
+            }
+        });
     }
 
-    @SuppressLint("UseCompatLoadingForDrawables")
-    private void displayItem() {
-        iv_icon.setImageDrawable(getResources().getDrawable(device.getIcon(),null));
-        tv_name.setText(device.getName());
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_device_selected,menu);
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if (item.getItemId() == R.id.menu_settings) {
+            Navigation.findNavController(requireActivity(), R.id.main_fragment)
+                    .navigate(SelectedDeviceFragmentDirections.actionSelectedDeviceFragmentToDeviceSettingFragment(device));
+        }
+
+        else if (item.getItemId() == android.R.id.home) {
+            Navigation.findNavController(requireActivity(), R.id.main_fragment).popBackStack();
+            return true;
+        }
+        return true;
     }
 
     @SuppressLint({"NonConstantResourceId", "UseCompatLoadingForDrawables"})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
-            case R.id.selectedD_cv_insight:
-                displayDialog(R.layout.dialog_insight);
-                break;
 
             case R.id.selectedD_cv_goal:
                 View view = displayDialog(R.layout.dialog_goal);
@@ -143,11 +184,6 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
                 tv_name1.setText(device.getName());
                 break;
 
-            case R.id.selectedD_iv_setting:
-                Navigation.findNavController(requireActivity(), R.id.main_fragment)
-                        .navigate(SelectedDeviceFragmentDirections.actionSelectedDeviceFragmentToDeviceSettingFragment(device));
-                break;
-
             case R.id.selectedD_iv_custom:
                 DatePickerDialog datePickerDialog = new DatePickerDialog(getContext()
                         , android.R.style.Theme_Holo_Light_Dialog_MinWidth
@@ -160,6 +196,12 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
                 datePickerDialog.getButton(DatePickerDialog.BUTTON_NEGATIVE).setBackground(null);
                 break;
         }
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private void displayItem() {
+        iv_icon.setImageDrawable(getResources().getDrawable(device.getIcon(),null));
+        tv_name.setText(device.getName());
     }
 
     public View displayDialog(int layout) {

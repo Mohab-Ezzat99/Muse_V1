@@ -61,33 +61,34 @@ public class OnThirdFragment extends Fragment {
         progressDialog = new ProgressDialog(getContext());
 
         btn_submit.setOnClickListener(v -> {
-            progressDialog.setMessage("Please wait...");
-            progressDialog.show();
-            ((ProgressBar)progressDialog.findViewById(android.R.id.progress))
-                    .getIndeterminateDrawable()
-                    .setColorFilter(StartActivity.colorPrimaryVariant, android.graphics.PorterDuff.Mode.SRC_IN);
-            progressDialog.setCanceledOnTouchOutside(false);
-
-            SSID=et_ssid.getText().toString().trim();
-            password=et_password.getText().toString().trim();
-
-            apiService= RetrofitBuilder.getInstance().create(ApiService.class);
-            apiService.setMqtt(1,MQTT_SERVER);
-            call=apiService.setWifi(1,SSID,password);
-            call.enqueue(new Callback<JSONObject>() {
-                @Override
-                public void onResponse(@NotNull Call<JSONObject> call, @NotNull Response<JSONObject> response) {
-                    Toast.makeText(getContext(), "Connected Successfully", Toast.LENGTH_SHORT).show();
-                    viewPager.setCurrentItem(3);
-                    progressDialog.dismiss();
-                }
-
-                @Override
-                public void onFailure(@NotNull Call<JSONObject> call, @NotNull Throwable t) {
-                    Toast.makeText(getContext(), "WIFI Failed", Toast.LENGTH_SHORT).show();
-                    progressDialog.dismiss();
-                }
-            });
+            viewPager.setCurrentItem(3);
+//            progressDialog.setMessage("Please wait...");
+//            progressDialog.show();
+//            ((ProgressBar)progressDialog.findViewById(android.R.id.progress))
+//                    .getIndeterminateDrawable()
+//                    .setColorFilter(StartActivity.colorPrimaryVariant, android.graphics.PorterDuff.Mode.SRC_IN);
+//            progressDialog.setCanceledOnTouchOutside(false);
+//
+//            SSID=et_ssid.getText().toString().trim();
+//            password=et_password.getText().toString().trim();
+//
+//            apiService= RetrofitBuilder.getInstance(RetrofitBuilder.PLUG_URL).create(ApiService.class);
+//            apiService.setMqtt(1,MQTT_SERVER);
+//            call=apiService.setWifi(1,SSID,password);
+//            call.enqueue(new Callback<JSONObject>() {
+//                @Override
+//                public void onResponse(@NotNull Call<JSONObject> call, @NotNull Response<JSONObject> response) {
+//                    Toast.makeText(getContext(), "Connected Successfully", Toast.LENGTH_SHORT).show();
+//                    viewPager.setCurrentItem(3);
+//                    progressDialog.dismiss();
+//                }
+//
+//                @Override
+//                public void onFailure(@NotNull Call<JSONObject> call, @NotNull Throwable t) {
+//                    Toast.makeText(getContext(), "WIFI Failed", Toast.LENGTH_SHORT).show();
+//                    progressDialog.dismiss();
+//                }
+//            });
         });
     }
 }

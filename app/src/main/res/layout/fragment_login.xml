@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:fillViewport="true"
     android:fitsSystemWindows="true"
+    android:background="@drawable/gradient_screen"
     android:layout_height="match_parent"
     android:scrollbars="vertical"
     tools:context=".StartActivity">

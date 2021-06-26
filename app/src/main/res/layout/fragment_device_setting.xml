@@ -9,14 +9,16 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_8sdp">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="@dimen/_10sdp"
-            app:cardElevation="@dimen/_6sdp"
+            app:cardCornerRadius="@dimen/_6sdp"
+            app:cardElevation="@dimen/_3sdp"
+            android:backgroundTint="?attr/colorAccent"
             app:cardUseCompatPadding="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -85,8 +87,9 @@
             android:id="@+id/cardView3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="@dimen/_10sdp"
-            app:cardElevation="@dimen/_6sdp"
+            app:cardCornerRadius="@dimen/_6sdp"
+            app:cardElevation="@dimen/_3sdp"
+            android:backgroundTint="?attr/colorAccent"
             app:cardUseCompatPadding="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -101,7 +104,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_16sdp"
-                    android:layout_marginVertical="@dimen/_8sdp"
                     android:text="@string/tit_alerts"
                     android:textColor="?attr/colorOnSecondary"
                     android:textSize="@dimen/_16ssp"
@@ -109,41 +111,29 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.appcompat.widget.SwitchCompat
-                    android:id="@+id/DeviceSetting_sw_alert"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:thumb="@drawable/selector_thumb"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView22"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/textView22"
-                    app:track="@drawable/selector_track"
-                    tools:ignore="UseSwitchCompatOrMaterialXml" />
-
                 <TextView
                     android:id="@+id/textView4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/_16sdp"
                     android:text="@string/txt_custom_alert"
                     android:textColor="?attr/colorOnSecondary"
                     android:textSize="@dimen/_14ssp"
-                    app:layout_constraintBottom_toBottomOf="@+id/DeviceSetting_iv_addAlert"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/textView22"
-                    app:layout_constraintTop_toTopOf="@+id/DeviceSetting_iv_addAlert" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView22"
+                    app:layout_constraintVertical_bias="0" />
 
                 <ImageView
                     android:id="@+id/DeviceSetting_iv_addAlert"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="@dimen/_16sdp"
+                    android:layout_marginEnd="@dimen/_26sdp"
                     android:contentDescription="@string/txt_null"
                     android:src="@drawable/ic_add"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/DeviceSetting_sw_alert"
-                    app:layout_constraintStart_toStartOf="@+id/DeviceSetting_sw_alert"
-                    app:layout_constraintTop_toBottomOf="@+id/DeviceSetting_sw_alert"
-                    app:layout_constraintVertical_bias="0"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView4"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textView4"
                     app:tint="?attr/colorPrimaryVariant" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -153,8 +143,9 @@
             android:id="@+id/cardView4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="@dimen/_10sdp"
-            app:cardElevation="@dimen/_6sdp"
+            app:cardCornerRadius="@dimen/_6sdp"
+            app:cardElevation="@dimen/_3sdp"
+            android:backgroundTint="?attr/colorAccent"
             app:cardUseCompatPadding="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -177,30 +168,16 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.appcompat.widget.SwitchCompat
-                    android:id="@+id/DeviceSetting_sw_goal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:thumb="@drawable/selector_thumb"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView23"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/textView23"
-                    app:track="@drawable/selector_track"
-                    tools:ignore="UseSwitchCompatOrMaterialXml" />
-
                 <ImageView
                     android:id="@+id/DeviceSetting_iv_addGoal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="@dimen/_16sdp"
+                    android:layout_marginEnd="@dimen/_26sdp"
                     android:contentDescription="@string/txt_null"
                     android:src="@drawable/ic_add"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/DeviceSetting_sw_goal"
-                    app:layout_constraintStart_toStartOf="@+id/DeviceSetting_sw_goal"
-                    app:layout_constraintTop_toBottomOf="@+id/DeviceSetting_sw_goal"
-                    app:layout_constraintVertical_bias="0"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView24"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textView24"
                     app:tint="?attr/colorPrimaryVariant" />
 
                 <TextView
@@ -208,11 +185,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/txt_add_goal"
+                    android:layout_marginVertical="@dimen/_16sdp"
                     android:textColor="?attr/colorOnSecondary"
                     android:textSize="@dimen/_14ssp"
-                    app:layout_constraintBottom_toBottomOf="@+id/DeviceSetting_iv_addGoal"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/textView23"
-                    app:layout_constraintTop_toTopOf="@+id/DeviceSetting_iv_addGoal" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView23"
+                    app:layout_constraintVertical_bias="0.36" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
@@ -220,9 +199,10 @@
         <androidx.cardview.widget.CardView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="@dimen/_10sdp"
-            app:cardElevation="@dimen/_6sdp"
+            app:cardCornerRadius="@dimen/_6sdp"
+            app:cardElevation="@dimen/_3sdp"
             app:cardUseCompatPadding="true"
+            android:backgroundTint="?attr/colorAccent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardView4">
@@ -244,29 +224,16 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.appcompat.widget.SwitchCompat
-                    android:id="@+id/DeviceSetting_sw_schedule"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/_16sdp"
-                    android:thumb="@drawable/selector_thumb"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView25"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/textView25"
-                    app:track="@drawable/selector_track"
-                    tools:ignore="UseSwitchCompatOrMaterialXml" />
-
                 <ImageView
                     android:id="@+id/DeviceSetting_iv_addSchedule"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="@dimen/_16sdp"
                     android:contentDescription="@string/txt_null"
+                    android:layout_marginEnd="@dimen/_26sdp"
                     android:src="@drawable/ic_add"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/DeviceSetting_sw_schedule"
-                    app:layout_constraintStart_toStartOf="@+id/DeviceSetting_sw_schedule"
-                    app:layout_constraintTop_toBottomOf="@+id/DeviceSetting_sw_schedule"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView26"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textView26"
                     app:layout_constraintVertical_bias="0"
                     app:tint="?attr/colorPrimaryVariant" />
 
@@ -274,12 +241,13 @@
                     android:id="@+id/textView26"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/_16sdp"
                     android:text="@string/txt_add_schedule"
                     android:textColor="?attr/colorOnSecondary"
                     android:textSize="@dimen/_14ssp"
-                    app:layout_constraintBottom_toBottomOf="@+id/DeviceSetting_iv_addSchedule"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/textView25"
-                    app:layout_constraintTop_toTopOf="@+id/DeviceSetting_iv_addSchedule" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView25" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>

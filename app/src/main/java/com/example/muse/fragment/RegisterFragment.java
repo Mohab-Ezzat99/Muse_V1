@@ -23,6 +23,9 @@ import androidx.navigation.Navigation;
 
 import com.example.muse.R;
 import com.example.muse.StartActivity;
+import com.example.muse.model.RegisterModel;
+import com.example.muse.network.ApiService;
+import com.example.muse.network.RetrofitBuilder;
 import com.example.muse.utility.SaveState;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -32,9 +35,15 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RegisterFragment extends Fragment implements View.OnClickListener {
 
@@ -117,6 +126,22 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 navController.navigate(R.id.action_registerFragment_to_loginFragment);
                 break;
             case R.id.register_btn_register:
+
+//                ApiService apiService= RetrofitBuilder.getInstance(RetrofitBuilder.BASE_URL).create(ApiService.class);
+//                Call<JSONObject> call=apiService.registerUser(new RegisterModel(full_name,email,password));
+//                call.enqueue(new Callback<JSONObject>() {
+//                    @Override
+//                    public void onResponse(Call<JSONObject> call, Response<JSONObject> response) {
+//                        Toast.makeText(getContext(), "Success", Toast.LENGTH_SHORT).show();
+//                        progressDialog.dismiss();
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<JSONObject> call, Throwable t) {
+//                        Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+//                        progressDialog.dismiss();
+//                    }
+//                });
                 navController.navigate(R.id.action_registerFragment_to_onBoardFragment);
                 //setupRegister();
                 break;

@@ -9,16 +9,29 @@ import androidx.room.Update;
 import com.example.muse.db.MuseDB;
 import com.example.muse.db.MuseDao;
 import com.example.muse.model.DeviceModel;
+import com.example.muse.model.RegisterModel;
+import com.example.muse.network.ApiService;
+import com.example.muse.network.RetrofitBuilder;
+
+import org.json.JSONObject;
 
 import java.util.List;
 
+import retrofit2.Call;
+
 public class Repository {
+    private ApiService apiService;
     private MuseDB museDB;
     private MuseDao museDao;
 
     public Repository(Application application) {
         this.museDB = MuseDB.getInstance(application);
         museDao=museDB.museDao();
+    }
+
+    public Call<JSONObject> registerUser(RegisterModel registerModel){
+        apiService= RetrofitBuilder.getInstance(RetrofitBuilder.BASE_URL).create(ApiService.class);
+        return apiService.registerUser(registerModel);
     }
 
     public void insertDevice(DeviceModel device){
@@ -31,10 +44,6 @@ public class Repository {
 
     public void deleteDevice(DeviceModel device){
         new DeleteDeviceAsyncTask(museDao).doInBackground(device);
-    }
-
-    public void deleteAllDevices(){
-        new InsertDeviceAsyncTask(museDao).doInBackground();
     }
 
     public LiveData<List<DeviceModel>> getAllDevices(){
@@ -87,20 +96,6 @@ public class Repository {
         @Override
         protected Void doInBackground(DeviceModel... deviceModels) {
             museDao.deleteDevice(deviceModels[0]);
-            return null;
-        }
-    }
-
-    public static class DeleteAllDeviceAsyncTask extends AsyncTask<Void,Void,Void>{
-        private MuseDao museDao;
-
-        public DeleteAllDeviceAsyncTask(MuseDao museDao) {
-            this.museDao = museDao;
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            museDao.deleteAllDevice();
             return null;
         }
     }

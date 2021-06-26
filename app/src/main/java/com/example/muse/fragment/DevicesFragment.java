@@ -22,7 +22,7 @@ import com.example.muse.R;
 import com.example.muse.StartActivity;
 import com.example.muse.adapters.RVAddDeviceAdapter;
 import com.example.muse.adapters.RVDeviceBotAdapter;
-import com.example.muse.interfaces.OnDeviceItemListener;
+import com.example.muse.adapters.OnDeviceItemListener;
 import com.example.muse.model.DeviceModel;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

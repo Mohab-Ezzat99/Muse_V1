@@ -41,10 +41,10 @@ public class RVNavMenuAdapter extends RecyclerView.Adapter<RVNavMenuAdapter.NMVi
         holder.iv_icon.setImageDrawable(context.getResources().getDrawable(NavMenuModel.getIcon(),null));
         holder.tv_name.setText(NavMenuModel.getName());
         holder.pos=position;
-        if (position == 3 || position == 4) {
+        if (position == 1 || position == 2) {
             holder.switchCompat.setVisibility(View.VISIBLE);
             //dark mode
-            if (position == 4)
+            if (position == 2)
                 holder.switchCompat.setChecked(SaveState.getDarkModeState());
                 //notification
             else
@@ -91,7 +91,7 @@ public class RVNavMenuAdapter extends RecyclerView.Adapter<RVNavMenuAdapter.NMVi
 
             switchCompat.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 //dark mode
-                if (pos == 4)
+                if (pos == 2)
                     listener.isDarkModeChecked(isChecked);
                 //notification
                 else

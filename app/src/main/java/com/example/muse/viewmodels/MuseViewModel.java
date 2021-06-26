@@ -7,9 +7,14 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.example.muse.model.DeviceModel;
+import com.example.muse.model.RegisterModel;
 import com.example.muse.repository.Repository;
 
+import org.json.JSONObject;
+
 import java.util.List;
+
+import retrofit2.Call;
 
 public class MuseViewModel extends AndroidViewModel {
     private Repository repository;
@@ -17,6 +22,10 @@ public class MuseViewModel extends AndroidViewModel {
     public MuseViewModel(@NonNull Application application) {
         super(application);
         repository=new Repository(application);
+    }
+
+    public Call<JSONObject> registerUser(RegisterModel registerModel){
+        return repository.registerUser(registerModel);
     }
 
     public void insertDevice(DeviceModel device){
@@ -29,10 +38,6 @@ public class MuseViewModel extends AndroidViewModel {
 
     public void deleteDevice(DeviceModel device){
         repository.deleteDevice(device);
-    }
-
-    public void deleteAllDevice() {
-        repository.deleteAllDevices();
     }
 
     public LiveData<List<DeviceModel>> getAllDevices() {

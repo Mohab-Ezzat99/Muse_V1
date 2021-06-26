@@ -1,4 +1,4 @@
-package com.example.muse.interfaces;
+package com.example.muse.adapters;
 
 import android.view.View;
 

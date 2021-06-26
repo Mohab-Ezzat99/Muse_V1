@@ -16,14 +16,11 @@
         android:label="@string/tit_devices"
         tools:layout="@layout/fragment_devices">
         <action
-            android:id="@+id/action_devicesFragment_to_selectedDeviceFragment"
-            app:destination="@id/selectedDeviceFragment" />
-        <action
-            android:id="@+id/action_devicesFragment_to_alertsFragment"
-            app:destination="@id/alertsFragment" />
-        <action
             android:id="@+id/action_devicesFragment_to_deviceSettingFragment"
             app:destination="@id/deviceSettingFragment" />
+        <action
+            android:id="@+id/action_devicesFragment_to_selectedDeviceFragment"
+            app:destination="@id/selectedDeviceFragment" />
     </fragment>
 
     <fragment
@@ -49,12 +46,6 @@
         android:label="@string/tit_more"
         tools:layout="@layout/fragment_menu" >
         <action
-            android:id="@+id/action_menuFragment_to_reportFragment"
-            app:destination="@id/reportFragment" />
-        <action
-            android:id="@+id/action_menuFragment_to_billingFragment"
-            app:destination="@id/billingFragment" />
-        <action
             android:id="@+id/action_menuFragment_to_schedulesFragment"
             app:destination="@id/schedulesFragment" />
     </fragment>
@@ -68,16 +59,6 @@
             android:name="alert_device"
             app:argType="com.example.muse.model.DeviceModel" />
     </fragment>
-    <fragment
-        android:id="@+id/reportFragment"
-        android:name="com.example.muse.fragment.ReportFragment"
-        android:label="@string/txt_report"
-        tools:layout="@layout/fragment_report" />
-    <fragment
-        android:id="@+id/billingFragment"
-        android:name="com.example.muse.fragment.BillingFragment"
-        android:label="@string/txt_billing"
-        tools:layout="@layout/fragment_billing" />
     <fragment
         android:id="@+id/schedulesFragment"
         android:name="com.example.muse.fragment.SchedulesFragment"
