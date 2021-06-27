@@ -16,28 +16,27 @@
 
         <ImageView
             android:id="@+id/register_iv"
-            android:layout_width="@dimen/_85sdp"
-            android:layout_height="@dimen/_85sdp"
+            android:layout_width="@dimen/_150sdp"
+            android:layout_height="@dimen/_150sdp"
             android:contentDescription="@string/txt_null"
             android:src="@drawable/ic_light"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/view4"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias=".2" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/register_itl_fullName"
             style="@style/TextInputLayoutStyle"
-            android:layout_width="@dimen/_230sdp"
+            android:layout_width="@dimen/_270sdp"
             android:layout_height="wrap_content"
             android:hint="@string/hint_full_name"
             android:textColorHint="@color/gray"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/register_iv"
-            app:layout_constraintStart_toStartOf="@+id/register_iv"
-            app:layout_constraintTop_toBottomOf="@+id/register_iv"
-            app:layout_constraintVertical_bias="0.05">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/view4"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.1">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/register_et_fullName"
@@ -55,16 +54,14 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/register_itl_email"
             style="@style/TextInputLayoutStyle"
-            android:layout_width="@dimen/_230sdp"
+            android:layout_width="@dimen/_270sdp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
             android:hint="@string/hint_email"
+            android:layout_marginTop="@dimen/_10sdp"
             android:textColorHint="@color/gray"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/view4"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.1">
+            app:layout_constraintTop_toBottomOf="@+id/register_itl_fullName">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/register_et_email"
@@ -83,7 +80,7 @@
             style="@style/TextInputLayoutStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:hint="@string/hint_password"
             android:textColorHint="@color/gray"
             app:layout_constraintEnd_toEndOf="@+id/register_itl_email"
@@ -109,7 +106,7 @@
             style="@style/TextInputLayoutStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:hint="@string/hint_confirm_password"
             android:textColorHint="@color/gray"
             app:layout_constraintEnd_toEndOf="@+id/register_itl_password"
@@ -130,38 +127,11 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/register_itl_device"
-            style="@style/TextInputLayoutStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_12sdp"
-            android:hint="@string/hint_device_id"
-            android:textColorHint="@color/gray"
-            app:layout_constraintBottom_toBottomOf="@+id/register_btn_register"
-            app:layout_constraintEnd_toEndOf="@+id/register_itl_fullName"
-            app:layout_constraintStart_toStartOf="@+id/register_itl_fullName"
-            app:layout_constraintTop_toBottomOf="@+id/register_itl_fullName"
-            app:layout_constraintVertical_bias="0.0">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/register_et_device"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_plug"
-                android:drawablePadding="@dimen/_8sdp"
-                android:drawableTint="?attr/colorPrimaryVariant"
-                android:inputType="textPersonName"
-                android:maxLength="20"
-                android:textColor="?attr/colorOnSecondary" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
         <Button
             android:id="@+id/register_btn_register"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:backgroundTint="?attr/colorPrimaryVariant"
             android:text="@string/BTxt_register"
             android:textAllCaps="false"
@@ -205,7 +175,8 @@
             android:layout_width="1dp"
             android:layout_height="0dp"
             android:layout_marginVertical="@dimen/_8sdp"
-            android:background="@color/gray"
+            android:background="?attr/colorOnPrimary"
+            app:layout_constraintHorizontal_bias=".4"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

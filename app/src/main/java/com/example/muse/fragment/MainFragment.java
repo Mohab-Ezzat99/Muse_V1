@@ -76,7 +76,8 @@ public class MainFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        if(SaveState.getLastAlerts()!=0)
+            bottomNavigationView.showBadge(R.id.alertsFragment).setNumber(SaveState.getLastAlerts());
         StartActivity.museViewModel.getNewAlerts().observe(requireActivity(), integer -> bottomNavigationView.showBadge(R.id.alertsFragment).setNumber(integer));
     }
 

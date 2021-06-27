@@ -24,6 +24,7 @@ public class SaveState {
     public static final String DARK_MODE="dark_mode";
     public static final String NOTIFICATION = "notification";
     public static final String NEW_ALERT = "new alert";
+    public static final String ON_BOARDING = "onBoarding";
 
     @SuppressLint("CommitPrefEdits")
     public SaveState(Context context) {
@@ -62,6 +63,15 @@ public class SaveState {
 
     public static int getLastAlerts() {
         return sharedPreferences.getInt(NEW_ALERT, 0);
+    }
+
+    public static boolean getShownOnBoarding() {
+        return sharedPreferences.getBoolean(ON_BOARDING, false);
+    }
+
+    public static void setShownOnBoarding(boolean isShown) {
+        editor.putBoolean(ON_BOARDING, isShown);
+        editor.apply();
     }
 
     public static boolean checkConnection(Context context) {

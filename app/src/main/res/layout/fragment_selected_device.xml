@@ -371,11 +371,11 @@
                         app:layout_constraintTop_toTopOf="@+id/selectedD_tv_average" />
 
                     <TextView
-                        android:id="@+id/selectedD_tv_perM"
+                        android:id="@+id/selectedD_tv_per"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/_4sdp"
-                        android:text="@string/txt_per_month"
+                        android:text="@string/txt_per_day"
                         android:textColor="?attr/colorOnSecondary"
                         android:textSize="@dimen/_14ssp"
                         android:textStyle="bold"
@@ -383,7 +383,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/selectedD_tv_average" />
 
                     <TextView
-                        android:id="@+id/selectedD_tv_perMV"
+                        android:id="@+id/selectedD_tv_perV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/_30sdp"
@@ -391,7 +391,7 @@
                         android:textColor="?attr/colorOnSecondary"
                         android:textSize="@dimen/_14ssp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/selectedD_tv_perM" />
+                        app:layout_constraintTop_toTopOf="@+id/selectedD_tv_per" />
 
                     <TextView
                         android:id="@+id/selectedD_tv_est"
@@ -403,7 +403,7 @@
                         android:textSize="@dimen/_14ssp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/selectedD_tv_perM" />
+                        app:layout_constraintTop_toBottomOf="@+id/selectedD_tv_per" />
 
                     <TextView
                         android:id="@+id/selectedD_tv_estV"

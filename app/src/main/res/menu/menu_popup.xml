@@ -11,6 +11,6 @@
     <item
         android:id="@+id/popup_settings"
         android:icon="@drawable/ic_settings"
-        android:title="@string/txt_deviceSettings"
+        android:title="@string/tit_settings"
         app:iconTint="?attr/colorPrimaryVariant" />
 </menu>

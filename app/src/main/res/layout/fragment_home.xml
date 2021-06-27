@@ -88,7 +88,7 @@
                     android:id="@+id/relativeLayout2"
                     android:layout_width="@dimen/_74sdp"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_2sdp"
                     android:background="@drawable/shape_orange_circle_fill"
                     android:gravity="center_vertical"
                     android:padding="@dimen/_4sdp"
@@ -187,11 +187,11 @@
                         app:layout_constraintTop_toTopOf="@+id/tv_average" />
 
                     <TextView
-                        android:id="@+id/tv_perM"
+                        android:id="@+id/home_tv_per"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/_4sdp"
-                        android:text="@string/txt_per_month"
+                        android:text="@string/txt_per_day"
                         android:textColor="?attr/colorOnSecondary"
                         android:textSize="@dimen/_14ssp"
                         android:textStyle="bold"
@@ -199,7 +199,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/tv_average" />
 
                     <TextView
-                        android:id="@+id/home_tv_perMV"
+                        android:id="@+id/home_tv_perV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/_30sdp"
@@ -207,7 +207,7 @@
                         android:textColor="?attr/colorOnSecondary"
                         android:textSize="@dimen/_14ssp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/tv_perM" />
+                        app:layout_constraintTop_toTopOf="@+id/home_tv_per" />
 
                     <TextView
                         android:id="@+id/tv_est"
@@ -219,7 +219,7 @@
                         android:textSize="@dimen/_14ssp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_perM" />
+                        app:layout_constraintTop_toBottomOf="@+id/home_tv_per" />
 
                     <TextView
                         android:id="@+id/home_tv_estV"
@@ -251,36 +251,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_4sdp"
-                android:padding="@dimen/_4sdp">
+                android:padding="@dimen/_8sdp">
 
                 <TextView
                     android:id="@+id/itemAG_tv_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_marginStart="@dimen/_4sdp"
                     android:text="@string/txt_goals"
                     android:textColor="?attr/colorPrimaryVariant"
                     android:textSize="@dimen/_18ssp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias=".05"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias=".05" />
+                    app:layout_constraintVertical_bias="0" />
 
                 <ImageView
                     android:id="@+id/itemAG_iv_result"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:layout_marginBottom="@dimen/_8sdp"
+                    android:layout_marginEnd="@dimen/_4sdp"
                     android:contentDescription="@string/txt_null"
                     android:src="@drawable/ic_checked"
                     app:layout_constraintBottom_toBottomOf="@+id/itemAG_tv_name"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias=".95"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/itemAG_tv_name" />
 
                 <TextView

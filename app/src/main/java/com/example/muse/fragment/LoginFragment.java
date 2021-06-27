@@ -26,8 +26,10 @@ import androidx.navigation.Navigation;
 import com.example.muse.R;
 import com.example.muse.StartActivity;
 import com.example.muse.utility.SaveState;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 
@@ -186,7 +188,12 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         progressDialog.setCanceledOnTouchOutside(false);
 
         StartActivity.mAuth.fetchSignInMethodsForEmail(email).addOnSuccessListener(task -> {
-            StartActivity.mAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener(task1 -> navController.navigate(R.id.action_loginFragment_to_mainFragment)).addOnFailureListener(e -> {
+            StartActivity.mAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener(authResult -> {
+                if(SaveState.getShownOnBoarding())
+                    navController.navigate(R.id.action_loginFragment_to_mainFragment);
+                else
+                    navController.navigate(R.id.action_loginFragment_to_onBoardFragment);
+            }).addOnFailureListener(e -> {
                 //email does not exist
                 if (e instanceof FirebaseAuthInvalidUserException) {
                     itl_email.setError("Invalid email");

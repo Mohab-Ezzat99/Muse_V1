@@ -52,46 +52,18 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/register_itl_device"
+            android:id="@+id/register_itl_email"
             style="@style/TextInputLayoutStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:hint="@string/hint_email"
             android:layout_marginTop="@dimen/_12sdp"
-            android:hint="@string/hint_device_id"
             android:textColorHint="@color/gray"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/register_itl_fullName"
             app:layout_constraintStart_toStartOf="@+id/register_itl_fullName"
             app:layout_constraintTop_toBottomOf="@+id/register_itl_fullName"
             app:layout_constraintVertical_bias="0.0">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/register_et_device"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_plug"
-                android:textColor="?attr/colorOnSecondary"
-                android:drawableTint="?attr/colorPrimaryVariant"
-                android:drawablePadding="@dimen/_8sdp"
-                android:inputType="textPersonName"
-                android:maxLength="20"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/register_itl_email"
-            style="@style/TextInputLayoutStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:hint="@string/hint_email"
-            android:textColorHint="@color/gray"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/register_itl_fullName"
-            app:layout_constraintStart_toStartOf="@+id/register_itl_fullName"
-            app:layout_constraintTop_toBottomOf="@+id/register_itl_device"
-            app:layout_constraintVertical_bias="0.0"
-            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/register_et_email"

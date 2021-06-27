@@ -2,6 +2,7 @@ package com.example.muse.fragment;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,7 +42,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Calendar;
 import java.util.Objects;
 
-public class SelectedDeviceFragment extends Fragment implements View.OnClickListener {
+public class SelectedDeviceFragment extends Fragment implements View.OnClickListener, MenuItem.OnMenuItemClickListener {
 
     private ChipNavigationBar chipNavigationBar;
     private NavController navControllerChart;
@@ -50,11 +52,12 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
     private ImageView iv_custom;
     private DeviceModel device;
     private int day, month, year;
+    private DatePickerDialog datePickerDialog;
     private ConstraintLayout constLayout_expand;
     private CardView cv_insight;
     private ImageView iv_arrow;
     private Spinner spinner;
-    private TextView tv_current,tv_average,tv_per,tv_estimation;
+    private TextView tv_current,tv_average,tv_per,tv_perV,tv_estimation;
 
     public SelectedDeviceFragment() {
         // Required empty public constructor
@@ -81,7 +84,7 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
         navControllerChart = Navigation.findNavController(requireActivity(), R.id.selectedD_fragment);
     }
 
-    @SuppressLint("NonConstantResourceId")
+    @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -90,6 +93,7 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
         iv_icon = view.findViewById(R.id.selectedD_iv_icon);
         cv_goal = view.findViewById(R.id.selectedD_cv_goal);
         cv_schedules = view.findViewById(R.id.selectedD_cv_schedule);
+
         iv_custom = view.findViewById(R.id.selectedD_iv_custom);
         displayItem();
 
@@ -104,35 +108,39 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
         year = calendar.get(Calendar.YEAR);
 
         chipNavigationBar =view.findViewById(R.id.selectedD_chipNav);
+        tv_per = view.findViewById(R.id.selectedD_tv_per);
         chipNavigationBar.setItemSelected(R.id.dayFragment,true);
-
         chipNavigationBar.setOnItemSelectedListener(i -> {
             switch (i){
                 case R.id.dayFragment :
                     navControllerChart.popBackStack();
                     navControllerChart.navigate(R.id.chartDayFragment);
+                    tv_per.setText("Per day");
                     return;
 
                 case R.id.weekFragment :
                     navControllerChart.popBackStack();
                     navControllerChart.navigate(R.id.chartWeekFragment);
+                    tv_per.setText("Per week");
                     return;
 
                 case R.id.monthFragment :
                     navControllerChart.popBackStack();
                     navControllerChart.navigate(R.id.chartMonthFragment);
+                    tv_per.setText("Per month");
                     return;
 
                 case R.id.yearFragment :
                     navControllerChart.popBackStack();
                     navControllerChart.navigate(R.id.chartYearFragment);
+                    tv_per.setText("Per year");
             }
         });
 
         spinner=view.findViewById(R.id.selectedD_spinner_unit);
         tv_current=view.findViewById(R.id.selectedD_tv_currentV);
         tv_average=view.findViewById(R.id.selectedD_tv_averageV);
-        tv_per=view.findViewById(R.id.selectedD_tv_perMV);
+        tv_perV=view.findViewById(R.id.selectedD_tv_perV);
         tv_estimation=view.findViewById(R.id.selectedD_tv_estV);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @SuppressLint("SetTextI18n")
@@ -141,14 +149,14 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
                 if(position==0){
                     tv_current.setText("20 W");
                     tv_average.setText("200 W");
-                    tv_per.setText("30 KW");
+                    tv_perV.setText("30 KW");
                     tv_estimation.setText("20 KW");
                 }
                 else
                 {
                     tv_current.setText("12 EGP");
                     tv_average.setText("120 EGP");
-                    tv_per.setText("390 EGP");
+                    tv_perV.setText("390 EGP");
                     tv_estimation.setText("260 EGP");
                 }
             }
@@ -220,15 +228,7 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
                 break;
 
             case R.id.selectedD_iv_custom:
-                DatePickerDialog datePickerDialog = new DatePickerDialog(getContext()
-                        , android.R.style.Theme_Holo_Light_Dialog_MinWidth
-                        , (view2, year, month, dayOfMonth) ->
-                        Toast.makeText(getContext(), dayOfMonth + "/" + (++month) + "/" + year, Toast.LENGTH_SHORT).show()
-                        , year, month, day);
-                datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                datePickerDialog.show();
-                datePickerDialog.getButton(DatePickerDialog.BUTTON_POSITIVE).setBackground(null);
-                datePickerDialog.getButton(DatePickerDialog.BUTTON_NEGATIVE).setBackground(null);
+                showPopup(iv_custom);
                 break;
         }
     }
@@ -246,5 +246,59 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
         return view;
+    }
+
+    public void showPopup(View v) {
+        PopupMenu popupMenu = new PopupMenu(getContext(), v);
+        popupMenu.setOnMenuItemClickListener(this::onMenuItemClick);
+        popupMenu.inflate(R.menu.menu_custom);
+        popupMenu.show();
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.menuCustom_day:
+                displayDatePicker(0);
+                return true;
+
+            case R.id.menuCustom_month:
+                displayDatePicker(1);
+                datePickerDialog.findViewById(Resources.getSystem()
+                        .getIdentifier("day", "id", "android")).setVisibility(View.GONE);
+                return true;
+
+            case R.id.menuCustom_year:
+                displayDatePicker(2);
+                datePickerDialog.findViewById(Resources.getSystem()
+                        .getIdentifier("day", "id", "android")).setVisibility(View.GONE);
+
+                datePickerDialog.findViewById(Resources.getSystem()
+                        .getIdentifier("month", "id", "android")).setVisibility(View.GONE);
+                return true;
+
+            default:
+                return false;
+        }
+    }
+
+    public void displayDatePicker(int position) {
+        DatePickerDialog.OnDateSetListener onDateSetListener= (view, year, month, dayOfMonth) -> {
+            if (position == 0) {
+                Toast.makeText(getContext(), dayOfMonth + "/" + (month + 1) + "/" + year, Toast.LENGTH_SHORT).show();
+            } else if (position == 1) {
+                Toast.makeText(getContext(), (month + 1) + "/" + year, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getContext(), year + "", Toast.LENGTH_SHORT).show();
+            }
+        };
+        datePickerDialog = new DatePickerDialog(getContext()
+                , android.R.style.Theme_Holo_Light_Dialog_MinWidth,onDateSetListener, year, month, day);
+        datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        datePickerDialog.show();
+        datePickerDialog.getButton(DatePickerDialog.BUTTON_POSITIVE).setBackground(null);
+        datePickerDialog.getButton(DatePickerDialog.BUTTON_NEGATIVE).setBackground(null);
     }
 }

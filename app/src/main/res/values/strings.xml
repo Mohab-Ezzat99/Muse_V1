@@ -67,7 +67,7 @@
     <string name="txt_20_w_12egp">20 W</string>
     <string name="txt_average">Average</string>
     <string name="txt_200_w_120egp">200 W</string>
-    <string name="txt_per_month">Per month</string>
+    <string name="txt_per_day">Per day</string>
     <string name="txt_30_kw_390egp">30 KW</string>
     <string name="txt_estimation">Estimation</string>
     <string name="txt_20_kw_260egp">20 KW</string>
@@ -170,5 +170,5 @@
     <string name="txt_submit">Submit</string>
     <string name="txt_cancel">Cancel</string>
     <string name="hint_ssid">SSID</string>
-    <string name="tit_settings">settings</string>
+    <string name="tit_settings">Settings</string>
 </resources>

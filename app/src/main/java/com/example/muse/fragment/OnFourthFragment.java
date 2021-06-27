@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.example.muse.R;
 import com.example.muse.StartActivity;
+import com.example.muse.utility.SaveState;
 
 public class OnFourthFragment extends Fragment {
     public OnFourthFragment() {
@@ -31,6 +32,10 @@ public class OnFourthFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        view.findViewById(R.id.onFourth_tv_finish).setOnClickListener(v -> Navigation.findNavController(requireActivity(),R.id.start_fragment).navigate(R.id.action_onBoardFragment_to_mainFragment));
+        view.findViewById(R.id.onFourth_tv_finish).setOnClickListener(v -> {
+            SaveState.setShownOnBoarding(true);
+            Navigation.findNavController(requireActivity(),R.id.start_fragment)
+                    .navigate(R.id.action_onBoardFragment_to_mainFragment);
+        });
     }
 }

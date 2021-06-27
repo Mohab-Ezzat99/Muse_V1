@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,6 +24,8 @@ import com.example.muse.model.DeviceModel;
 import com.google.android.material.textfield.TextInputEditText;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 public class DeviceSettingFragment extends Fragment {
 
@@ -84,12 +87,14 @@ public class DeviceSettingFragment extends Fragment {
             case R.id.menu_delete:
                 StartActivity.museViewModel.deleteDevice(device);
                 navController.navigate(R.id.devicesFragment);
+                Toast.makeText(getContext(), "Deleted successfully", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.menu_save:
-                device.setName(et_deviceName.getText().toString());
+                device.setName(Objects.requireNonNull(et_deviceName.getText()).toString());
                 StartActivity.museViewModel.updateDevice(device);
                 navController.popBackStack();
+                Toast.makeText(getContext(), "Updated successfully", Toast.LENGTH_SHORT).show();
                 break;
 
             case android.R.id.home:

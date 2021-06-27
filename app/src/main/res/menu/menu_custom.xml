@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menuCustom_day"
+        android:title="@string/tit_day"
+        app:iconTint="?attr/colorPrimaryVariant" />
+
+    <item
+        android:id="@+id/menuCustom_month"
+        android:title="@string/tit_month"
+        app:iconTint="?attr/colorPrimaryVariant" />
+
+    <item
+        android:id="@+id/menuCustom_year"
+        android:title="@string/tit_year"
+        app:iconTint="?attr/colorPrimaryVariant" />
+</menu>

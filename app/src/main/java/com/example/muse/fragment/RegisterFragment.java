@@ -23,9 +23,6 @@ import androidx.navigation.Navigation;
 
 import com.example.muse.R;
 import com.example.muse.StartActivity;
-import com.example.muse.model.RegisterModel;
-import com.example.muse.network.ApiService;
-import com.example.muse.network.RetrofitBuilder;
 import com.example.muse.utility.SaveState;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -35,15 +32,9 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class RegisterFragment extends Fragment implements View.OnClickListener {
 
@@ -51,8 +42,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     private Button btn_register;
     private String full_name, device_id, email, password, confirm_password, user_id;
     private ProgressDialog progressDialog;
-    private TextInputLayout itl_fullName, itl_email, itl_password, itl_confirm, itl_deviceId;
-    private TextInputEditText et_fullName, et_email, et_password, et_confirm, et_deviceId;
+    private TextInputLayout itl_fullName, itl_email, itl_password, itl_confirm;
+    private TextInputEditText et_fullName, et_email, et_password, et_confirm;
     private NavController navController;
 
     private FirebaseFirestore db;
@@ -88,12 +79,10 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         super.onViewCreated(view, savedInstanceState);
 
         et_fullName = view.findViewById(R.id.register_et_fullName);
-        et_deviceId = view.findViewById(R.id.register_et_device);
         et_email = view.findViewById(R.id.register_et_email);
         et_password = view.findViewById(R.id.register_et_password);
         et_confirm = view.findViewById(R.id.register_et_confPassword);
         itl_fullName = view.findViewById(R.id.register_itl_fullName);
-        itl_deviceId = view.findViewById(R.id.register_itl_device);
         itl_email = view.findViewById(R.id.register_itl_email);
         itl_password = view.findViewById(R.id.register_itl_password);
         itl_confirm = view.findViewById(R.id.register_itl_confPassword);
@@ -123,7 +112,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
 
             case R.id.register_tv_login:
-                navController.navigate(R.id.action_registerFragment_to_loginFragment);
+                if (isAdded())
+                    navController.navigate(R.id.action_registerFragment_to_loginFragment);
                 break;
             case R.id.register_btn_register:
 
@@ -142,7 +132,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 //                        progressDialog.dismiss();
 //                    }
 //                });
-                navController.navigate(R.id.action_registerFragment_to_onBoardFragment);
+                navController.navigate(R.id.action_registerFragment_to_loginFragment);
+                Toast.makeText(getContext(), "Registered successfully", Toast.LENGTH_SHORT).show();
                 //setupRegister();
                 break;
         }
@@ -150,7 +141,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
     public void setupRegister() {
         full_name = Objects.requireNonNull(et_fullName.getText()).toString().trim();
-        device_id = Objects.requireNonNull(et_deviceId.getText()).toString().trim();
         email = Objects.requireNonNull(et_email.getText()).toString().trim();
         password = Objects.requireNonNull(et_password.getText()).toString().trim();
         confirm_password = Objects.requireNonNull(et_confirm.getText()).toString().trim();
@@ -161,12 +151,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             return;
         } else
             itl_fullName.setError(null);
-
-        if (TextUtils.isEmpty(device_id)) {
-            itl_deviceId.setError("Device ID is required");
-            return;
-        } else
-            itl_deviceId.setError(null);
 
         if (TextUtils.isEmpty(email)) {
             itl_email.setError("Email is required");
@@ -213,7 +197,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 map.put(SaveState.DEVICE_ID,device_id);
                 map.put(SaveState.EMAIL, email);
                 documentReference.set(map).addOnCompleteListener(task -> {
-                    navController.navigate(R.id.action_registerFragment_to_onBoardFragment);
+                    navController.navigate(R.id.action_registerFragment_to_loginFragment);
+                    Toast.makeText(getContext(), "Registered successfully", Toast.LENGTH_SHORT).show();
                     progressDialog.dismiss();
                 });
             } else {
