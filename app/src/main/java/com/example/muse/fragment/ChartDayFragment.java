@@ -52,23 +52,23 @@ public class ChartDayFragment extends Fragment {
         lineChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
         lineChart.setAutoScaleMinMaxEnabled(true);
         lineChart.animateY(1000);
-
-        // y axis edit
-        String[] yValues = new String[]{"", "5 W", "10 W", "15 W", "20 W", "25 W", "30 W"};
-        YAxis yAxis = lineChart.getAxisLeft();
-        yAxis.setAxisMinimum(0f);
-        yAxis.setLabelCount(5);
-        yAxis.setTextColor(StartActivity.colorPrimaryVariant);
-        yAxis.setValueFormatter(new IndexAxisValueFormatter(yValues));
-        yAxis.setDrawLimitLinesBehindData(true);
-        yAxis.setDrawGridLines(false);
+        lineChart.setDescription(null);
 
         // x axis edit
         String[] xValues = new String[]{"", "4 am", "8 am", "12 pm", "4 pm", "8 pm", "12 am"};
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setTextColor(StartActivity.colorPrimaryVariant);
-        xAxis.setValueFormatter(new DataCharts.XAxisFormat(xValues));
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(xValues));
         xAxis.setGranularity(1f);
         xAxis.setDrawGridLines(false);
+
+        // y axis edit
+        YAxis yAxis = lineChart.getAxisLeft();
+        yAxis.setAxisMinimum(0f);
+        yAxis.setLabelCount(5);
+        yAxis.setTextColor(StartActivity.colorPrimaryVariant);
+        yAxis.setDrawLimitLinesBehindData(true);
+        yAxis.setDrawGridLines(false);
+        yAxis.setValueFormatter(new DataCharts.AxisFormat());
     }
 }

@@ -96,7 +96,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <Spinner
-                        android:id="@+id/goalBotSheet_spinner_time"
+                        android:id="@+id/home_spinner_unit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -131,7 +131,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/tv_tit_cons" />
 
                 <TextView
-                    android:id="@+id/tv_currentV"
+                    android:id="@+id/home_tv_currentV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/txt_20_w_12egp"
@@ -176,7 +176,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/tv_averageV"
+                        android:id="@+id/home_tv_averageV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/_30sdp"
@@ -199,7 +199,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/tv_average" />
 
                     <TextView
-                        android:id="@+id/tv_perMV"
+                        android:id="@+id/home_tv_perMV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/_30sdp"
@@ -222,7 +222,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/tv_perM" />
 
                     <TextView
-                        android:id="@+id/tv_estV"
+                        android:id="@+id/home_tv_estV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/_30sdp"

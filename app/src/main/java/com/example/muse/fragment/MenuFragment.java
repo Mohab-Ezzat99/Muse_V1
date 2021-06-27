@@ -67,9 +67,6 @@ public class MenuFragment extends Fragment {
         adapter.addItem(new NavMenuModel(R.drawable.ic_logout, "Logout"));
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
-                DividerItemDecoration.VERTICAL);
-        recyclerView.addItemDecoration(dividerItemDecoration);
 
         adapter.setListener(new RVNavMenuAdapter.OnItemClickListener() {
             @SuppressLint("QueryPermissionsNeeded")

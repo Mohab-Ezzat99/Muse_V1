@@ -7,19 +7,23 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
 
+import androidx.lifecycle.MutableLiveData;
+
 public class SaveState {
 
+    private static MutableLiveData<Integer> mutableLiveData = new MutableLiveData<>();
     private Context context;
     private static SharedPreferences sharedPreferences;
     private static SharedPreferences.Editor editor;
 
-    public static final String USERS="Users";
-    public static final String USER_ID="User ID";
+    public static final String USERS = "Users";
+    public static final String USER_ID = "User ID";
     public static final String FULL_NAME="Full Name";
     public static final String DEVICE_ID="Device ID";
     public static final String EMAIL="Email";
     public static final String DARK_MODE="dark_mode";
-    public static final String NOTIFICATION="notification";
+    public static final String NOTIFICATION = "notification";
+    public static final String NEW_ALERT = "new alert";
 
     @SuppressLint("CommitPrefEdits")
     public SaveState(Context context) {
@@ -37,13 +41,27 @@ public class SaveState {
         return sharedPreferences.getBoolean(DARK_MODE,false);
     }
 
-    public static void setNotificationState(boolean b){
-        editor.putBoolean(NOTIFICATION,b);
+    public static void setNotificationState(boolean b) {
+        editor.putBoolean(NOTIFICATION, b);
         editor.apply();
     }
 
-    public static boolean getNotificationState(){
-        return sharedPreferences.getBoolean(NOTIFICATION,true);
+    public static boolean getNotificationState() {
+        return sharedPreferences.getBoolean(NOTIFICATION, true);
+    }
+
+    public static void setNewAlert(int counter) {
+        mutableLiveData.setValue(counter);
+        editor.putInt(NEW_ALERT, counter);
+        editor.apply();
+    }
+
+    public static MutableLiveData<Integer> getNewAlerts() {
+        return mutableLiveData;
+    }
+
+    public static int getLastAlerts() {
+        return sharedPreferences.getInt(NEW_ALERT, 0);
     }
 
     public static boolean checkConnection(Context context) {

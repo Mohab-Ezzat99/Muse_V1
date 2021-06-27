@@ -63,16 +63,14 @@ public class DataCharts {
     }
 
 
-    public static class XAxisFormat extends ValueFormatter {
-        String[] mValues;
+    public static class AxisFormat extends ValueFormatter {
 
-        public XAxisFormat(String[] values) {
-            this.mValues = values;
+        public AxisFormat() {
         }
 
         @Override
         public String getFormattedValue(float value) {
-            return mValues[(int) value];
+            return (int)value+" W";
         }
     }
 }

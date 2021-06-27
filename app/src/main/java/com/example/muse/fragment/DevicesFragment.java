@@ -20,10 +20,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.muse.R;
 import com.example.muse.StartActivity;
+import com.example.muse.adapters.OnDeviceItemListener;
 import com.example.muse.adapters.RVAddDeviceAdapter;
 import com.example.muse.adapters.RVDeviceBotAdapter;
-import com.example.muse.adapters.OnDeviceItemListener;
 import com.example.muse.model.DeviceModel;
+import com.example.muse.utility.SaveState;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -133,6 +134,7 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
                 device.initDevice("50%", 50, true);
                 device.setAlertMessage("turn on for more 3h!");
                 device.setHasAlert(true);
+                SaveState.setNewAlert((SaveState.getLastAlerts()) + 1);
 
                 //add to list & room
                 StartActivity.museViewModel.insertDevice(device);

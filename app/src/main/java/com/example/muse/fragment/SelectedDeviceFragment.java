@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.transition.AutoTransition;
+import android.transition.Fade;
 import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -13,7 +14,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,6 +53,8 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
     private ConstraintLayout constLayout_expand;
     private CardView cv_insight;
     private ImageView iv_arrow;
+    private Spinner spinner;
+    private TextView tv_current,tv_average,tv_per,tv_estimation;
 
     public SelectedDeviceFragment() {
         // Required empty public constructor
@@ -124,6 +129,36 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
             }
         });
 
+        spinner=view.findViewById(R.id.selectedD_spinner_unit);
+        tv_current=view.findViewById(R.id.selectedD_tv_currentV);
+        tv_average=view.findViewById(R.id.selectedD_tv_averageV);
+        tv_per=view.findViewById(R.id.selectedD_tv_perMV);
+        tv_estimation=view.findViewById(R.id.selectedD_tv_estV);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(position==0){
+                    tv_current.setText("20 W");
+                    tv_average.setText("200 W");
+                    tv_per.setText("30 KW");
+                    tv_estimation.setText("20 KW");
+                }
+                else
+                {
+                    tv_current.setText("12 EGP");
+                    tv_average.setText("120 EGP");
+                    tv_per.setText("390 EGP");
+                    tv_estimation.setText("260 EGP");
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         constLayout_expand=view.findViewById(R.id.selectedD_constLayoutExpanded);
         iv_arrow=view.findViewById(R.id.selectedD_iv_arrow);
         cv_insight=view.findViewById(R.id.selectedD_cv_insight);
@@ -136,7 +171,7 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
             }
             else
             {
-                TransitionManager.beginDelayedTransition(cv_insight,new AutoTransition());
+                TransitionManager.beginDelayedTransition(cv_insight,new Fade());
                 constLayout_expand.setVisibility(View.GONE);
                 iv_arrow.setBackgroundResource(R.drawable.ic_arrow_down);
             }

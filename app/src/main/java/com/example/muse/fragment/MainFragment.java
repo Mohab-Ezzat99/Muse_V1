@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
@@ -25,6 +26,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.muse.R;
 import com.example.muse.StartActivity;
+import com.example.muse.utility.SaveState;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainFragment extends Fragment {
@@ -43,9 +45,8 @@ public class MainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
-        View view=inflater.inflate(R.layout.fragment_main, container, false);
+        View view = inflater.inflate(R.layout.fragment_main, container, false);
         bottomNavigationView = view.findViewById(R.id.bottomNavigationView);
-//        bottomNavigationView.showBadge(R.id.alertsFragment).setNumber(3);
         return view;
     }
 
@@ -53,6 +54,12 @@ public class MainFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         navControllerMain = Navigation.findNavController(requireActivity(), R.id.main_fragment);
+        navControllerMain.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            if (destination.getId() == R.id.alertsFragment) {
+                SaveState.setNewAlert(0);
+                bottomNavigationView.removeBadge(R.id.alertsFragment);
+            }
+        });
         NavigationUI.setupWithNavController(bottomNavigationView, navControllerMain);
 
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration
@@ -64,6 +71,13 @@ public class MainFragment extends Fragment {
                 .build();
         NavigationUI.setupActionBarWithNavController((AppCompatActivity) requireActivity()
                 , navControllerMain, appBarConfiguration);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        StartActivity.museViewModel.getNewAlerts().observe(requireActivity(), integer -> bottomNavigationView.showBadge(R.id.alertsFragment).setNumber(integer));
     }
 
     public static void displayNotification(Context context, int notificationId, int current) {

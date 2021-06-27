@@ -14,6 +14,7 @@ import com.example.muse.R;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
 public class ChartYearFragment extends Fragment {
 
@@ -50,12 +51,14 @@ public class ChartYearFragment extends Fragment {
         barChart.setAutoScaleMinMaxEnabled(true);
         barChart.setFitBars(true);
         barChart.animateY(1000);
+        barChart.setDescription(null);
+        barChart.getLegend().setEnabled(false);
 
         // x axis edit
         String[] values = new String[]{"2014", "2015", "2016", "2017", "2018", "2019", "2020"};
         XAxis xAxis = barChart.getXAxis();
         xAxis.setTextColor(StartActivity.colorPrimaryVariant);
-        xAxis.setValueFormatter(new DataCharts.XAxisFormat(values));
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(values));
         xAxis.setGranularity(1f);
         xAxis.setDrawGridLines(false);
 
@@ -67,5 +70,6 @@ public class ChartYearFragment extends Fragment {
         yAxis.setLabelCount(6, true);
         yAxis.setDrawLimitLinesBehindData(true);
         yAxis.setDrawGridLines(false);
+        yAxis.setValueFormatter(new DataCharts.AxisFormat());
     }
 }

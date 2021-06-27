@@ -7,19 +7,34 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.muse.R;
 import com.example.muse.model.DeviceModel;
-import java.util.ArrayList;
-import java.util.List;
 
-public class RVAddGoalAdapter extends RecyclerView.Adapter<RVAddGoalAdapter.AGViewHolder> {
-    private List<DeviceModel> deviceModels = new ArrayList<>();
+public class RVAddGoalAdapter extends ListAdapter<DeviceModel, RVAddGoalAdapter.AGViewHolder> {
     private Context context;
+    private static final DiffUtil.ItemCallback<DeviceModel> DIFF_CALLBACK = new DiffUtil.ItemCallback<DeviceModel>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull DeviceModel oldItem, @NonNull DeviceModel newItem) {
+            return oldItem.getId() == newItem.getId();
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull DeviceModel oldItem, @NonNull DeviceModel newItem) {
+            return oldItem.getName().equals(newItem.getName()) &&
+                    oldItem.getPercent().equals(newItem.getPercent()) &&
+                    oldItem.getPercent().equals(newItem.getPercent());
+        }
+    };
 
     public RVAddGoalAdapter(Context context) {
+        super(DIFF_CALLBACK);
         this.context = context;
     }
 
@@ -33,7 +48,7 @@ public class RVAddGoalAdapter extends RecyclerView.Adapter<RVAddGoalAdapter.AGVi
     @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     public void onBindViewHolder(@NonNull AGViewHolder holder, int position) {
-        DeviceModel deviceModel = deviceModels.get(position);
+        DeviceModel deviceModel = getItem(position);
         holder.tv_name.setText(deviceModel.getName());
         holder.iv_icon.setImageDrawable(context.getResources().getDrawable(deviceModel.getIcon(),null));
 
@@ -47,19 +62,8 @@ public class RVAddGoalAdapter extends RecyclerView.Adapter<RVAddGoalAdapter.AGVi
         }
     }
 
-    @Override
-    public int getItemCount() {
-        return deviceModels.size();
-    }
-
-    public void addItem(DeviceModel itemAD) {
-        this.deviceModels.add(itemAD);
-        notifyDataSetChanged();
-    }
-
-    public void setList(List<DeviceModel> deviceModels) {
-        this.deviceModels = deviceModels;
-        notifyDataSetChanged();
+    public DeviceModel getItemAt(int position) {
+        return getItem(position);
     }
 
     static class AGViewHolder extends RecyclerView.ViewHolder {

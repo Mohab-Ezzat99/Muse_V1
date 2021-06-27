@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -61,6 +62,7 @@ public class GoalsFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new RVAddGoalAdapter(getContext());
         recyclerView.setAdapter(adapter);
+        setupSwipe();
 
         StartActivity.museViewModel.getDevicesGoals().observe(getViewLifecycleOwner(), deviceModels -> {
             if (deviceModels.size() != 0) {
@@ -72,7 +74,7 @@ public class GoalsFragment extends Fragment {
                 not_add.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.GONE);
             }
-            adapter.setList(deviceModels);
+            adapter.submitList(deviceModels);
         });
 
         StartActivity.museViewModel.getAllDevices().observe(getViewLifecycleOwner(), deviceModels -> {
@@ -121,5 +123,26 @@ public class GoalsFragment extends Fragment {
         //launch bottom sheet
         bottomSheetDialog.setContentView(bottom_sheet);
         bottomSheetDialog.show();
+    }
+
+    private void setupSwipe()
+    {
+        ItemTouchHelper.SimpleCallback callback=new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+                DeviceModel device=adapter.getItemAt(viewHolder.getAdapterPosition());
+                device.setHasGoal(false);
+                StartActivity.museViewModel.updateDevice(device);
+            }
+        };
+
+        ItemTouchHelper itemTouchHelper=new ItemTouchHelper(callback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 }

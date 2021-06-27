@@ -280,7 +280,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <Spinner
-                        android:id="@+id/goalBotSheet_spinner_time"
+                        android:id="@+id/selectedD_spinner_unit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -315,7 +315,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/tv_tit_cons" />
 
                 <TextView
-                    android:id="@+id/tv_currentV"
+                    android:id="@+id/selectedD_tv_currentV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/_30sdp"
@@ -348,7 +348,7 @@
                     app:layout_constraintVertical_bias="0">
 
                     <TextView
-                        android:id="@+id/tv_average"
+                        android:id="@+id/selectedD_tv_average"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/_4sdp"
@@ -360,7 +360,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/tv_averageV"
+                        android:id="@+id/selectedD_tv_averageV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/_30sdp"
@@ -368,10 +368,10 @@
                         android:textColor="?attr/colorOnSecondary"
                         android:textSize="@dimen/_14ssp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/tv_average" />
+                        app:layout_constraintTop_toTopOf="@+id/selectedD_tv_average" />
 
                     <TextView
-                        android:id="@+id/tv_perM"
+                        android:id="@+id/selectedD_tv_perM"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/_4sdp"
@@ -380,10 +380,10 @@
                         android:textSize="@dimen/_14ssp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_average" />
+                        app:layout_constraintTop_toBottomOf="@+id/selectedD_tv_average" />
 
                     <TextView
-                        android:id="@+id/tv_perMV"
+                        android:id="@+id/selectedD_tv_perMV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/_30sdp"
@@ -391,10 +391,10 @@
                         android:textColor="?attr/colorOnSecondary"
                         android:textSize="@dimen/_14ssp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/tv_perM" />
+                        app:layout_constraintTop_toTopOf="@+id/selectedD_tv_perM" />
 
                     <TextView
-                        android:id="@+id/tv_est"
+                        android:id="@+id/selectedD_tv_est"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/_4sdp"
@@ -403,10 +403,10 @@
                         android:textSize="@dimen/_14ssp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_perM" />
+                        app:layout_constraintTop_toBottomOf="@+id/selectedD_tv_perM" />
 
                     <TextView
-                        android:id="@+id/tv_estV"
+                        android:id="@+id/selectedD_tv_estV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/_30sdp"
@@ -414,7 +414,7 @@
                         android:textColor="?attr/colorOnSecondary"
                         android:textSize="@dimen/_14ssp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/tv_est" />
+                        app:layout_constraintTop_toTopOf="@+id/selectedD_tv_est" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>

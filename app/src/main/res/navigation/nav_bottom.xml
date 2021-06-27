@@ -58,6 +58,9 @@
         <argument
             android:name="alert_device"
             app:argType="com.example.muse.model.DeviceModel" />
+        <action
+            android:id="@+id/action_alertsFragment_to_selectedDeviceFragment"
+            app:destination="@id/selectedDeviceFragment" />
     </fragment>
     <fragment
         android:id="@+id/schedulesFragment"

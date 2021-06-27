@@ -5,10 +5,12 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.muse.model.DeviceModel;
 import com.example.muse.model.RegisterModel;
 import com.example.muse.repository.Repository;
+import com.example.muse.utility.SaveState;
 
 import org.json.JSONObject;
 
@@ -50,5 +52,9 @@ public class MuseViewModel extends AndroidViewModel {
 
     public LiveData<List<DeviceModel>> getDevicesAlerts() {
         return repository.getDevicesAlerts();
+    }
+
+    public MutableLiveData<Integer> getNewAlerts() {
+        return SaveState.getNewAlerts();
     }
 }
