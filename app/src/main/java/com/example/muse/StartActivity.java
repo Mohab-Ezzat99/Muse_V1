@@ -16,10 +16,14 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
+import com.example.muse.model.DeviceModel;
 import com.example.muse.utility.SaveState;
 import com.example.muse.viewmodels.MuseViewModel;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class StartActivity extends AppCompatActivity {
@@ -45,6 +49,7 @@ public class StartActivity extends AppCompatActivity {
     public SaveState saveState;
     private static Window window;
     public static MuseViewModel museViewModel;
+    public static ArrayList<DeviceModel> deviceModels=new ArrayList<>();
 
     public static FirebaseAuth mAuth;
     public static FirebaseApp firebaseApp;
@@ -72,6 +77,20 @@ public class StartActivity extends AppCompatActivity {
         toolbar.setTitleTextAppearance(this, R.style.ToolbarTitleStyle);
         setSupportActionBar(toolbar);
         activeActionBar(this);
+
+        //declare devices
+        deviceModels.add(new DeviceModel(R.drawable.ic_tv, TV));
+        deviceModels.add(new DeviceModel(R.drawable.ic_fridge, FRIDGE));
+        deviceModels.add(new DeviceModel(R.drawable.ic_air_conditioner, AIR));
+        deviceModels.add(new DeviceModel(R.drawable.ic_pc, PC));
+        deviceModels.add(new DeviceModel(R.drawable.ic_clothes_dryer, CLOTHES_DRYER));
+        deviceModels.add(new DeviceModel(R.drawable.ic_freezer, FREEZER));
+        deviceModels.add(new DeviceModel(R.drawable.ic_coffee_maker, COFFEE_MAKER));
+        deviceModels.add(new DeviceModel(R.drawable.ic_dishwasher, DISHWASHER));
+        deviceModels.add(new DeviceModel(R.drawable.ic_fan_heater, FAN_HEATER));
+        deviceModels.add(new DeviceModel(R.drawable.ic_toaster, TOASTER));
+        deviceModels.add(new DeviceModel(R.drawable.ic_water_dispenser, WATER_DISPENSER));
+        deviceModels.add(new DeviceModel(R.drawable.ic_plug, DEVICE));
 
         museViewModel = new ViewModelProvider(this).get(MuseViewModel.class);
         firebaseApp = FirebaseApp.initializeApp(this);

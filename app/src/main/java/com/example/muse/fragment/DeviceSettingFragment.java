@@ -17,10 +17,15 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.muse.R;
 import com.example.muse.StartActivity;
+import com.example.muse.adapters.OnDeviceItemListener;
+import com.example.muse.adapters.RVDeviceBotAdapter;
 import com.example.muse.model.DeviceModel;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.textfield.TextInputEditText;
 
 import org.jetbrains.annotations.NotNull;
@@ -34,6 +39,7 @@ public class DeviceSettingFragment extends Fragment {
     private TextView tv_name;
     private DeviceModel device;
     private NavController navController;
+    private BottomSheetDialog bottomSheetDialog;
 
     public DeviceSettingFragment() {
         // Required empty public constructor
@@ -57,7 +63,6 @@ public class DeviceSettingFragment extends Fragment {
         navController= Navigation.findNavController(requireActivity(),R.id.main_fragment);
     }
 
-    @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -66,10 +71,48 @@ public class DeviceSettingFragment extends Fragment {
         et_deviceName=view.findViewById(R.id.DeviceSetting_et_deviceName);
         tv_name=view.findViewById(R.id.DeviceSetting_tv_name);
 
-        iv_icon.setImageDrawable(getResources().getDrawable(device.getIcon(),null));
+        iv_icon.setImageResource(device.getIcon());
         tv_name.setText(device.getName());
         et_deviceName.setText(device.getName());
         et_deviceName.requestFocus();
+        iv_icon.setOnClickListener(this::showBottomSheet);
+    }
+
+    @SuppressLint("SetTextI18n")
+    public void showBottomSheet(View view) {
+        //init
+        bottomSheetDialog = new BottomSheetDialog(requireContext(), R.style.BottomSheetDialogTheme);
+        View bottom_sheet = LayoutInflater.from(getContext()).inflate(R.layout.bottom_sheet_device, view.findViewById(R.id.deviceBotSheet));
+
+        TextView tv_title = bottom_sheet.findViewById(R.id.deviceBotSheet_tv_title);
+        tv_title.setText("Select icon");
+
+        RecyclerView rv = bottom_sheet.findViewById(R.id.deviceBotSheet_rv);
+        rv.setHasFixedSize(true);
+        rv.setLayoutManager(new GridLayoutManager(getContext(), 2));
+
+        // adapter with click listener
+        RVDeviceBotAdapter botAdapter = new RVDeviceBotAdapter(getContext());
+        botAdapter.setList(StartActivity.deviceModels);
+        rv.setAdapter(botAdapter);
+
+        botAdapter.setListener(new OnDeviceItemListener() {
+            @Override
+            public void OnItemClick(DeviceModel device1) {
+                iv_icon.setImageResource(device1.getIcon());
+                device.setIcon(device1.getIcon());
+                bottomSheetDialog.dismiss();
+            }
+
+            @Override
+            public void OnItemLongClick(View view, DeviceModel device) {
+
+            }
+        });
+
+        //launch bottom sheet
+        bottomSheetDialog.setContentView(bottom_sheet);
+        bottomSheetDialog.show();
     }
 
     @Override

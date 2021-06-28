@@ -34,12 +34,13 @@
             android:layout_height="wrap_content"
             android:text="@string/txt_muse_will_be_configured_to_access_this_network"
             android:textSize="@dimen/_14ssp"
+            android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView16"
             app:layout_constraintVertical_bias=".05"
-            app:layout_constraintWidth_percent=".7" />
+            app:layout_constraintWidth_percent=".5" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/itl_ssid"

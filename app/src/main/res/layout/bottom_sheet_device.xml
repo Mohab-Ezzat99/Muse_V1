@@ -8,7 +8,7 @@
     android:background="@drawable/shape_up">
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/deviceBotSheet_tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_8sdp"
@@ -23,14 +23,14 @@
     <View
         android:id="@+id/view"
         android:layout_width="0dp"
-        android:layout_height="@dimen/_2sdp"
+        android:layout_height="@dimen/_1sdp"
         android:layout_marginTop="@dimen/_8sdp"
         android:layout_marginHorizontal="@dimen/_2sdp"
         android:background="?attr/colorOnSecondary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/deviceBotSheet_tv_title"
         app:layout_constraintVertical_bias="0" />
 
     <androidx.recyclerview.widget.RecyclerView

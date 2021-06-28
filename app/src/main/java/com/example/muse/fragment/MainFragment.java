@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDeepLinkBuilder;
 import androidx.navigation.Navigation;
@@ -78,7 +79,12 @@ public class MainFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         if(SaveState.getLastAlerts()!=0)
             bottomNavigationView.showBadge(R.id.alertsFragment).setNumber(SaveState.getLastAlerts());
-        StartActivity.museViewModel.getNewAlerts().observe(requireActivity(), integer -> bottomNavigationView.showBadge(R.id.alertsFragment).setNumber(integer));
+        StartActivity.museViewModel.getNewAlerts().observe(requireActivity(), integer -> {
+            if(integer!=0)
+                bottomNavigationView.showBadge(R.id.alertsFragment).setNumber(integer);
+            else
+                bottomNavigationView.removeBadge(R.id.alertsFragment);
+        });
     }
 
     public static void displayNotification(Context context, int notificationId, int current) {

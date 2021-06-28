@@ -14,7 +14,6 @@
     <string name="BTxt_submit">Submit</string>
 
     <string-array name="spinner_time">
-        <item>Time</item>
         <item>Day</item>
         <item>Week</item>
         <item>Month</item>
@@ -27,10 +26,28 @@
     </string-array>
 
     <string-array name="spinner_consumption">
-        <item>Value</item>
         <item>100KW</item>
         <item>200KW</item>
         <item>300KW</item>
+    </string-array>
+
+    <string-array name="spinner_turn">
+        <item>OFF</item>
+        <item>ON</item>
+    </string-array>
+
+    <string-array name="spinner_at">
+        <item>12 AM</item>
+        <item>6 AM</item>
+        <item>12 PM</item>
+        <item>6 PM</item>
+    </string-array>
+
+    <string-array name="spinner_after">
+        <item>30 Min</item>
+        <item>1 H</item>
+        <item>3 H</item>
+        <item>6 H</item>
     </string-array>
 
     <!--_________________________________________________________________________________________-->
@@ -55,11 +72,12 @@
 
     <!--_________________________________________________________________________________________-->
     <!--fragment devices-->
-    <string name="txt_no_devices_have_been_added">No devices have been added</string>
+    <string name="txt_no_devices_have_been_added">There are no devices</string>
 
     <!--fragment goals-->
     <string name="txt_goals">Goals</string>
-    <string name="txt_no_goals_have_been_added">No goals have been added</string>
+    <string name="txt_no_goals_have_been_added">There are no goals</string>
+    <string name="txt_no_schedules_have_been_added">There are no schedules</string>
 
     <!--fragment home-->
     <string name="txt_insights">Insights</string>
@@ -120,7 +138,7 @@
     <!--fragment on third-->
     <string name="txt_press_the_red_button_on_your_muse_device">
         First,long press the red button on your Muse device.
-    \n\nSecond,choose&amp;connect to Muse wifi network.</string>
+    \n\nSecond,choose &amp; connect to Muse wifi network.</string>
 
     <!--_________________________________________________________________________________________-->
     <!--fragment register-->
@@ -171,4 +189,16 @@
     <string name="txt_cancel">Cancel</string>
     <string name="hint_ssid">SSID</string>
     <string name="tit_settings">Settings</string>
+    <string name="txt_turn">Turn</string>
+    <string name="txt_repeat">Repeat</string>
+    <string name="txt_sat">Sat</string>
+    <string name="txt_sun">Sun</string>
+    <string name="txt_mon">Mon</string>
+    <string name="txt_tue">Tue</string>
+    <string name="txt_wed">Wed</string>
+    <string name="txt_thu">Thu</string>
+    <string name="txt_fri">Fri</string>
+    <string name="txt_select_days">Select days</string>
+    <string name="txt_at">At</string>
+    <string name="txt_after">After</string>
 </resources>

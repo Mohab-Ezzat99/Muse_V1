@@ -62,8 +62,12 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         super.onActivityCreated(savedInstanceState);
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).hide();
         navController=Navigation.findNavController(requireActivity(),R.id.start_fragment);
-        if (StartActivity.mAuth.getCurrentUser() != null)
-            navController.navigate(R.id.action_loginFragment_to_mainFragment);
+        if (StartActivity.mAuth.getCurrentUser() != null) {
+            if(SaveState.getShownOnBoarding())
+                navController.navigate(R.id.action_loginFragment_to_mainFragment);
+            else
+                navController.navigate(R.id.action_loginFragment_to_onBoardFragment);
+        }
 
         //StatusBar color
         if (SaveState.getDarkModeState())

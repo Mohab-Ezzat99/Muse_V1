@@ -107,25 +107,13 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
         bottomSheetDialog = new BottomSheetDialog(requireContext(), R.style.BottomSheetDialogTheme);
         View bottom_sheet = LayoutInflater.from(getContext()).inflate(R.layout.bottom_sheet_device, view.findViewById(R.id.deviceBotSheet));
 
-        //catch spinner
         RecyclerView rv = bottom_sheet.findViewById(R.id.deviceBotSheet_rv);
         rv.setHasFixedSize(true);
         rv.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
         // adapter with click listener
         RVDeviceBotAdapter botAdapter = new RVDeviceBotAdapter(getContext());
-        botAdapter.addItem(new DeviceModel(R.drawable.ic_tv, StartActivity.TV));
-        botAdapter.addItem(new DeviceModel(R.drawable.ic_fridge, StartActivity.FRIDGE));
-        botAdapter.addItem(new DeviceModel(R.drawable.ic_air_conditioner, StartActivity.AIR));
-        botAdapter.addItem(new DeviceModel(R.drawable.ic_pc, StartActivity.PC));
-        botAdapter.addItem(new DeviceModel(R.drawable.ic_clothes_dryer, StartActivity.CLOTHES_DRYER));
-        botAdapter.addItem(new DeviceModel(R.drawable.ic_freezer, StartActivity.FREEZER));
-        botAdapter.addItem(new DeviceModel(R.drawable.ic_coffee_maker, StartActivity.COFFEE_MAKER));
-        botAdapter.addItem(new DeviceModel(R.drawable.ic_dishwasher, StartActivity.DISHWASHER));
-        botAdapter.addItem(new DeviceModel(R.drawable.ic_fan_heater, StartActivity.FAN_HEATER));
-        botAdapter.addItem(new DeviceModel(R.drawable.ic_toaster, StartActivity.TOASTER));
-        botAdapter.addItem(new DeviceModel(R.drawable.ic_water_dispenser, StartActivity.WATER_DISPENSER));
-        botAdapter.addItem(new DeviceModel(R.drawable.ic_plug, StartActivity.DEVICE));
+        botAdapter.setList(StartActivity.deviceModels);
         rv.setAdapter(botAdapter);
 
         botAdapter.setListener(new OnDeviceItemListener() {

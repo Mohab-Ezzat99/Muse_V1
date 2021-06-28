@@ -48,6 +48,10 @@ public class RVDeviceBotAdapter extends RecyclerView.Adapter<RVDeviceBotAdapter.
         notifyDataSetChanged();
     }
 
+    public void setList(ArrayList<DeviceModel> mDevice) {
+        this.mDevice = mDevice;
+    }
+
     public void setListener(OnDeviceItemListener listener) {
         this.listener= listener;
     }

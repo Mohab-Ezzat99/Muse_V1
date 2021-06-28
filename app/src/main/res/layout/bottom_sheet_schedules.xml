@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/goalBotSheet"
+    android:id="@+id/schedulesBotSheet"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@drawable/shape_up">
 
     <TextView
@@ -11,20 +11,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_8sdp"
-        android:text="@string/txt_add_goal"
+        android:text="@string/txt_add_schedule"
         android:textColor="?attr/colorOnSecondary"
         android:textSize="@dimen/_16ssp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:id="@+id/view"
         android:layout_width="0dp"
         android:layout_height="@dimen/_1sdp"
-        android:layout_marginTop="@dimen/_8sdp"
         android:layout_marginHorizontal="@dimen/_2sdp"
+        android:layout_marginTop="@dimen/_8sdp"
         android:background="?attr/colorOnSecondary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,11 +36,12 @@
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:text="@string/txt_i_want_my"
         android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:text="@string/tit_devices"
         android:textColor="?attr/colorOnSecondary"
         android:textSize="@dimen/_14ssp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0"
@@ -52,9 +53,9 @@
         android:id="@+id/relativeLayout1"
         android:layout_width="@dimen/_124sdp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_8sdp"
         android:background="@drawable/shape_orange_circle_fill"
         android:gravity="center_vertical"
-        android:layout_marginEnd="@dimen/_8sdp"
         android:padding="@dimen/_2sdp"
         app:layout_constraintBottom_toBottomOf="@+id/textView8"
         app:layout_constraintEnd_toEndOf="parent"
@@ -63,7 +64,7 @@
         app:layout_constraintTop_toTopOf="@+id/textView8">
 
         <Spinner
-            android:id="@+id/goalBotSheet_spinner_devices"
+            android:id="@+id/schedulesBotSheet_spinner_devices"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -91,9 +92,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_8sdp"
-        android:text="@string/txt_consumption_at_the_end_of"
+        android:text="@string/txt_turn"
         android:textColor="?attr/colorOnSecondary"
         android:textSize="@dimen/_14ssp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/textView8"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
@@ -111,13 +113,110 @@
         app:layout_constraintTop_toTopOf="@+id/textView11">
 
         <Spinner
-            android:id="@+id/goalBotSheet_spinner_time"
+            android:id="@+id/schedulesBotSheet_spinner_state"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="5dp"
             android:background="@android:color/transparent"
-            android:entries="@array/spinner_time"
+            android:entries="@array/spinner_turn"
+            android:gravity="center"
+            android:popupBackground="?attr/colorOnPrimary"
+            android:spinnerMode="dropdown" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:contentDescription="@string/txt_null"
+            android:src="@drawable/ic_arrow_down"
+            app:tint="?attr/colorOnSecondary" />
+
+    </RelativeLayout>
+
+    <RadioGroup
+        android:id="@+id/schedulesBotSheet_rg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="@+id/textView8"
+        app:layout_constraintTop_toTopOf="@+id/relativeLayout_at">
+
+        <RadioButton
+            android:id="@+id/schedulesBotSheet_rb_at"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_28sdp"
+            android:buttonTint="?attr/colorOnSecondary"
+            android:checked="true"
+            android:text="@string/txt_at"
+            android:textColor="?attr/colorOnSecondary" />
+
+        <RadioButton
+            android:id="@+id/schedulesBotSheet_rb_after"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_28sdp"
+            android:buttonTint="?attr/colorOnSecondary"
+            android:text="@string/txt_after"
+            android:textColor="?attr/colorOnSecondary" />
+    </RadioGroup>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout_at"
+        android:layout_width="@dimen/_74sdp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_orange_circle_fill"
+        android:gravity="center_vertical"
+        android:padding="@dimen/_2sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        app:layout_constraintEnd_toEndOf="@+id/relativeLayout1"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout2">
+
+        <Spinner
+            android:id="@+id/schedulesBotSheet_spinner_at"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:background="@android:color/transparent"
+            android:entries="@array/spinner_at"
+            android:gravity="center"
+            android:popupBackground="?attr/colorOnPrimary"
+            android:spinnerMode="dropdown" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:contentDescription="@string/txt_null"
+            android:src="@drawable/ic_arrow_down"
+            app:tint="?attr/colorOnSecondary" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout_after"
+        android:layout_width="@dimen/_74sdp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:background="@drawable/shape_orange_circle_fill"
+        android:gravity="center_vertical"
+        android:padding="@dimen/_2sdp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/relativeLayout1"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout_at">
+
+        <Spinner
+            android:id="@+id/schedulesBotSheet_spinner_after"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:background="@android:color/transparent"
+            android:entries="@array/spinner_after"
             android:gravity="center"
             android:popupBackground="?attr/colorOnPrimary"
             android:spinnerMode="dropdown" />
@@ -138,64 +237,44 @@
         android:id="@+id/textView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:text="@string/txt_to_be"
+        android:text="@string/txt_repeat"
         android:textColor="?attr/colorOnSecondary"
         android:textSize="@dimen/_14ssp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/schedulesBotSheet_tv_select"
         app:layout_constraintStart_toStartOf="@+id/textView11"
-        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+        app:layout_constraintTop_toTopOf="@+id/schedulesBotSheet_tv_select" />
 
-    <RelativeLayout
-        android:id="@+id/relativeLayout3"
-        android:layout_width="@dimen/_74sdp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/shape_orange_circle_fill"
-        android:gravity="center_vertical"
-        android:padding="@dimen/_2sdp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView12"
-        app:layout_constraintEnd_toEndOf="@+id/relativeLayout2"
-        app:layout_constraintTop_toTopOf="@+id/textView12">
-
-        <Spinner
-            android:id="@+id/goalBotSheet_spinner_values"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center"
-            android:layout_marginLeft="5dp"
-            android:background="@android:color/transparent"
-            android:entries="@array/spinner_consumption"
-            android:gravity="center"
-            android:popupBackground="?attr/colorOnPrimary"
-            android:spinnerMode="dropdown" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center"
-            android:contentDescription="@string/txt_null"
-            android:src="@drawable/ic_arrow_down"
-            app:tint="?attr/colorOnSecondary" />
-
-    </RelativeLayout>
-
-    <Button
-        android:id="@+id/goalBotSheet_btn_submit"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/schedulesBotSheet_tv_select"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_8sdp"
-        android:layout_marginBottom="@dimen/_8sdp"
+        android:background="@drawable/shape_orange_circle_fill"
+        android:paddingHorizontal="@dimen/_12sdp"
+        android:paddingVertical="@dimen/_8sdp"
+        android:text="@string/txt_select_days"
+        android:textColor="?attr/colorOnSecondary"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintEnd_toEndOf="@+id/relativeLayout1"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout_after" />
+
+
+    <Button
+        android:id="@+id/schedulesBotSheet_btn_submit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/_8sdp"
         android:backgroundTint="?attr/colorOnPrimary"
         android:text="@string/BTxt_submit"
         android:textAllCaps="false"
         android:textColor="?attr/colorOnSecondary"
         android:textSize="@dimen/_12ssp"
-        app:layout_constraintWidth_percent=".7"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/relativeLayout3"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textView12"
-        app:layout_constraintTop_toBottomOf="@+id/textView12"
-        app:layout_constraintVertical_bias=".01" />
+        app:layout_constraintTop_toBottomOf="@+id/schedulesBotSheet_tv_select"
+        app:layout_constraintVertical_bias=".01"
+        app:layout_constraintWidth_percent=".7" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

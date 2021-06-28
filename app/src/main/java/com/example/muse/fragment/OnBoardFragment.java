@@ -2,6 +2,7 @@ package com.example.muse.fragment;
 
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -55,5 +56,13 @@ public class OnBoardFragment extends Fragment {
         VPOnBoardAdapter adapter=new VPOnBoardAdapter(requireActivity().getSupportFragmentManager(),0);
         adapter.setScreens(screens);
         viewPager.setAdapter(adapter);
+
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(),
+                new OnBackPressedCallback(true) {
+                    @Override
+                    public void handleOnBackPressed() {
+                        requireActivity().finish();
+                    }
+                });
     }
 }

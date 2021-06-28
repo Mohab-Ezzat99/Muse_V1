@@ -116,7 +116,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                     navController.navigate(R.id.action_registerFragment_to_loginFragment);
                 break;
             case R.id.register_btn_register:
-
+                setupRegister();
+                break;
 //                ApiService apiService= RetrofitBuilder.getInstance(RetrofitBuilder.BASE_URL).create(ApiService.class);
 //                Call<JSONObject> call=apiService.registerUser(new RegisterModel(full_name,email,password));
 //                call.enqueue(new Callback<JSONObject>() {
@@ -132,10 +133,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 //                        progressDialog.dismiss();
 //                    }
 //                });
-                navController.navigate(R.id.action_registerFragment_to_loginFragment);
-                Toast.makeText(getContext(), "Registered successfully", Toast.LENGTH_SHORT).show();
-                //setupRegister();
-                break;
         }
     }
 
@@ -188,7 +185,10 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 .setColorFilter(StartActivity.colorPrimaryVariant, android.graphics.PorterDuff.Mode.SRC_IN);
         progressDialog.setCanceledOnTouchOutside(false);
 
-        StartActivity.mAuth.fetchSignInMethodsForEmail(email).addOnSuccessListener(signInMethodQueryResult -> StartActivity.mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task1 -> {
+        StartActivity.mAuth.fetchSignInMethodsForEmail(email)
+                .addOnSuccessListener(signInMethodQueryResult ->
+                        StartActivity.mAuth.createUserWithEmailAndPassword(email, password)
+                                .addOnCompleteListener(task1 -> {
             if (task1.isSuccessful()) {
                 user_id = Objects.requireNonNull(StartActivity.mAuth.getCurrentUser()).getUid();
                 documentReference = db.collection(SaveState.USERS).document(user_id);
@@ -197,6 +197,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 map.put(SaveState.DEVICE_ID,device_id);
                 map.put(SaveState.EMAIL, email);
                 documentReference.set(map).addOnCompleteListener(task -> {
+                    StartActivity.mAuth.signOut();
                     navController.navigate(R.id.action_registerFragment_to_loginFragment);
                     Toast.makeText(getContext(), "Registered successfully", Toast.LENGTH_SHORT).show();
                     progressDialog.dismiss();

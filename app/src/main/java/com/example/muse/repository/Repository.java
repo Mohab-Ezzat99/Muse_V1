@@ -60,6 +60,10 @@ public class Repository {
         return museDao.getDevicesAlerts();
     }
 
+    public LiveData<List<DeviceModel>> getDevicesSchedules(){
+        return museDao.getDevicesSchedules();
+    }
+
     public static class InsertDeviceAsyncTask extends AsyncTask<DeviceModel,Void,Void>{
         private MuseDao museDao;
 

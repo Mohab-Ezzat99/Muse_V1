@@ -13,7 +13,7 @@ import androidx.sqlite.db.SupportSQLiteOpenHelper;
 
 import com.example.muse.model.DeviceModel;
 
-@Database(entities = DeviceModel.class,version = 2,exportSchema = false)
+@Database(entities = DeviceModel.class,version = 3,exportSchema = false)
 public abstract class MuseDB extends RoomDatabase {
     private static MuseDB instance;
     public abstract MuseDao museDao();
