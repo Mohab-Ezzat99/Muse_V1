@@ -30,6 +30,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class DeviceSettingFragment extends Fragment {
@@ -93,7 +94,7 @@ public class DeviceSettingFragment extends Fragment {
 
         // adapter with click listener
         RVDeviceBotAdapter botAdapter = new RVDeviceBotAdapter(getContext());
-        botAdapter.setList(StartActivity.deviceModels);
+        StartActivity.museViewModel.getAllDevices().observe(getViewLifecycleOwner(), deviceModels -> botAdapter.setList((ArrayList<DeviceModel>) deviceModels));
         rv.setAdapter(botAdapter);
 
         botAdapter.setListener(new OnDeviceItemListener() {

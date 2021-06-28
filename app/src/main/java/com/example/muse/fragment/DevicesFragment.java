@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -29,6 +30,8 @@ import com.example.muse.utility.SaveState;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClickListener {
@@ -88,7 +91,7 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
             }
         });
 
-        StartActivity.museViewModel.getAllDevices().observe(getViewLifecycleOwner(), deviceModels -> {
+        StartActivity.museViewModel.getDevicesAdded().observe(getViewLifecycleOwner(), deviceModels -> {
             if (deviceModels.size() != 0) {
                 // visibility
                 not_add.setVisibility(View.GONE);
@@ -113,20 +116,21 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
 
         // adapter with click listener
         RVDeviceBotAdapter botAdapter = new RVDeviceBotAdapter(getContext());
-        botAdapter.setList(StartActivity.deviceModels);
+        StartActivity.museViewModel.getAllDevices().observe(getViewLifecycleOwner(), deviceModels -> botAdapter.setList((ArrayList<DeviceModel>) deviceModels));
         rv.setAdapter(botAdapter);
 
         botAdapter.setListener(new OnDeviceItemListener() {
             @Override
             public void OnItemClick(DeviceModel device) {
                 //init device
-                device.initDevice("50%", 50, true);
+                device.initDevice("50%", 50, false);
                 device.setAlertMessage("turn on for more 3h!");
+                device.setAdded(true);
                 device.setHasAlert(true);
                 SaveState.setNewAlert((SaveState.getLastAlerts()) + 1);
 
                 //add to list & room
-                StartActivity.museViewModel.insertDevice(device);
+                StartActivity.museViewModel.updateDevice(device);
                 bottomSheetDialog.dismiss();
             }
 

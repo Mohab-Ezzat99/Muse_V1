@@ -52,6 +52,10 @@ public class Repository {
         return museDao.getAllDevices();
     }
 
+    public LiveData<List<DeviceModel>> getDevicesAdded(){
+        return museDao.getDevicesAdded();
+    }
+
     public LiveData<List<DeviceModel>> getDevicesGoals(){
         return museDao.getDevicesGoals();
     }

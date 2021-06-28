@@ -25,12 +25,22 @@ public class SaveState {
     public static final String NOTIFICATION = "notification";
     public static final String NEW_ALERT = "new alert";
     public static final String ON_BOARDING = "onBoarding";
+    public static final String INIT_DEVICES = "init devices";
 
     @SuppressLint("CommitPrefEdits")
     public SaveState(Context context) {
         this.context = context;
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         editor=sharedPreferences.edit();
+    }
+
+    public static void setDeclared(boolean b){
+        editor.putBoolean(INIT_DEVICES,b);
+        editor.apply();
+    }
+
+    public static boolean isDeclared(){
+        return sharedPreferences.getBoolean(INIT_DEVICES,false);
     }
 
     public static void setDarkModeState(boolean b){

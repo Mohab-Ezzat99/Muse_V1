@@ -16,6 +16,7 @@ public class DeviceModel implements Serializable {
     private int progress;
     private boolean isOn;
     private String alertMessage;
+    private boolean isAdded;
     private boolean hasGoal;
     private boolean hasAlert;
     private boolean hasSchedules;
@@ -91,6 +92,14 @@ public class DeviceModel implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public boolean isAdded() {
+        return isAdded;
+    }
+
+    public void setAdded(boolean added) {
+        isAdded = added;
     }
 
     public boolean isHasGoal() {

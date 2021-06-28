@@ -91,26 +91,24 @@
         android:id="@+id/textView11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_8sdp"
         android:text="@string/txt_turn"
         android:textColor="?attr/colorOnSecondary"
         android:textSize="@dimen/_14ssp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/relativeLayout2"
         app:layout_constraintStart_toStartOf="@+id/textView8"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+        app:layout_constraintTop_toTopOf="@+id/relativeLayout2" />
 
     <RelativeLayout
         android:id="@+id/relativeLayout2"
         android:layout_width="@dimen/_74sdp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_8sdp"
         android:background="@drawable/shape_orange_circle_fill"
         android:gravity="center_vertical"
         android:padding="@dimen/_2sdp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView11"
         app:layout_constraintEnd_toEndOf="@+id/relativeLayout1"
-        app:layout_constraintHorizontal_bias=".9"
-        app:layout_constraintTop_toTopOf="@+id/textView11">
+        app:layout_constraintTop_toBottomOf="@+id/schedulesBotSheet_tv_select">
 
         <Spinner
             android:id="@+id/schedulesBotSheet_spinner_state"
@@ -166,10 +164,10 @@
         android:id="@+id/relativeLayout_at"
         android:layout_width="@dimen/_74sdp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
         android:background="@drawable/shape_orange_circle_fill"
         android:gravity="center_vertical"
         android:padding="@dimen/_2sdp"
-        android:layout_marginTop="@dimen/_8sdp"
         app:layout_constraintEnd_toEndOf="@+id/relativeLayout1"
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout2">
 
@@ -249,15 +247,17 @@
         android:id="@+id/schedulesBotSheet_tv_select"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_8sdp"
         android:background="@drawable/shape_orange_circle_fill"
         android:paddingHorizontal="@dimen/_12sdp"
         android:paddingVertical="@dimen/_8sdp"
+        android:layout_marginVertical="@dimen/_8sdp"
         android:text="@string/txt_select_days"
         android:textColor="?attr/colorOnSecondary"
         android:textSize="@dimen/_12ssp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/relativeLayout1"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout_after" />
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout1"
+        app:layout_constraintVertical_bias="0" />
 
 
     <Button
@@ -273,7 +273,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textView12"
-        app:layout_constraintTop_toBottomOf="@+id/schedulesBotSheet_tv_select"
+        app:layout_constraintTop_toBottomOf="@+id/schedulesBotSheet_rg"
         app:layout_constraintVertical_bias=".01"
         app:layout_constraintWidth_percent=".7" />
 

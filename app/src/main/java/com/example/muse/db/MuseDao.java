@@ -23,6 +23,9 @@ public interface MuseDao {
     @Query("select * from devices_table")
     LiveData<List<DeviceModel>> getAllDevices();
 
+    @Query("select * from devices_table where isAdded=1")
+    LiveData<List<DeviceModel>> getDevicesAdded();
+
     @Query("select * from devices_table where hasGoal=1")
     LiveData<List<DeviceModel>> getDevicesGoals();
 
