@@ -78,6 +78,7 @@
     <string name="txt_goals">Goals</string>
     <string name="txt_no_goals_have_been_added">There are no goals</string>
     <string name="txt_no_schedules_have_been_added">There are no schedules</string>
+    <string name="txt_no_custom_alert_have_been_added">There are no custom alerts</string>
 
     <!--fragment home-->
     <string name="txt_insights">Insights</string>
@@ -179,7 +180,7 @@
     <string name="txt_there_are_no_alerts">There are no alerts</string>
     <string name="txt_icon">Icon</string>
     <string name="hint_device_name">Device name</string>
-    <string name="txt_custom_alert">Custom alert</string>
+    <string name="txt_custom_alert">Custom alerts</string>
     <string name="txt_add_schedule">Add schedule</string>
     <string name="tit_delete">Delete</string>
     <string name="tit_save">Save</string>
@@ -201,4 +202,8 @@
     <string name="txt_select_days">Select days</string>
     <string name="txt_at">At</string>
     <string name="txt_after">After</string>
+    <string name="txt_add_custom_alert">Add custom alert</string>
+    <string name="txt_when">When</string>
+    <string name="txt_on">ON</string>
+    <string name="txt_12_am">12 AM</string>
 </resources>

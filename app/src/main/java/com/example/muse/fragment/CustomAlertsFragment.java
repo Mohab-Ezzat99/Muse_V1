@@ -1,8 +1,6 @@
 package com.example.muse.fragment;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +10,6 @@ import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,25 +22,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.muse.R;
 import com.example.muse.StartActivity;
-import com.example.muse.adapters.RVAddGoalAdapter;
-import com.example.muse.adapters.RVAddSchedulesAdapter;
+import com.example.muse.adapters.RVAddCustomAlertAdapter;
 import com.example.muse.model.DeviceModel;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class SchedulesFragment extends Fragment {
+public class CustomAlertsFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private RVAddSchedulesAdapter adapter;
+    private RVAddCustomAlertAdapter adapter;
     private Group not_add;
     private String[] strings;
     private List<DeviceModel> result;
 
-    public SchedulesFragment() {
+    public CustomAlertsFragment() {
         // Required empty public constructor
     }
 
@@ -51,7 +45,7 @@ public class SchedulesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_schedules, container, false);
+        return inflater.inflate(R.layout.fragment_custom_alerts, container, false);
     }
 
     @Override
@@ -60,16 +54,16 @@ public class SchedulesFragment extends Fragment {
 
         //StatusBar color
         StartActivity.setupBackgroundStatusBar(StartActivity.colorPrimaryVariant);
-        not_add = view.findViewById(R.id.FSchedules_group);
+        not_add = view.findViewById(R.id.FCustomAlert_group);
 
-        recyclerView = view.findViewById(R.id.FSchedules_rv);
+        recyclerView = view.findViewById(R.id.FCustomAlert_rv);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new RVAddSchedulesAdapter(getContext());
+        adapter = new RVAddCustomAlertAdapter(getContext());
         recyclerView.setAdapter(adapter);
         setupSwipe();
 
-        StartActivity.museViewModel.getDevicesSchedules().observe(getViewLifecycleOwner(), deviceModels -> {
+        StartActivity.museViewModel.getDevicesCustomAlerts().observe(getViewLifecycleOwner(), deviceModels -> {
             if (deviceModels.size() != 0) {
                 // visibility
                 not_add.setVisibility(View.GONE);
@@ -82,14 +76,9 @@ public class SchedulesFragment extends Fragment {
             adapter.submitList(deviceModels);
         });
 
-        StartActivity.museViewModel.getDevicesAdded().observe(getViewLifecycleOwner(), deviceModels -> {
-            result = deviceModels;
-            strings = new String[deviceModels.size()];
-            for (int i = 0; i < deviceModels.size(); i++)
-                strings[i] = deviceModels.get(i).getName();
-        });
+        StartActivity.museViewModel.getDevicesAdded().observe(getViewLifecycleOwner(), deviceModels -> result = deviceModels);
 
-        FloatingActionButton fab_add = view.findViewById(R.id.FSchedules_fab_add);
+        FloatingActionButton fab_add = view.findViewById(R.id.FCustomAlert_fab_add);
         fab_add.setOnClickListener(v -> {
             if (result.size() == 0)
                 Toast.makeText(getContext(), "No Devices yet", Toast.LENGTH_SHORT).show();
@@ -102,68 +91,66 @@ public class SchedulesFragment extends Fragment {
     public void showBottomSheet(View view) {
         //init
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireContext(), R.style.BottomSheetDialogTheme);
-        View bottom_sheet = LayoutInflater.from(getContext()).inflate(R.layout.bottom_sheet_schedules, view.findViewById(R.id.schedulesBotSheet));
+        View bottom_sheet = LayoutInflater.from(getContext()).inflate(R.layout.bottom_sheet_custom_alert, view.findViewById(R.id.customAlertBotSheet));
 
         //catch spinner devices
-        Spinner spinner_device = bottom_sheet.findViewById(R.id.schedulesBotSheet_spinner_devices);
+        strings = new String[result.size()];
+        for (int i = 0; i < result.size(); i++) {
+            strings[i] = result.get(i).getName();
+        }
+        Spinner spinner_device = bottom_sheet.findViewById(R.id.customAlertBotSheet_spinner_devices);
         ArrayAdapter<String> stringsAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, strings);
         stringsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_device.setAdapter(stringsAdapter);
 
-        // select days
-        ArrayList<Integer> dayList=new ArrayList<>();
-        String[] dayArray={"Sat","Sun","Mon","Tue","Wed","Thu","Fri"};
-        boolean[] selectedDay=new boolean[dayArray.length];
-
         //radio group
-        RadioGroup radioGroup=bottom_sheet.findViewById(R.id.schedulesBotSheet_rg);
-        RelativeLayout relativeLayout_at,relativeLayout_after;
-        relativeLayout_at=bottom_sheet.findViewById(R.id.schedulesBotSheet_relativeLayout_at);
-        relativeLayout_after=bottom_sheet.findViewById(R.id.schedulesBotSheet_relativeLayout_after);
+        RadioGroup radioGroup = bottom_sheet.findViewById(R.id.customAlertBotSheet_rg);
+        RelativeLayout relativeLayout_at, relativeLayout_after;
+        relativeLayout_at = bottom_sheet.findViewById(R.id.customAlertBotSheet_relativeLayout_at);
+        relativeLayout_after = bottom_sheet.findViewById(R.id.customAlertBotSheet_relativeLayout_after);
         radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
-            switch (checkedId){
-                case R.id.schedulesBotSheet_rb_at:
+            switch (checkedId) {
+                case R.id.customAlertBotSheet_rb_at:
                     relativeLayout_at.setVisibility(View.VISIBLE);
                     relativeLayout_after.setVisibility(View.INVISIBLE);
                     break;
 
-                case R.id.schedulesBotSheet_rb_after:
+                case R.id.customAlertBotSheet_rb_after:
                     relativeLayout_after.setVisibility(View.VISIBLE);
                     relativeLayout_at.setVisibility(View.INVISIBLE);
             }
         });
 
-        TextView tv_select = bottom_sheet.findViewById(R.id.schedulesBotSheet_tv_select);
-        tv_select.setOnClickListener(v -> {
-            AlertDialog.Builder builder=new AlertDialog.Builder(getContext())
-                    .setTitle("Select days")
-                    .setMultiChoiceItems(dayArray, selectedDay, (dialog, which, isChecked) -> {
-                        if(isChecked)
-                            dayList.add(1);
-                        else dayList.add(0);
-                    })
-                    .setCancelable(false)
-                    .setPositiveButton("OK", (dialog, which) -> dialog.dismiss())
-                    .setNeutralButton("Cancel", (dialog, which) -> {
-                        Arrays.fill(selectedDay, false);
-                        dayList.clear();
-                        dialog.dismiss();
-                    });
-            AlertDialog alertDialog=builder.create();
-            alertDialog.show();
-            alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setBackground(null);
-            alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(StartActivity.colorOnSecondary);
+        Spinner spinner_state = bottom_sheet.findViewById(R.id.customAlertBotSheet_spinner_state);
+        Spinner spinner_at = bottom_sheet.findViewById(R.id.customAlertBotSheet_spinner_at);
+        Spinner spinner_after = bottom_sheet.findViewById(R.id.customAlertBotSheet_spinner_after);
 
-            alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL).setBackground(null);
-            alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL).setTextColor(StartActivity.colorOnSecondary);
-        });
 
         //btn submit
-        Button btn_submit = bottom_sheet.findViewById(R.id.schedulesBotSheet_btn_submit);
+        Button btn_submit = bottom_sheet.findViewById(R.id.customAlertBotSheet_btn_submit);
         btn_submit.setOnClickListener(v1 -> {
             // add item to rv
             DeviceModel device = result.get(spinner_device.getSelectedItemPosition());
-            device.setHasSchedules(true);
+            device.setHasCustomAlert(true);
+            switch (spinner_state.getSelectedItemPosition()) {
+                case 0:
+                    device.setAlertOn(false);
+                    break;
+                case 1:
+                    device.setAlertOn(true);
+                    break;
+            }
+            switch (radioGroup.getCheckedRadioButtonId()) {
+                case R.id.customAlertBotSheet_rb_at:
+                    device.setTime_type("At");
+                    device.setTime(spinner_at.getSelectedItem().toString());
+                    break;
+
+                case R.id.customAlertBotSheet_rb_after:
+                    device.setTime_type("After");
+                    device.setTime(spinner_after.getSelectedItem().toString());
+                    break;
+            }
             StartActivity.museViewModel.updateDevice(device);
 
             // visibility
@@ -189,7 +176,7 @@ public class SchedulesFragment extends Fragment {
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 
                 DeviceModel device = adapter.getItemAt(viewHolder.getAdapterPosition());
-                device.setHasSchedules(false);
+                device.setHasCustomAlert(false);
                 StartActivity.museViewModel.updateDevice(device);
             }
         };

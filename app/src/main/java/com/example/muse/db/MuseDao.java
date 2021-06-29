@@ -34,4 +34,7 @@ public interface MuseDao {
 
     @Query("select * from devices_table where hasSchedules=1")
     LiveData<List<DeviceModel>> getDevicesSchedules();
+
+    @Query("select * from devices_table where hasCustomAlert=1")
+    LiveData<List<DeviceModel>> getDevicesCustomAlerts();
 }

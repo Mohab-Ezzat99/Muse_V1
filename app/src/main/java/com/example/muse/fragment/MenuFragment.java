@@ -59,6 +59,7 @@ public class MenuFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.FMenu_rv);
         RVNavMenuAdapter adapter = new RVNavMenuAdapter(getContext());
         adapter.addItem(new NavMenuModel(R.drawable.ic_schedules, "Schedules"));
+        adapter.addItem(new NavMenuModel(R.drawable.ic_custom_alert, "Custom alerts"));
         adapter.addItem(new NavMenuModel(R.drawable.ic_notification, "Notifications"));
         adapter.addItem(new NavMenuModel(R.drawable.ic_moon, "Dark mode"));
         adapter.addItem(new NavMenuModel(R.drawable.ic_contactus, "Contact us"));
@@ -76,14 +77,18 @@ public class MenuFragment extends Fragment {
                     case 0:
                         navController_main.navigate(R.id.action_menuFragment_to_schedulesFragment);
                         break;
+                    //Custom alerts
+                    case 1:
+                        navController_main.navigate(R.id.action_menuFragment_to_customAlertsFragment);
+                        break;
                     //Contact us
-                    case 3:
+                    case 4:
                         Uri callUri = Uri.parse("tel:01205186367");
                         Intent callIntent = new Intent(Intent.ACTION_DIAL, callUri);
                         startActivity(callIntent);
                         break;
                     //Logout
-                    case 4:
+                    case 5:
                         SaveState.setToken(null);
                         navController_start.popBackStack();
                         navController_start.navigate(R.id.loginFragment);

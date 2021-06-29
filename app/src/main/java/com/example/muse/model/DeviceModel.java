@@ -15,11 +15,15 @@ public class DeviceModel implements Serializable {
     private String percent;
     private int progress;
     private boolean isOn;
-    private String alertMessage;
     private boolean isAdded;
     private boolean hasGoal;
     private boolean hasAlert;
+    private String alertMessage;
     private boolean hasSchedules;
+    private boolean hasCustomAlert;
+    private boolean isAlertOn;
+    private String time;
+    private String time_type;
 
     public DeviceModel() {
     }
@@ -124,5 +128,37 @@ public class DeviceModel implements Serializable {
 
     public void setHasSchedules(boolean hasSchedules) {
         this.hasSchedules = hasSchedules;
+    }
+
+    public boolean isHasCustomAlert() {
+        return hasCustomAlert;
+    }
+
+    public void setHasCustomAlert(boolean hasCustomAlert) {
+        this.hasCustomAlert = hasCustomAlert;
+    }
+
+    public boolean isAlertOn() {
+        return isAlertOn;
+    }
+
+    public void setAlertOn(boolean alertOn) {
+        isAlertOn = alertOn;
+    }
+
+    public String getTime_type() {
+        return time_type;
+    }
+
+    public void setTime_type(String time_type) {
+        this.time_type = time_type;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }

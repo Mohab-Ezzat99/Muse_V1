@@ -48,6 +48,9 @@
         <action
             android:id="@+id/action_menuFragment_to_schedulesFragment"
             app:destination="@id/schedulesFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_customAlertsFragment"
+            app:destination="@id/customAlertsFragment" />
     </fragment>
     <fragment
         android:id="@+id/alertsFragment"
@@ -77,5 +80,10 @@
             android:name="device_setting"
             app:argType="com.example.muse.model.DeviceModel" />
     </fragment>
+    <fragment
+        android:id="@+id/customAlertsFragment"
+        android:name="com.example.muse.fragment.CustomAlertsFragment"
+        android:label="@string/txt_custom_alert"
+        tools:layout="@layout/fragment_custom_alerts" />
 
 </navigation>
