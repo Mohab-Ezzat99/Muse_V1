@@ -110,11 +110,6 @@ public class SchedulesFragment extends Fragment {
         stringsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_device.setAdapter(stringsAdapter);
 
-        // select days
-        ArrayList<Integer> dayList=new ArrayList<>();
-        String[] dayArray={"Sat","Sun","Mon","Tue","Wed","Thu","Fri"};
-        boolean[] selectedDay=new boolean[dayArray.length];
-
         //radio group
         RadioGroup radioGroup=bottom_sheet.findViewById(R.id.schedulesBotSheet_rg);
         RelativeLayout relativeLayout_at,relativeLayout_after;
@@ -131,31 +126,6 @@ public class SchedulesFragment extends Fragment {
                     relativeLayout_after.setVisibility(View.VISIBLE);
                     relativeLayout_at.setVisibility(View.INVISIBLE);
             }
-        });
-
-        TextView tv_select = bottom_sheet.findViewById(R.id.schedulesBotSheet_tv_select);
-        tv_select.setOnClickListener(v -> {
-            AlertDialog.Builder builder=new AlertDialog.Builder(getContext())
-                    .setTitle("Select days")
-                    .setMultiChoiceItems(dayArray, selectedDay, (dialog, which, isChecked) -> {
-                        if(isChecked)
-                            dayList.add(1);
-                        else dayList.add(0);
-                    })
-                    .setCancelable(false)
-                    .setPositiveButton("OK", (dialog, which) -> dialog.dismiss())
-                    .setNeutralButton("Cancel", (dialog, which) -> {
-                        Arrays.fill(selectedDay, false);
-                        dayList.clear();
-                        dialog.dismiss();
-                    });
-            AlertDialog alertDialog=builder.create();
-            alertDialog.show();
-            alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setBackground(null);
-            alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(StartActivity.colorOnSecondary);
-
-            alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL).setBackground(null);
-            alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL).setTextColor(StartActivity.colorOnSecondary);
         });
 
         //btn submit

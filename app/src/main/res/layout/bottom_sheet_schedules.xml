@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/schedulesBotSheet"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@drawable/shape_up">
 
     <TextView
@@ -108,7 +108,7 @@
         android:gravity="center_vertical"
         android:padding="@dimen/_2sdp"
         app:layout_constraintEnd_toEndOf="@+id/relativeLayout1"
-        app:layout_constraintTop_toBottomOf="@+id/schedulesBotSheet_tv_select">
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout1">
 
         <Spinner
             android:id="@+id/schedulesBotSheet_spinner_state"
@@ -236,29 +236,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/txt_repeat"
+        android:layout_marginTop="@dimen/_8sdp"
         android:textColor="?attr/colorOnSecondary"
         android:textSize="@dimen/_14ssp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/schedulesBotSheet_tv_select"
         app:layout_constraintStart_toStartOf="@+id/textView11"
-        app:layout_constraintTop_toTopOf="@+id/schedulesBotSheet_tv_select" />
-
-    <TextView
-        android:id="@+id/schedulesBotSheet_tv_select"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/shape_orange_circle_fill"
-        android:paddingHorizontal="@dimen/_12sdp"
-        android:paddingVertical="@dimen/_8sdp"
-        android:layout_marginVertical="@dimen/_8sdp"
-        android:text="@string/txt_select_days"
-        android:textColor="?attr/colorOnSecondary"
-        android:textSize="@dimen/_12ssp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/relativeLayout1"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout1"
-        app:layout_constraintVertical_bias="0" />
-
+        app:layout_constraintTop_toBottomOf="@+id/schedulesBotSheet_rg" />
 
     <Button
         android:id="@+id/schedulesBotSheet_btn_submit"
@@ -273,8 +256,84 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textView12"
-        app:layout_constraintTop_toBottomOf="@+id/schedulesBotSheet_rg"
+        app:layout_constraintTop_toBottomOf="@+id/time2"
         app:layout_constraintVertical_bias=".01"
         app:layout_constraintWidth_percent=".7" />
+
+    <nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView12"
+        app:layout_constraintVertical_bias="0.501"
+        app:toggle_requiredAmount="1"
+        app:toggle_selectableAmount="4"> <!-- this attribute is from the underlying FlexboxLayout -->
+
+        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+            android:id="@+id/tb_sat"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_24sdp"
+            app:toggle_selectedBackgroundColor="?attr/colorPrimaryVariant"
+            app:toggle_text="Sat" />
+
+        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+            android:id="@+id/tb_sun"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_24sdp"
+            app:toggle_selectedBackgroundColor="?attr/colorPrimaryVariant"
+            app:toggle_text="Sun" />
+
+        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+            android:id="@+id/tb_mon"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_24sdp"
+            app:toggle_selectedBackgroundColor="?attr/colorPrimaryVariant"
+            app:toggle_text="Mon" />
+
+        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+            android:id="@+id/tb_tue"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_24sdp"
+            app:toggle_selectedBackgroundColor="?attr/colorPrimaryVariant"
+            app:toggle_text="Tue" />
+    </nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup>
+
+
+    <nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup
+        android:id="@+id/time2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/time"
+        app:toggle_requiredAmount="1"
+        app:toggle_selectableAmount="4">
+
+        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+            android:id="@+id/tb_wen"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_24sdp"
+            app:toggle_selectedBackgroundColor="?attr/colorPrimaryVariant"
+            app:toggle_text="Wen" />
+
+        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+            android:id="@+id/tb_thu"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_24sdp"
+            app:toggle_selectedBackgroundColor="?attr/colorPrimaryVariant"
+            app:toggle_text="Thu" />
+
+        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+            android:id="@+id/tb_fri"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_24sdp"
+            app:toggle_selectedBackgroundColor="?attr/colorPrimaryVariant"
+            app:toggle_text="Fri" />
+
+    </nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

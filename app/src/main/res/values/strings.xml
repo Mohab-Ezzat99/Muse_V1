@@ -36,6 +36,12 @@
         <item>ON</item>
     </string-array>
 
+    <string-array name="spinner_days">
+        <item>Mon</item>
+        <item>Wen</item>
+        <item>Fri</item>
+    </string-array>
+
     <string-array name="spinner_at">
         <item>12 AM</item>
         <item>6 AM</item>
@@ -204,7 +210,8 @@
     <string name="txt_after">After</string>
     <string name="txt_add_custom_alert">Add custom alert</string>
     <string name="txt_when">When</string>
-    <string name="txt_on">ON</string>
+    <string name="txt_ON">ON</string>
+    <string name="txt_On">On</string>
     <string name="txt_12_am">12 AM</string>
     <string name="txt_add_new_plug">Add new plug!</string>
     <string name="txt_select_device">Select device</string>

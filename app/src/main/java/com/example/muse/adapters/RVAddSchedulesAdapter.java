@@ -5,11 +5,9 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
@@ -42,14 +40,14 @@ public class RVAddSchedulesAdapter extends ListAdapter<DeviceModel, RVAddSchedul
     @NonNull
     @Override
     public ASViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ASViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.dialog_schedules, parent, false));
+        return new ASViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_add_schedules, parent, false));
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     public void onBindViewHolder(@NonNull ASViewHolder holder, int position) {
         DeviceModel deviceModel = getItem(position);
-        holder.tv_name.setText(deviceModel.getName());
+//        holder.tv_name.setText(deviceModel.getName());
     }
 
     public DeviceModel getItemAt(int position) {
@@ -62,7 +60,7 @@ public class RVAddSchedulesAdapter extends ListAdapter<DeviceModel, RVAddSchedul
 
         public ASViewHolder(@NonNull View itemView) {
             super(itemView);
-            tv_name=itemView.findViewById(R.id.dialogSchedule_tv_name);
+//            tv_name=itemView.findViewById(R.id.dialogSchedule_tv_name);
 
         }
     }

@@ -31,16 +31,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.muse.R;
-import com.example.muse.StartActivity;
-import com.example.muse.adapters.OnDeviceItemListener;
-import com.example.muse.adapters.RVDeviceBotAdapter;
 import com.example.muse.model.DeviceModel;
-import com.example.muse.utility.SaveState;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 import org.jetbrains.annotations.NotNull;
@@ -228,9 +221,9 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
                 break;
 
             case R.id.selectedD_cv_schedule:
-                View view1 = displayDialog(R.layout.dialog_schedules);
-                TextView tv_name1 = view1.findViewById(R.id.dialogSchedule_tv_name);
-                tv_name1.setText(device.getName());
+                View view1 = displayDialog(R.layout.item_add_schedules);
+//                TextView tv_name1 = view1.findViewById(R.id.dialogSchedule_tv_name);
+//                tv_name1.setText(device.getName());
                 break;
 
             case R.id.selectedD_iv_custom:
