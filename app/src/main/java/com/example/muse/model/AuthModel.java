@@ -2,7 +2,7 @@ package com.example.muse.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class RegisterModel {
+public class AuthModel {
     @SerializedName("username")
     String username;
 
@@ -12,8 +12,13 @@ public class RegisterModel {
     @SerializedName("password")
     String password;
 
-    public RegisterModel(String username, String email, String password) {
+    public AuthModel(String username, String email, String password) {
         this.username = username;
+        this.email = email;
+        this.password = password;
+    }
+
+    public AuthModel(String email, String password) {
         this.email = email;
         this.password = password;
     }

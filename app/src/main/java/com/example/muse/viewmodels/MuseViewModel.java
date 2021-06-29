@@ -7,15 +7,15 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.muse.model.AuthModel;
 import com.example.muse.model.DeviceModel;
-import com.example.muse.model.RegisterModel;
+import com.example.muse.model.LoginResponseModel;
 import com.example.muse.repository.Repository;
 import com.example.muse.utility.SaveState;
 
-import org.json.JSONObject;
-
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 
 public class MuseViewModel extends AndroidViewModel {
@@ -26,8 +26,12 @@ public class MuseViewModel extends AndroidViewModel {
         repository=new Repository(application);
     }
 
-    public Call<JSONObject> registerUser(RegisterModel registerModel){
-        return repository.registerUser(registerModel);
+    public Call<ResponseBody> register(AuthModel authModel){
+        return repository.register(authModel);
+    }
+
+    public Call<LoginResponseModel> login(AuthModel authModel){
+        return repository.login(authModel);
     }
 
     public void insertDevice(DeviceModel device){

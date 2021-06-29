@@ -8,6 +8,8 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
@@ -147,5 +149,10 @@ public class StartActivity extends AppCompatActivity {
         Resources.Theme theme = this.getTheme();
         theme.resolveAttribute(color, typedValue, true);
         return typedValue.data;
+    }
+
+    public static void hideKeyboardFrom(Context context, View view) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

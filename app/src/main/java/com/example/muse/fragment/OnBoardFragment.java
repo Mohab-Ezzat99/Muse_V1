@@ -33,7 +33,7 @@ public class OnBoardFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).hide();
-        requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
         return inflater.inflate(R.layout.fragment_on_board, container, false);
     }
 

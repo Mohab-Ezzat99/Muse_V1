@@ -16,16 +16,12 @@ public class SaveState {
     private static SharedPreferences sharedPreferences;
     private static SharedPreferences.Editor editor;
 
-    public static final String USERS = "Users";
-    public static final String USER_ID = "User ID";
-    public static final String FULL_NAME="Full Name";
-    public static final String DEVICE_ID="Device ID";
-    public static final String EMAIL="Email";
     public static final String DARK_MODE="dark_mode";
     public static final String NOTIFICATION = "notification";
     public static final String NEW_ALERT = "new alert";
     public static final String ON_BOARDING = "onBoarding";
     public static final String INIT_DEVICES = "init devices";
+    public static final String TOKEN = "token";
 
     @SuppressLint("CommitPrefEdits")
     public SaveState(Context context) {
@@ -41,6 +37,15 @@ public class SaveState {
 
     public static boolean isDeclared(){
         return sharedPreferences.getBoolean(INIT_DEVICES,false);
+    }
+
+    public static void setToken(String token) {
+        editor.putString(TOKEN,token);
+        editor.apply();
+    }
+
+    public static String getToken() {
+        return sharedPreferences.getString(TOKEN,null);
     }
 
     public static void setDarkModeState(boolean b){

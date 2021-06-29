@@ -2,7 +2,6 @@ package com.example.muse.fragment;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -18,22 +17,27 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.example.muse.R;
 import com.example.muse.StartActivity;
+import com.example.muse.model.AuthModel;
+import com.example.muse.model.LoginResponseModel;
+import com.example.muse.network.ApiService;
+import com.example.muse.network.RetrofitBuilder;
 import com.example.muse.utility.SaveState;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
-import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginFragment extends Fragment implements View.OnClickListener {
 
@@ -44,6 +48,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     private TextInputEditText et_email, et_password;
     private TextInputLayout itl_email, itl_password;
     private NavController navController;
+    private LoginResponseModel model;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -61,9 +66,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).hide();
-        navController=Navigation.findNavController(requireActivity(),R.id.start_fragment);
-        if (StartActivity.mAuth.getCurrentUser() != null) {
-            if(SaveState.getShownOnBoarding())
+        navController = Navigation.findNavController(requireActivity(), R.id.start_fragment);
+        if (SaveState.getToken() != null) {
+            if (SaveState.getShownOnBoarding())
                 navController.navigate(R.id.action_loginFragment_to_mainFragment);
             else
                 navController.navigate(R.id.action_loginFragment_to_onBoardFragment);
@@ -111,7 +116,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
             case R.id.login_btn_login:
                 setupLogin();
-                break;
         }
     }
 
@@ -186,38 +190,34 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
         progressDialog.setMessage("Please wait...");
         progressDialog.show();
-        ((ProgressBar)progressDialog.findViewById(android.R.id.progress))
+        ((ProgressBar) progressDialog.findViewById(android.R.id.progress))
                 .getIndeterminateDrawable()
                 .setColorFilter(StartActivity.colorPrimaryVariant, android.graphics.PorterDuff.Mode.SRC_IN);
         progressDialog.setCanceledOnTouchOutside(false);
 
-        StartActivity.mAuth.fetchSignInMethodsForEmail(email).addOnSuccessListener(task -> {
-            StartActivity.mAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener(authResult -> {
-                if(SaveState.getShownOnBoarding())
-                    navController.navigate(R.id.action_loginFragment_to_mainFragment);
-                else
-                    navController.navigate(R.id.action_loginFragment_to_onBoardFragment);
-            }).addOnFailureListener(e -> {
-                //email does not exist
-                if (e instanceof FirebaseAuthInvalidUserException) {
-                    itl_email.setError("Invalid email");
-                    itl_password.setError(null);
+        ApiService apiService = RetrofitBuilder.getInstance().create(ApiService.class);
+        Call<LoginResponseModel> call = apiService.login(new AuthModel(email, password));
+        call.enqueue(new Callback<LoginResponseModel>() {
+            @Override
+            public void onResponse(@NotNull Call<LoginResponseModel> call, @NotNull Response<LoginResponseModel> response) {
+                if (response.body() == null)
+                    Toast.makeText(getContext(), response.message(), Toast.LENGTH_SHORT).show();
+                else {
+                    SaveState.setToken(response.body().getToken());
+                    StartActivity.hideKeyboardFrom(requireContext(), btn_login);
+                    if (SaveState.getShownOnBoarding())
+                        navController.navigate(R.id.action_loginFragment_to_mainFragment);
+                    else
+                        navController.navigate(R.id.action_loginFragment_to_onBoardFragment);
                 }
+                progressDialog.dismiss();
+            }
 
-                //wrong password
-                if (e instanceof FirebaseAuthInvalidCredentialsException) {
-                    itl_password.setError("Password is wrong");
-                    itl_email.setError(null);
-                }
-            });
-            progressDialog.dismiss();
-        }).addOnFailureListener(e -> {
-            if (e instanceof FirebaseAuthInvalidCredentialsException) {
-                itl_email.setError("Badly format");
-                itl_password.setError(null);
-            } else
-                Toast.makeText(getContext(), "Error! " + e.getCause(), Toast.LENGTH_SHORT).show();
-            progressDialog.dismiss();
+            @Override
+            public void onFailure(@NotNull Call<LoginResponseModel> call, @NotNull Throwable t) {
+                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                progressDialog.dismiss();
+            }
         });
     }
 }

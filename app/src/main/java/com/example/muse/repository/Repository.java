@@ -4,21 +4,18 @@ import android.app.Application;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.room.Update;
 
 import com.example.muse.db.MuseDB;
 import com.example.muse.db.MuseDao;
 import com.example.muse.model.DeviceModel;
-import com.example.muse.model.RegisterModel;
+import com.example.muse.model.AuthModel;
+import com.example.muse.model.LoginResponseModel;
 import com.example.muse.network.ApiService;
 import com.example.muse.network.RetrofitBuilder;
-import com.example.muse.utility.SaveState;
-
-import org.json.JSONObject;
 
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 
 public class Repository {
@@ -31,9 +28,14 @@ public class Repository {
         museDao=museDB.museDao();
     }
 
-    public Call<JSONObject> registerUser(RegisterModel registerModel){
-        apiService= RetrofitBuilder.getInstance(RetrofitBuilder.BASE_URL).create(ApiService.class);
-        return apiService.registerUser(registerModel);
+    public Call<ResponseBody> register(AuthModel authModel){
+        apiService= RetrofitBuilder.getInstance().create(ApiService.class);
+        return apiService.register(authModel);
+    }
+
+    public Call<LoginResponseModel> login(AuthModel authModel){
+        apiService= RetrofitBuilder.getInstance().create(ApiService.class);
+        return apiService.login(authModel);
     }
 
     public void insertDevice(DeviceModel device){

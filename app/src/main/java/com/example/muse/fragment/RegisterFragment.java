@@ -23,6 +23,9 @@ import androidx.navigation.Navigation;
 
 import com.example.muse.R;
 import com.example.muse.StartActivity;
+import com.example.muse.model.AuthModel;
+import com.example.muse.network.ApiService;
+import com.example.muse.network.RetrofitBuilder;
 import com.example.muse.utility.SaveState;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -32,9 +35,17 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RegisterFragment extends Fragment implements View.OnClickListener {
 
@@ -117,26 +128,10 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.register_btn_register:
                 setupRegister();
-                break;
-//                ApiService apiService= RetrofitBuilder.getInstance(RetrofitBuilder.BASE_URL).create(ApiService.class);
-//                Call<JSONObject> call=apiService.registerUser(new RegisterModel(full_name,email,password));
-//                call.enqueue(new Callback<JSONObject>() {
-//                    @Override
-//                    public void onResponse(Call<JSONObject> call, Response<JSONObject> response) {
-//                        Toast.makeText(getContext(), "Success", Toast.LENGTH_SHORT).show();
-//                        progressDialog.dismiss();
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<JSONObject> call, Throwable t) {
-//                        Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
-//                        progressDialog.dismiss();
-//                    }
-//                });
         }
     }
 
-    public void setupRegister() {
+    public void  setupRegister(){
         full_name = Objects.requireNonNull(et_fullName.getText()).toString().trim();
         email = Objects.requireNonNull(et_email.getText()).toString().trim();
         password = Objects.requireNonNull(et_password.getText()).toString().trim();
@@ -185,40 +180,24 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 .setColorFilter(StartActivity.colorPrimaryVariant, android.graphics.PorterDuff.Mode.SRC_IN);
         progressDialog.setCanceledOnTouchOutside(false);
 
-        StartActivity.mAuth.fetchSignInMethodsForEmail(email)
-                .addOnSuccessListener(signInMethodQueryResult ->
-                        StartActivity.mAuth.createUserWithEmailAndPassword(email, password)
-                                .addOnCompleteListener(task1 -> {
-            if (task1.isSuccessful()) {
-                user_id = Objects.requireNonNull(StartActivity.mAuth.getCurrentUser()).getUid();
-                documentReference = db.collection(SaveState.USERS).document(user_id);
-                map.put(SaveState.USER_ID, user_id);
-                map.put(SaveState.FULL_NAME, full_name);
-                map.put(SaveState.DEVICE_ID,device_id);
-                map.put(SaveState.EMAIL, email);
-                documentReference.set(map).addOnCompleteListener(task -> {
-                    StartActivity.mAuth.signOut();
+        Call<ResponseBody> call=StartActivity.museViewModel.register(new AuthModel(full_name,email,password));
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
+                if(response.body()==null)
+                    Toast.makeText(getContext(), "Error! check fields", Toast.LENGTH_SHORT).show();
+                else {
+                    Toast.makeText(getContext(), "Registered Successfully", Toast.LENGTH_SHORT).show();
                     navController.navigate(R.id.action_registerFragment_to_loginFragment);
-                    Toast.makeText(getContext(), "Registered successfully", Toast.LENGTH_SHORT).show();
-                    progressDialog.dismiss();
-                });
-            } else {
-                if (task1.getException() instanceof FirebaseAuthUserCollisionException) {
-                    itl_email.setError("Already exist");
-                    itl_password.setError(null);
-                } else if (task1.getException() instanceof FirebaseAuthWeakPasswordException) {
-                    itl_password.setError("Weak password");
-                    itl_email.setError(null);
-                } else
-                    Toast.makeText(getContext(), "Error! " + task1.getException(), Toast.LENGTH_LONG).show();
+                }
                 progressDialog.dismiss();
             }
-        })).addOnFailureListener(e -> {
-            if (e instanceof FirebaseAuthInvalidCredentialsException)
-                itl_email.setError("Badly format");
-            else
-                Toast.makeText(getContext(), "Error! " + e.getCause(), Toast.LENGTH_SHORT).show();
-            progressDialog.dismiss();
+
+            @Override
+            public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
+                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                progressDialog.dismiss();
+            }
         });
     }
 }
