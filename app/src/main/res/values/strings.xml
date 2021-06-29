@@ -206,4 +206,6 @@
     <string name="txt_when">When</string>
     <string name="txt_on">ON</string>
     <string name="txt_12_am">12 AM</string>
+    <string name="txt_add_new_plug">Add new plug!</string>
+    <string name="txt_select_device">Select device</string>
 </resources>

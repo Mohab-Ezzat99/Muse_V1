@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/colorOnPrimary"
+    app:cardCornerRadius="@dimen/_10sdp"
+    app:cardElevation="@dimen/_6sdp"
+    app:cardUseCompatPadding="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/_4sdp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/itl_ssid"
+            style="@style/TextInputLayoutStyle"
+            android:layout_width="@dimen/_250sdp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_8sdp"
+            android:hint="@string/hint_ssid"
+            android:textColorHint="@color/gray"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView3"
+            app:layout_constraintVertical_bias="0.05">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/dialogWifi_et_ssid"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:drawableStart="@drawable/ic_wifi"
+                android:drawableLeft="@drawable/ic_wifi"
+                android:drawablePadding="@dimen/_8sdp"
+                android:inputType="textEmailAddress"
+                android:maxLength="30"
+                android:textColor="?attr/colorOnSecondary" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/itl_password"
+            style="@style/TextInputLayoutStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:hint="@string/hint_password"
+            android:textColorHint="@color/gray"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/itl_ssid"
+            app:layout_constraintStart_toStartOf="@+id/itl_ssid"
+            app:layout_constraintTop_toBottomOf="@+id/itl_ssid"
+            app:layout_constraintVertical_bias=".01"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="?attr/colorPrimaryVariant">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/dialogWifi_et_password"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:drawableStart="@drawable/ic_password"
+                android:drawableLeft="@drawable/ic_password"
+                android:drawablePadding="8dp"
+                android:inputType="textPassword"
+                android:maxLength="20"
+                android:textColor="?attr/colorOnSecondary" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:text="@string/txt_wi_fi_connection"
+            android:textColor="?attr/colorOnSecondary"
+            android:textSize="@dimen/_16ssp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/dialogWifi_tv_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_4sdp"
+            android:text="@string/txt_submit"
+            android:textAllCaps="false"
+            android:textColor="?attr/colorPrimaryVariant"
+            android:textSize="@dimen/_16ssp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/dialogWifi_pb"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/dialogWifi_tv_cancel"
+            app:layout_constraintTop_toTopOf="@+id/dialogWifi_pb" />
+
+        <TextView
+            android:id="@+id/dialogWifi_tv_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_4sdp"
+            android:text="@string/txt_cancel"
+            android:textAllCaps="false"
+            android:textColor="@color/red"
+            android:textSize="@dimen/_16ssp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/dialogWifi_tv_submit"
+            app:layout_constraintEnd_toStartOf="@+id/dialogWifi_tv_submit"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/dialogWifi_tv_submit"
+            app:layout_constraintVertical_bias=".05" />
+
+        <ProgressBar
+            android:id="@+id/dialogWifi_pb"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_8sdp"
+            android:indeterminateTint="?attr/colorPrimaryVariant"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/itl_password"
+            app:layout_constraintStart_toStartOf="@+id/itl_password"
+            app:layout_constraintTop_toBottomOf="@+id/itl_password" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

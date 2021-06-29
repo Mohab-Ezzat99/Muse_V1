@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_8sdp"
-        android:text="@string/txt_add_device"
+        android:text="@string/txt_select_device"
         android:textColor="?attr/colorOnSecondary"
         android:textSize="@dimen/_16ssp"
         android:textStyle="bold"

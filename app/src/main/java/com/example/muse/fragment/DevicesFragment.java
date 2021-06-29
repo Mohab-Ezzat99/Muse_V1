@@ -7,14 +7,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -31,17 +32,19 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClickListener {
 
     private RecyclerView recyclerView;
     private RVAddDeviceAdapter addDeviceAdapter;
     private Group not_add;
+    private FloatingActionButton fab_add;
     private BottomSheetDialog bottomSheetDialog;
     private NavController navController;
     private DeviceModel currentDevice;
+    private boolean isDisplayed=false;
 
     public DevicesFragment() {
         // Required empty public constructor
@@ -67,8 +70,8 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
         //StatusBar color
         StartActivity.setupBackgroundStatusBar(StartActivity.colorPrimaryVariant);
 
-        FloatingActionButton fab_add = view.findViewById(R.id.FDevices_fab_add);
-        fab_add.setOnClickListener(v -> showBottomSheet(view));
+        fab_add = view.findViewById(R.id.FDevices_fab_add);
+        fab_add.setOnClickListener(v -> setupAdd());
         not_add = view.findViewById(R.id.FDevices_group);
 
         recyclerView = view.findViewById(R.id.FDevices_rv);
@@ -169,5 +172,45 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
             default:
                 return false;
         }
+    }
+
+    public void setupAdd(){
+        final AlertDialog.Builder builderPlug = new AlertDialog.Builder(requireContext(),R.style.DialogStyle);
+        final View viewPlug = LayoutInflater.from(getContext()).inflate(R.layout.dialog_plug, null, false);
+        builderPlug.setView(viewPlug);
+        builderPlug.setCancelable(false);
+        final AlertDialog alertDialogPlug = builderPlug.create();
+        alertDialogPlug.show();
+
+        final TextView tv_next = viewPlug.findViewById(R.id.dialogPlug_tv_next);
+        final TextView tv_plugCancel = viewPlug.findViewById(R.id.dialogPlug_tv_cancel);
+
+        tv_next.setOnClickListener(v -> {
+            displayWifi();
+            alertDialogPlug.dismiss();
+        });
+
+        tv_plugCancel.setOnClickListener(v -> alertDialogPlug.dismiss());
+
+    }
+
+    public void displayWifi(){
+        final AlertDialog.Builder builderWifi = new AlertDialog.Builder(requireContext(),R.style.DialogStyle);
+        final View viewWifi = LayoutInflater.from(getContext()).inflate(R.layout.dialog_wifi, null, false);
+        builderWifi.setView(viewWifi);
+        builderWifi.setCancelable(false);
+        final AlertDialog alertDialogWifi = builderWifi.create();
+        alertDialogWifi.show();
+
+        final TextView tv_submit = viewWifi.findViewById(R.id.dialogWifi_tv_submit);
+        final TextView tv_wifiCancel = viewWifi.findViewById(R.id.dialogWifi_tv_cancel);
+
+        tv_submit.setOnClickListener(v -> {
+            showBottomSheet(fab_add);
+            alertDialogWifi.dismiss();
+        });
+
+        tv_wifiCancel.setOnClickListener(v -> alertDialogWifi.dismiss());
+
     }
 }
