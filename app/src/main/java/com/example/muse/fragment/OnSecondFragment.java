@@ -27,7 +27,6 @@ public class OnSecondFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_on_second, container, false);
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

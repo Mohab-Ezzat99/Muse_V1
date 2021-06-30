@@ -34,7 +34,6 @@ public class CustomAlertsFragment extends Fragment {
     private RecyclerView recyclerView;
     private RVAddCustomAlertAdapter adapter;
     private Group not_add;
-    private String[] strings;
     private List<DeviceModel> result;
 
     public CustomAlertsFragment() {
@@ -87,14 +86,14 @@ public class CustomAlertsFragment extends Fragment {
         });
     }
 
-    @SuppressLint({"UseCompatLoadingForDrawables", "NonConstantResourceId"})
+    @SuppressLint("NonConstantResourceId")
     public void showBottomSheet(View view) {
         //init
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireContext(), R.style.BottomSheetDialogTheme);
         View bottom_sheet = LayoutInflater.from(getContext()).inflate(R.layout.bottom_sheet_custom_alert, view.findViewById(R.id.customAlertBotSheet));
 
         //catch spinner devices
-        strings = new String[result.size()];
+        String[] strings = new String[result.size()];
         for (int i = 0; i < result.size(); i++) {
             strings[i] = result.get(i).getName();
         }
@@ -124,7 +123,6 @@ public class CustomAlertsFragment extends Fragment {
         Spinner spinner_state = bottom_sheet.findViewById(R.id.customAlertBotSheet_spinner_state);
         Spinner spinner_at = bottom_sheet.findViewById(R.id.customAlertBotSheet_spinner_at);
         Spinner spinner_after = bottom_sheet.findViewById(R.id.customAlertBotSheet_spinner_after);
-
 
         //btn submit
         Button btn_submit = bottom_sheet.findViewById(R.id.customAlertBotSheet_btn_submit);

@@ -17,7 +17,7 @@ import com.example.muse.R;
 import com.example.muse.model.DeviceModel;
 
 public class RVAlertAdapter extends ListAdapter<DeviceModel, RVAlertAdapter.AlertViewHolder> {
-    private Context context;
+    private final Context context;
     private OnDeviceItemListener listener;
 
     private static final DiffUtil.ItemCallback<DeviceModel> DIFF_CALLBACK = new DiffUtil.ItemCallback<DeviceModel>() {
@@ -64,8 +64,8 @@ public class RVAlertAdapter extends ListAdapter<DeviceModel, RVAlertAdapter.Aler
     }
 
     class AlertViewHolder extends RecyclerView.ViewHolder {
-        private ImageView iv_icon;
-        private TextView tv_name, tv_message;
+        private final ImageView iv_icon;
+        private final TextView tv_name, tv_message;
         private DeviceModel device;
 
         public AlertViewHolder(@NonNull View itemView) {

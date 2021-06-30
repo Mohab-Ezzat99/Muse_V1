@@ -17,7 +17,7 @@ import com.example.muse.R;
 import com.example.muse.model.DeviceModel;
 
 public class RVAddCustomAlertAdapter extends ListAdapter<DeviceModel, RVAddCustomAlertAdapter.ASViewHolder> {
-    private Context context;
+    private final Context context;
     private static final DiffUtil.ItemCallback<DeviceModel> DIFF_CALLBACK = new DiffUtil.ItemCallback<DeviceModel>() {
         @Override
         public boolean areItemsTheSame(@NonNull DeviceModel oldItem, @NonNull DeviceModel newItem) {
@@ -72,7 +72,6 @@ public class RVAddCustomAlertAdapter extends ListAdapter<DeviceModel, RVAddCusto
             tv_state=itemView.findViewById(R.id.itemAC_tv_state);
             tv_type=itemView.findViewById(R.id.itemAC_tv_type);
             tv_time=itemView.findViewById(R.id.itemAC_tv_time);
-
         }
     }
 }

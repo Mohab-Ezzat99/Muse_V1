@@ -3,6 +3,7 @@ package com.example.muse.model;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
 
 @Entity(tableName = "devices_table")
@@ -12,15 +13,20 @@ public class DeviceModel implements Serializable {
     private int id;
     private String name;
     private int icon;
+    private boolean isOn;
+
     private String percent;
     private int progress;
-    private boolean isOn;
+
+    // for conditions displaying in fragment
     private boolean isAdded;
     private boolean hasGoal;
-    private boolean hasAlert;
-    private String alertMessage;
     private boolean hasSchedules;
     private boolean hasCustomAlert;
+    private boolean hasAlert;
+    private String alertMessage;
+
+    //check if custom alert exist
     private boolean isAlertOn;
     private String time;
     private String time_type;
@@ -30,7 +36,7 @@ public class DeviceModel implements Serializable {
 
     //add new device
     @Ignore
-    public DeviceModel(int icon,String name) {
+    public DeviceModel(int icon, String name) {
         this.name = name;
         this.icon = icon;
     }
@@ -40,6 +46,14 @@ public class DeviceModel implements Serializable {
         this.percent = percent;
         this.progress = progress;
         this.isOn = isOn;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -58,6 +72,16 @@ public class DeviceModel implements Serializable {
         this.icon = icon;
     }
 
+    public boolean isOn() {
+        return isOn;
+    }
+
+    public void setOn(boolean isOn) {
+        this.isOn = isOn;
+    }
+
+    //___________________________________________________________________________________________//
+
     public String getPercent() {
         return percent;
     }
@@ -74,29 +98,7 @@ public class DeviceModel implements Serializable {
         this.progress = progress;
     }
 
-    public boolean isOn() {
-        return isOn;
-    }
-
-    public void setOn(boolean isOn) {
-        this.isOn = isOn;
-    }
-
-    public String getAlertMessage() {
-        return alertMessage;
-    }
-
-    public void setAlertMessage(String alertMessage) {
-        this.alertMessage = alertMessage;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+    //___________________________________________________________________________________________//
 
     public boolean isAdded() {
         return isAdded;
@@ -114,14 +116,6 @@ public class DeviceModel implements Serializable {
         this.hasGoal = hasGoal;
     }
 
-    public boolean isHasAlert() {
-        return hasAlert;
-    }
-
-    public void setHasAlert(boolean hasAlert) {
-        this.hasAlert = hasAlert;
-    }
-
     public boolean isHasSchedules() {
         return hasSchedules;
     }
@@ -137,6 +131,24 @@ public class DeviceModel implements Serializable {
     public void setHasCustomAlert(boolean hasCustomAlert) {
         this.hasCustomAlert = hasCustomAlert;
     }
+
+    public boolean isHasAlert() {
+        return hasAlert;
+    }
+
+    public void setHasAlert(boolean hasAlert) {
+        this.hasAlert = hasAlert;
+    }
+
+    public String getAlertMessage() {
+        return alertMessage;
+    }
+
+    public void setAlertMessage(String alertMessage) {
+        this.alertMessage = alertMessage;
+    }
+
+    //___________________________________________________________________________________________//
 
     public boolean isAlertOn() {
         return isAlertOn;

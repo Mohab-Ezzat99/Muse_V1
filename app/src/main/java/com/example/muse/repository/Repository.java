@@ -7,8 +7,8 @@ import androidx.lifecycle.LiveData;
 
 import com.example.muse.db.MuseDB;
 import com.example.muse.db.MuseDao;
-import com.example.muse.model.DeviceModel;
 import com.example.muse.model.AuthModel;
+import com.example.muse.model.DeviceModel;
 import com.example.muse.model.LoginResponseModel;
 import com.example.muse.network.ApiService;
 import com.example.muse.network.RetrofitBuilder;
@@ -20,16 +20,16 @@ import retrofit2.Call;
 
 public class Repository {
     private ApiService apiService;
-    private MuseDB museDB;
-    private MuseDao museDao;
+    private final MuseDB museDB;
+    private final MuseDao museDao;
 
     public Repository(Application application) {
         this.museDB = MuseDB.getInstance(application);
-        museDao=museDB.museDao();
+        museDao = museDB.museDao();
     }
 
-    public Call<ResponseBody> register(AuthModel authModel){
-        apiService= RetrofitBuilder.getInstance().create(ApiService.class);
+    public Call<ResponseBody> register(AuthModel authModel) {
+        apiService = RetrofitBuilder.getInstance().create(ApiService.class);
         return apiService.register(authModel);
     }
 
@@ -66,16 +66,16 @@ public class Repository {
         return museDao.getDevicesAlerts();
     }
 
-    public LiveData<List<DeviceModel>> getDevicesSchedules(){
+    public LiveData<List<DeviceModel>> getDevicesSchedules() {
         return museDao.getDevicesSchedules();
     }
 
-    public LiveData<List<DeviceModel>> getDevicesCustomAlerts(){
+    public LiveData<List<DeviceModel>> getDevicesCustomAlerts() {
         return museDao.getDevicesCustomAlerts();
     }
 
     public static class InsertDeviceAsyncTask extends AsyncTask<DeviceModel,Void,Void>{
-        private MuseDao museDao;
+        private final MuseDao museDao;
 
         public InsertDeviceAsyncTask(MuseDao museDao) {
             this.museDao = museDao;
@@ -89,7 +89,7 @@ public class Repository {
     }
 
     public static class UpdateDeviceAsyncTask extends AsyncTask<DeviceModel,Void,Void>{
-        private MuseDao museDao;
+        private final MuseDao museDao;
 
         public UpdateDeviceAsyncTask(MuseDao museDao) {
             this.museDao = museDao;
@@ -103,7 +103,7 @@ public class Repository {
     }
 
     public static class DeleteDeviceAsyncTask extends AsyncTask<DeviceModel,Void,Void>{
-        private MuseDao museDao;
+        private final MuseDao museDao;
 
         public DeleteDeviceAsyncTask(MuseDao museDao) {
             this.museDao = museDao;

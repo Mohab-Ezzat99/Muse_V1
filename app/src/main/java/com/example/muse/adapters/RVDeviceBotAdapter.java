@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class RVDeviceBotAdapter extends RecyclerView.Adapter<RVDeviceBotAdapter.DBViewHolder> {
     private ArrayList<DeviceModel> mDevice =new ArrayList<>();
     private OnDeviceItemListener listener;
-    private Context context;
+    private final Context context;
 
     public RVDeviceBotAdapter(Context context) {
         this.context = context;
@@ -29,23 +29,17 @@ public class RVDeviceBotAdapter extends RecyclerView.Adapter<RVDeviceBotAdapter.
         return new RVDeviceBotAdapter.DBViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_bottom_device, null, false));
     }
 
-    @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     public void onBindViewHolder(@NonNull DBViewHolder holder, int position) {
         DeviceModel mBottomDevice = mDevice.get(position);
         holder.device=mBottomDevice;
-        holder.iv_icon.setImageDrawable(context.getResources().getDrawable(mBottomDevice.getIcon(),null));
+        holder.iv_icon.setImageResource(mBottomDevice.getIcon());
         holder.tv_device.setText(mBottomDevice.getName());
     }
 
     @Override
     public int getItemCount() {
         return mDevice.size();
-    }
-
-    public void addItem(DeviceModel mBottomDevice){
-        this.mDevice.add(mBottomDevice);
-        notifyDataSetChanged();
     }
 
     public void setList(ArrayList<DeviceModel> mDevice) {

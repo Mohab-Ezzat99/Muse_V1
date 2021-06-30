@@ -53,25 +53,16 @@ public class AlertsFragment extends Fragment {
         //StatusBar color
         StartActivity.setupBackgroundStatusBar(StartActivity.colorPrimaryVariant);
 
+        //init
         not_add = view.findViewById(R.id.FAlerts_group);
         recyclerView = view.findViewById(R.id.FAlerts_rv);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        //recycleView
         adapter=new RVAlertAdapter(getContext());
         recyclerView.setAdapter(adapter);
         setupSwipe();
-        adapter.setListener(new OnDeviceItemListener() {
-            @Override
-            public void OnItemClick(DeviceModel device) {
-                navController.navigate(AlertsFragmentDirections.actionAlertsFragmentToSelectedDeviceFragment(device));
-            }
-
-            @Override
-            public void OnItemLongClick(View view, DeviceModel device) {
-
-            }
-        });
 
         StartActivity.museViewModel.getDevicesAlerts().observe(getViewLifecycleOwner(), deviceModels -> {
             if(deviceModels.size()!=0)
@@ -86,6 +77,18 @@ public class AlertsFragment extends Fragment {
                 recyclerView.setVisibility(View.GONE);
             }
             adapter.submitList(deviceModels);
+        });
+
+        adapter.setListener(new OnDeviceItemListener() {
+            @Override
+            public void OnItemClick(DeviceModel device) {
+                navController.navigate(AlertsFragmentDirections.actionAlertsFragmentToSelectedDeviceFragment(device));
+            }
+
+            @Override
+            public void OnItemLongClick(View view, DeviceModel device) {
+
+            }
         });
     }
 

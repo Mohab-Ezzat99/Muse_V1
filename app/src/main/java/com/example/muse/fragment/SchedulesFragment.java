@@ -62,6 +62,7 @@ public class SchedulesFragment extends Fragment {
         StartActivity.setupBackgroundStatusBar(StartActivity.colorPrimaryVariant);
         not_add = view.findViewById(R.id.FSchedules_group);
 
+        //recycleView
         recyclerView = view.findViewById(R.id.FSchedules_rv);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

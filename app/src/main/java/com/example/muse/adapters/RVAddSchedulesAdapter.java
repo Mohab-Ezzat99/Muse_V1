@@ -16,7 +16,7 @@ import com.example.muse.R;
 import com.example.muse.model.DeviceModel;
 
 public class RVAddSchedulesAdapter extends ListAdapter<DeviceModel, RVAddSchedulesAdapter.ASViewHolder> {
-    private Context context;
+    private final Context context;
     private static final DiffUtil.ItemCallback<DeviceModel> DIFF_CALLBACK = new DiffUtil.ItemCallback<DeviceModel>() {
         @Override
         public boolean areItemsTheSame(@NonNull DeviceModel oldItem, @NonNull DeviceModel newItem) {

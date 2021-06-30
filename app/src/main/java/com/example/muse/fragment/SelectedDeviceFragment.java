@@ -93,8 +93,10 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
         cv_goal = view.findViewById(R.id.selectedD_cv_goal);
         cv_schedules = view.findViewById(R.id.selectedD_cv_schedule);
 
+        // set selected device info
         iv_custom = view.findViewById(R.id.selectedD_iv_custom);
-        displayItem();
+        iv_icon.setImageResource(device.getIcon());
+        tv_name.setText(device.getName());
 
         cv_goal.setOnClickListener(this);
         cv_schedules.setOnClickListener(this);
@@ -106,6 +108,7 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
         month = calendar.get(Calendar.MONTH);
         year = calendar.get(Calendar.YEAR);
 
+        // charts taps
         chipNavigationBar =view.findViewById(R.id.selectedD_chipNav);
         tv_per = view.findViewById(R.id.selectedD_tv_per);
         chipNavigationBar.setItemSelected(R.id.dayFragment,true);
@@ -136,6 +139,7 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
             }
         });
 
+        // spinner info
         spinner=view.findViewById(R.id.selectedD_spinner_unit);
         tv_current=view.findViewById(R.id.selectedD_tv_currentV);
         tv_average=view.findViewById(R.id.selectedD_tv_averageV);
@@ -169,7 +173,6 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
         constLayout_expand=view.findViewById(R.id.selectedD_constLayoutExpanded);
         iv_arrow=view.findViewById(R.id.selectedD_iv_arrow);
         cv_insight=view.findViewById(R.id.selectedD_cv_insight);
-
         iv_arrow.setOnClickListener(v -> {
             if(constLayout_expand.getVisibility()== View.GONE){
                 TransitionManager.beginDelayedTransition(cv_insight,new AutoTransition());
@@ -207,7 +210,7 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
         return true;
     }
 
-    @SuppressLint({"NonConstantResourceId", "UseCompatLoadingForDrawables"})
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -216,7 +219,7 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
                 View view = displayDialog(R.layout.dialog_goal);
                 ImageView iv_icon = view.findViewById(R.id.dialogGoal_iv_icon);
                 TextView tv_name = view.findViewById(R.id.dialogGoal_tv_name);
-                iv_icon.setImageDrawable(getResources().getDrawable(device.getIcon(),null));
+                iv_icon.setImageResource(device.getIcon());
                 tv_name.setText(device.getName());
                 break;
 
@@ -230,21 +233,6 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
                 showPopup(iv_custom);
                 break;
         }
-    }
-
-    @SuppressLint("UseCompatLoadingForDrawables")
-    private void displayItem() {
-        iv_icon.setImageDrawable(getResources().getDrawable(device.getIcon(),null));
-        tv_name.setText(device.getName());
-    }
-
-    public View displayDialog(int layout) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext(),R.style.DialogStyle);
-        View view = LayoutInflater.from(requireContext()).inflate(layout, null, false);
-        builder.setView(view);
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-        return view;
     }
 
     public void showPopup(View v) {
@@ -299,5 +287,14 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
         datePickerDialog.show();
         datePickerDialog.getButton(DatePickerDialog.BUTTON_POSITIVE).setBackground(null);
         datePickerDialog.getButton(DatePickerDialog.BUTTON_NEGATIVE).setBackground(null);
+    }
+
+    public View displayDialog(int layout) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext(),R.style.DialogStyle);
+        View view = LayoutInflater.from(requireContext()).inflate(layout, null, false);
+        builder.setView(view);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+        return view;
     }
 }

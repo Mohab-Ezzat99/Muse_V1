@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class RVNavMenuAdapter extends RecyclerView.Adapter<RVNavMenuAdapter.NMViewHolder> {
     private ArrayList<NavMenuModel> NavMenuModels = new ArrayList<>();
     private OnItemClickListener listener;
-    private Context context;
+    private final Context context;
 
     public RVNavMenuAdapter(Context context) {
         this.context = context;
@@ -76,9 +76,9 @@ public class RVNavMenuAdapter extends RecyclerView.Adapter<RVNavMenuAdapter.NMVi
     }
 
     public class NMViewHolder extends RecyclerView.ViewHolder {
-        private ImageView iv_icon;
-        private TextView tv_name;
-        private SwitchCompat switchCompat;
+        private final ImageView iv_icon;
+        private final TextView tv_name;
+        private final SwitchCompat switchCompat;
         private int pos;
 
         public NMViewHolder(@NonNull View itemView) {

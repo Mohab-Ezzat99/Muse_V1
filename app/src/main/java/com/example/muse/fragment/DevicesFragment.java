@@ -71,28 +71,15 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
         StartActivity.setupBackgroundStatusBar(StartActivity.colorPrimaryVariant);
 
         fab_add = view.findViewById(R.id.FDevices_fab_add);
-        fab_add.setOnClickListener(v -> setupAdd());
+        fab_add.setOnClickListener(v -> displayPlug());
         not_add = view.findViewById(R.id.FDevices_group);
 
+        // recycleView
         recyclerView = view.findViewById(R.id.FDevices_rv);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-
-        // adapter with click listener
         addDeviceAdapter = new RVAddDeviceAdapter(getContext());
         recyclerView.setAdapter(addDeviceAdapter);
-        addDeviceAdapter.setListener(new OnDeviceItemListener() {
-            @Override
-            public void OnItemClick(DeviceModel device) {
-                navController.navigate(DevicesFragmentDirections.actionDevicesFragmentToSelectedDeviceFragment(device));
-            }
-
-            @Override
-            public void OnItemLongClick(View view, DeviceModel device) {
-                showPopup(view);
-                currentDevice = device;
-            }
-        });
 
         StartActivity.museViewModel.getDevicesAdded().observe(getViewLifecycleOwner(), deviceModels -> {
             if (deviceModels.size() != 0) {
@@ -106,46 +93,19 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
             }
             addDeviceAdapter.setDeviceModels(deviceModels);
         });
-    }
 
-    public void showBottomSheet(View view) {
-        //init
-        bottomSheetDialog = new BottomSheetDialog(requireContext(), R.style.BottomSheetDialogTheme);
-        View bottom_sheet = LayoutInflater.from(getContext()).inflate(R.layout.bottom_sheet_device, view.findViewById(R.id.deviceBotSheet));
-
-        RecyclerView rv = bottom_sheet.findViewById(R.id.deviceBotSheet_rv);
-        rv.setHasFixedSize(true);
-        rv.setLayoutManager(new GridLayoutManager(getContext(), 2));
-
-        // adapter with click listener
-        RVDeviceBotAdapter botAdapter = new RVDeviceBotAdapter(getContext());
-        StartActivity.museViewModel.getAllDevices().observe(getViewLifecycleOwner(), deviceModels -> botAdapter.setList((ArrayList<DeviceModel>) deviceModels));
-        rv.setAdapter(botAdapter);
-
-        botAdapter.setListener(new OnDeviceItemListener() {
+        addDeviceAdapter.setListener(new OnDeviceItemListener() {
             @Override
             public void OnItemClick(DeviceModel device) {
-                //init device
-                device.initDevice("50%", 50, false);
-                device.setAlertMessage("turn on for more 3h!");
-                device.setAdded(true);
-                device.setHasAlert(true);
-                SaveState.setNewAlert((SaveState.getLastAlerts()) + 1);
-
-                //add to list & room
-                StartActivity.museViewModel.updateDevice(device);
-                bottomSheetDialog.dismiss();
+                navController.navigate(DevicesFragmentDirections.actionDevicesFragmentToSelectedDeviceFragment(device));
             }
 
             @Override
             public void OnItemLongClick(View view, DeviceModel device) {
-
+                showPopup(view);
+                currentDevice = device;
             }
         });
-
-        //launch bottom sheet
-        bottomSheetDialog.setContentView(bottom_sheet);
-        bottomSheetDialog.show();
     }
 
     public void showPopup(View v) {
@@ -174,7 +134,7 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
         }
     }
 
-    public void setupAdd(){
+    public void displayPlug(){
         final AlertDialog.Builder builderPlug = new AlertDialog.Builder(requireContext(),R.style.DialogStyle);
         final View viewPlug = LayoutInflater.from(getContext()).inflate(R.layout.dialog_plug, null, false);
         builderPlug.setView(viewPlug);
@@ -212,5 +172,45 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
 
         tv_wifiCancel.setOnClickListener(v -> alertDialogWifi.dismiss());
 
+    }
+
+    public void showBottomSheet(View view) {
+        //init
+        bottomSheetDialog = new BottomSheetDialog(requireContext(), R.style.BottomSheetDialogTheme);
+        View bottom_sheet = LayoutInflater.from(getContext()).inflate(R.layout.bottom_sheet_device, view.findViewById(R.id.deviceBotSheet));
+
+        // recycleView
+        RecyclerView rv = bottom_sheet.findViewById(R.id.deviceBotSheet_rv);
+        rv.setHasFixedSize(true);
+        rv.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        RVDeviceBotAdapter botAdapter = new RVDeviceBotAdapter(getContext());
+        rv.setAdapter(botAdapter);
+
+        StartActivity.museViewModel.getAllDevices().observe(getViewLifecycleOwner(), deviceModels -> botAdapter.setList((ArrayList<DeviceModel>) deviceModels));
+
+        botAdapter.setListener(new OnDeviceItemListener() {
+            @Override
+            public void OnItemClick(DeviceModel device) {
+                //init device
+                device.initDevice("50%", 50, false);
+                device.setAlertMessage("turn on for more 3h!");
+                device.setAdded(true);
+                device.setHasAlert(true);
+                SaveState.setNewAlert((SaveState.getLastAlerts()) + 1);
+
+                //add to list & room
+                StartActivity.museViewModel.updateDevice(device);
+                bottomSheetDialog.dismiss();
+            }
+
+            @Override
+            public void OnItemLongClick(View view, DeviceModel device) {
+
+            }
+        });
+
+        //launch bottom sheet
+        bottomSheetDialog.setContentView(bottom_sheet);
+        bottomSheetDialog.show();
     }
 }

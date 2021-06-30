@@ -26,13 +26,9 @@ public class MuseViewModel extends AndroidViewModel {
         repository=new Repository(application);
     }
 
-    public Call<ResponseBody> register(AuthModel authModel){
-        return repository.register(authModel);
-    }
+    public Call<ResponseBody> register(AuthModel authModel){return repository.register(authModel); }
 
-    public Call<LoginResponseModel> login(AuthModel authModel){
-        return repository.login(authModel);
-    }
+    public Call<LoginResponseModel> login(AuthModel authModel){return repository.login(authModel);}
 
     public void insertDevice(DeviceModel device){
         repository.insertDevice(device);
@@ -62,13 +58,9 @@ public class MuseViewModel extends AndroidViewModel {
         return repository.getDevicesAlerts();
     }
 
-    public LiveData<List<DeviceModel>> getDevicesSchedules() {
-        return repository.getDevicesSchedules();
-    }
+    public LiveData<List<DeviceModel>> getDevicesSchedules() { return repository.getDevicesSchedules();}
 
-    public LiveData<List<DeviceModel>> getDevicesCustomAlerts(){
-        return repository.getDevicesCustomAlerts();
-    }
+    public LiveData<List<DeviceModel>> getDevicesCustomAlerts(){return repository.getDevicesCustomAlerts();}
 
     public MutableLiveData<Integer> getNewAlerts() {
         return SaveState.getNewAlerts();

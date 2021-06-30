@@ -21,7 +21,7 @@ import java.util.List;
 public class RVAddDeviceAdapter extends RecyclerView.Adapter<RVAddDeviceAdapter.ADViewHolder> {
     private List<DeviceModel> DeviceModels;
     private OnDeviceItemListener listener;
-    private Context context;
+    private final Context context;
 
     public RVAddDeviceAdapter(Context context) {
         this.context = context;
@@ -51,11 +51,6 @@ public class RVAddDeviceAdapter extends RecyclerView.Adapter<RVAddDeviceAdapter.
         return DeviceModels.size();
     }
 
-    public void addItem(DeviceModel DeviceModel){
-        this.DeviceModels.add(DeviceModel);
-        notifyDataSetChanged();
-    }
-
     public void setDeviceModels(List<DeviceModel> deviceModels) {
         this.DeviceModels = deviceModels;
         notifyDataSetChanged();
@@ -67,10 +62,10 @@ public class RVAddDeviceAdapter extends RecyclerView.Adapter<RVAddDeviceAdapter.
 
     class ADViewHolder extends RecyclerView.ViewHolder {
 
-        private ImageView iv_icon;
-        private SwitchCompat switchCompat;
-        private TextView tv_device,tv_percent;
-        private ProgressBar progressBar;
+        private final ImageView iv_icon;
+        private final SwitchCompat switchCompat;
+        private final TextView tv_device,tv_percent;
+        private final ProgressBar progressBar;
         private DeviceModel device;
 
         public ADViewHolder(@NonNull View itemView) {

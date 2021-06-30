@@ -27,7 +27,7 @@ public class DataCharts {
         LineDataSet lineDataSet = new LineDataSet(yEntries, null);
         lineDataSet.setForm(Legend.LegendForm.NONE);
         lineDataSet.setFillAlpha(120);
-        lineDataSet.setFillDrawable(ContextCompat.getDrawable(context, R.drawable.shape_line));
+        lineDataSet.setFillDrawable(ContextCompat.getDrawable(context, R.drawable.shape_line_chart));
         lineDataSet.setDrawFilled(true);
         lineDataSet.setLineWidth(1.5f);
         lineDataSet.setValueTextSize(12f);

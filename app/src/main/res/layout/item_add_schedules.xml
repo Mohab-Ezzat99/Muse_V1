@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:backgroundTint="?attr/colorAccent"
     app:cardCornerRadius="@dimen/_6sdp"
     app:cardElevation="@dimen/_2sdp"
@@ -114,11 +114,12 @@
             android:id="@+id/relativeLayout2"
             android:layout_width="@dimen/_74sdp"
             android:layout_height="wrap_content"
-            android:background="@drawable/shape_orange_circle_fill"
+            android:background="@drawable/shape_primary_circle_fill"
             android:gravity="center_vertical"
             android:padding="@dimen/_2sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
             app:layout_constraintBottom_toBottomOf="@+id/itemAC_tv_day"
-            app:layout_constraintEnd_toEndOf="@+id/itemAC_tv_time"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/itemAC_tv_day">
 
             <Spinner

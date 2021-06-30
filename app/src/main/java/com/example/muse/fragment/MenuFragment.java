@@ -51,7 +51,6 @@ public class MenuFragment extends Fragment {
         StartActivity.setupBackgroundStatusBar(StartActivity.colorPrimaryVariant);
     }
 
-    @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

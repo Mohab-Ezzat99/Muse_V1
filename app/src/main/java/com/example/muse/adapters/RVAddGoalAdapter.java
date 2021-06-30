@@ -18,7 +18,7 @@ import com.example.muse.R;
 import com.example.muse.model.DeviceModel;
 
 public class RVAddGoalAdapter extends ListAdapter<DeviceModel, RVAddGoalAdapter.AGViewHolder> {
-    private Context context;
+    private final Context context;
     private static final DiffUtil.ItemCallback<DeviceModel> DIFF_CALLBACK = new DiffUtil.ItemCallback<DeviceModel>() {
         @Override
         public boolean areItemsTheSame(@NonNull DeviceModel oldItem, @NonNull DeviceModel newItem) {
@@ -68,8 +68,8 @@ public class RVAddGoalAdapter extends ListAdapter<DeviceModel, RVAddGoalAdapter.
 
     static class AGViewHolder extends RecyclerView.ViewHolder {
 
-        private ImageView iv_icon, iv_done;
-        private TextView tv_name, tv_status;
+        private final ImageView iv_icon, iv_done;
+        private final TextView tv_name, tv_status;
 
         public AGViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -86,7 +86,6 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
         day = calendar.get(Calendar.DAY_OF_MONTH);
         month = calendar.get(Calendar.MONTH);
         year = calendar.get(Calendar.YEAR);
-
         iv_custom = view.findViewById(R.id.FHome_iv_custom);
         iv_custom.setOnClickListener(this::showPopup);
 
@@ -149,10 +148,10 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
             }
         });
 
+        // arrow info
         constLayout_expand=view.findViewById(R.id.constLayoutExpanded);
         iv_arrow=view.findViewById(R.id.home_iv_arrow);
         cv_insight=view.findViewById(R.id.home_cv_insight);
-
         iv_arrow.setOnClickListener(v -> {
             if (constLayout_expand.getVisibility() == View.GONE) {
                 TransitionManager.beginDelayedTransition(cv_insight, new AutoTransition());

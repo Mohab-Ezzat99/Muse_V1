@@ -39,12 +39,11 @@ public class ChartDayFragment extends Fragment {
         setupLineChart();
 
         // fixed line chart for now
-        int[] xAxis_value = {0, 1, 2, 3, 4, 5, 6};
-        float[] yAxis_value = {0f,2f,4f, 2f, 5f, 6f, 10f};
+        int[] xAxis_value = {0, 1, 2, 3, 4, 5};
+        float[] yAxis_value = {20f,34f, 66f, 52f, 40f, 45f};
         lineChart.setData(DataCharts.drawLineChart(getContext(),xAxis_value,yAxis_value ));
     }
 
-    @SuppressLint("ResourceType")
     public void setupLineChart(){
         lineChart.setDragEnabled(true);
         lineChart.setScaleEnabled(false);
@@ -55,7 +54,7 @@ public class ChartDayFragment extends Fragment {
         lineChart.setDescription(null);
 
         // x axis edit
-        String[] xValues = new String[]{"", "4 am", "8 am", "12 pm", "4 pm", "8 pm", "12 am"};
+        String[] xValues = new String[]{"4 am", "8 am", "12 pm", "4 pm", "8 pm", "12 am"};
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setTextColor(StartActivity.colorPrimaryVariant);
         xAxis.setValueFormatter(new IndexAxisValueFormatter(xValues));

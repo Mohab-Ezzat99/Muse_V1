@@ -79,6 +79,39 @@ public class DeviceSettingFragment extends Fragment {
         iv_icon.setOnClickListener(this::showBottomSheet);
     }
 
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_device_setting,menu);
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()){
+
+            case R.id.menu_delete:
+                StartActivity.museViewModel.deleteDevice(device);
+                navController.navigate(R.id.devicesFragment);
+                Toast.makeText(getContext(), "Deleted successfully", Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.menu_save:
+                device.setName(Objects.requireNonNull(et_deviceName.getText()).toString());
+                StartActivity.museViewModel.updateDevice(device);
+                navController.popBackStack();
+                Toast.makeText(getContext(), "Updated successfully", Toast.LENGTH_SHORT).show();
+                break;
+
+            case android.R.id.home:
+                navController.popBackStack();
+                break;
+
+        }
+        return true;
+    }
+
     @SuppressLint("SetTextI18n")
     public void showBottomSheet(View view) {
         //init
@@ -114,38 +147,5 @@ public class DeviceSettingFragment extends Fragment {
         //launch bottom sheet
         bottomSheetDialog.setContentView(bottom_sheet);
         bottomSheetDialog.show();
-    }
-
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_device_setting,menu);
-    }
-
-    @SuppressLint("NonConstantResourceId")
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        switch (item.getItemId()){
-
-            case R.id.menu_delete:
-                StartActivity.museViewModel.deleteDevice(device);
-                navController.navigate(R.id.devicesFragment);
-                Toast.makeText(getContext(), "Deleted successfully", Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.menu_save:
-                device.setName(Objects.requireNonNull(et_deviceName.getText()).toString());
-                StartActivity.museViewModel.updateDevice(device);
-                navController.popBackStack();
-                Toast.makeText(getContext(), "Updated successfully", Toast.LENGTH_SHORT).show();
-                break;
-
-            case android.R.id.home:
-                navController.popBackStack();
-                break;
-
-        }
-        return true;
     }
 }

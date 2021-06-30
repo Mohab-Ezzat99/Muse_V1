@@ -103,9 +103,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
-
         switch (v.getId()) {
-
             case R.id.login_tv_forgot:
                 setupForgotPassword();
                 break;
@@ -121,7 +119,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
     public void setupForgotPassword() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(requireContext(),R.style.DialogStyle);
-        final View view = LayoutInflater.from(getContext()).inflate(R.layout.custom_dialog, null, false);
+        final View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_forgot, null, false);
         builder.setView(view);
         final AlertDialog alertDialog = builder.create();
         alertDialog.show();
@@ -146,22 +144,11 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 tv_submit.setVisibility(View.INVISIBLE);
                 tv_cancel.setVisibility(View.INVISIBLE);
 
-                StartActivity.mAuth.fetchSignInMethodsForEmail(reset_email).addOnSuccessListener(task -> StartActivity.mAuth.sendPasswordResetEmail(reset_email)
-                        .addOnSuccessListener(aVoid -> {
-                            Toast.makeText(getContext(), "Reset link sent to your email", Toast.LENGTH_LONG).show();
-                            alertDialog.dismiss();
-                        })
-                        .addOnFailureListener(e -> {
-                            Toast.makeText(getContext(), "Error! " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                            pb.setVisibility(View.GONE);
-                            tv_submit.setVisibility(View.VISIBLE);
-                            tv_cancel.setVisibility(View.VISIBLE);
-                        })).addOnFailureListener(e -> {
-                    Toast.makeText(getContext(), "Error! " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    pb.setVisibility(View.GONE);
-                    tv_submit.setVisibility(View.VISIBLE);
-                    tv_cancel.setVisibility(View.VISIBLE);
-                });
+                //do some code
+
+                pb.setVisibility(View.GONE);
+                tv_submit.setVisibility(View.VISIBLE);
+                tv_cancel.setVisibility(View.VISIBLE);
             }
         });
         tv_cancel.setOnClickListener(v12 -> alertDialog.dismiss());

@@ -51,15 +51,11 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
     private TextView tv_login;
     private Button btn_register;
-    private String full_name, device_id, email, password, confirm_password, user_id;
+    private String full_name, email, password, confirm_password;
     private ProgressDialog progressDialog;
     private TextInputLayout itl_fullName, itl_email, itl_password, itl_confirm;
     private TextInputEditText et_fullName, et_email, et_password, et_confirm;
     private NavController navController;
-
-    private FirebaseFirestore db;
-    private DocumentReference documentReference;
-    private Map<String, Object> map;
 
     public RegisterFragment() {
         // Required empty public constructor
@@ -98,16 +94,13 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         itl_password = view.findViewById(R.id.register_itl_password);
         itl_confirm = view.findViewById(R.id.register_itl_confPassword);
 
-        db = FirebaseFirestore.getInstance();
-        progressDialog = new ProgressDialog(getContext());
-        map = new HashMap<>();
-
         tv_login = view.findViewById(R.id.register_tv_login);
         btn_register = view.findViewById(R.id.register_btn_register);
 
         tv_login.setOnClickListener(this);
         btn_register.setOnClickListener(this);
 
+        //back pressed
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(),
                 new OnBackPressedCallback(true) {
                     @Override

@@ -57,6 +57,7 @@ public class GoalsFragment extends Fragment {
         StartActivity.setupBackgroundStatusBar(StartActivity.colorPrimaryVariant);
         not_add = view.findViewById(R.id.FGoals_group);
 
+        //recycleView
         recyclerView = view.findViewById(R.id.FGoals_rv);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -84,6 +85,7 @@ public class GoalsFragment extends Fragment {
                 strings[i] = deviceModels.get(i).getName();
         });
 
+        // fab add
         FloatingActionButton fab_add = view.findViewById(R.id.FGoals_fab_add);
         fab_add.setOnClickListener(v -> {
             if (result.size() == 0)
@@ -94,7 +96,6 @@ public class GoalsFragment extends Fragment {
 
     }
 
-    @SuppressLint("UseCompatLoadingForDrawables")
     public void showBottomSheet(View view) {
         //init
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireContext(), R.style.BottomSheetDialogTheme);
@@ -117,7 +118,6 @@ public class GoalsFragment extends Fragment {
             not_add.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
             bottomSheetDialog.dismiss();
-
         });
 
         //launch bottom sheet

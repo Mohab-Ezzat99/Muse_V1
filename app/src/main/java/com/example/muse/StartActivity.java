@@ -52,9 +52,6 @@ public class StartActivity extends AppCompatActivity {
     private static Window window;
     public static MuseViewModel museViewModel;
 
-    public static FirebaseAuth mAuth;
-    public static FirebaseApp firebaseApp;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,9 +65,11 @@ public class StartActivity extends AppCompatActivity {
         this.getResources().updateConfiguration(config,
                 this.getResources().getDisplayMetrics());
 
+        //init
         saveState=new SaveState(this);
         window = this.getWindow();
         navControllerStart = Navigation.findNavController(this, R.id.start_fragment);
+        museViewModel = new ViewModelProvider(this).get(MuseViewModel.class);
         setupMode();
 
         // toolbar
@@ -78,10 +77,6 @@ public class StartActivity extends AppCompatActivity {
         toolbar.setTitleTextAppearance(this, R.style.ToolbarTitleStyle);
         setSupportActionBar(toolbar);
         activeActionBar(this);
-
-        museViewModel = new ViewModelProvider(this).get(MuseViewModel.class);
-        firebaseApp = FirebaseApp.initializeApp(this);
-        mAuth = FirebaseAuth.getInstance();
 
         //declare devices
         if(!SaveState.isDeclared()) {
