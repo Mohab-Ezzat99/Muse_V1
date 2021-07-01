@@ -53,10 +53,8 @@ public class RVAddGoalAdapter extends ListAdapter<DeviceModel, RVAddGoalAdapter.
         holder.iv_icon.setImageDrawable(context.getResources().getDrawable(deviceModel.getIcon(),null));
 
         if (position % 2 == 0) {
-            holder.iv_done.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_checked));
             holder.tv_status.setText(R.string.txt_goal_will_be_achieved);
         } else {
-            holder.iv_done.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_alarm));
             holder.tv_status.setText(R.string.txt_goal_will_not_achieved);
             holder.tv_status.setTextColor(ContextCompat.getColor(context, R.color.red));
         }
@@ -68,13 +66,12 @@ public class RVAddGoalAdapter extends ListAdapter<DeviceModel, RVAddGoalAdapter.
 
     static class AGViewHolder extends RecyclerView.ViewHolder {
 
-        private final ImageView iv_icon, iv_done;
+        private final ImageView iv_icon;
         private final TextView tv_name, tv_status;
 
         public AGViewHolder(@NonNull View itemView) {
             super(itemView);
             iv_icon = itemView.findViewById(R.id.itemAG_iv_icon);
-            iv_done = itemView.findViewById(R.id.itemAG_iv_result);
             tv_name = itemView.findViewById(R.id.itemAG_tv_name);
             tv_status = itemView.findViewById(R.id.itemAG_TPre1V);
         }

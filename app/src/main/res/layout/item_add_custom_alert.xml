@@ -28,6 +28,21 @@
             app:layout_constraintVertical_bias=".05"
             app:tint="?attr/colorPrimaryVariant" />
 
+        <ImageView
+            android:id="@+id/itemAC_iv_patch"
+            android:layout_width="@dimen/_24sdp"
+            android:layout_height="@dimen/_24sdp"
+            android:layout_marginVertical="@dimen/_8sdp"
+            android:contentDescription="@string/txt_null"
+            android:src="@drawable/ic_notification"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias=".95"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias=".05"
+            app:tint="?attr/colorOnSecondary" />
+
         <TextView
             android:id="@+id/itemAC_tv_name"
             android:layout_width="wrap_content"

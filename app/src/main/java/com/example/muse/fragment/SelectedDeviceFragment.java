@@ -16,16 +16,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
@@ -33,6 +37,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.example.muse.R;
+import com.example.muse.StartActivity;
 import com.example.muse.model.DeviceModel;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
@@ -45,9 +50,11 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
 
     private ChipNavigationBar chipNavigationBar;
     private NavController navControllerChart;
-    private TextView tv_name;
+    private TextView tv_name,tv_percent;
     private ImageView iv_icon;
     private CardView  cv_goal, cv_schedules;
+    private SwitchCompat switchCompat;
+    private ProgressBar progressBar;
     private ImageView iv_custom;
     private DeviceModel device;
     private int day, month, year;
@@ -92,11 +99,42 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
         iv_icon = view.findViewById(R.id.selectedD_iv_icon);
         cv_goal = view.findViewById(R.id.selectedD_cv_goal);
         cv_schedules = view.findViewById(R.id.selectedD_cv_schedule);
+        switchCompat = view.findViewById(R.id.selectedD_switch);
+        tv_percent = view.findViewById(R.id.selectedD_progressValue);
+        progressBar = view.findViewById(R.id.selectedD_pb);
 
         // set selected device info
         iv_custom = view.findViewById(R.id.selectedD_iv_custom);
         iv_icon.setImageResource(device.getIcon());
         tv_name.setText(device.getName());
+        switchCompat.setChecked(device.isOn());
+
+        // display getting info
+        if(device.isOn()){
+            iv_icon.setColorFilter(StartActivity.colorPrimaryVariant);
+            tv_percent.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.VISIBLE);
+        }
+        else {
+            iv_icon.setColorFilter(requireContext().getResources().getColor(R.color.gray));
+            tv_percent.setVisibility(View.INVISIBLE);
+            progressBar.setVisibility(View.INVISIBLE);
+        }
+
+        switchCompat.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if(isChecked){
+                iv_icon.setColorFilter(StartActivity.colorPrimaryVariant);
+                tv_percent.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.VISIBLE);
+            }
+            else {
+                iv_icon.setColorFilter(requireContext().getResources().getColor(R.color.gray));
+                tv_percent.setVisibility(View.INVISIBLE);
+                progressBar.setVisibility(View.INVISIBLE);
+            }
+            device.setOn(isChecked);
+            StartActivity.museViewModel.updateDevice(device);
+        });
 
         cv_goal.setOnClickListener(this);
         cv_schedules.setOnClickListener(this);
@@ -216,17 +254,19 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
         switch (v.getId()) {
 
             case R.id.selectedD_cv_goal:
-                View view = displayDialog(R.layout.dialog_goal);
-                ImageView iv_icon = view.findViewById(R.id.dialogGoal_iv_icon);
-                TextView tv_name = view.findViewById(R.id.dialogGoal_tv_name);
-                iv_icon.setImageResource(device.getIcon());
-                tv_name.setText(device.getName());
+                View viewG = displayDialog(R.layout.item_add_goal);
+                ImageView ivG_icon = viewG.findViewById(R.id.itemAG_iv_icon);
+                TextView tvG_name = viewG.findViewById(R.id.itemAG_tv_name);
+                ivG_icon.setImageResource(device.getIcon());
+                tvG_name.setText(device.getName());
                 break;
 
             case R.id.selectedD_cv_schedule:
-                View view1 = displayDialog(R.layout.item_add_schedules);
-//                TextView tv_name1 = view1.findViewById(R.id.dialogSchedule_tv_name);
-//                tv_name1.setText(device.getName());
+                View viewS = displayDialog(R.layout.item_add_schedules);
+                ImageView ivS_icon = viewS.findViewById(R.id.itemAS_iv_icon);
+                TextView tvS_name = viewS.findViewById(R.id.itemAS_tv_name);
+                ivS_icon.setImageResource(device.getIcon());
+                tvS_name.setText(device.getName());
                 break;
 
             case R.id.selectedD_iv_custom:

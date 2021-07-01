@@ -41,19 +41,42 @@
         app:layout_constraintStart_toEndOf="@+id/itemAG_iv_icon"
         app:layout_constraintTop_toTopOf="@+id/itemAG_iv_icon" />
 
-    <ImageView
-        android:id="@+id/itemAG_iv_result"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:layout_marginBottom="@dimen/_8sdp"
-        android:contentDescription="@string/txt_null"
-        android:src="@drawable/ic_checked"
-        app:layout_constraintBottom_toBottomOf="@+id/itemAG_iv_icon"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias=".95"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/itemAG_iv_icon" />
+        <RelativeLayout
+            android:id="@+id/itemAG_rl_aggregation"
+            android:layout_width="@dimen/_74sdp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_2sdp"
+            android:background="@drawable/shape_primary_circle_fill"
+            android:gravity="center_vertical"
+            android:padding="@dimen/_4sdp"
+            app:layout_constraintBottom_toBottomOf="@+id/itemAG_iv_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias=".95"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/itemAG_iv_icon">
+
+            <Spinner
+                android:id="@+id/home_spinner_unit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:entries="@array/period"
+                android:popupBackground="?attr/colorOnPrimary"
+                android:gravity="center"
+                android:spinnerMode="dropdown" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:contentDescription="@string/txt_null"
+                android:src="@drawable/ic_arrow_down"
+                app:tint="?attr/colorOnSecondary" />
+
+        </RelativeLayout>
 
     <TextView
         android:id="@+id/TUse1"
@@ -77,7 +100,7 @@
         android:textColor="?attr/colorOnSecondary"
         android:textSize="@dimen/_14ssp"
         app:layout_constraintBottom_toBottomOf="@+id/TUse1"
-        app:layout_constraintEnd_toEndOf="@+id/itemAG_iv_result"
+        app:layout_constraintEnd_toEndOf="@+id/itemAG_rl_aggregation"
         app:layout_constraintTop_toTopOf="@+id/TUse1" />
 
 

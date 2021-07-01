@@ -348,7 +348,20 @@
                     app:layout_constraintVertical_bias="0">
 
                     <TextView
-                        android:id="@+id/selectedD_tv_average"
+                        android:id="@+id/selectedD_tv_per"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_4sdp"
+                        android:text="@string/txt_per_day"
+                        android:textColor="?attr/colorPrimaryVariant"
+                        android:textSize="@dimen/_16ssp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <TextView
+                        android:id="@+id/tv_average"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/_4sdp"
@@ -357,7 +370,7 @@
                         android:textSize="@dimen/_14ssp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@+id/selectedD_tv_per" />
 
                     <TextView
                         android:id="@+id/selectedD_tv_averageV"
@@ -368,19 +381,19 @@
                         android:textColor="?attr/colorOnSecondary"
                         android:textSize="@dimen/_14ssp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/selectedD_tv_average" />
+                        app:layout_constraintTop_toTopOf="@+id/tv_average" />
 
                     <TextView
-                        android:id="@+id/selectedD_tv_per"
+                        android:id="@+id/selectedD_tv_consumption"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/_4sdp"
-                        android:text="@string/txt_per_day"
+                        android:text="@string/txt_consumed"
                         android:textColor="?attr/colorOnSecondary"
                         android:textSize="@dimen/_14ssp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/selectedD_tv_average" />
+                        app:layout_constraintTop_toBottomOf="@+id/tv_average" />
 
                     <TextView
                         android:id="@+id/selectedD_tv_perV"
@@ -391,10 +404,10 @@
                         android:textColor="?attr/colorOnSecondary"
                         android:textSize="@dimen/_14ssp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/selectedD_tv_per" />
+                        app:layout_constraintTop_toTopOf="@+id/selectedD_tv_consumption" />
 
                     <TextView
-                        android:id="@+id/selectedD_tv_est"
+                        android:id="@+id/tv_est"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/_4sdp"
@@ -403,7 +416,7 @@
                         android:textSize="@dimen/_14ssp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/selectedD_tv_per" />
+                        app:layout_constraintTop_toBottomOf="@+id/selectedD_tv_consumption" />
 
                     <TextView
                         android:id="@+id/selectedD_tv_estV"
@@ -414,7 +427,7 @@
                         android:textColor="?attr/colorOnSecondary"
                         android:textSize="@dimen/_14ssp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/selectedD_tv_est" />
+                        app:layout_constraintTop_toTopOf="@+id/tv_est" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>

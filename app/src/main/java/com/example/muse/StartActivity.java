@@ -22,10 +22,6 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.muse.model.DeviceModel;
 import com.example.muse.utility.SaveState;
 import com.example.muse.viewmodels.MuseViewModel;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.auth.FirebaseAuth;
-
-import java.util.ArrayList;
 import java.util.Locale;
 
 public class StartActivity extends AppCompatActivity {

@@ -78,7 +78,7 @@ public class GoalsFragment extends Fragment {
             adapter.submitList(deviceModels);
         });
 
-        StartActivity.museViewModel.getAllDevices().observe(getViewLifecycleOwner(), deviceModels -> {
+        StartActivity.museViewModel.getDevicesCWithoutGoal().observe(getViewLifecycleOwner(), deviceModels -> {
             result = deviceModels;
             strings = new String[deviceModels.size()];
             for (int i = 0; i < deviceModels.size(); i++)

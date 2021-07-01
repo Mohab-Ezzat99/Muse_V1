@@ -1,8 +1,6 @@
 package com.example.muse.fragment;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +10,6 @@ import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,15 +22,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.muse.R;
 import com.example.muse.StartActivity;
-import com.example.muse.adapters.RVAddGoalAdapter;
 import com.example.muse.adapters.RVAddSchedulesAdapter;
 import com.example.muse.model.DeviceModel;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+
+import nl.bryanderidder.themedtogglebuttongroup.ThemedButton;
+import nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup;
 
 public class SchedulesFragment extends Fragment {
 
@@ -83,7 +80,7 @@ public class SchedulesFragment extends Fragment {
             adapter.submitList(deviceModels);
         });
 
-        StartActivity.museViewModel.getDevicesAdded().observe(getViewLifecycleOwner(), deviceModels -> {
+        StartActivity.museViewModel.getDevicesWithoutSchedule().observe(getViewLifecycleOwner(), deviceModels -> {
             result = deviceModels;
             strings = new String[deviceModels.size()];
             for (int i = 0; i < deviceModels.size(); i++)
@@ -93,7 +90,7 @@ public class SchedulesFragment extends Fragment {
         FloatingActionButton fab_add = view.findViewById(R.id.FSchedules_fab_add);
         fab_add.setOnClickListener(v -> {
             if (result.size() == 0)
-                Toast.makeText(getContext(), "No Devices yet", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "No device found to set schedule", Toast.LENGTH_LONG).show();
             else
                 showBottomSheet(view);
         });
@@ -129,12 +126,61 @@ public class SchedulesFragment extends Fragment {
             }
         });
 
+        Spinner spinner_state = bottom_sheet.findViewById(R.id.schedulesBotSheet_spinner_state);
+        Spinner spinner_at = bottom_sheet.findViewById(R.id.schedulesBotSheet_spinner_at);
+        Spinner spinner_after = bottom_sheet.findViewById(R.id.schedulesBotSheet_spinner_after);
+        ThemedToggleButtonGroup tg_long = bottom_sheet.findViewById(R.id.schedulesBotSheet_tg_long);
+        ThemedToggleButtonGroup tg_small = bottom_sheet.findViewById(R.id.schedulesBotSheet_tg_small);
+
         //btn submit
         Button btn_submit = bottom_sheet.findViewById(R.id.schedulesBotSheet_btn_submit);
         btn_submit.setOnClickListener(v1 -> {
             // add item to rv
             DeviceModel device = result.get(spinner_device.getSelectedItemPosition());
             device.setHasSchedules(true);
+            switch (spinner_state.getSelectedItemPosition()) {
+                case 0:
+                    device.setAlertOn(false);
+                    break;
+                case 1:
+                    device.setAlertOn(true);
+                    break;
+            }
+            switch (radioGroup.getCheckedRadioButtonId()) {
+                case R.id.schedulesBotSheet_rb_at:
+                    device.setTime_type("At");
+                    device.setTime(spinner_at.getSelectedItem().toString());
+                    break;
+
+                case R.id.schedulesBotSheet_rb_after:
+                    device.setTime_type("After");
+                    device.setTime(spinner_after.getSelectedItem().toString());
+                    break;
+            }
+
+            List<ThemedButton> buttons_long = tg_long.getSelectedButtons();
+            List<ThemedButton> buttons_small = tg_small.getSelectedButtons();
+            StringBuilder dayStringBuilder = new StringBuilder();
+            String days;
+
+            if (buttons_long.size() > 0)
+                for (ThemedButton themedButton : buttons_long)
+                    dayStringBuilder.append(",").append(themedButton.getText());
+
+            if (buttons_small.size() > 0)
+                for (ThemedButton themedButton : buttons_small)
+                    dayStringBuilder.append(",").append(themedButton.getText());
+
+            if (dayStringBuilder.length() > 0) {
+                if (dayStringBuilder.length() == 28)
+                    days = "Everyday";
+                else {
+                    days = dayStringBuilder.toString();
+                    days = days.substring(1);
+                }
+                device.setDays(days);
+            }
+
             StartActivity.museViewModel.updateDevice(device);
 
             // visibility

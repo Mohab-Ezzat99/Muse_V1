@@ -113,7 +113,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.login_btn_login:
-                setupLogin();
+                navController.navigate(R.id.action_loginFragment_to_mainFragment);
+                //setupLogin();
         }
     }
 

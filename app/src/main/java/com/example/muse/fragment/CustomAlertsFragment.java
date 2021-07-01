@@ -75,7 +75,7 @@ public class CustomAlertsFragment extends Fragment {
             adapter.submitList(deviceModels);
         });
 
-        StartActivity.museViewModel.getDevicesAdded().observe(getViewLifecycleOwner(), deviceModels -> result = deviceModels);
+        StartActivity.museViewModel.getDevicesWithoutCustomAlerts().observe(getViewLifecycleOwner(), deviceModels -> result = deviceModels);
 
         FloatingActionButton fab_add = view.findViewById(R.id.FCustomAlert_fab_add);
         fab_add.setOnClickListener(v -> {

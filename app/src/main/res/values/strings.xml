@@ -25,6 +25,21 @@
         <item>EGP</item>
     </string-array>
 
+    <string-array name="aggregation">
+        <item>Realtime</item>
+        <item>Day</item>
+        <item>Week</item>
+        <item>Month</item>
+        <item>Year</item>
+    </string-array>
+
+    <string-array name="period">
+        <item>Day</item>
+        <item>Week</item>
+        <item>Month</item>
+        <item>Year</item>
+    </string-array>
+
     <string-array name="spinner_consumption">
         <item>100KW</item>
         <item>200KW</item>
@@ -34,12 +49,6 @@
     <string-array name="spinner_turn">
         <item>OFF</item>
         <item>ON</item>
-    </string-array>
-
-    <string-array name="spinner_days">
-        <item>Mon</item>
-        <item>Wen</item>
-        <item>Fri</item>
     </string-array>
 
     <string-array name="spinner_at">
@@ -97,7 +106,7 @@
     <string name="txt_estimation">Estimation</string>
     <string name="txt_20_kw_260egp">20 KW</string>
     <string name="txt_used">Used</string>
-    <string name="txt_100kw_1500kw">100 KW</string>
+    <string name="txt_100kw_1500kw">100KW/50EGP</string>
     <string name="txt_predicted">Predicted</string>
     <string name="txt_goal_will_be_achieved">Goal will be achieve</string>
     <string name="txt_goal_will_not_achieved">Goal won\'t achieve</string>
@@ -215,4 +224,10 @@
     <string name="txt_12_am">12 AM</string>
     <string name="txt_add_new_plug">Add new plug!</string>
     <string name="txt_select_device">Select device</string>
+    <string name="txt_consumed">Consumed</string>
+    <string name="txt_edit_custom_alert">Edit custom alert</string>
+    <string name="txt_edit_goal">Edit goal</string>
+    <string name="txt_edit_schedule">Edit schedule</string>
+    <string name="txt_everyday">Everyday</string>
+    <string name="txt_realtime">Realtime</string>
 </resources>

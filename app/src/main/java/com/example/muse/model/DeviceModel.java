@@ -30,6 +30,7 @@ public class DeviceModel implements Serializable {
     private boolean isAlertOn;
     private String time;
     private String time_type;
+    private String days;
 
     public DeviceModel() {
     }
@@ -172,5 +173,13 @@ public class DeviceModel implements Serializable {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public String getDays() {
+        return days;
+    }
+
+    public void setDays(String days) {
+        this.days = days;
     }
 }

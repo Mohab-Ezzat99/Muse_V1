@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -40,11 +42,11 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
     private RecyclerView recyclerView;
     private RVAddDeviceAdapter addDeviceAdapter;
     private Group not_add;
+    private CardView cv_aggregation,cv_unit;
     private FloatingActionButton fab_add;
     private BottomSheetDialog bottomSheetDialog;
     private NavController navController;
     private DeviceModel currentDevice;
-    private boolean isDisplayed=false;
 
     public DevicesFragment() {
         // Required empty public constructor
@@ -73,6 +75,8 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
         fab_add = view.findViewById(R.id.FDevices_fab_add);
         fab_add.setOnClickListener(v -> displayPlug());
         not_add = view.findViewById(R.id.FDevices_group);
+        cv_aggregation = view.findViewById(R.id.FDevices_cv_aggregation);
+        cv_unit = view.findViewById(R.id.FDevices_cv_unit);
 
         // recycleView
         recyclerView = view.findViewById(R.id.FDevices_rv);
@@ -86,12 +90,21 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
                 // visibility
                 not_add.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
+                cv_aggregation.setVisibility(View.VISIBLE);
+                cv_unit.setVisibility(View.VISIBLE);
             } else {
                 // visibility
                 not_add.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.GONE);
+                cv_aggregation.setVisibility(View.GONE);
+                cv_unit.setVisibility(View.GONE);
             }
             addDeviceAdapter.setDeviceModels(deviceModels);
+        });
+
+        addDeviceAdapter.setSwitchListener((device, isChecked) -> {
+            device.setOn(isChecked);
+            StartActivity.museViewModel.updateDevice(device);
         });
 
         addDeviceAdapter.setListener(new OnDeviceItemListener() {
@@ -192,7 +205,7 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
             @Override
             public void OnItemClick(DeviceModel device) {
                 //init device
-                device.initDevice("50%", 50, false);
+                device.initDevice("50%",50,false);
                 device.setAlertMessage("turn on for more 3h!");
                 device.setAdded(true);
                 device.setHasAlert(true);

@@ -14,7 +14,7 @@
         android:padding="@dimen/_4sdp">
 
         <ImageView
-            android:id="@+id/itemAC_iv_icon"
+            android:id="@+id/itemAS_iv_icon"
             android:layout_width="@dimen/_24sdp"
             android:layout_height="@dimen/_24sdp"
             android:layout_marginVertical="@dimen/_8sdp"
@@ -28,8 +28,23 @@
             app:layout_constraintVertical_bias=".05"
             app:tint="?attr/colorPrimaryVariant" />
 
+        <ImageView
+            android:id="@+id/itemAS_iv_patch"
+            android:layout_width="@dimen/_24sdp"
+            android:layout_height="@dimen/_24sdp"
+            android:layout_marginVertical="@dimen/_8sdp"
+            android:contentDescription="@string/txt_null"
+            android:src="@drawable/ic_schedules"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias=".95"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias=".05"
+            app:tint="?attr/colorOnSecondary" />
+
         <TextView
-            android:id="@+id/itemAC_tv_name"
+            android:id="@+id/itemAS_tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_8sdp"
@@ -37,9 +52,9 @@
             android:textColor="?attr/colorPrimaryVariant"
             android:textSize="@dimen/_16ssp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/itemAC_iv_icon"
-            app:layout_constraintStart_toEndOf="@+id/itemAC_iv_icon"
-            app:layout_constraintTop_toTopOf="@+id/itemAC_iv_icon" />
+            app:layout_constraintBottom_toBottomOf="@+id/itemAS_iv_icon"
+            app:layout_constraintStart_toEndOf="@+id/itemAS_iv_icon"
+            app:layout_constraintTop_toTopOf="@+id/itemAS_iv_icon" />
 
         <TextView
             android:id="@+id/TUse1"
@@ -50,11 +65,11 @@
             android:textColor="?attr/colorOnSecondary"
             android:textSize="@dimen/_14ssp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/itemAC_iv_icon"
-            app:layout_constraintTop_toBottomOf="@+id/itemAC_iv_icon" />
+            app:layout_constraintStart_toStartOf="@+id/itemAS_iv_icon"
+            app:layout_constraintTop_toBottomOf="@+id/itemAS_iv_icon" />
 
         <TextView
-            android:id="@+id/itemAC_tv_state"
+            android:id="@+id/itemAS_tv_state"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -69,7 +84,7 @@
             app:layout_constraintTop_toTopOf="@+id/TUse1" />
 
         <TextView
-            android:id="@+id/itemAC_tv_type"
+            android:id="@+id/itemAS_tv_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_8sdp"
@@ -83,7 +98,7 @@
             app:layout_constraintVertical_bias="0" />
 
         <TextView
-            android:id="@+id/itemAC_tv_time"
+            android:id="@+id/itemAS_tv_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -91,13 +106,13 @@
             android:text="@string/txt_12_am"
             android:textColor="?attr/colorPrimaryVariant"
             android:textSize="@dimen/_14ssp"
-            app:layout_constraintBottom_toBottomOf="@+id/itemAC_tv_type"
-            app:layout_constraintEnd_toEndOf="@+id/itemAC_tv_state"
-            app:layout_constraintTop_toTopOf="@+id/itemAC_tv_type" />
+            app:layout_constraintBottom_toBottomOf="@+id/itemAS_tv_type"
+            app:layout_constraintEnd_toEndOf="@+id/itemAS_tv_state"
+            app:layout_constraintTop_toTopOf="@+id/itemAS_tv_type" />
 
 
         <TextView
-            android:id="@+id/itemAC_tv_day"
+            android:id="@+id/itemAS_tv_on"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/_8sdp"
@@ -107,44 +122,20 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/TUse1"
-            app:layout_constraintTop_toBottomOf="@+id/itemAC_tv_type"
+            app:layout_constraintTop_toBottomOf="@+id/itemAS_tv_type"
             app:layout_constraintVertical_bias="0" />
 
-        <RelativeLayout
-            android:id="@+id/relativeLayout2"
-            android:layout_width="@dimen/_74sdp"
+        <TextView
+            android:id="@+id/itemAS_tv_days"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/shape_primary_circle_fill"
-            android:gravity="center_vertical"
-            android:padding="@dimen/_2sdp"
-            android:layout_marginEnd="@dimen/_8sdp"
-            app:layout_constraintBottom_toBottomOf="@+id/itemAC_tv_day"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/itemAC_tv_day">
+            android:textColor="?attr/colorPrimaryVariant"
+            android:textSize="@dimen/_14ssp"
+            android:text="@string/txt_everyday"
+            app:layout_constraintBottom_toBottomOf="@+id/itemAS_tv_on"
+            app:layout_constraintEnd_toEndOf="@+id/itemAS_tv_state"
+            app:layout_constraintTop_toTopOf="@+id/itemAS_tv_on"/>
 
-            <Spinner
-                android:id="@+id/schedulesBotSheet_spinner_state"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="5dp"
-                android:background="@android:color/transparent"
-                android:entries="@array/spinner_days"
-                android:gravity="center"
-                android:popupBackground="?attr/colorOnPrimary"
-                android:spinnerMode="dropdown" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center"
-                android:contentDescription="@string/txt_null"
-                android:src="@drawable/ic_arrow_down"
-                app:tint="?attr/colorOnSecondary" />
-
-        </RelativeLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

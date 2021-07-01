@@ -41,14 +41,18 @@ public class RVNavMenuAdapter extends RecyclerView.Adapter<RVNavMenuAdapter.NMVi
         holder.iv_icon.setImageDrawable(context.getResources().getDrawable(NavMenuModel.getIcon(),null));
         holder.tv_name.setText(NavMenuModel.getName());
         holder.pos=position;
-        if (position == 2 || position == 3) {
+        if (position == 2 || position == 3 || position==4) {
             holder.switchCompat.setVisibility(View.VISIBLE);
-            //dark mode
-            if (position == 3)
-                holder.switchCompat.setChecked(SaveState.getDarkModeState());
+            switch (position){
                 //notification
-            else
-                holder.switchCompat.setChecked(SaveState.getNotificationState());
+                case 2 :
+                    holder.switchCompat.setChecked(SaveState.getNotificationState());
+                    break;
+                //dark mode
+                case 3:
+                    holder.switchCompat.setChecked(SaveState.getDarkModeState());
+                    break;
+            }
         }
     }
 

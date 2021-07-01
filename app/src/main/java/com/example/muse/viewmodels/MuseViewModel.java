@@ -65,4 +65,16 @@ public class MuseViewModel extends AndroidViewModel {
     public MutableLiveData<Integer> getNewAlerts() {
         return SaveState.getNewAlerts();
     }
+
+    public LiveData<List<DeviceModel>> getDevicesCWithoutGoal() {
+        return repository.getDevicesWithoutGoal();
+    }
+
+    public LiveData<List<DeviceModel>> getDevicesWithoutSchedule() {
+        return repository.getDevicesWithoutSchedule();
+    }
+
+    public LiveData<List<DeviceModel>> getDevicesWithoutCustomAlerts() {
+        return repository.getDevicesWithoutCustomAlert();
+    }
 }

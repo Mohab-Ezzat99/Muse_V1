@@ -74,6 +74,18 @@ public class Repository {
         return museDao.getDevicesCustomAlerts();
     }
 
+    public LiveData<List<DeviceModel>> getDevicesWithoutGoal() {
+        return museDao.getDevicesWithoutGoal();
+    }
+
+    public LiveData<List<DeviceModel>> getDevicesWithoutSchedule() {
+        return museDao.getDevicesWithoutSchedule();
+    }
+
+    public LiveData<List<DeviceModel>> getDevicesWithoutCustomAlert() {
+        return museDao.getDevicesWithoutCustomAlert();
+    }
+
     public static class InsertDeviceAsyncTask extends AsyncTask<DeviceModel,Void,Void>{
         private final MuseDao museDao;
 

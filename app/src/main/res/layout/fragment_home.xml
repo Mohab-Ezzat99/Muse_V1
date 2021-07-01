@@ -123,7 +123,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_8sdp"
-                    android:text="@string/txt_current"
+                    android:text="@string/txt_realtime"
                     android:textColor="?attr/colorOnSecondary"
                     android:textSize="@dimen/_14ssp"
                     android:textStyle="bold"
@@ -164,6 +164,19 @@
                     app:layout_constraintVertical_bias="0">
 
                     <TextView
+                        android:id="@+id/home_tv_per"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_4sdp"
+                        android:text="@string/txt_per_day"
+                        android:textColor="?attr/colorPrimaryVariant"
+                        android:textSize="@dimen/_16ssp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+
+                    <TextView
                         android:id="@+id/tv_average"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -173,7 +186,7 @@
                         android:textSize="@dimen/_14ssp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@id/home_tv_per" />
 
                     <TextView
                         android:id="@+id/home_tv_averageV"
@@ -187,11 +200,11 @@
                         app:layout_constraintTop_toTopOf="@+id/tv_average" />
 
                     <TextView
-                        android:id="@+id/home_tv_per"
+                        android:id="@+id/home_tv_consumption"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/_4sdp"
-                        android:text="@string/txt_per_day"
+                        android:text="@string/txt_consumed"
                         android:textColor="?attr/colorOnSecondary"
                         android:textSize="@dimen/_14ssp"
                         android:textStyle="bold"
@@ -207,7 +220,7 @@
                         android:textColor="?attr/colorOnSecondary"
                         android:textSize="@dimen/_14ssp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/home_tv_per" />
+                        app:layout_constraintTop_toTopOf="@+id/home_tv_consumption" />
 
                     <TextView
                         android:id="@+id/tv_est"
@@ -219,7 +232,7 @@
                         android:textSize="@dimen/_14ssp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/home_tv_per" />
+                        app:layout_constraintTop_toBottomOf="@+id/home_tv_consumption" />
 
                     <TextView
                         android:id="@+id/home_tv_estV"
@@ -267,16 +280,40 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0" />
 
-                <ImageView
-                    android:id="@+id/itemAG_iv_result"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:id="@+id/home_rl_aggregation"
+                    android:layout_width="@dimen/_74sdp"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/_4sdp"
-                    android:contentDescription="@string/txt_null"
-                    android:src="@drawable/ic_checked"
+                    android:layout_marginEnd="@dimen/_2sdp"
+                    android:background="@drawable/shape_primary_circle_fill"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/_4sdp"
                     app:layout_constraintBottom_toBottomOf="@+id/itemAG_tv_name"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/itemAG_tv_name" />
+                    app:layout_constraintTop_toTopOf="@+id/itemAG_tv_name">
+
+                    <Spinner
+                        android:id="@+id/home_spinner_aggregation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@android:color/transparent"
+                        android:entries="@array/period"
+                        android:popupBackground="?attr/colorOnPrimary"
+                        android:gravity="center"
+                        android:spinnerMode="dropdown" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/txt_null"
+                        android:src="@drawable/ic_arrow_down"
+                        app:tint="?attr/colorOnSecondary" />
+
+                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/TUse1"
@@ -301,7 +338,7 @@
                     android:textColor="?attr/colorOnSecondary"
                     android:textSize="@dimen/_14ssp"
                     app:layout_constraintBottom_toBottomOf="@+id/TUse1"
-                    app:layout_constraintEnd_toEndOf="@+id/itemAG_iv_result"
+                    app:layout_constraintEnd_toEndOf="@+id/home_rl_aggregation"
                     app:layout_constraintTop_toTopOf="@+id/TUse1" />
 
 

@@ -256,12 +256,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textView12"
-        app:layout_constraintTop_toBottomOf="@+id/time2"
+        app:layout_constraintTop_toBottomOf="@+id/schedulesBotSheet_tg_small"
         app:layout_constraintVertical_bias=".01"
         app:layout_constraintWidth_percent=".7" />
 
     <nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup
-        android:id="@+id/time"
+        android:id="@+id/schedulesBotSheet_tg_long"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_8sdp"
@@ -269,7 +269,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView12"
         app:layout_constraintVertical_bias="0.501"
-        app:toggle_requiredAmount="1"
+        app:toggle_requiredAmount="0"
         app:toggle_selectableAmount="4"> <!-- this attribute is from the underlying FlexboxLayout -->
 
         <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
@@ -303,14 +303,14 @@
 
 
     <nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup
-        android:id="@+id/time2"
+        android:id="@+id/schedulesBotSheet_tg_small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_8sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/time"
-        app:toggle_requiredAmount="1"
+        app:layout_constraintTop_toBottomOf="@+id/schedulesBotSheet_tg_long"
+        app:toggle_requiredAmount="0"
         app:toggle_selectableAmount="4">
 
         <nl.bryanderidder.themedtogglebuttongroup.ThemedButton

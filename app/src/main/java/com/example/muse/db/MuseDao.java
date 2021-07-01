@@ -37,4 +37,13 @@ public interface MuseDao {
 
     @Query("select * from devices_table where hasCustomAlert=1")
     LiveData<List<DeviceModel>> getDevicesCustomAlerts();
+
+    @Query("select * from devices_table where isAdded=1 and hasGoal=0")
+    LiveData<List<DeviceModel>> getDevicesWithoutGoal();
+
+    @Query("select * from devices_table where isAdded=1 and hasSchedules=0")
+    LiveData<List<DeviceModel>> getDevicesWithoutSchedule();
+
+    @Query("select * from devices_table where isAdded=1 and hasCustomAlert=0")
+    LiveData<List<DeviceModel>> getDevicesWithoutCustomAlert();
 }

@@ -24,22 +24,12 @@ import androidx.navigation.Navigation;
 import com.example.muse.R;
 import com.example.muse.StartActivity;
 import com.example.muse.model.AuthModel;
-import com.example.muse.network.ApiService;
-import com.example.muse.network.RetrofitBuilder;
 import com.example.muse.utility.SaveState;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
-import com.google.firebase.auth.FirebaseAuthUserCollisionException;
-import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 import okhttp3.ResponseBody;
