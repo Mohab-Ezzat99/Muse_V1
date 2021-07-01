@@ -17,6 +17,7 @@ import com.example.muse.R;
 import com.example.muse.StartActivity;
 import com.example.muse.model.DeviceModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RVAddDeviceAdapter extends RecyclerView.Adapter<RVAddDeviceAdapter.ADViewHolder> {
@@ -27,6 +28,7 @@ public class RVAddDeviceAdapter extends RecyclerView.Adapter<RVAddDeviceAdapter.
 
     public RVAddDeviceAdapter(Context context) {
         this.context = context;
+        this.DeviceModels=new ArrayList<>();
     }
 
     @SuppressLint("InflateParams")

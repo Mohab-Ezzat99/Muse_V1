@@ -16,7 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.ProgressBar;
@@ -24,7 +23,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -35,14 +33,21 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.muse.R;
 import com.example.muse.StartActivity;
+import com.example.muse.adapters.OnDeviceItemListener;
+import com.example.muse.adapters.RVDeviceBotAdapter;
 import com.example.muse.model.DeviceModel;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.textfield.TextInputEditText;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Objects;
 
@@ -50,9 +55,9 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
 
     private ChipNavigationBar chipNavigationBar;
     private NavController navControllerChart;
-    private TextView tv_name,tv_percent;
-    private ImageView iv_icon;
-    private CardView  cv_goal, cv_schedules;
+    private TextView tv_name, tv_percent;
+    private ImageView iv_icon, dialogIv_icon;
+    private CardView cv_goal, cv_schedules;
     private SwitchCompat switchCompat;
     private ProgressBar progressBar;
     private ImageView iv_custom;
@@ -63,7 +68,8 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
     private CardView cv_insight;
     private ImageView iv_arrow;
     private Spinner spinner;
-    private TextView tv_current,tv_average,tv_per,tv_perV,tv_estimation;
+    private TextView tv_current,tv_average,tv_per,tv_perV, tv_estimation;
+    private BottomSheetDialog bottomSheetDialog;
 
     public SelectedDeviceFragment() {
         // Required empty public constructor
@@ -237,8 +243,36 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         if (item.getItemId() == R.id.menu_settings) {
-            Navigation.findNavController(requireActivity(), R.id.main_fragment)
-                    .navigate(SelectedDeviceFragmentDirections.actionSelectedDeviceFragmentToDeviceSettingFragment(device));
+            AlertDialog.Builder builder = new AlertDialog.Builder(requireContext(), R.style.DialogStyle);
+            View view = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_edit, null, false);
+            builder.setView(view);
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+
+            dialogIv_icon = view.findViewById(R.id.dialogEdit_iv_icon);
+            TextView tv_save = view.findViewById(R.id.dialogEdit_tv_save);
+            TextView tv_delete = view.findViewById(R.id.dialogEdit_tv_delete);
+            TextInputEditText et_name = view.findViewById(R.id.dialogEdit_et_deviceName);
+
+            dialogIv_icon.setImageResource(device.getIcon());
+            dialogIv_icon.setOnClickListener(v -> showBottomSheet(dialogIv_icon));
+
+            tv_save.setOnClickListener(v -> {
+                if (!(et_name.getText().toString().equals("")))
+                    device.setName(et_name.getText().toString());
+                StartActivity.museViewModel.updateDevice(device);
+                Toast.makeText(getContext(), "Updated successfully", Toast.LENGTH_SHORT).show();
+                Navigation.findNavController(requireActivity(),R.id.main_fragment).popBackStack();
+                alertDialog.dismiss();
+            });
+
+            tv_delete.setOnClickListener(v -> {
+                StartActivity.museViewModel.deleteDevice(device);
+                Toast.makeText(getContext(), "Deleted successfully", Toast.LENGTH_SHORT).show();
+                Navigation.findNavController(requireActivity(),R.id.main_fragment).popBackStack();
+                alertDialog.dismiss();
+            });
+
         }
 
         else if (item.getItemId() == android.R.id.home) {
@@ -330,11 +364,48 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
     }
 
     public View displayDialog(int layout) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext(),R.style.DialogStyle);
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext(), R.style.DialogStyle);
         View view = LayoutInflater.from(requireContext()).inflate(layout, null, false);
         builder.setView(view);
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
         return view;
+    }
+
+    @SuppressLint("SetTextI18n")
+    public void showBottomSheet(View view) {
+        //init
+        bottomSheetDialog = new BottomSheetDialog(requireContext(), R.style.BottomSheetDialogTheme);
+        View bottom_sheet = LayoutInflater.from(getContext()).inflate(R.layout.bottom_sheet_device, view.findViewById(R.id.deviceBotSheet));
+
+        TextView tv_title = bottom_sheet.findViewById(R.id.deviceBotSheet_tv_title);
+        tv_title.setText("Select icon");
+
+        RecyclerView rv = bottom_sheet.findViewById(R.id.deviceBotSheet_rv);
+        rv.setHasFixedSize(true);
+        rv.setLayoutManager(new GridLayoutManager(getContext(), 2));
+
+        // adapter with click listener
+        RVDeviceBotAdapter botAdapter = new RVDeviceBotAdapter(getContext());
+        botAdapter.setList(StartActivity.modelArrayList);
+        rv.setAdapter(botAdapter);
+
+        botAdapter.setListener(new OnDeviceItemListener() {
+            @Override
+            public void OnItemClick(DeviceModel device1) {
+                dialogIv_icon.setImageResource(device1.getIcon());
+                device.setIcon(device1.getIcon());
+                bottomSheetDialog.dismiss();
+            }
+
+            @Override
+            public void OnItemLongClick(View view, DeviceModel device) {
+
+            }
+        });
+
+        //launch bottom sheet
+        bottomSheetDialog.setContentView(bottom_sheet);
+        bottomSheetDialog.show();
     }
 }

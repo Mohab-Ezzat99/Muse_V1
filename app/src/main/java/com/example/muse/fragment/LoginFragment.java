@@ -113,7 +113,10 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.login_btn_login:
-                navController.navigate(R.id.action_loginFragment_to_mainFragment);
+                if (SaveState.getShownOnBoarding())
+                    navController.navigate(R.id.action_loginFragment_to_mainFragment);
+                else
+                    navController.navigate(R.id.action_loginFragment_to_onBoardFragment);
                 //setupLogin();
         }
     }

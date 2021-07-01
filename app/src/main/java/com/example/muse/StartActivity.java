@@ -22,6 +22,8 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.muse.model.DeviceModel;
 import com.example.muse.utility.SaveState;
 import com.example.muse.viewmodels.MuseViewModel;
+
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class StartActivity extends AppCompatActivity {
@@ -43,6 +45,7 @@ public class StartActivity extends AppCompatActivity {
     public static int colorPrimaryVariant;
     public static int colorOnPrimary;
     public static int colorOnSecondary;
+    public static ArrayList<DeviceModel> modelArrayList;
 
     public SaveState saveState;
     private static Window window;
@@ -75,20 +78,20 @@ public class StartActivity extends AppCompatActivity {
         activeActionBar(this);
 
         //declare devices
-        if(!SaveState.isDeclared()) {
-            museViewModel.insertDevice(new DeviceModel(R.drawable.ic_tv, TV));
-            museViewModel.insertDevice(new DeviceModel(R.drawable.ic_fridge, FRIDGE));
-            museViewModel.insertDevice(new DeviceModel(R.drawable.ic_air_conditioner, AIR));
-            museViewModel.insertDevice(new DeviceModel(R.drawable.ic_pc, PC));
-            museViewModel.insertDevice(new DeviceModel(R.drawable.ic_clothes_dryer, CLOTHES_DRYER));
-            museViewModel.insertDevice(new DeviceModel(R.drawable.ic_freezer, FREEZER));
-            museViewModel.insertDevice(new DeviceModel(R.drawable.ic_coffee_maker, COFFEE_MAKER));
-            museViewModel.insertDevice(new DeviceModel(R.drawable.ic_dishwasher, DISHWASHER));
-            museViewModel.insertDevice(new DeviceModel(R.drawable.ic_fan_heater, FAN_HEATER));
-            museViewModel.insertDevice(new DeviceModel(R.drawable.ic_toaster, TOASTER));
-            museViewModel.insertDevice(new DeviceModel(R.drawable.ic_water_dispenser, WATER_DISPENSER));
-            museViewModel.insertDevice(new DeviceModel(R.drawable.ic_plug, DEVICE));
-            SaveState.setDeclared(true);
+        modelArrayList=new ArrayList<>();
+        if(modelArrayList.size()==0) {
+            modelArrayList.add(new DeviceModel(R.drawable.ic_tv, TV));
+            modelArrayList.add(new DeviceModel(R.drawable.ic_fridge, FRIDGE));
+            modelArrayList.add(new DeviceModel(R.drawable.ic_air_conditioner, AIR));
+            modelArrayList.add(new DeviceModel(R.drawable.ic_pc, PC));
+            modelArrayList.add(new DeviceModel(R.drawable.ic_clothes_dryer, CLOTHES_DRYER));
+            modelArrayList.add(new DeviceModel(R.drawable.ic_freezer, FREEZER));
+            modelArrayList.add(new DeviceModel(R.drawable.ic_coffee_maker, COFFEE_MAKER));
+            modelArrayList.add(new DeviceModel(R.drawable.ic_dishwasher, DISHWASHER));
+            modelArrayList.add(new DeviceModel(R.drawable.ic_fan_heater, FAN_HEATER));
+            modelArrayList.add(new DeviceModel(R.drawable.ic_toaster, TOASTER));
+            modelArrayList.add(new DeviceModel(R.drawable.ic_water_dispenser, WATER_DISPENSER));
+            modelArrayList.add(new DeviceModel(R.drawable.ic_plug, DEVICE));
         }
 
         //get some colors

@@ -34,7 +34,7 @@ public class OnFourthFragment extends Fragment {
 
         view.findViewById(R.id.onFourth_tv_finish).setOnClickListener(v -> {
             SaveState.setShownOnBoarding(true);
-            Navigation.findNavController(requireActivity(),R.id.start_fragment).popBackStack();
+            Navigation.findNavController(requireActivity(),R.id.start_fragment).navigate(R.id.action_onBoardFragment_to_mainFragment);
         });
     }
 }

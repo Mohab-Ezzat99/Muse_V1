@@ -131,20 +131,12 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        switch (item.getItemId()) {
-
-            case R.id.popup_delete:
-                StartActivity.museViewModel.deleteDevice(currentDevice);
-                Toast.makeText(getContext(), "Deleted successfully", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.popup_settings:
-                navController.navigate(DevicesFragmentDirections.actionDevicesFragmentToDeviceSettingFragment(currentDevice));
-                return true;
-
-            default:
-                return false;
+        if (item.getItemId() == R.id.popup_delete) {
+            StartActivity.museViewModel.deleteDevice(currentDevice);
+            Toast.makeText(getContext(), "Deleted successfully", Toast.LENGTH_SHORT).show();
+            return true;
         }
+        return false;
     }
 
     public void displayPlug(){
@@ -197,9 +189,8 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
         rv.setHasFixedSize(true);
         rv.setLayoutManager(new GridLayoutManager(getContext(), 2));
         RVDeviceBotAdapter botAdapter = new RVDeviceBotAdapter(getContext());
+        botAdapter.setList(StartActivity.modelArrayList);
         rv.setAdapter(botAdapter);
-
-        StartActivity.museViewModel.getAllDevices().observe(getViewLifecycleOwner(), deviceModels -> botAdapter.setList((ArrayList<DeviceModel>) deviceModels));
 
         botAdapter.setListener(new OnDeviceItemListener() {
             @Override
@@ -212,7 +203,7 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
                 SaveState.setNewAlert((SaveState.getLastAlerts()) + 1);
 
                 //add to list & room
-                StartActivity.museViewModel.updateDevice(device);
+                StartActivity.museViewModel.insertDevice(device);
                 bottomSheetDialog.dismiss();
             }
 

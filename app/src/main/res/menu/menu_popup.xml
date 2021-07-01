@@ -7,10 +7,4 @@
         android:icon="@drawable/ic_delete"
         android:title="@string/tit_delete"
         app:iconTint="?attr/colorPrimaryVariant" />
-
-    <item
-        android:id="@+id/popup_settings"
-        android:icon="@drawable/ic_settings"
-        android:title="@string/tit_settings"
-        app:iconTint="?attr/colorPrimaryVariant" />
 </menu>

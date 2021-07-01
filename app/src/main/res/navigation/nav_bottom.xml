@@ -16,9 +16,6 @@
         android:label="@string/tit_devices"
         tools:layout="@layout/fragment_devices">
         <action
-            android:id="@+id/action_devicesFragment_to_deviceSettingFragment"
-            app:destination="@id/deviceSettingFragment" />
-        <action
             android:id="@+id/action_devicesFragment_to_selectedDeviceFragment"
             app:destination="@id/selectedDeviceFragment" />
     </fragment>
@@ -27,9 +24,6 @@
         android:id="@+id/selectedDeviceFragment"
         android:name="com.example.muse.fragment.SelectedDeviceFragment"
         tools:layout="@layout/fragment_selected_device">
-        <action
-            android:id="@+id/action_selectedDeviceFragment_to_deviceSettingFragment"
-            app:destination="@id/deviceSettingFragment" />
 
         <argument
             android:name="selected_device"
@@ -70,16 +64,6 @@
         android:name="com.example.muse.fragment.SchedulesFragment"
         android:label="@string/txt_schedule"
         tools:layout="@layout/fragment_schedules" />
-    <fragment
-        android:id="@+id/deviceSettingFragment"
-        android:name="com.example.muse.fragment.DeviceSettingFragment"
-        android:label="@string/txt_deviceSettings"
-        tools:layout="@layout/fragment_device_setting">
-
-        <argument
-            android:name="device_setting"
-            app:argType="com.example.muse.model.DeviceModel" />
-    </fragment>
     <fragment
         android:id="@+id/customAlertsFragment"
         android:name="com.example.muse.fragment.CustomAlertsFragment"

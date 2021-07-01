@@ -40,7 +40,7 @@ public class ChartDayFragment extends Fragment {
 
         // fixed line chart for now
         int[] xAxis_value = {0, 1, 2, 3, 4, 5};
-        float[] yAxis_value = {12f, 16f, 20f, 11f, 24f, 18f};
+        float[] yAxis_value = {12f, 10f, 20f, 11f, 24f, 18f};
 //        int[] xAxis_value = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23};
 //        float[] yAxis_value = {5f, 16f, 20f, 14f, 18f, 23f, 21f, 25f, 19f, 26f, 24f, 17f, 12f, 18f, 22f, 28f, 32f, 30f, 25f, 34f, 29f, 22f, 24f, 30f};
         lineChart.setData(DataCharts.drawLineChart(getContext(), xAxis_value, yAxis_value));

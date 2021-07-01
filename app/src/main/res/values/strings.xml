@@ -230,4 +230,6 @@
     <string name="txt_edit_schedule">Edit schedule</string>
     <string name="txt_everyday">Everyday</string>
     <string name="txt_realtime">Realtime</string>
+    <string name="txt_save">Save</string>
+    <string name="txt_delete">Delete</string>
 </resources>
