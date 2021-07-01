@@ -26,7 +26,7 @@ import com.example.muse.viewmodels.MuseViewModel;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class StartActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
     public static final String TV = "TV";
     public static final String FRIDGE = "Fridge";
     public static final String AIR = "Air Conditioner";
@@ -54,7 +54,7 @@ public class StartActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_start);
+        setContentView(R.layout.activity_main);
 
         //set English
         Configuration config = this.getResources().getConfiguration();

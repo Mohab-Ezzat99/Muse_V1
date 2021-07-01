@@ -1,6 +1,5 @@
 package com.example.muse.fragment;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,8 +18,8 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.muse.MainActivity;
 import com.example.muse.R;
-import com.example.muse.StartActivity;
 import com.example.muse.adapters.RVAddGoalAdapter;
 import com.example.muse.model.DeviceModel;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -54,7 +53,7 @@ public class GoalsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //StatusBar color
-        StartActivity.setupBackgroundStatusBar(StartActivity.colorPrimaryVariant);
+        MainActivity.setupBackgroundStatusBar(MainActivity.colorPrimaryVariant);
         not_add = view.findViewById(R.id.FGoals_group);
 
         //recycleView
@@ -65,7 +64,7 @@ public class GoalsFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         setupSwipe();
 
-        StartActivity.museViewModel.getDevicesGoals().observe(getViewLifecycleOwner(), deviceModels -> {
+        MainActivity.museViewModel.getDevicesGoals().observe(getViewLifecycleOwner(), deviceModels -> {
             if (deviceModels.size() != 0) {
                 // visibility
                 not_add.setVisibility(View.GONE);
@@ -78,7 +77,7 @@ public class GoalsFragment extends Fragment {
             adapter.submitList(deviceModels);
         });
 
-        StartActivity.museViewModel.getDevicesCWithoutGoal().observe(getViewLifecycleOwner(), deviceModels -> {
+        MainActivity.museViewModel.getDevicesCWithoutGoal().observe(getViewLifecycleOwner(), deviceModels -> {
             result = deviceModels;
             strings = new String[deviceModels.size()];
             for (int i = 0; i < deviceModels.size(); i++)
@@ -89,7 +88,7 @@ public class GoalsFragment extends Fragment {
         FloatingActionButton fab_add = view.findViewById(R.id.FGoals_fab_add);
         fab_add.setOnClickListener(v -> {
             if (result.size() == 0)
-                Toast.makeText(getContext(), "No Devices yet", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "No device found to set goal", Toast.LENGTH_LONG).show();
             else
                 showBottomSheet(view);
         });
@@ -112,7 +111,7 @@ public class GoalsFragment extends Fragment {
             // add item to rv
             DeviceModel device = result.get(spinner_device.getSelectedItemPosition());
             device.setHasGoal(true);
-            StartActivity.museViewModel.updateDevice(device);
+            MainActivity.museViewModel.updateDevice(device);
 
             // visibility
             not_add.setVisibility(View.GONE);
@@ -138,7 +137,7 @@ public class GoalsFragment extends Fragment {
 
                 DeviceModel device=adapter.getItemAt(viewHolder.getAdapterPosition());
                 device.setHasGoal(false);
-                StartActivity.museViewModel.updateDevice(device);
+                MainActivity.museViewModel.updateDevice(device);
             }
         };
 

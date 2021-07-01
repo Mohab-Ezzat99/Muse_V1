@@ -21,8 +21,8 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.example.muse.MainActivity;
 import com.example.muse.R;
-import com.example.muse.StartActivity;
 import com.example.muse.model.AuthModel;
 import com.example.muse.model.LoginResponseModel;
 import com.example.muse.network.ApiService;
@@ -76,9 +76,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
         //StatusBar color
         if (SaveState.getDarkModeState())
-            StartActivity.setupBackgroundStatusBar(getResources().getColor(R.color.nice_black, null));
+            MainActivity.setupBackgroundStatusBar(getResources().getColor(R.color.nice_black, null));
         else
-            StartActivity.setupLightStatusBar(getResources().getColor(R.color.white_muse, null));
+            MainActivity.setupLightStatusBar(getResources().getColor(R.color.white_muse, null));
     }
 
     @Override
@@ -183,7 +183,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         progressDialog.show();
         ((ProgressBar) progressDialog.findViewById(android.R.id.progress))
                 .getIndeterminateDrawable()
-                .setColorFilter(StartActivity.colorPrimaryVariant, android.graphics.PorterDuff.Mode.SRC_IN);
+                .setColorFilter(MainActivity.colorPrimaryVariant, android.graphics.PorterDuff.Mode.SRC_IN);
         progressDialog.setCanceledOnTouchOutside(false);
 
         ApiService apiService = RetrofitBuilder.getInstance().create(ApiService.class);
@@ -195,7 +195,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                     Toast.makeText(getContext(), response.message(), Toast.LENGTH_SHORT).show();
                 else {
                     SaveState.setToken(response.body().getToken());
-                    StartActivity.hideKeyboardFrom(requireContext(), btn_login);
+                    MainActivity.hideKeyboardFrom(requireContext(), btn_login);
                     if (SaveState.getShownOnBoarding())
                         navController.navigate(R.id.action_loginFragment_to_mainFragment);
                     else

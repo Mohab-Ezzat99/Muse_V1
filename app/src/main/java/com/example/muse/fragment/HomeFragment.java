@@ -14,7 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.Spinner;
@@ -31,7 +30,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.example.muse.R;
-import com.example.muse.StartActivity;
+import com.example.muse.MainActivity;
 import com.example.muse.utility.SaveState;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
@@ -77,9 +76,9 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
 
         //StatusBar color
         if (SaveState.getDarkModeState())
-            StartActivity.setupBackgroundStatusBar(getResources().getColor(R.color.nice_black, null));
+            MainActivity.setupBackgroundStatusBar(getResources().getColor(R.color.nice_black, null));
         else
-            StartActivity.setupLightStatusBar(getResources().getColor(R.color.white_muse, null));
+            MainActivity.setupLightStatusBar(getResources().getColor(R.color.white_muse, null));
 
         //iv_custom
         Calendar calendar = Calendar.getInstance();

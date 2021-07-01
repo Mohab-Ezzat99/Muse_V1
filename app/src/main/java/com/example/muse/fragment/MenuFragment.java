@@ -17,8 +17,8 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.muse.MainActivity;
 import com.example.muse.R;
-import com.example.muse.StartActivity;
 import com.example.muse.adapters.RVNavMenuAdapter;
 import com.example.muse.model.NavMenuModel;
 import com.example.muse.utility.SaveState;
@@ -48,7 +48,7 @@ public class MenuFragment extends Fragment {
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).show();
 
         //StatusBar color
-        StartActivity.setupBackgroundStatusBar(StartActivity.colorPrimaryVariant);
+        MainActivity.setupBackgroundStatusBar(MainActivity.colorPrimaryVariant);
     }
 
     @Override
@@ -99,7 +99,7 @@ public class MenuFragment extends Fragment {
             @Override
             public void isDarkModeChecked(boolean isChecked) {
                 SaveState.setDarkModeState(isChecked);
-                StartActivity.setupMode();
+                MainActivity.setupMode();
             }
 
             @Override

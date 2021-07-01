@@ -7,7 +7,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,8 +22,8 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.muse.MainActivity;
 import com.example.muse.R;
-import com.example.muse.StartActivity;
 import com.example.muse.adapters.OnDeviceItemListener;
 import com.example.muse.adapters.RVAddDeviceAdapter;
 import com.example.muse.adapters.RVDeviceBotAdapter;
@@ -33,9 +32,7 @@ import com.example.muse.utility.SaveState;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClickListener {
 
@@ -70,7 +67,7 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
         super.onViewCreated(view, savedInstanceState);
 
         //StatusBar color
-        StartActivity.setupBackgroundStatusBar(StartActivity.colorPrimaryVariant);
+        MainActivity.setupBackgroundStatusBar(MainActivity.colorPrimaryVariant);
 
         fab_add = view.findViewById(R.id.FDevices_fab_add);
         fab_add.setOnClickListener(v -> displayPlug());
@@ -85,7 +82,7 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
         addDeviceAdapter = new RVAddDeviceAdapter(getContext());
         recyclerView.setAdapter(addDeviceAdapter);
 
-        StartActivity.museViewModel.getDevicesAdded().observe(getViewLifecycleOwner(), deviceModels -> {
+        MainActivity.museViewModel.getDevicesAdded().observe(getViewLifecycleOwner(), deviceModels -> {
             if (deviceModels.size() != 0) {
                 // visibility
                 not_add.setVisibility(View.GONE);
@@ -104,7 +101,7 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
 
         addDeviceAdapter.setSwitchListener((device, isChecked) -> {
             device.setOn(isChecked);
-            StartActivity.museViewModel.updateDevice(device);
+            MainActivity.museViewModel.updateDevice(device);
         });
 
         addDeviceAdapter.setListener(new OnDeviceItemListener() {
@@ -132,7 +129,7 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         if (item.getItemId() == R.id.popup_delete) {
-            StartActivity.museViewModel.deleteDevice(currentDevice);
+            MainActivity.museViewModel.deleteDevice(currentDevice);
             Toast.makeText(getContext(), "Deleted successfully", Toast.LENGTH_SHORT).show();
             return true;
         }
@@ -189,7 +186,7 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
         rv.setHasFixedSize(true);
         rv.setLayoutManager(new GridLayoutManager(getContext(), 2));
         RVDeviceBotAdapter botAdapter = new RVDeviceBotAdapter(getContext());
-        botAdapter.setList(StartActivity.modelArrayList);
+        botAdapter.setList(MainActivity.modelArrayList);
         rv.setAdapter(botAdapter);
 
         botAdapter.setListener(new OnDeviceItemListener() {
@@ -203,7 +200,7 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
                 SaveState.setNewAlert((SaveState.getLastAlerts()) + 1);
 
                 //add to list & room
-                StartActivity.museViewModel.insertDevice(device);
+                MainActivity.museViewModel.insertDevice(device);
                 bottomSheetDialog.dismiss();
             }
 

@@ -21,8 +21,8 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.example.muse.MainActivity;
 import com.example.muse.R;
-import com.example.muse.StartActivity;
 import com.example.muse.model.AuthModel;
 import com.example.muse.utility.SaveState;
 import com.google.android.material.textfield.TextInputEditText;
@@ -66,9 +66,9 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
         //StatusBar color
         if (SaveState.getDarkModeState())
-            StartActivity.setupBackgroundStatusBar(getResources().getColor(R.color.nice_black, null));
+            MainActivity.setupBackgroundStatusBar(getResources().getColor(R.color.nice_black, null));
         else
-            StartActivity.setupLightStatusBar(getResources().getColor(R.color.white_muse, null));
+            MainActivity.setupLightStatusBar(getResources().getColor(R.color.white_muse, null));
     }
 
     @Override
@@ -160,10 +160,10 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         progressDialog.show();
         ((ProgressBar)progressDialog.findViewById(android.R.id.progress))
                 .getIndeterminateDrawable()
-                .setColorFilter(StartActivity.colorPrimaryVariant, android.graphics.PorterDuff.Mode.SRC_IN);
+                .setColorFilter(MainActivity.colorPrimaryVariant, android.graphics.PorterDuff.Mode.SRC_IN);
         progressDialog.setCanceledOnTouchOutside(false);
 
-        Call<ResponseBody> call=StartActivity.museViewModel.register(new AuthModel(full_name,email,password));
+        Call<ResponseBody> call= MainActivity.museViewModel.register(new AuthModel(full_name,email,password));
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {

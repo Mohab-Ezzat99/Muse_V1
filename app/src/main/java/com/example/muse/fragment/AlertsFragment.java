@@ -16,10 +16,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.muse.R;
-import com.example.muse.StartActivity;
+import com.example.muse.MainActivity;
 import com.example.muse.adapters.RVAlertAdapter;
 import com.example.muse.adapters.OnDeviceItemListener;
 import com.example.muse.model.DeviceModel;
@@ -51,7 +50,7 @@ public class AlertsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //StatusBar color
-        StartActivity.setupBackgroundStatusBar(StartActivity.colorPrimaryVariant);
+        MainActivity.setupBackgroundStatusBar(MainActivity.colorPrimaryVariant);
 
         //init
         not_add = view.findViewById(R.id.FAlerts_group);
@@ -64,7 +63,7 @@ public class AlertsFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         setupSwipe();
 
-        StartActivity.museViewModel.getDevicesAlerts().observe(getViewLifecycleOwner(), deviceModels -> {
+        MainActivity.museViewModel.getDevicesAlerts().observe(getViewLifecycleOwner(), deviceModels -> {
             if(deviceModels.size()!=0)
             {
                 // visibility
@@ -105,7 +104,7 @@ public class AlertsFragment extends Fragment {
 
                 DeviceModel device=adapter.getItemAt(viewHolder.getAdapterPosition());
                 device.setHasAlert(false);
-                StartActivity.museViewModel.updateDevice(device);
+                MainActivity.museViewModel.updateDevice(device);
             }
         };
 

@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.muse.StartActivity;
+import com.example.muse.MainActivity;
 import com.example.muse.utility.DataCharts;
 import com.example.muse.R;
 import com.github.mikephil.charting.charts.BarChart;
@@ -57,14 +57,14 @@ public class ChartYearFragment extends Fragment {
         // x axis edit
         String[] values = new String[]{"2014", "2015", "2016", "2017", "2018", "2019", "2020"};
         XAxis xAxis = barChart.getXAxis();
-        xAxis.setTextColor(StartActivity.colorPrimaryVariant);
+        xAxis.setTextColor(MainActivity.colorPrimaryVariant);
         xAxis.setValueFormatter(new IndexAxisValueFormatter(values));
         xAxis.setGranularity(1f);
         xAxis.setDrawGridLines(false);
 
         // y axis edit
         YAxis yAxis = barChart.getAxisLeft();
-        yAxis.setTextColor(StartActivity.colorPrimaryVariant);
+        yAxis.setTextColor(MainActivity.colorPrimaryVariant);
         yAxis.setAxisMaximum(10f);
         yAxis.setAxisMinimum(0f);
         yAxis.setLabelCount(6, true);

@@ -13,8 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.muse.MainActivity;
 import com.example.muse.R;
-import com.example.muse.StartActivity;
 import com.example.muse.model.DeviceModel;
 
 import java.util.ArrayList;
@@ -49,7 +49,7 @@ public class RVAddDeviceAdapter extends RecyclerView.Adapter<RVAddDeviceAdapter.
         holder.progressBar.setProgress(deviceModel.getProgress());
 
         if(deviceModel.isOn()){
-            holder.iv_icon.setColorFilter(StartActivity.colorPrimaryVariant);
+            holder.iv_icon.setColorFilter(MainActivity.colorPrimaryVariant);
             holder.tv_percent.setVisibility(View.VISIBLE);
             holder.progressBar.setVisibility(View.VISIBLE);
 

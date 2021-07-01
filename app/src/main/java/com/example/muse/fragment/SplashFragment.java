@@ -16,8 +16,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import com.example.muse.MainActivity;
 import com.example.muse.R;
-import com.example.muse.StartActivity;
 import com.example.muse.utility.SaveState;
 
 import java.util.Objects;
@@ -46,9 +46,9 @@ public class SplashFragment extends Fragment {
 
         //StatusBar color
         if (SaveState.getDarkModeState())
-            StartActivity.setupBackgroundStatusBar(getResources().getColor(R.color.nice_black, null));
+            MainActivity.setupBackgroundStatusBar(getResources().getColor(R.color.nice_black, null));
         else
-            StartActivity.setupLightStatusBar(getResources().getColor(R.color.white_muse, null));
+            MainActivity.setupLightStatusBar(getResources().getColor(R.color.white_muse, null));
     }
 
     @Override

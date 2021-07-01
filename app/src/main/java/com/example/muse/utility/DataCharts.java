@@ -2,8 +2,9 @@ package com.example.muse.utility;
 
 import android.content.Context;
 import androidx.core.content.ContextCompat;
+
+import com.example.muse.MainActivity;
 import com.example.muse.R;
-import com.example.muse.StartActivity;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
@@ -33,8 +34,8 @@ public class DataCharts {
         lineDataSet.setValueTextSize(12f);
         lineDataSet.setDrawCircleHole(false);
         lineDataSet.setCircleRadius(2f);
-        lineDataSet.setCircleColor(StartActivity.colorOnSecondary);
-        lineDataSet.setValueTextColor(StartActivity.colorOnSecondary);
+        lineDataSet.setCircleColor(MainActivity.colorOnSecondary);
+        lineDataSet.setValueTextColor(MainActivity.colorOnSecondary);
         lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
 
         //list of data sets which everyone makes a line
@@ -53,10 +54,10 @@ public class DataCharts {
 
         //collect values in a set
         BarDataSet barDataSet = new BarDataSet(yEntries, null);
-        barDataSet.setGradientColor(StartActivity.colorOnPrimary
-                ,StartActivity.colorPrimaryVariant);
+        barDataSet.setGradientColor(MainActivity.colorOnPrimary
+                , MainActivity.colorPrimaryVariant);
         barDataSet.setValueTextSize(10f);
-        barDataSet.setValueTextColor(StartActivity.colorOnSecondary);
+        barDataSet.setValueTextColor(MainActivity.colorOnSecondary);
 
         //assign all data sets to line chart
         return new BarData(barDataSet);

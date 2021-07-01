@@ -8,7 +8,7 @@
     android:background="@drawable/gradient_screen"
     android:layout_height="match_parent"
     android:scrollbars="vertical"
-    tools:context=".StartActivity">
+    tools:context=".MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

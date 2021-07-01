@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
-import com.example.muse.StartActivity;
+import com.example.muse.MainActivity;
 import com.example.muse.utility.NonSwipeableViewPager;
 import com.example.muse.R;
 import com.example.muse.adapters.VPOnBoardAdapter;
@@ -43,9 +43,9 @@ public class OnBoardFragment extends Fragment {
 
         //StatusBar color
         if (SaveState.getDarkModeState())
-            StartActivity.setupBackgroundStatusBar(getResources().getColor(R.color.nice_black, null));
+            MainActivity.setupBackgroundStatusBar(getResources().getColor(R.color.nice_black, null));
         else
-            StartActivity.setupLightStatusBar(getResources().getColor(R.color.white_muse, null));
+            MainActivity.setupLightStatusBar(getResources().getColor(R.color.white_muse, null));
 
         NonSwipeableViewPager viewPager=view.findViewById(R.id.onBoard_vp);
         ArrayList<Fragment> screens=new ArrayList<>();

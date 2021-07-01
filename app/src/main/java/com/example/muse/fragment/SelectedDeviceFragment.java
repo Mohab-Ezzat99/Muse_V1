@@ -36,8 +36,8 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.muse.MainActivity;
 import com.example.muse.R;
-import com.example.muse.StartActivity;
 import com.example.muse.adapters.OnDeviceItemListener;
 import com.example.muse.adapters.RVDeviceBotAdapter;
 import com.example.muse.model.DeviceModel;
@@ -47,7 +47,6 @@ import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Objects;
 
@@ -117,7 +116,7 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
 
         // display getting info
         if(device.isOn()){
-            iv_icon.setColorFilter(StartActivity.colorPrimaryVariant);
+            iv_icon.setColorFilter(MainActivity.colorPrimaryVariant);
             tv_percent.setVisibility(View.VISIBLE);
             progressBar.setVisibility(View.VISIBLE);
         }
@@ -129,7 +128,7 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
 
         switchCompat.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if(isChecked){
-                iv_icon.setColorFilter(StartActivity.colorPrimaryVariant);
+                iv_icon.setColorFilter(MainActivity.colorPrimaryVariant);
                 tv_percent.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.VISIBLE);
             }
@@ -139,7 +138,7 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
                 progressBar.setVisibility(View.INVISIBLE);
             }
             device.setOn(isChecked);
-            StartActivity.museViewModel.updateDevice(device);
+            MainActivity.museViewModel.updateDevice(device);
         });
 
         cv_goal.setOnClickListener(this);
@@ -260,14 +259,14 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
             tv_save.setOnClickListener(v -> {
                 if (!(et_name.getText().toString().equals("")))
                     device.setName(et_name.getText().toString());
-                StartActivity.museViewModel.updateDevice(device);
+                MainActivity.museViewModel.updateDevice(device);
                 Toast.makeText(getContext(), "Updated successfully", Toast.LENGTH_SHORT).show();
                 Navigation.findNavController(requireActivity(),R.id.main_fragment).popBackStack();
                 alertDialog.dismiss();
             });
 
             tv_delete.setOnClickListener(v -> {
-                StartActivity.museViewModel.deleteDevice(device);
+                MainActivity.museViewModel.deleteDevice(device);
                 Toast.makeText(getContext(), "Deleted successfully", Toast.LENGTH_SHORT).show();
                 Navigation.findNavController(requireActivity(),R.id.main_fragment).popBackStack();
                 alertDialog.dismiss();
@@ -387,7 +386,7 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
 
         // adapter with click listener
         RVDeviceBotAdapter botAdapter = new RVDeviceBotAdapter(getContext());
-        botAdapter.setList(StartActivity.modelArrayList);
+        botAdapter.setList(MainActivity.modelArrayList);
         rv.setAdapter(botAdapter);
 
         botAdapter.setListener(new OnDeviceItemListener() {

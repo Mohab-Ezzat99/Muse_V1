@@ -13,21 +13,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.example.muse.R;
-import com.example.muse.StartActivity;
 import com.example.muse.network.ApiService;
-import com.example.muse.network.RetrofitBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 
-import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class OnThirdFragment extends Fragment {
     public static final String MQTT_SERVER="broker.hivemq.com:1883";
@@ -66,7 +59,7 @@ public class OnThirdFragment extends Fragment {
 //            progressDialog.show();
 //            ((ProgressBar)progressDialog.findViewById(android.R.id.progress))
 //                    .getIndeterminateDrawable()
-//                    .setColorFilter(StartActivity.colorPrimaryVariant, android.graphics.PorterDuff.Mode.SRC_IN);
+//                    .setColorFilter(MainActivity.colorPrimaryVariant, android.graphics.PorterDuff.Mode.SRC_IN);
 //            progressDialog.setCanceledOnTouchOutside(false);
 //
 //            SSID=et_ssid.getText().toString().trim();

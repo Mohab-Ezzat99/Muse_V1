@@ -1,6 +1,5 @@
 package com.example.muse.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.muse.R;
-import com.example.muse.StartActivity;
 import com.example.muse.utility.SaveState;
 
 public class OnFourthFragment extends Fragment {

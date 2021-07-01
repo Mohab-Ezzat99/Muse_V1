@@ -20,8 +20,8 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.muse.MainActivity;
 import com.example.muse.R;
-import com.example.muse.StartActivity;
 import com.example.muse.adapters.RVAddCustomAlertAdapter;
 import com.example.muse.model.DeviceModel;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -52,7 +52,7 @@ public class CustomAlertsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //StatusBar color
-        StartActivity.setupBackgroundStatusBar(StartActivity.colorPrimaryVariant);
+        MainActivity.setupBackgroundStatusBar(MainActivity.colorPrimaryVariant);
         not_add = view.findViewById(R.id.FCustomAlert_group);
 
         recyclerView = view.findViewById(R.id.FCustomAlert_rv);
@@ -62,7 +62,7 @@ public class CustomAlertsFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         setupSwipe();
 
-        StartActivity.museViewModel.getDevicesCustomAlerts().observe(getViewLifecycleOwner(), deviceModels -> {
+        MainActivity.museViewModel.getDevicesCustomAlerts().observe(getViewLifecycleOwner(), deviceModels -> {
             if (deviceModels.size() != 0) {
                 // visibility
                 not_add.setVisibility(View.GONE);
@@ -75,12 +75,12 @@ public class CustomAlertsFragment extends Fragment {
             adapter.submitList(deviceModels);
         });
 
-        StartActivity.museViewModel.getDevicesWithoutCustomAlerts().observe(getViewLifecycleOwner(), deviceModels -> result = deviceModels);
+        MainActivity.museViewModel.getDevicesWithoutCustomAlerts().observe(getViewLifecycleOwner(), deviceModels -> result = deviceModels);
 
         FloatingActionButton fab_add = view.findViewById(R.id.FCustomAlert_fab_add);
         fab_add.setOnClickListener(v -> {
             if (result.size() == 0)
-                Toast.makeText(getContext(), "No Devices yet", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "No device found to set custom alert", Toast.LENGTH_LONG).show();
             else
                 showBottomSheet(view);
         });
@@ -149,7 +149,7 @@ public class CustomAlertsFragment extends Fragment {
                     device.setTime(spinner_after.getSelectedItem().toString());
                     break;
             }
-            StartActivity.museViewModel.updateDevice(device);
+            MainActivity.museViewModel.updateDevice(device);
 
             // visibility
             not_add.setVisibility(View.GONE);
@@ -175,7 +175,7 @@ public class CustomAlertsFragment extends Fragment {
 
                 DeviceModel device = adapter.getItemAt(viewHolder.getAdapterPosition());
                 device.setHasCustomAlert(false);
-                StartActivity.museViewModel.updateDevice(device);
+                MainActivity.museViewModel.updateDevice(device);
             }
         };
 

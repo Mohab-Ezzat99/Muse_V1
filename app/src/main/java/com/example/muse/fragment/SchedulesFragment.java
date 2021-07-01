@@ -20,8 +20,8 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.muse.MainActivity;
 import com.example.muse.R;
-import com.example.muse.StartActivity;
 import com.example.muse.adapters.RVAddSchedulesAdapter;
 import com.example.muse.model.DeviceModel;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -56,7 +56,7 @@ public class SchedulesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //StatusBar color
-        StartActivity.setupBackgroundStatusBar(StartActivity.colorPrimaryVariant);
+        MainActivity.setupBackgroundStatusBar(MainActivity.colorPrimaryVariant);
         not_add = view.findViewById(R.id.FSchedules_group);
 
         //recycleView
@@ -67,7 +67,7 @@ public class SchedulesFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         setupSwipe();
 
-        StartActivity.museViewModel.getDevicesSchedules().observe(getViewLifecycleOwner(), deviceModels -> {
+        MainActivity.museViewModel.getDevicesSchedules().observe(getViewLifecycleOwner(), deviceModels -> {
             if (deviceModels.size() != 0) {
                 // visibility
                 not_add.setVisibility(View.GONE);
@@ -80,7 +80,7 @@ public class SchedulesFragment extends Fragment {
             adapter.submitList(deviceModels);
         });
 
-        StartActivity.museViewModel.getDevicesWithoutSchedule().observe(getViewLifecycleOwner(), deviceModels -> {
+        MainActivity.museViewModel.getDevicesWithoutSchedule().observe(getViewLifecycleOwner(), deviceModels -> {
             result = deviceModels;
             strings = new String[deviceModels.size()];
             for (int i = 0; i < deviceModels.size(); i++)
@@ -181,7 +181,7 @@ public class SchedulesFragment extends Fragment {
                 device.setDays(days);
             }
 
-            StartActivity.museViewModel.updateDevice(device);
+            MainActivity.museViewModel.updateDevice(device);
 
             // visibility
             not_add.setVisibility(View.GONE);
@@ -207,7 +207,7 @@ public class SchedulesFragment extends Fragment {
 
                 DeviceModel device = adapter.getItemAt(viewHolder.getAdapterPosition());
                 device.setHasSchedules(false);
-                StartActivity.museViewModel.updateDevice(device);
+                MainActivity.museViewModel.updateDevice(device);
             }
         };
 

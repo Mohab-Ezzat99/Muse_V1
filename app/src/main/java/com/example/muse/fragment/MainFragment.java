@@ -18,7 +18,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDeepLinkBuilder;
 import androidx.navigation.Navigation;
@@ -26,7 +25,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.muse.R;
-import com.example.muse.StartActivity;
+import com.example.muse.MainActivity;
 import com.example.muse.utility.SaveState;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -79,7 +78,7 @@ public class MainFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         if(SaveState.getLastAlerts()!=0)
             bottomNavigationView.showBadge(R.id.alertsFragment).setNumber(SaveState.getLastAlerts());
-        StartActivity.museViewModel.getNewAlerts().observe(requireActivity(), integer -> {
+        MainActivity.museViewModel.getNewAlerts().observe(requireActivity(), integer -> {
             if(integer!=0)
                 bottomNavigationView.showBadge(R.id.alertsFragment).setNumber(integer);
             else
@@ -96,7 +95,7 @@ public class MainFragment extends Fragment {
         }
 
         PendingIntent pi = new NavDeepLinkBuilder(context)
-                .setComponentName(StartActivity.class)
+                .setComponentName(MainActivity.class)
                 .setGraph(R.navigation.nav_bottom)
                 .setDestination(current)
                 .createPendingIntent();
