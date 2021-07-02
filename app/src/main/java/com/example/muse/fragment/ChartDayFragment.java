@@ -36,38 +36,44 @@ public class ChartDayFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         lineChart = view.findViewById(R.id.FDay_chart);
-        setupLineChart();
 
         // fixed line chart for now
-        int[] xAxis_value = {0, 1, 2, 3, 4, 5};
-        float[] yAxis_value = {12f, 10f, 20f, 11f, 24f, 18f};
-//        int[] xAxis_value = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23};
-//        float[] yAxis_value = {5f, 16f, 20f, 14f, 18f, 23f, 21f, 25f, 19f, 26f, 24f, 17f, 12f, 18f, 22f, 28f, 32f, 30f, 25f, 34f, 29f, 22f, 24f, 30f};
+        int[] xAxis_value = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23};
+        float[] yAxis_value = {24f, 17f, 12f, 18f, 22f, 28f, 32f, 30f, 25f, 34f, 30f, 28f, 31f, 17f, 18f, 14f, 15f
+                , 11f, 13f, 16f, 18f, 17f, 19f, 23f};
         lineChart.setData(DataCharts.drawLineChart(getContext(), xAxis_value, yAxis_value));
+        setupLineChart();
     }
 
-    public void setupLineChart(){
+    public void setupLineChart() {
         lineChart.setDragEnabled(true);
-        lineChart.setScaleEnabled(false);
+        lineChart.setScaleEnabled(true);
         lineChart.getAxisRight().setEnabled(false);
         lineChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
         lineChart.setAutoScaleMinMaxEnabled(true);
         lineChart.animateY(1000);
         lineChart.setDescription(null);
+        lineChart.fitScreen();
+        lineChart.zoomIn();
+        lineChart.zoomOut();
+        lineChart.setTouchEnabled(true);
+        lineChart.setPinchZoom(true);
+        lineChart.setVisibleXRangeMaximum(7);
 
         // x axis edit
-        String[] xValues = new String[]{"6 pm", "7 pm", "8 pm", "9 pm", "10 pm", "11 pm"};
-//        String[] xValues = new String[]{"12 am", "1 am", "2 am", "3 am", "4 am", "5 am","6 am","7 am","8 am","9 am","10 am","11 am"
-//                ,"12 pm","1 pm","2 pm","3 pm","4 pm","5 pm","6 pm","7 pm","8 pm","9 pm","10 pm","11 pm"};
+        String[] xValues = new String[]{"12 am","1 am","2 am","3 am","4 am","5 am","6 am","7 am","8 am","9 am","10 am", "11 am"
+                , "12 pm", "1 pm", "2 pm", "3 pm", "4 pm", "5 pm", "6 pm", "7 pm","8 pm","9 pm","10 pm","11 pm"};
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setTextColor(MainActivity.colorPrimaryVariant);
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(xValues));
         xAxis.setGranularity(1f);
+        xAxis.setDrawLimitLinesBehindData(true);
         xAxis.setDrawGridLines(false);
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(xValues));
 
         // y axis edit
         YAxis yAxis = lineChart.getAxisLeft();
         yAxis.setAxisMinimum(0f);
+        yAxis.setAxisMaximum(80f);
         yAxis.setLabelCount(5);
         yAxis.setTextColor(MainActivity.colorPrimaryVariant);
         yAxis.setDrawLimitLinesBehindData(true);

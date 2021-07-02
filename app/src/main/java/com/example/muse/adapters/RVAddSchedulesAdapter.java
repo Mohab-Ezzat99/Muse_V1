@@ -56,11 +56,10 @@ public class RVAddSchedulesAdapter extends ListAdapter<DeviceModel, RVAddSchedul
             holder.tv_state.setText("OFF");
         holder.tv_type.setText(deviceModel.getTime_type());
         holder.tv_time.setText(deviceModel.getTime());
-        if (deviceModel.getDays().length() == 0) {
+        if (deviceModel.getDays() == null) {
             holder.tv_on.setVisibility(View.GONE);
             holder.tv_days.setVisibility(View.GONE);
-        }
-        else {
+        } else {
             holder.tv_days.setText(deviceModel.getDays());
             holder.tv_on.setVisibility(View.VISIBLE);
             holder.tv_days.setVisibility(View.VISIBLE);
