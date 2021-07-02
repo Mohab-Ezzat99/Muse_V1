@@ -113,11 +113,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.login_btn_login:
-                if (SaveState.getShownOnBoarding())
-                    navController.navigate(R.id.action_loginFragment_to_mainFragment);
-                else
-                    navController.navigate(R.id.action_loginFragment_to_onBoardFragment);
-                //setupLogin();
+                setupLogin();
         }
     }
 
@@ -186,8 +182,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 .setColorFilter(MainActivity.colorPrimaryVariant, android.graphics.PorterDuff.Mode.SRC_IN);
         progressDialog.setCanceledOnTouchOutside(false);
 
-        ApiService apiService = RetrofitBuilder.getInstance().create(ApiService.class);
-        Call<LoginResponseModel> call = apiService.login(new AuthModel(email, password));
+        Call<LoginResponseModel> call = MainActivity.museViewModel.login(new AuthModel(email, password));
         call.enqueue(new Callback<LoginResponseModel>() {
             @Override
             public void onResponse(@NotNull Call<LoginResponseModel> call, @NotNull Response<LoginResponseModel> response) {

@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitBuilder {
     public static final String PLUG_URL = "http://192.168.33.1/";
-    public static final String BASE_URL = "https://museapi32.azurewebsites.net/";
+    public static final String BASE_URL = "https://museapirg.azurewebsites.net/";
     private static Retrofit plugInstance = null,instance=null,authInstance=null;
 
     public static Retrofit getPlugInstance() {

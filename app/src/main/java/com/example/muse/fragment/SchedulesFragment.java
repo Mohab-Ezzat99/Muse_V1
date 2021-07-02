@@ -180,6 +180,8 @@ public class SchedulesFragment extends Fragment {
                 }
                 device.setDays(days);
             }
+            else
+                device.setDays(null);
 
             MainActivity.museViewModel.updateDevice(device);
 
