@@ -9,6 +9,15 @@ public class GoalModel {
     private int used;
     private int estimation;
     private int percent;
+    private int usageLimit;
+    private int unit;
+
+    public GoalModel(int deviceId, int type, int usageLimit, int unit) {
+        this.deviceId = deviceId;
+        this.type = type;
+        this.usageLimit = usageLimit;
+        this.unit = unit;
+    }
 
     public int getId() {
         return id;
@@ -64,5 +73,21 @@ public class GoalModel {
 
     public void setPercent(int percent) {
         this.percent = percent;
+    }
+
+    public int getUsageLimit() {
+        return usageLimit;
+    }
+
+    public void setUsageLimit(int usageLimit) {
+        this.usageLimit = usageLimit;
+    }
+
+    public int getUnit() {
+        return unit;
+    }
+
+    public void setUnit(int unit) {
+        this.unit = unit;
     }
 }

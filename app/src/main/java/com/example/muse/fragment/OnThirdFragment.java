@@ -13,14 +13,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.example.muse.MainActivity;
 import com.example.muse.R;
+import com.example.muse.model.DeviceRequestModel;
+import com.example.muse.model.DeviceResponseModel;
 import com.example.muse.network.ApiService;
 import com.google.android.material.textfield.TextInputEditText;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class OnThirdFragment extends Fragment {
     public static final String MQTT_SERVER="broker.hivemq.com:1883";
@@ -54,6 +61,18 @@ public class OnThirdFragment extends Fragment {
         progressDialog = new ProgressDialog(getContext());
 
         btn_submit.setOnClickListener(v -> {
+            Call<DeviceResponseModel> call=MainActivity.museViewModel.addHouse(new DeviceRequestModel(0,"House","Mohab Ezzat"));
+            call.enqueue(new Callback<DeviceResponseModel>() {
+                @Override
+                public void onResponse(@NotNull Call<DeviceResponseModel> call, @NotNull Response<DeviceResponseModel> response) {
+                    Toast.makeText(getContext(), response.body().getName(), Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onFailure(@NotNull Call<DeviceResponseModel> call, @NotNull Throwable t) {
+
+                }
+            });
             viewPager.setCurrentItem(3);
 //            progressDialog.setMessage("Please wait...");
 //            progressDialog.show();

@@ -189,12 +189,13 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 if (response.body() == null)
                     Toast.makeText(getContext(), response.message(), Toast.LENGTH_SHORT).show();
                 else {
-                    SaveState.setToken(response.body().getToken());
                     MainActivity.hideKeyboardFrom(requireContext(), btn_login);
                     if (SaveState.getShownOnBoarding())
                         navController.navigate(R.id.action_loginFragment_to_mainFragment);
                     else
                         navController.navigate(R.id.action_loginFragment_to_onBoardFragment);
+                    SaveState.setToken(response.body().getToken());
+                    MainActivity.museViewModel.setSecretToken(response.body().getToken());
                 }
                 progressDialog.dismiss();
             }

@@ -10,7 +10,7 @@ public class DeviceResponseModel {
     private ArrayList<AlertModel> alerts;
     private ArrayList<GoalModel> goals;
     private ArrayList<ScheduleModel> schedules;
-    private ArrayList<CustomAlertModel> customAlerts;
+    private ArrayList<AlertModel> customAlerts;
 
     public int getId() {
         return id;
@@ -68,11 +68,11 @@ public class DeviceResponseModel {
         this.schedules = schedules;
     }
 
-    public ArrayList<CustomAlertModel> getCustomAlerts() {
+    public ArrayList<AlertModel> getCustomAlerts() {
         return customAlerts;
     }
 
-    public void setCustomAlerts(ArrayList<CustomAlertModel> customAlerts) {
+    public void setCustomAlerts(ArrayList<AlertModel> customAlerts) {
         this.customAlerts = customAlerts;
     }
 }
