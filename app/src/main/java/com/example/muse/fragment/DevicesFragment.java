@@ -8,7 +8,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,8 +56,6 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
     private BottomSheetDialog bottomSheetDialog;
     private NavController navController;
     private DeviceRequestModel currentDevice;
-    private AlertDialog alertDialogLoading;
-    private ProgressDialog progressDialog;
 
     public DevicesFragment() {
         // Required empty public constructor
@@ -83,7 +80,6 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
 
         //StatusBar color
         MainActivity.setupBackgroundStatusBar(MainActivity.colorPrimaryVariant);
-        progressDialog = new ProgressDialog(getContext());
 
         not_add = view.findViewById(R.id.FDevices_group);
         cv_aggregation = view.findViewById(R.id.FDevices_cv_aggregation);
@@ -102,7 +98,7 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
         getAllDevicesReq(0, 0);
 
         addDeviceAdapter.setSwitchListener((device, state) -> {
-            displayLoadingDialog();
+            MainActivity.displayLoadingDialog();
             MainActivity.museViewModel.setState(device.getId(), state).enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
@@ -110,13 +106,13 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
                         Toast.makeText(getContext(), "Updated state", Toast.LENGTH_SHORT).show();
                     else
                         Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
-                    progressDialog.dismiss();
+                    MainActivity.progressDialog.dismiss();
                 }
 
                 @Override
                 public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
                     Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                    progressDialog.dismiss();
+                    MainActivity.progressDialog.dismiss();
                 }
             });
         });
@@ -151,21 +147,23 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         if (item.getItemId() == R.id.popup_delete) {
-            displayLoadingDialog();
+            MainActivity.displayLoadingDialog();
             MainActivity.museViewModel.deleteDeviceById(currentDevice.getId()).enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
-                    if (response.isSuccessful())
+                    if (response.isSuccessful()){
                         Toast.makeText(getContext(), "Deleted successfully", Toast.LENGTH_SHORT).show();
+                        getAllDevicesReq(0,0);
+                    }
                     else
                         Toast.makeText(getContext(), response.message(), Toast.LENGTH_SHORT).show();
-                    progressDialog.dismiss();
+                    MainActivity.progressDialog.dismiss();
                 }
 
                 @Override
                 public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
                     Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                    progressDialog.dismiss();
+                    MainActivity.progressDialog.dismiss();
                 }
             });
             return true;
@@ -234,24 +232,26 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
 
             @Override
             public void OnBottomSheetItemClick(DeviceModel device, int position) {
-                displayLoadingDialog();
+                MainActivity.displayLoadingDialog();
                 //init device
-                SaveState.setNewAlert((SaveState.getLastAlerts()) + 1);
+//                SaveState.setNewAlert((SaveState.getLastAlerts()) + 1);
                 DeviceRequestModel requestModel = new DeviceRequestModel(position, device.getName(), "MMM");
                 MainActivity.museViewModel.addDevice(requestModel).enqueue(new Callback<DeviceResponseModel>() {
                     @Override
                     public void onResponse(@NotNull Call<DeviceResponseModel> call, @NotNull Response<DeviceResponseModel> response) {
-                        if (response.isSuccessful())
+                        if (response.isSuccessful()) {
                             Toast.makeText(getContext(), "Added successfully", Toast.LENGTH_SHORT).show();
+                            getAllDevicesReq(0,0);
+                        }
                         else
                             Toast.makeText(getContext(), response.message(), Toast.LENGTH_SHORT).show();
-                        progressDialog.dismiss();
+                        MainActivity.progressDialog.dismiss();
                     }
 
                     @Override
                     public void onFailure(@NotNull Call<DeviceResponseModel> call, @NotNull Throwable t) {
                         Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                        progressDialog.dismiss();
+                        MainActivity.progressDialog.dismiss();
                     }
                 });
                 bottomSheetDialog.dismiss();
@@ -269,7 +269,7 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
     }
 
     public void getAllDevicesReq(int aggregation, int unit) {
-        displayLoadingDialog();
+        MainActivity.displayLoadingDialog();
         MainActivity.museViewModel.getAllDevicesRequest(aggregation, unit)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -288,33 +288,11 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
                                 cv_unit.setVisibility(View.GONE);
                             }
                             addDeviceAdapter.setDeviceRequestModels(result);
-                            progressDialog.dismiss();
+                            MainActivity.progressDialog.dismiss();
                         },
                         error -> {
                             Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                            progressDialog.dismiss();
+                            MainActivity.progressDialog.dismiss();
                         });
-    }
-
-    public void displayLoadingDialog() {
-        progressDialog.setMessage("Please wait...");
-        progressDialog.show();
-        ((ProgressBar) progressDialog.findViewById(android.R.id.progress))
-                .getIndeterminateDrawable()
-                .setColorFilter(MainActivity.colorPrimaryVariant, android.graphics.PorterDuff.Mode.SRC_IN);
-        progressDialog.setCanceledOnTouchOutside(false);
-
-//        final AlertDialog.Builder builder = new AlertDialog.Builder(requireContext(), R.style.DialogStyle);
-//        final View viewLoading = LayoutInflater.from(getContext()).inflate(R.layout.dialog_progress, null);
-//        builder.setView(viewLoading);
-//        builder.setCancelable(false);
-//        alertDialogLoading = builder.create();
-//        Window window = alertDialogLoading.getWindow();
-//        window.setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
-//        window.setGravity(Gravity.CENTER);
-//        alertDialogLoading.show();
-
-//        final TextView tv_message = viewLoading.findViewById(R.id.dialogProgress_tv_message);
-//        tv_message.setText(message);
     }
 }

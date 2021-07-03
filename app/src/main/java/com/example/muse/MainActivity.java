@@ -1,5 +1,6 @@
 package com.example.muse;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -50,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     public SaveState saveState;
     private static Window window;
     public static MuseViewModel museViewModel;
+    public static ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         window = this.getWindow();
         navControllerStart = Navigation.findNavController(this, R.id.start_fragment);
         museViewModel = new ViewModelProvider(this).get(MuseViewModel.class);
+        progressDialog = new ProgressDialog(this);
         setupMode();
 
         // toolbar
@@ -148,5 +152,27 @@ public class MainActivity extends AppCompatActivity {
     public static void hideKeyboardFrom(Context context, View view) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    public static void displayLoadingDialog() {
+        progressDialog.setMessage("Please wait...");
+        progressDialog.show();
+        ((ProgressBar) progressDialog.findViewById(android.R.id.progress))
+                .getIndeterminateDrawable()
+                .setColorFilter(MainActivity.colorPrimaryVariant, android.graphics.PorterDuff.Mode.SRC_IN);
+        progressDialog.setCanceledOnTouchOutside(false);
+
+//        final AlertDialog.Builder builder = new AlertDialog.Builder(requireContext(), R.style.DialogStyle);
+//        final View viewLoading = LayoutInflater.from(getContext()).inflate(R.layout.dialog_progress, null);
+//        builder.setView(viewLoading);
+//        builder.setCancelable(false);
+//        alertDialogLoading = builder.create();
+//        Window window = alertDialogLoading.getWindow();
+//        window.setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
+//        window.setGravity(Gravity.CENTER);
+//        alertDialogLoading.show();
+
+//        final TextView tv_message = viewLoading.findViewById(R.id.dialogProgress_tv_message);
+//        tv_message.setText(message);
     }
 }

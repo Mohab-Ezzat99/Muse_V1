@@ -41,6 +41,8 @@ import com.example.muse.R;
 import com.example.muse.adapters.OnDeviceItemListener;
 import com.example.muse.adapters.RVDeviceBotAdapter;
 import com.example.muse.model.DeviceModel;
+import com.example.muse.model.DeviceRequestModel;
+import com.example.muse.model.DeviceResponseModel;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.textfield.TextInputEditText;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
@@ -49,6 +51,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Calendar;
 import java.util.Objects;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SelectedDeviceFragment extends Fragment implements View.OnClickListener, MenuItem.OnMenuItemClickListener {
 
@@ -60,7 +67,7 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
     private SwitchCompat switchCompat;
     private ProgressBar progressBar;
     private ImageView iv_custom;
-    private DeviceModel device;
+    private DeviceRequestModel device;
     private int day, month, year;
     private DatePickerDialog datePickerDialog;
     private ConstraintLayout constLayout_expand;
@@ -69,6 +76,7 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
     private Spinner spinner;
     private TextView tv_current,tv_average,tv_per,tv_perV, tv_estimation;
     private BottomSheetDialog bottomSheetDialog;
+    private int chosenIcon=-1;
 
     public SelectedDeviceFragment() {
         // Required empty public constructor
@@ -79,10 +87,11 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-//        if (getArguments() != null) {
-//            SelectedDeviceFragmentArgs args = SelectedDeviceFragmentArgs.fromBundle(getArguments());
-//            device=args.getSelectedDevice();
-//        }
+        if (getArguments() != null) {
+            SelectedDeviceFragmentArgs args = SelectedDeviceFragmentArgs.fromBundle(getArguments());
+            device = args.getSelectedDevice();
+        }
+
         setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_selected_device, container, false);
     }
@@ -110,35 +119,67 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
 
         // set selected device info
         iv_custom = view.findViewById(R.id.selectedD_iv_custom);
-        iv_icon.setImageResource(device.getIcon());
+        setupIcons(iv_icon, device.getPictureId());
         tv_name.setText(device.getName());
-        switchCompat.setChecked(device.isOn());
+        switchCompat.setChecked(device.getState() != 0);
 
         // display getting info
-        if(device.isOn()){
+        if (device.getState() != 0) {
             iv_icon.setColorFilter(MainActivity.colorPrimaryVariant);
             tv_percent.setVisibility(View.VISIBLE);
             progressBar.setVisibility(View.VISIBLE);
-        }
-        else {
+        } else {
             iv_icon.setColorFilter(requireContext().getResources().getColor(R.color.gray));
             tv_percent.setVisibility(View.INVISIBLE);
             progressBar.setVisibility(View.INVISIBLE);
         }
 
         switchCompat.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if(isChecked){
+            MainActivity.displayLoadingDialog();
+            if (isChecked) {
                 iv_icon.setColorFilter(MainActivity.colorPrimaryVariant);
                 tv_percent.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.VISIBLE);
+
+                MainActivity.museViewModel.setState(device.getId(), 1).enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
+                        if (response.isSuccessful())
+                            Toast.makeText(getContext(), "Updated state", Toast.LENGTH_SHORT).show();
+                        else
+                            Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+                        MainActivity.progressDialog.dismiss();
+                    }
+
+                    @Override
+                    public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
+                        Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                        MainActivity.progressDialog.dismiss();
+                    }
+                });
             }
             else {
                 iv_icon.setColorFilter(requireContext().getResources().getColor(R.color.gray));
                 tv_percent.setVisibility(View.INVISIBLE);
                 progressBar.setVisibility(View.INVISIBLE);
+
+                MainActivity.museViewModel.setState(device.getId(), 0).enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
+                        if (response.isSuccessful())
+                            Toast.makeText(getContext(), "Updated state", Toast.LENGTH_SHORT).show();
+                        else
+                            Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+                        MainActivity.progressDialog.dismiss();
+                    }
+
+                    @Override
+                    public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
+                        Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                        MainActivity.progressDialog.dismiss();
+                    }
+                });
             }
-            device.setOn(isChecked);
-            MainActivity.museViewModel.updateDevice(device);
         });
 
         cv_goal.setOnClickListener(this);
@@ -253,24 +294,63 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
             TextView tv_delete = view.findViewById(R.id.dialogEdit_tv_delete);
             TextInputEditText et_name = view.findViewById(R.id.dialogEdit_et_deviceName);
 
-            dialogIv_icon.setImageResource(device.getIcon());
+            setupIcons(dialogIv_icon, device.getPictureId());
             dialogIv_icon.setOnClickListener(v -> showBottomSheet(dialogIv_icon));
 
             tv_save.setOnClickListener(v -> {
-                if (!(Objects.requireNonNull(et_name.getText()).toString().equals("")))
-                    device.setName(et_name.getText().toString());
-                MainActivity.museViewModel.updateDevice(device);
-                Toast.makeText(getContext(), "Updated successfully", Toast.LENGTH_SHORT).show();
-                Navigation.findNavController(requireActivity(),R.id.main_fragment).popBackStack();
-                alertDialog.dismiss();
+                String new_name = Objects.requireNonNull(et_name.getText()).toString();
+                DeviceRequestModel requestModel = null;
+
+                if (chosenIcon >= 0) {
+                    if (!(new_name.equals("")))
+                        requestModel = new DeviceRequestModel(chosenIcon, new_name);
+                    else requestModel = new DeviceRequestModel(chosenIcon, device.getName());
+                    chosenIcon=-1;
+                } else {
+                    if (!(new_name.equals(""))) {
+                        requestModel = new DeviceRequestModel(device.getPictureId(), new_name);
+                    }
+                }
+
+                if (requestModel != null) {
+                    MainActivity.museViewModel.editDeviceById(device.getId(), requestModel).enqueue(new Callback<DeviceResponseModel>() {
+                        @Override
+                        public void onResponse(@NotNull Call<DeviceResponseModel> call, @NotNull Response<DeviceResponseModel> response) {
+                            if (response.isSuccessful()) {
+                                Toast.makeText(getContext(), "Updated successfully", Toast.LENGTH_SHORT).show();
+                                Navigation.findNavController(requireActivity(), R.id.main_fragment).popBackStack();
+                                alertDialog.dismiss();
+                            } else
+                                Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onFailure(@NotNull Call<DeviceResponseModel> call, @NotNull Throwable t) {
+                            Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+                    Toast.makeText(getContext(), "No changes", Toast.LENGTH_SHORT).show();
+                    Navigation.findNavController(requireActivity(), R.id.main_fragment).popBackStack();
+                    alertDialog.dismiss();
+                }
             });
 
-            tv_delete.setOnClickListener(v -> {
-                MainActivity.museViewModel.deleteDevice(device);
-                Toast.makeText(getContext(), "Deleted successfully", Toast.LENGTH_SHORT).show();
-                Navigation.findNavController(requireActivity(),R.id.main_fragment).popBackStack();
-                alertDialog.dismiss();
-            });
+            tv_delete.setOnClickListener(v -> MainActivity.museViewModel.deleteDeviceById(device.getId()).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
+                    if (response.isSuccessful()) {
+                        Toast.makeText(getContext(), "Deleted successfully", Toast.LENGTH_SHORT).show();
+                        Navigation.findNavController(requireActivity(), R.id.main_fragment).popBackStack();
+                        alertDialog.dismiss();
+                    } else Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
+                    Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }));
 
         }
 
@@ -290,7 +370,7 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
                 View viewG = displayDialog(R.layout.item_add_goal);
                 ImageView ivG_icon = viewG.findViewById(R.id.itemAG_iv_icon);
                 TextView tvG_name = viewG.findViewById(R.id.itemAG_tv_name);
-                ivG_icon.setImageResource(device.getIcon());
+                setupIcons(ivG_icon, device.getPictureId());
                 tvG_name.setText(device.getName());
                 break;
 
@@ -298,7 +378,7 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
                 View viewS = displayDialog(R.layout.item_add_schedules);
                 ImageView ivS_icon = viewS.findViewById(R.id.itemAS_iv_icon);
                 TextView tvS_name = viewS.findViewById(R.id.itemAS_tv_name);
-                ivS_icon.setImageResource(device.getIcon());
+                setupIcons(ivS_icon, device.getPictureId());
                 tvS_name.setText(device.getName());
                 break;
 
@@ -389,22 +469,68 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
         botAdapter.setList(MainActivity.modelArrayList);
         rv.setAdapter(botAdapter);
 
-//        botAdapter.setListener(new OnDeviceItemListener() {
-//            @Override
-//            public void OnItemClick(DeviceModel device1) {
-//                dialogIv_icon.setImageResource(device1.getIcon());
-//                device.setIcon(device1.getIcon());
-//                bottomSheetDialog.dismiss();
-//            }
-//
-//            @Override
-//            public void OnItemLongClick(View view, DeviceModel device) {
-//
-//            }
-//        });
+        botAdapter.setListener(new OnDeviceItemListener() {
+            @Override
+            public void OnItemClick(DeviceRequestModel device1) {
+
+            }
+
+            @Override
+            public void OnBottomSheetItemClick(DeviceModel device, int position) {
+                chosenIcon = position;
+                setupIcons(dialogIv_icon, chosenIcon);
+                bottomSheetDialog.dismiss();
+            }
+
+            @Override
+            public void OnItemLongClick(View view, DeviceRequestModel device) {
+
+            }
+        });
 
         //launch bottom sheet
         bottomSheetDialog.setContentView(bottom_sheet);
         bottomSheetDialog.show();
+    }
+
+    public void setupIcons(ImageView imageView, int id) {
+
+        switch (id) {
+            case 1:
+                imageView.setImageResource(R.drawable.ic_tv);
+                break;
+            case 2:
+                imageView.setImageResource(R.drawable.ic_fridge);
+                break;
+            case 3:
+                imageView.setImageResource(R.drawable.ic_air_conditioner);
+                break;
+            case 4:
+                imageView.setImageResource(R.drawable.ic_pc);
+                break;
+            case 5:
+                imageView.setImageResource(R.drawable.ic_clothes_dryer);
+                break;
+            case 6:
+                imageView.setImageResource(R.drawable.ic_freezer);
+                break;
+            case 7:
+                imageView.setImageResource(R.drawable.ic_coffee_maker);
+                break;
+            case 8:
+                imageView.setImageResource(R.drawable.ic_dishwasher);
+                break;
+            case 9:
+                imageView.setImageResource(R.drawable.ic_fan_heater);
+                break;
+            case 10:
+                imageView.setImageResource(R.drawable.ic_toaster);
+                break;
+            case 11:
+                imageView.setImageResource(R.drawable.ic_water_dispenser);
+                break;
+            case 12:
+                imageView.setImageResource(R.drawable.ic_plug);
+        }
     }
 }
