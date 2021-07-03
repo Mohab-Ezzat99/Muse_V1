@@ -62,18 +62,18 @@ public class CustomAlertsFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         setupSwipe();
 
-        MainActivity.museViewModel.getDevicesCustomAlerts().observe(getViewLifecycleOwner(), deviceModels -> {
-            if (deviceModels.size() != 0) {
-                // visibility
-                not_add.setVisibility(View.GONE);
-                recyclerView.setVisibility(View.VISIBLE);
-            } else {
-                // visibility
-                not_add.setVisibility(View.VISIBLE);
-                recyclerView.setVisibility(View.GONE);
-            }
-            adapter.submitList(deviceModels);
-        });
+//        MainActivity.museViewModel.getDevicesCustomAlerts().observe(getViewLifecycleOwner(), deviceModels -> {
+//            if (deviceModels.size() != 0) {
+//                // visibility
+//                not_add.setVisibility(View.GONE);
+//                recyclerView.setVisibility(View.VISIBLE);
+//            } else {
+//                // visibility
+//                not_add.setVisibility(View.VISIBLE);
+//                recyclerView.setVisibility(View.GONE);
+//            }
+//            adapter.submitList(deviceModels);
+//        });
 
         MainActivity.museViewModel.getDevicesWithoutCustomAlerts().observe(getViewLifecycleOwner(), deviceModels -> result = deviceModels);
 

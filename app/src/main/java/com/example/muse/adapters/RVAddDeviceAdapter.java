@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -15,20 +16,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.muse.MainActivity;
 import com.example.muse.R;
-import com.example.muse.model.DeviceModel;
+import com.example.muse.model.DeviceRequestModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RVAddDeviceAdapter extends RecyclerView.Adapter<RVAddDeviceAdapter.ADViewHolder> {
-    private List<DeviceModel> DeviceModels;
+    private List<DeviceRequestModel> DeviceRequestModels;
     private OnDeviceItemListener listener;
     private final Context context;
     private OnSwitchListener switchListener;
 
     public RVAddDeviceAdapter(Context context) {
         this.context = context;
-        this.DeviceModels=new ArrayList<>();
+        this.DeviceRequestModels = new ArrayList<>();
     }
 
     @SuppressLint("InflateParams")
@@ -40,21 +41,59 @@ public class RVAddDeviceAdapter extends RecyclerView.Adapter<RVAddDeviceAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ADViewHolder holder, int position) {
-        DeviceModel deviceModel = DeviceModels.get(position);
-        holder.device= deviceModel;
-        holder.iv_icon.setImageResource(deviceModel.getIcon());
-        holder.switchCompat.setChecked(deviceModel.isOn());
-        holder.tv_device.setText(deviceModel.getName());
-        holder.tv_percent.setText(deviceModel.getPercent());
-        holder.progressBar.setProgress(deviceModel.getProgress());
+        DeviceRequestModel deviceModel = DeviceRequestModels.get(position);
 
-        if(deviceModel.isOn()){
+        holder.tv_device.setText(deviceModel.getName());
+        holder.device = deviceModel;
+        switch (deviceModel.getPictureId()) {
+            case 1:
+                holder.iv_icon.setImageResource(R.drawable.ic_tv);
+                break;
+            case 2:
+                holder.iv_icon.setImageResource(R.drawable.ic_fridge);
+                break;
+            case 3:
+                holder.iv_icon.setImageResource(R.drawable.ic_air_conditioner);
+                break;
+            case 4:
+                holder.iv_icon.setImageResource(R.drawable.ic_pc);
+                break;
+            case 5:
+                holder.iv_icon.setImageResource(R.drawable.ic_clothes_dryer);
+                break;
+            case 6:
+                holder.iv_icon.setImageResource(R.drawable.ic_freezer);
+                break;
+            case 7:
+                holder.iv_icon.setImageResource(R.drawable.ic_coffee_maker);
+                break;
+            case 8:
+                holder.iv_icon.setImageResource(R.drawable.ic_dishwasher);
+                break;
+            case 9:
+                holder.iv_icon.setImageResource(R.drawable.ic_fan_heater);
+                break;
+            case 10:
+                holder.iv_icon.setImageResource(R.drawable.ic_toaster);
+                break;
+            case 11:
+                holder.iv_icon.setImageResource(R.drawable.ic_water_dispenser);
+                break;
+            case 12:
+                holder.iv_icon.setImageResource(R.drawable.ic_plug);
+        }
+        holder.switchCompat.setChecked(deviceModel.getState() != 0);
+
+        holder.tv_percent.setText(String.valueOf(deviceModel.getUsage()));
+        holder.progressBar.setProgress(deviceModel.getPercent());
+
+        if(deviceModel.getState() != 0){
             holder.iv_icon.setColorFilter(MainActivity.colorPrimaryVariant);
             holder.tv_percent.setVisibility(View.VISIBLE);
             holder.progressBar.setVisibility(View.VISIBLE);
 
-            holder.tv_percent.setText(deviceModel.getPercent());
-            holder.progressBar.setProgress(deviceModel.getProgress());
+            holder.tv_percent.setText(String.valueOf(deviceModel.getUsage()));
+            holder.progressBar.setProgress(deviceModel.getPercent());
         }
         else {
             holder.iv_icon.setColorFilter(context.getResources().getColor(R.color.gray));
@@ -65,11 +104,11 @@ public class RVAddDeviceAdapter extends RecyclerView.Adapter<RVAddDeviceAdapter.
 
     @Override
     public int getItemCount() {
-        return DeviceModels.size();
+        return DeviceRequestModels.size();
     }
 
-    public void setDeviceModels(List<DeviceModel> deviceModels) {
-        this.DeviceModels = deviceModels;
+    public void setDeviceRequestModels(List<DeviceRequestModel> deviceModels) {
+        this.DeviceRequestModels = deviceModels;
         notifyDataSetChanged();
     }
 
@@ -87,7 +126,7 @@ public class RVAddDeviceAdapter extends RecyclerView.Adapter<RVAddDeviceAdapter.
         private final SwitchCompat switchCompat;
         private final TextView tv_device,tv_percent;
         private final ProgressBar progressBar;
-        private DeviceModel device;
+        private DeviceRequestModel device;
 
         @SuppressLint("SetTextI18n")
         public ADViewHolder(@NonNull View itemView) {
@@ -104,11 +143,16 @@ public class RVAddDeviceAdapter extends RecyclerView.Adapter<RVAddDeviceAdapter.
                 return true;
             });
 
-            switchCompat.setOnCheckedChangeListener((buttonView, isChecked) -> switchListener.isChecked(device,isChecked));
+            switchCompat.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if(isChecked)
+                    switchListener.isChecked(device,1);
+                else
+                    switchListener.isChecked(device,0);
+            });
         }
     }
 
     public interface OnSwitchListener {
-        void isChecked(DeviceModel device,boolean isChecked);
+        void isChecked(DeviceRequestModel device, int state);
     }
 }

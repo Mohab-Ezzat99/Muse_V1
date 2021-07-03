@@ -74,11 +74,11 @@ public class RVAlertAdapter extends ListAdapter<DeviceModel, RVAlertAdapter.Aler
             tv_name=itemView.findViewById(R.id.itemAlert_tv_name);
             tv_message=itemView.findViewById(R.id.itemAlert_tv_message);
 
-            itemView.setOnClickListener(v -> listener.OnItemClick(device));
-            itemView.setOnLongClickListener(v -> {
-                listener.OnItemLongClick(v,device);
-                return true;
-            });
+//            itemView.setOnClickListener(v -> listener.OnItemClick(device));
+//            itemView.setOnLongClickListener(v -> {
+//                listener.OnItemLongClick(v,device);
+//                return true;
+//            });
         }
     }
 }

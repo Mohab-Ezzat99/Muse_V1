@@ -35,6 +35,7 @@ public class RVDeviceBotAdapter extends RecyclerView.Adapter<RVDeviceBotAdapter.
         holder.device=mBottomDevice;
         holder.iv_icon.setImageResource(mBottomDevice.getIcon());
         holder.tv_device.setText(mBottomDevice.getName());
+        holder.position=position;
     }
 
     @Override
@@ -55,13 +56,14 @@ public class RVDeviceBotAdapter extends RecyclerView.Adapter<RVDeviceBotAdapter.
         ImageView iv_icon;
         TextView tv_device;
         DeviceModel device;
+        int position;
 
         public DBViewHolder(@NonNull View itemView) {
             super(itemView);
             iv_icon=itemView.findViewById(R.id.itemBD_iv);
             tv_device=itemView.findViewById(R.id.itemBD_tv);
 
-            itemView.setOnClickListener(v -> listener.OnItemClick(device));
+            itemView.setOnClickListener(v -> listener.OnBottomSheetItemClick(device,++position));
         }
     }
 }

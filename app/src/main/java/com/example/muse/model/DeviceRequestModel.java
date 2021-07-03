@@ -1,6 +1,8 @@
 package com.example.muse.model;
 
-public class DeviceRequestModel {
+import java.io.Serializable;
+
+public class DeviceRequestModel implements Serializable {
     private int id;
     private int pictureId;
     private String name;

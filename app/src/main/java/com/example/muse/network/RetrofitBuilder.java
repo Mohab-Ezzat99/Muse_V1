@@ -2,6 +2,7 @@ package com.example.muse.network;
 
 import java.io.IOException;
 
+import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -19,6 +20,7 @@ public class RetrofitBuilder {
             plugInstance = new Retrofit.Builder()
                     .baseUrl(PLUG_URL)
                     .addConverterFactory(GsonConverterFactory.create())
+                    .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                     .build();
         }
         return plugInstance;
@@ -29,6 +31,7 @@ public class RetrofitBuilder {
             instance = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
+                    .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                     .build();
         }
         return instance;
@@ -45,6 +48,7 @@ public class RetrofitBuilder {
                     .baseUrl(BASE_URL)
                     .client(client)
                     .addConverterFactory(GsonConverterFactory.create())
+                    .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                     .build();
         return authInstance;
     }

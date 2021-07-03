@@ -1,12 +1,14 @@
 package com.example.muse.fragment;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,22 +30,35 @@ import com.example.muse.adapters.OnDeviceItemListener;
 import com.example.muse.adapters.RVAddDeviceAdapter;
 import com.example.muse.adapters.RVDeviceBotAdapter;
 import com.example.muse.model.DeviceModel;
+import com.example.muse.model.DeviceRequestModel;
+import com.example.muse.model.DeviceResponseModel;
 import com.example.muse.utility.SaveState;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Objects;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClickListener {
 
     private RecyclerView recyclerView;
     private RVAddDeviceAdapter addDeviceAdapter;
     private Group not_add;
-    private CardView cv_aggregation,cv_unit;
+    private CardView cv_aggregation, cv_unit;
     private FloatingActionButton fab_add;
     private BottomSheetDialog bottomSheetDialog;
     private NavController navController;
-    private DeviceModel currentDevice;
+    private DeviceRequestModel currentDevice;
+    private AlertDialog alertDialogLoading;
+    private ProgressDialog progressDialog;
 
     public DevicesFragment() {
         // Required empty public constructor
@@ -68,9 +83,8 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
 
         //StatusBar color
         MainActivity.setupBackgroundStatusBar(MainActivity.colorPrimaryVariant);
+        progressDialog = new ProgressDialog(getContext());
 
-        fab_add = view.findViewById(R.id.FDevices_fab_add);
-        fab_add.setOnClickListener(v -> displayPlug());
         not_add = view.findViewById(R.id.FDevices_group);
         cv_aggregation = view.findViewById(R.id.FDevices_cv_aggregation);
         cv_unit = view.findViewById(R.id.FDevices_cv_unit);
@@ -82,36 +96,44 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
         addDeviceAdapter = new RVAddDeviceAdapter(getContext());
         recyclerView.setAdapter(addDeviceAdapter);
 
-        MainActivity.museViewModel.getDevicesAdded().observe(getViewLifecycleOwner(), deviceModels -> {
-            if (deviceModels.size() != 0) {
-                // visibility
-                not_add.setVisibility(View.GONE);
-                recyclerView.setVisibility(View.VISIBLE);
-                cv_aggregation.setVisibility(View.VISIBLE);
-                cv_unit.setVisibility(View.VISIBLE);
-            } else {
-                // visibility
-                not_add.setVisibility(View.VISIBLE);
-                recyclerView.setVisibility(View.GONE);
-                cv_aggregation.setVisibility(View.GONE);
-                cv_unit.setVisibility(View.GONE);
-            }
-            addDeviceAdapter.setDeviceModels(deviceModels);
-        });
+        fab_add = view.findViewById(R.id.FDevices_fab_add);
+        fab_add.setOnClickListener(v -> displayPlug());
 
-        addDeviceAdapter.setSwitchListener((device, isChecked) -> {
-            device.setOn(isChecked);
-            MainActivity.museViewModel.updateDevice(device);
+        getAllDevicesReq(0, 0);
+
+        addDeviceAdapter.setSwitchListener((device, state) -> {
+            displayLoadingDialog();
+            MainActivity.museViewModel.setState(device.getId(), state).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
+                    if (response.isSuccessful())
+                        Toast.makeText(getContext(), "Updated state", Toast.LENGTH_SHORT).show();
+                    else
+                        Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
+                }
+
+                @Override
+                public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
+                    Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
+                }
+            });
         });
 
         addDeviceAdapter.setListener(new OnDeviceItemListener() {
             @Override
-            public void OnItemClick(DeviceModel device) {
+            public void OnItemClick(DeviceRequestModel device) {
                 navController.navigate(DevicesFragmentDirections.actionDevicesFragmentToSelectedDeviceFragment(device));
             }
 
             @Override
-            public void OnItemLongClick(View view, DeviceModel device) {
+            public void OnBottomSheetItemClick(DeviceModel device, int position) {
+
+            }
+
+            @Override
+            public void OnItemLongClick(View view, DeviceRequestModel device) {
                 showPopup(view);
                 currentDevice = device;
             }
@@ -129,8 +151,23 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         if (item.getItemId() == R.id.popup_delete) {
-            MainActivity.museViewModel.deleteDevice(currentDevice);
-            Toast.makeText(getContext(), "Deleted successfully", Toast.LENGTH_SHORT).show();
+            displayLoadingDialog();
+            MainActivity.museViewModel.deleteDeviceById(currentDevice.getId()).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
+                    if (response.isSuccessful())
+                        Toast.makeText(getContext(), "Deleted successfully", Toast.LENGTH_SHORT).show();
+                    else
+                        Toast.makeText(getContext(), response.message(), Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
+                }
+
+                @Override
+                public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
+                    Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
+                }
+            });
             return true;
         }
         return false;
@@ -191,21 +228,37 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
 
         botAdapter.setListener(new OnDeviceItemListener() {
             @Override
-            public void OnItemClick(DeviceModel device) {
-                //init device
-                device.initDevice("50%",50,false);
-                device.setAlertMessage("turn on for more 3h!");
-                device.setAdded(true);
-                device.setHasAlert(true);
-                SaveState.setNewAlert((SaveState.getLastAlerts()) + 1);
+            public void OnItemClick(DeviceRequestModel device) {
 
-                //add to list & room
-                MainActivity.museViewModel.insertDevice(device);
+            }
+
+            @Override
+            public void OnBottomSheetItemClick(DeviceModel device, int position) {
+                displayLoadingDialog();
+                //init device
+                SaveState.setNewAlert((SaveState.getLastAlerts()) + 1);
+                DeviceRequestModel requestModel = new DeviceRequestModel(position, device.getName(), "MMM");
+                MainActivity.museViewModel.addDevice(requestModel).enqueue(new Callback<DeviceResponseModel>() {
+                    @Override
+                    public void onResponse(@NotNull Call<DeviceResponseModel> call, @NotNull Response<DeviceResponseModel> response) {
+                        if (response.isSuccessful())
+                            Toast.makeText(getContext(), "Added successfully", Toast.LENGTH_SHORT).show();
+                        else
+                            Toast.makeText(getContext(), response.message(), Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+                    }
+
+                    @Override
+                    public void onFailure(@NotNull Call<DeviceResponseModel> call, @NotNull Throwable t) {
+                        Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+                    }
+                });
                 bottomSheetDialog.dismiss();
             }
 
             @Override
-            public void OnItemLongClick(View view, DeviceModel device) {
+            public void OnItemLongClick(View view, DeviceRequestModel device) {
 
             }
         });
@@ -213,5 +266,55 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
         //launch bottom sheet
         bottomSheetDialog.setContentView(bottom_sheet);
         bottomSheetDialog.show();
+    }
+
+    public void getAllDevicesReq(int aggregation, int unit) {
+        displayLoadingDialog();
+        MainActivity.museViewModel.getAllDevicesRequest(aggregation, unit)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(result -> {
+                            if (result.size() != 0) {
+                                // visibility
+                                not_add.setVisibility(View.GONE);
+                                recyclerView.setVisibility(View.VISIBLE);
+                                cv_aggregation.setVisibility(View.VISIBLE);
+                                cv_unit.setVisibility(View.VISIBLE);
+                            } else {
+                                // visibility
+                                not_add.setVisibility(View.VISIBLE);
+                                recyclerView.setVisibility(View.GONE);
+                                cv_aggregation.setVisibility(View.GONE);
+                                cv_unit.setVisibility(View.GONE);
+                            }
+                            addDeviceAdapter.setDeviceRequestModels(result);
+                            progressDialog.dismiss();
+                        },
+                        error -> {
+                            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                            progressDialog.dismiss();
+                        });
+    }
+
+    public void displayLoadingDialog() {
+        progressDialog.setMessage("Please wait...");
+        progressDialog.show();
+        ((ProgressBar) progressDialog.findViewById(android.R.id.progress))
+                .getIndeterminateDrawable()
+                .setColorFilter(MainActivity.colorPrimaryVariant, android.graphics.PorterDuff.Mode.SRC_IN);
+        progressDialog.setCanceledOnTouchOutside(false);
+
+//        final AlertDialog.Builder builder = new AlertDialog.Builder(requireContext(), R.style.DialogStyle);
+//        final View viewLoading = LayoutInflater.from(getContext()).inflate(R.layout.dialog_progress, null);
+//        builder.setView(viewLoading);
+//        builder.setCancelable(false);
+//        alertDialogLoading = builder.create();
+//        Window window = alertDialogLoading.getWindow();
+//        window.setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
+//        window.setGravity(Gravity.CENTER);
+//        alertDialogLoading.show();
+
+//        final TextView tv_message = viewLoading.findViewById(R.id.dialogProgress_tv_message);
+//        tv_message.setText(message);
     }
 }

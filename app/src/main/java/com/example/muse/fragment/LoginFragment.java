@@ -68,6 +68,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).hide();
         navController = Navigation.findNavController(requireActivity(), R.id.start_fragment);
         if (SaveState.getToken() != null) {
+            MainActivity.museViewModel.setSecretToken(SaveState.getToken());
             if (SaveState.getShownOnBoarding())
                 navController.navigate(R.id.action_loginFragment_to_mainFragment);
             else

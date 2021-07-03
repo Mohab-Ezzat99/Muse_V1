@@ -79,10 +79,10 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        if (getArguments() != null) {
-            SelectedDeviceFragmentArgs args = SelectedDeviceFragmentArgs.fromBundle(getArguments());
-            device=args.getSelectedDevice();
-        }
+//        if (getArguments() != null) {
+//            SelectedDeviceFragmentArgs args = SelectedDeviceFragmentArgs.fromBundle(getArguments());
+//            device=args.getSelectedDevice();
+//        }
         setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_selected_device, container, false);
     }
@@ -257,7 +257,7 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
             dialogIv_icon.setOnClickListener(v -> showBottomSheet(dialogIv_icon));
 
             tv_save.setOnClickListener(v -> {
-                if (!(et_name.getText().toString().equals("")))
+                if (!(Objects.requireNonNull(et_name.getText()).toString().equals("")))
                     device.setName(et_name.getText().toString());
                 MainActivity.museViewModel.updateDevice(device);
                 Toast.makeText(getContext(), "Updated successfully", Toast.LENGTH_SHORT).show();
@@ -389,19 +389,19 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
         botAdapter.setList(MainActivity.modelArrayList);
         rv.setAdapter(botAdapter);
 
-        botAdapter.setListener(new OnDeviceItemListener() {
-            @Override
-            public void OnItemClick(DeviceModel device1) {
-                dialogIv_icon.setImageResource(device1.getIcon());
-                device.setIcon(device1.getIcon());
-                bottomSheetDialog.dismiss();
-            }
-
-            @Override
-            public void OnItemLongClick(View view, DeviceModel device) {
-
-            }
-        });
+//        botAdapter.setListener(new OnDeviceItemListener() {
+//            @Override
+//            public void OnItemClick(DeviceModel device1) {
+//                dialogIv_icon.setImageResource(device1.getIcon());
+//                device.setIcon(device1.getIcon());
+//                bottomSheetDialog.dismiss();
+//            }
+//
+//            @Override
+//            public void OnItemLongClick(View view, DeviceModel device) {
+//
+//            }
+//        });
 
         //launch bottom sheet
         bottomSheetDialog.setContentView(bottom_sheet);

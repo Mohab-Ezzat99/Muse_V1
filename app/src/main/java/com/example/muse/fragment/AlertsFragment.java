@@ -78,17 +78,17 @@ public class AlertsFragment extends Fragment {
             adapter.submitList(deviceModels);
         });
 
-        adapter.setListener(new OnDeviceItemListener() {
-            @Override
-            public void OnItemClick(DeviceModel device) {
-                navController.navigate(AlertsFragmentDirections.actionAlertsFragmentToSelectedDeviceFragment(device));
-            }
-
-            @Override
-            public void OnItemLongClick(View view, DeviceModel device) {
-
-            }
-        });
+//        adapter.setListener(new OnDeviceItemListener() {
+//            @Override
+//            public void OnItemClick(DeviceModel device) {
+//                navController.navigate(AlertsFragmentDirections.actionAlertsFragmentToSelectedDeviceFragment(device));
+//            }
+//
+//            @Override
+//            public void OnItemLongClick(View view, DeviceModel device) {
+//
+//            }
+//        });
     }
 
     private void setupSwipe()

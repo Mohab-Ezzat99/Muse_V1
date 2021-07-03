@@ -21,15 +21,9 @@ import com.example.muse.network.RetrofitBuilder;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.http.Body;
-import retrofit2.http.DELETE;
-import retrofit2.http.GET;
-import retrofit2.http.POST;
-import retrofit2.http.PUT;
-import retrofit2.http.Path;
-import retrofit2.http.Query;
 
 public class Repository {
     private ApiService apiService;
@@ -61,11 +55,11 @@ public class Repository {
     //________________________________________________________________________________________//
     //Alerts
 
-    public LiveData<Call<List<AlertModel>>> getAllAlertsRequest(){
+    public Observable<Call<List<AlertModel>>> getAllAlertsRequest(){
         return apiService.getAllAlertsRequest();
     }
 
-    public LiveData<Call<List<AlertModel>>> getAlertsById(int deviceId){
+    public Observable<Call<List<AlertModel>>> getAlertsById(int deviceId){
         return apiService.getAlertsById(deviceId);
     }
 
@@ -76,7 +70,7 @@ public class Repository {
     //________________________________________________________________________________________//
     //Custom Alerts
 
-    public LiveData<Call<List<AlertModel>>> getAllCustomAlertsRequest(){
+    public Observable<Call<List<AlertModel>>> getAllCustomAlertsRequest(){
         return apiService.getAllCustomAlertsRequest();
     }
 
@@ -84,7 +78,7 @@ public class Repository {
         return apiService.addCustomAlert(scheduleModel);
     }
 
-    public LiveData<Call<List<AlertModel>>> getCustomAlertsById(int deviceId){
+    public Observable<Call<List<AlertModel>>> getCustomAlertsById(int deviceId){
         return apiService.getCustomAlertsById(deviceId);
     }
 
@@ -99,7 +93,7 @@ public class Repository {
         return apiService.addHouse(requestModel);
     }
 
-    public LiveData<Call<DeviceResponseModel>> getHouse(){
+    public Observable<Call<DeviceResponseModel>> getHouse(){
         return apiService.getHouse();
     }
 
@@ -107,11 +101,11 @@ public class Repository {
         return apiService.addDevice(requestModel);
     }
 
-    public LiveData<Call<List<DeviceRequestModel>>> getAllDevicesRequest(int aggregation,int unit){
+    public Observable<List<DeviceRequestModel>> getAllDevicesRequest(int aggregation, int unit){
         return apiService.getAllDevicesRequest(aggregation,unit);
     }
 
-    public LiveData<Call<DeviceResponseModel>> getDeviceById(int deviceId){
+    public Observable<Call<DeviceResponseModel>> getDeviceById(int deviceId){
         return apiService.getDeviceById(deviceId);
     }
 
@@ -123,14 +117,14 @@ public class Repository {
         return apiService.deleteDeviceById(deviceId);
     }
 
-    public LiveData<Call<ResponseBody>> setState(int deviceId,int state){
+    public Call<ResponseBody> setState(int deviceId, int state){
         return apiService.setState(deviceId,state);
     }
 
     //________________________________________________________________________________________//
     //Goals
 
-    public LiveData<Call<List<GoalModel>>> getAllGoalsRequest(){
+    public Observable<Call<List<GoalModel>>> getAllGoalsRequest(){
         return apiService.getAllGoalsRequest();
     }
 
@@ -138,7 +132,7 @@ public class Repository {
         return apiService.addGoal(goalModel);
     }
 
-    public LiveData<Call<List<GoalModel>>> getGoalsById(int deviceId){
+    public Observable<Call<List<GoalModel>>> getGoalsById(int deviceId){
         return apiService.getGoalsById(deviceId);
     }
 
@@ -149,23 +143,23 @@ public class Repository {
     //________________________________________________________________________________________//
     //Insights
 
-    public LiveData<Call<InsightModel>> getInsightRequest(int id,int aggregation,int unit){
+    public Observable<Call<InsightModel>> getInsightRequest(int id, int aggregation, int unit){
         return apiService.getInsightRequest(id,aggregation,unit);
     }
 
-    public LiveData<Call<InsightModel>> getCustomInsightRequest(int id,String unit,String year
-            ,String month,String day){
+    public Observable<Call<InsightModel>> getCustomInsightRequest(int id, String unit, String year
+            , String month, String day){
         return apiService.getCustomInsightRequest(id,unit,year,month,day);
     }
 
-    public LiveData<Call<ResponseBody>> getCurrentUsageRequest(int id,String unit){
+    public Observable<Call<ResponseBody>> getCurrentUsageRequest(int id, String unit){
         return apiService.getCurrentUsageRequest(id,unit);
     }
 
     //________________________________________________________________________________________//
     //Schedules
 
-    public LiveData<Call<List<ScheduleModel>>> getAllSchedulesRequest(){
+    public Observable<Call<List<ScheduleModel>>> getAllSchedulesRequest(){
         return apiService.getAllSchedulesRequest();
     }
 
@@ -173,7 +167,7 @@ public class Repository {
         return apiService.addSchedule(scheduleModel);
     }
 
-    public LiveData<Call<List<ScheduleModel>>> getSchedulesById(int deviceId){
+    public Observable<Call<List<ScheduleModel>>> getSchedulesById(int deviceId){
         return apiService.getSchedulesById(deviceId);
     }
 

@@ -16,13 +16,12 @@ import com.example.muse.model.GoalModel;
 import com.example.muse.model.InsightModel;
 import com.example.muse.model.LoginResponseModel;
 import com.example.muse.model.ScheduleModel;
-import com.example.muse.network.ApiService;
-import com.example.muse.network.RetrofitBuilder;
 import com.example.muse.repository.Repository;
 import com.example.muse.utility.SaveState;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 
@@ -48,11 +47,11 @@ public class MuseViewModel extends AndroidViewModel {
     //________________________________________________________________________________________//
     //Alerts
 
-    public LiveData<Call<List<AlertModel>>> getAllAlertsRequest(){
+    public Observable<Call<List<AlertModel>>> getAllAlertsRequest(){
         return repository.getAllAlertsRequest();
     }
 
-    public LiveData<Call<List<AlertModel>>> getAlertsById(int deviceId){
+    public Observable<Call<List<AlertModel>>> getAlertsById(int deviceId){
         return repository.getAlertsById(deviceId);
     }
 
@@ -63,7 +62,7 @@ public class MuseViewModel extends AndroidViewModel {
     //________________________________________________________________________________________//
     //Custom Alerts
 
-    public LiveData<Call<List<AlertModel>>> getAllCustomAlertsRequest(){
+    public Observable<Call<List<AlertModel>>> getAllCustomAlertsRequest(){
         return repository.getAllCustomAlertsRequest();
     }
 
@@ -71,7 +70,7 @@ public class MuseViewModel extends AndroidViewModel {
         return repository.addCustomAlert(scheduleModel);
     }
 
-    public LiveData<Call<List<AlertModel>>> getCustomAlertsById(int deviceId){
+    public Observable<Call<List<AlertModel>>> getCustomAlertsById(int deviceId){
         return repository.getCustomAlertsById(deviceId);
     }
 
@@ -86,7 +85,7 @@ public class MuseViewModel extends AndroidViewModel {
         return repository.addHouse(requestModel);
     }
 
-    public LiveData<Call<DeviceResponseModel>> getHouse(){
+    public Observable<Call<DeviceResponseModel>> getHouse(){
         return repository.getHouse();
     }
 
@@ -94,11 +93,11 @@ public class MuseViewModel extends AndroidViewModel {
         return repository.addDevice(requestModel);
     }
 
-    public LiveData<Call<List<DeviceRequestModel>>> getAllDevicesRequest(int aggregation,int unit){
+    public Observable<List<DeviceRequestModel>> getAllDevicesRequest(int aggregation,int unit){
         return repository.getAllDevicesRequest(aggregation,unit);
     }
 
-    public LiveData<Call<DeviceResponseModel>> getDeviceById(int deviceId){
+    public Observable<Call<DeviceResponseModel>> getDeviceById(int deviceId){
         return repository.getDeviceById(deviceId);
     }
 
@@ -110,14 +109,14 @@ public class MuseViewModel extends AndroidViewModel {
         return repository.deleteDeviceById(deviceId);
     }
 
-    public LiveData<Call<ResponseBody>> setState(int deviceId,int state){
+    public Call<ResponseBody> setState(int deviceId,int state){
         return repository.setState(deviceId,state);
     }
 
     //________________________________________________________________________________________//
     //Goals
 
-    public LiveData<Call<List<GoalModel>>> getAllGoalsRequest(){
+    public Observable<Call<List<GoalModel>>> getAllGoalsRequest(){
         return repository.getAllGoalsRequest();
     }
 
@@ -125,7 +124,7 @@ public class MuseViewModel extends AndroidViewModel {
         return repository.addGoal(goalModel);
     }
 
-    public LiveData<Call<List<GoalModel>>> getGoalsById(int deviceId){
+    public Observable<Call<List<GoalModel>>> getGoalsById(int deviceId){
         return repository.getGoalsById(deviceId);
     }
 
@@ -136,23 +135,23 @@ public class MuseViewModel extends AndroidViewModel {
     //________________________________________________________________________________________//
     //Insights
 
-    public LiveData<Call<InsightModel>> getInsightRequest(int id, int aggregation, int unit){
+    public Observable<Call<InsightModel>> getInsightRequest(int id, int aggregation, int unit){
         return repository.getInsightRequest(id,aggregation,unit);
     }
 
-    public LiveData<Call<InsightModel>> getCustomInsightRequest(int id,String unit,String year
+    public Observable<Call<InsightModel>> getCustomInsightRequest(int id,String unit,String year
             ,String month,String day){
         return repository.getCustomInsightRequest(id,unit,year,month,day);
     }
 
-    public LiveData<Call<ResponseBody>> getCurrentUsageRequest(int id,String unit){
+    public Observable<Call<ResponseBody>> getCurrentUsageRequest(int id,String unit){
         return repository.getCurrentUsageRequest(id,unit);
     }
 
     //________________________________________________________________________________________//
     //Schedules
 
-    public LiveData<Call<List<ScheduleModel>>> getAllSchedulesRequest(){
+    public Observable<Call<List<ScheduleModel>>> getAllSchedulesRequest(){
         return repository.getAllSchedulesRequest();
     }
 
@@ -160,7 +159,7 @@ public class MuseViewModel extends AndroidViewModel {
         return repository.addSchedule(scheduleModel);
     }
 
-    public LiveData<Call<List<ScheduleModel>>> getSchedulesById(int deviceId){
+    public Observable<Call<List<ScheduleModel>>> getSchedulesById(int deviceId){
         return repository.getSchedulesById(deviceId);
     }
 
