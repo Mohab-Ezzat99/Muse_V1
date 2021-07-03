@@ -126,7 +126,7 @@ public interface ApiService {
     //Schedules
 
     @GET("api/Schedules")
-    Observable<Call<List<ScheduleModel>>> getAllSchedulesRequest();
+    Observable<List<ScheduleModel>> getAllSchedulesRequest();
 
     @POST("api/Schedules")
     Call<ScheduleModel> addSchedule(@Body ScheduleModel scheduleModel);

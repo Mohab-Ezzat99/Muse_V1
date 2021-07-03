@@ -377,9 +377,7 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
             case R.id.selectedD_cv_schedule:
                 View viewS = displayDialog(R.layout.item_add_schedules);
                 ImageView ivS_icon = viewS.findViewById(R.id.itemAS_iv_icon);
-                TextView tvS_name = viewS.findViewById(R.id.itemAS_tv_name);
                 setupIcons(ivS_icon, device.getPictureId());
-                tvS_name.setText(device.getName());
                 break;
 
             case R.id.selectedD_iv_custom:

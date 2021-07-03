@@ -159,7 +159,7 @@ public class Repository {
     //________________________________________________________________________________________//
     //Schedules
 
-    public Observable<Call<List<ScheduleModel>>> getAllSchedulesRequest(){
+    public Observable<List<ScheduleModel>> getAllSchedulesRequest(){
         return apiService.getAllSchedulesRequest();
     }
 

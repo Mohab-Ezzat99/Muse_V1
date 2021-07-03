@@ -151,7 +151,7 @@ public class MuseViewModel extends AndroidViewModel {
     //________________________________________________________________________________________//
     //Schedules
 
-    public Observable<Call<List<ScheduleModel>>> getAllSchedulesRequest(){
+    public Observable<List<ScheduleModel>> getAllSchedulesRequest(){
         return repository.getAllSchedulesRequest();
     }
 

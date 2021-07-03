@@ -23,14 +23,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.muse.MainActivity;
 import com.example.muse.R;
 import com.example.muse.adapters.RVAddSchedulesAdapter;
-import com.example.muse.model.DeviceModel;
+import com.example.muse.model.DeviceRequestModel;
+import com.example.muse.model.ScheduleModel;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import nl.bryanderidder.themedtogglebuttongroup.ThemedButton;
 import nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SchedulesFragment extends Fragment {
 
@@ -38,7 +47,7 @@ public class SchedulesFragment extends Fragment {
     private RVAddSchedulesAdapter adapter;
     private Group not_add;
     private String[] strings;
-    private List<DeviceModel> result;
+    private List<DeviceRequestModel> result_devices;
 
     public SchedulesFragment() {
         // Required empty public constructor
@@ -67,29 +76,12 @@ public class SchedulesFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         setupSwipe();
 
-//        MainActivity.museViewModel.getDevicesSchedules().observe(getViewLifecycleOwner(), deviceModels -> {
-//            if (deviceModels.size() != 0) {
-//                // visibility
-//                not_add.setVisibility(View.GONE);
-//                recyclerView.setVisibility(View.VISIBLE);
-//            } else {
-//                // visibility
-//                not_add.setVisibility(View.VISIBLE);
-//                recyclerView.setVisibility(View.GONE);
-//            }
-//            adapter.submitList(deviceModels);
-//        });
-
-        MainActivity.museViewModel.getDevicesWithoutSchedule().observe(getViewLifecycleOwner(), deviceModels -> {
-            result = deviceModels;
-            strings = new String[deviceModels.size()];
-            for (int i = 0; i < deviceModels.size(); i++)
-                strings[i] = deviceModels.get(i).getName();
-        });
+        getAllDevicesReq(0, 0);
+        getAllSchedulesReq();
 
         FloatingActionButton fab_add = view.findViewById(R.id.FSchedules_fab_add);
         fab_add.setOnClickListener(v -> {
-            if (result.size() == 0)
+            if (result_devices.size() == 0)
                 Toast.makeText(getContext(), "No device found to set schedule", Toast.LENGTH_LONG).show();
             else
                 showBottomSheet(view);
@@ -136,32 +128,14 @@ public class SchedulesFragment extends Fragment {
         Button btn_submit = bottom_sheet.findViewById(R.id.schedulesBotSheet_btn_submit);
         btn_submit.setOnClickListener(v1 -> {
             // add item to rv
-            DeviceModel device = result.get(spinner_device.getSelectedItemPosition());
-            device.setHasSchedules(true);
-            switch (spinner_state.getSelectedItemPosition()) {
-                case 0:
-                    device.setAlertOn(false);
-                    break;
-                case 1:
-                    device.setAlertOn(true);
-                    break;
-            }
-            switch (radioGroup.getCheckedRadioButtonId()) {
-                case R.id.schedulesBotSheet_rb_at:
-                    device.setTime_type("At");
-                    device.setTime(spinner_at.getSelectedItem().toString());
-                    break;
-
-                case R.id.schedulesBotSheet_rb_after:
-                    device.setTime_type("After");
-                    device.setTime(spinner_after.getSelectedItem().toString());
-                    break;
-            }
+            DeviceRequestModel device = result_devices.get(spinner_device.getSelectedItemPosition());
+            ScheduleModel scheduleModel;
 
             List<ThemedButton> buttons_long = tg_long.getSelectedButtons();
             List<ThemedButton> buttons_small = tg_small.getSelectedButtons();
             StringBuilder dayStringBuilder = new StringBuilder();
-            String days;
+            String days = "";
+            int after = -1;
 
             if (buttons_long.size() > 0)
                 for (ThemedButton themedButton : buttons_long)
@@ -178,18 +152,53 @@ public class SchedulesFragment extends Fragment {
                     days = dayStringBuilder.toString();
                     days = days.substring(1);
                 }
-                device.setDays(days);
             }
-            else
-                device.setDays(null);
 
-            MainActivity.museViewModel.updateDevice(device);
+            switch (radioGroup.getCheckedRadioButtonId()) {
+                case R.id.schedulesBotSheet_rb_at:
+                    scheduleModel = new ScheduleModel(device.getId(), spinner_state.getSelectedItemPosition()
+                            , spinner_at.getSelectedItem().toString(), 0, days);
+                    break;
 
-            // visibility
-            not_add.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.VISIBLE);
-            bottomSheetDialog.dismiss();
+                case R.id.schedulesBotSheet_rb_after:
+                    switch (spinner_state.getSelectedItemPosition()) {
+                        case 0:
+                            after = 30;
+                            break;
 
+                        case 1:
+                            after = 60;
+                            break;
+
+                        case 2:
+                            after = 180;
+                            break;
+
+                        case 3:
+                            after = 360;
+                    }
+                    scheduleModel = new ScheduleModel(device.getId(), spinner_state.getSelectedItemPosition()
+                            , null, after, days);
+                    break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + radioGroup.getCheckedRadioButtonId());
+            }
+
+            MainActivity.museViewModel.addSchedule(scheduleModel).enqueue(new Callback<ScheduleModel>() {
+                @Override
+                public void onResponse(@NotNull Call<ScheduleModel> call, @NotNull Response<ScheduleModel> response) {
+                    if (response.isSuccessful()) {
+                        Toast.makeText(getContext(), "Added successfully", Toast.LENGTH_SHORT).show();
+                        getAllSchedulesReq();
+                        bottomSheetDialog.dismiss();
+                    } else Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onFailure(@NotNull Call<ScheduleModel> call, @NotNull Throwable t) {
+                    Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
         });
 
         //launch bottom sheet
@@ -207,13 +216,73 @@ public class SchedulesFragment extends Fragment {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 
-                DeviceModel device = adapter.getItemAt(viewHolder.getAdapterPosition());
-                device.setHasSchedules(false);
-                MainActivity.museViewModel.updateDevice(device);
+                ScheduleModel scheduleModel = adapter.getItemAt(viewHolder.getAdapterPosition());
+                MainActivity.displayLoadingDialog();
+                MainActivity.museViewModel.deleteScheduleById(scheduleModel.getId()).enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
+                        if (response.isSuccessful()) {
+                            Toast.makeText(getContext(), "Deleted successfully", Toast.LENGTH_SHORT).show();
+                            MainActivity.progressDialog.dismiss();
+                            getAllSchedulesReq();
+                        } else {
+                            Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+                            MainActivity.progressDialog.dismiss();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
+                        Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                        MainActivity.progressDialog.dismiss();
+                    }
+                });
             }
         };
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
+    }
+
+    public void getAllDevicesReq(int aggregation, int unit) {
+        MainActivity.displayLoadingDialog();
+        MainActivity.museViewModel.getAllDevicesRequest(aggregation, unit)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(result -> {
+                            result_devices = result;
+                            strings = new String[result.size()];
+                            for (int i = 0; i < result.size(); i++)
+                                strings[i] = result.get(i).getName();
+                            MainActivity.progressDialog.dismiss();
+                        },
+                        error -> {
+                            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                            MainActivity.progressDialog.dismiss();
+                        });
+    }
+
+    public void getAllSchedulesReq() {
+        MainActivity.displayLoadingDialog();
+        MainActivity.museViewModel.getAllSchedulesRequest()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(result -> {
+                            if (result.size() != 0) {
+                                // visibility
+                                not_add.setVisibility(View.GONE);
+                                recyclerView.setVisibility(View.VISIBLE);
+                            } else {
+                                // visibility
+                                not_add.setVisibility(View.VISIBLE);
+                                recyclerView.setVisibility(View.GONE);
+                            }
+                            adapter.submitList(result);
+                            MainActivity.progressDialog.dismiss();
+                        },
+                        error -> {
+                            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                            MainActivity.progressDialog.dismiss();
+                        });
     }
 }
