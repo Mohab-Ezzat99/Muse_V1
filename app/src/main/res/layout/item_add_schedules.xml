@@ -48,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/_8sdp"
-            android:text="@string/tit_tv"
+            android:text="@string/txt_turn_on_for_more_3_hrs"
             android:textColor="?attr/colorPrimaryVariant"
             android:textSize="@dimen/_14sdp"
             app:layout_constraintEnd_toEndOf="@+id/itemAS_iv_patch"

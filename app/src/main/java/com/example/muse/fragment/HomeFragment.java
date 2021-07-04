@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +32,7 @@ import androidx.navigation.Navigation;
 
 import com.example.muse.MainActivity;
 import com.example.muse.R;
+import com.example.muse.model.GoalModel;
 import com.example.muse.model.InsightDataModel;
 import com.example.muse.utility.SaveState;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
@@ -53,11 +55,13 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
     private ConstraintLayout constLayout_expand;
     private CardView cv_insight;
     private ImageView iv_arrow;
-    private Spinner spinner;
-    private TextView tv_current, tv_average, tv_per, tv_consumedV, tv_estimation;
+    private Spinner spinner,spinner_agg;
+    private TextView tv_current, tv_average, tv_per, tv_consumedV, tv_estimation,tv_used,tv_prediction,tv_percent;
+    private ProgressBar progressBar;
     private int aggregation = -1;
     private boolean notViewed=true;
     public static ArrayList<InsightDataModel> dataModels=new ArrayList<>();
+    public ArrayList<GoalModel> goalModels=new ArrayList<>();
 
     public HomeFragment() {
         // Required empty public constructor
@@ -97,8 +101,8 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
         iv_custom = view.findViewById(R.id.FHome_iv_custom);
         iv_custom.setOnClickListener(this::showPopup);
 
-        //spinner
-        spinner = view.findViewById(R.id.home_spinner_unit);
+        //spinner insight
+        spinner = view.findViewById(R.id.home_spinner_aggregation);
         tv_current = view.findViewById(R.id.home_tv_currentV);
         tv_average = view.findViewById(R.id.home_tv_averageV);
         tv_consumedV = view.findViewById(R.id.home_tv_consumedV);
@@ -116,9 +120,40 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
             }
         });
 
+        //spinner agg
+        spinner_agg = view.findViewById(R.id.home_spinner_unit);
+        tv_used = view.findViewById(R.id.home_tv_goalUsed);
+        tv_prediction = view.findViewById(R.id.home_tv_estimation);
+        tv_percent = view.findViewById(R.id.home_tv_percent);
+        progressBar = view.findViewById(R.id.home_pb);
+
         //default info
         aggregation = 1;
         getHouseInfo(1, 0);
+
+        spinner_agg.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                for (GoalModel model:goalModels){
+                    if(model.getType()==position){
+                        tv_used.setText(model.getUsed());
+                        if(model.getEstimation()==0)
+                            tv_prediction.setText("Goal will not achieve");
+                        else
+                            tv_prediction.setText("Goal will achieve");
+                        tv_percent.setText(model.getPercent()+"");
+                        progressBar.setProgress(model.getPercent());
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         //chipNav
         chipNavigationBar = view.findViewById(R.id.FHome_chipNav);
@@ -240,37 +275,52 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
         MainActivity.museViewModel.getHouse()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(result -> MainActivity.museViewModel.getInsightRequest(result.getId(), agg, spinnerItem)
-                        .subscribeOn(Schedulers.computation())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(result1 -> {
-                                    dataModels.clear();
-                                    dataModels = result1.getData();
-                                    tv_average.setText(result1.getAverageUsage() + "");
-                                    tv_consumedV.setText(result1.getUsage() + "");
-                                    tv_estimation.setText(result1.getEstimatedUsage() + "");
+                .subscribe(result -> {
+                            goalModels=result.getGoals();
+                            for (GoalModel model:result.getGoals()){
+                                if(model.getType()==spinner_agg.getSelectedItemPosition()){
+                                    tv_used.setText(model.getUsed());
+                                    if(model.getEstimation()==0)
+                                        tv_prediction.setText("Goal will not achieve");
+                                    else
+                                        tv_prediction.setText("Goal will achieve");
+                                    tv_percent.setText(model.getPercent()+"");
+                                    progressBar.setProgress(model.getPercent());
+                                    break;
+                                }
+                            }
+                            MainActivity.museViewModel.getInsightRequest(result.getId(), agg, spinnerItem)
+                                    .subscribeOn(Schedulers.computation())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(result1 -> {
+                                                dataModels.clear();
+                                                dataModels = result1.getData();
+                                                tv_average.setText(result1.getAverageUsage() + "");
+                                                tv_consumedV.setText(result1.getUsage() + "");
+                                                tv_estimation.setText(result1.getEstimatedUsage() + "");
 
-                                    MainActivity.museViewModel.getCurrentUsageRequest(result.getId(), spinnerItem + "")
-                                            .subscribeOn(Schedulers.computation())
-                                            .observeOn(AndroidSchedulers.mainThread())
-                                            .subscribe(result2 -> {
-                                                tv_current.setText(result2.string());
-                                                MainActivity.progressDialog.dismiss();
-                                            },error ->{
+                                                MainActivity.museViewModel.getCurrentUsageRequest(result.getId(), spinnerItem + "")
+                                                        .subscribeOn(Schedulers.computation())
+                                                        .observeOn(AndroidSchedulers.mainThread())
+                                                        .subscribe(result2 -> {
+                                                            tv_current.setText(result2.string());
+                                                            MainActivity.progressDialog.dismiss();
+                                                        }, error -> {
+                                                            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                                                            MainActivity.progressDialog.dismiss();
+                                                        });
+                                                if (notViewed) {
+                                                    navControllerChart.popBackStack();
+                                                    navControllerChart.popBackStack();
+                                                    navControllerChart.navigate(R.id.chartDayFragment);
+                                                    notViewed = false;
+                                                }
+                                            },
+                                            error -> {
                                                 Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
                                                 MainActivity.progressDialog.dismiss();
                                             });
-                                    if(notViewed){
-                                        navControllerChart.popBackStack();
-                                        navControllerChart.popBackStack();
-                                        navControllerChart.navigate(R.id.chartDayFragment);
-                                        notViewed=false;
-                                    }
-                                },
-                                error -> {
-                                    Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
-                                    MainActivity.progressDialog.dismiss();
-                                }),
+                        },
                         error -> {
                             Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
                             MainActivity.progressDialog.dismiss();

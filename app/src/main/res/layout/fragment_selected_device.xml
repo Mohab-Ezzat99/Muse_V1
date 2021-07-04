@@ -340,7 +340,6 @@
                     android:id="@+id/selectedD_constLayoutExpanded"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -396,7 +395,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/tv_average" />
 
                     <TextView
-                        android:id="@+id/selectedD_tv_perV"
+                        android:id="@+id/selectedD_tv_consumedV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/_30sdp"

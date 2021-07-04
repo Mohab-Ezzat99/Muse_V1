@@ -155,24 +155,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void displayLoadingDialog() {
-        progressDialog.setMessage("Please wait...");
         progressDialog.show();
-        ((ProgressBar) progressDialog.findViewById(android.R.id.progress))
-                .getIndeterminateDrawable()
-                .setColorFilter(MainActivity.colorPrimaryVariant, android.graphics.PorterDuff.Mode.SRC_IN);
-        progressDialog.setCanceledOnTouchOutside(false);
-
-//        final AlertDialog.Builder builder = new AlertDialog.Builder(requireContext(), R.style.DialogStyle);
-//        final View viewLoading = LayoutInflater.from(getContext()).inflate(R.layout.dialog_progress, null);
-//        builder.setView(viewLoading);
-//        builder.setCancelable(false);
-//        alertDialogLoading = builder.create();
-//        Window window = alertDialogLoading.getWindow();
-//        window.setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
-//        window.setGravity(Gravity.CENTER);
-//        alertDialogLoading.show();
-
-//        final TextView tv_message = viewLoading.findViewById(R.id.dialogProgress_tv_message);
-//        tv_message.setText(message);
+        progressDialog.setContentView(R.layout.dialog_progress);
+        progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
     }
 }

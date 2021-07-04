@@ -44,12 +44,15 @@ import com.example.muse.model.AlertModel;
 import com.example.muse.model.DeviceModel;
 import com.example.muse.model.DeviceRequestModel;
 import com.example.muse.model.DeviceResponseModel;
+import com.example.muse.model.GoalModel;
+import com.example.muse.model.InsightDataModel;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.textfield.TextInputEditText;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Objects;
 
@@ -77,17 +80,20 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
     private CardView cv_insight;
     private ImageView iv_arrow;
     private Spinner spinner;
-    private TextView tv_current, tv_average, tv_per, tv_perV, tv_estimation;
+    private TextView tv_current, tv_average, tv_per, tv_consumedV, tv_estimation;
     private BottomSheetDialog bottomSheetDialog;
     private int chosenIcon = -1, deviceId = -1;
+    private int aggregation = -1;
+    private boolean notViewed = true;
+    public static ArrayList<InsightDataModel> dataModels = new ArrayList<>();
+    public ArrayList<GoalModel> goalModels = new ArrayList<>();
 
     public SelectedDeviceFragment() {
         // Required empty public constructor
     }
 
     @Override
-    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
         if (getArguments() != null) {
@@ -95,50 +101,7 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
             deviceId = args.getDeviceId();
         }
 
-        MainActivity.displayLoadingDialog();
-        MainActivity.museViewModel.getDeviceById(deviceId)
-                .subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(result -> {
-                    // set selected device info
-                    device = result;
-                    setupIcons(iv_icon, device.getPictureId());
-                    tv_name.setText(device.getName());
-                    switchCompat.setChecked(device.getState() != 0);
-
-                    // display getting info
-                    if (device.getState() != 0) {
-                        iv_icon.setColorFilter(MainActivity.colorPrimaryVariant);
-                        tv_percent.setVisibility(View.VISIBLE);
-                        progressBar.setVisibility(View.VISIBLE);
-                    } else {
-                        iv_icon.setColorFilter(requireContext().getResources().getColor(R.color.gray));
-                        tv_percent.setVisibility(View.INVISIBLE);
-                        progressBar.setVisibility(View.INVISIBLE);
-                    }
-                    MainActivity.progressDialog.dismiss();
-                }, error -> {
-                    Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                    MainActivity.progressDialog.dismiss();
-                });
-
-        setHasOptionsMenu(true);
-        return inflater.inflate(R.layout.fragment_selected_device, container, false);
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).show();
-        if (device != null)
-            Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle(device.getName());
-        navControllerChart = Navigation.findNavController(requireActivity(), R.id.selectedD_fragment);
-    }
-
-    @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        View view = inflater.inflate(R.layout.fragment_selected_device, container, false);
 
         tv_name = view.findViewById(R.id.selectedD_tv_name);
         iv_icon = view.findViewById(R.id.selectedD_iv_icon);
@@ -148,6 +111,22 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
         tv_percent = view.findViewById(R.id.selectedD_progressValue);
         progressBar = view.findViewById(R.id.selectedD_pb);
         iv_custom = view.findViewById(R.id.selectedD_iv_custom);
+
+        setHasOptionsMenu(true);
+        return view;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        getDeviceInfo(0, 0);
+        navControllerChart = Navigation.findNavController(requireActivity(), R.id.selectedD_fragment);
+    }
+
+    @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         switchCompat.setOnCheckedChangeListener((buttonView, isChecked) -> {
             MainActivity.displayLoadingDialog();
@@ -207,60 +186,17 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
         month = calendar.get(Calendar.MONTH);
         year = calendar.get(Calendar.YEAR);
 
-        // charts taps
-        chipNavigationBar =view.findViewById(R.id.selectedD_chipNav);
-        tv_per = view.findViewById(R.id.selectedD_tv_per);
-        chipNavigationBar.setItemSelected(R.id.dayFragment,true);
-        chipNavigationBar.setOnItemSelectedListener(i -> {
-            switch (i){
-                case R.id.dayFragment :
-                    navControllerChart.popBackStack();
-                    navControllerChart.navigate(R.id.chartDayFragment);
-                    tv_per.setText("Per day");
-                    return;
-
-                case R.id.weekFragment :
-                    navControllerChart.popBackStack();
-                    navControllerChart.navigate(R.id.chartWeekFragment);
-                    tv_per.setText("Per week");
-                    return;
-
-                case R.id.monthFragment :
-                    navControllerChart.popBackStack();
-                    navControllerChart.navigate(R.id.chartMonthFragment);
-                    tv_per.setText("Per month");
-                    return;
-
-                case R.id.yearFragment :
-                    navControllerChart.popBackStack();
-                    navControllerChart.navigate(R.id.chartYearFragment);
-                    tv_per.setText("Per year");
-            }
-        });
-
         // spinner info
-        spinner=view.findViewById(R.id.selectedD_spinner_unit);
-        tv_current=view.findViewById(R.id.selectedD_tv_currentV);
-        tv_average=view.findViewById(R.id.selectedD_tv_averageV);
-        tv_perV=view.findViewById(R.id.selectedD_tv_perV);
-        tv_estimation=view.findViewById(R.id.selectedD_tv_estV);
+        spinner = view.findViewById(R.id.selectedD_spinner_unit);
+        tv_current = view.findViewById(R.id.selectedD_tv_currentV);
+        tv_average = view.findViewById(R.id.selectedD_tv_averageV);
+        tv_consumedV = view.findViewById(R.id.selectedD_tv_consumedV);
+        tv_estimation = view.findViewById(R.id.selectedD_tv_estV);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position==0){
-                    tv_current.setText("20 W");
-                    tv_average.setText("200 W");
-                    tv_perV.setText("30 KW");
-                    tv_estimation.setText("20 KW");
-                }
-                else
-                {
-                    tv_current.setText("12 EGP");
-                    tv_average.setText("120 EGP");
-                    tv_perV.setText("390 EGP");
-                    tv_estimation.setText("260 EGP");
-                }
+                getDeviceInfo(aggregation, position);
             }
 
             @Override
@@ -269,12 +205,43 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
             }
         });
 
-        constLayout_expand=view.findViewById(R.id.selectedD_constLayoutExpanded);
-        iv_arrow=view.findViewById(R.id.selectedD_iv_arrow);
-        cv_insight=view.findViewById(R.id.selectedD_cv_insight);
+        // charts taps
+        chipNavigationBar = view.findViewById(R.id.selectedD_chipNav);
+        tv_per = view.findViewById(R.id.selectedD_tv_per);
+        chipNavigationBar.setItemSelected(R.id.dayFragment, true);
+        chipNavigationBar.setOnItemSelectedListener(i -> {
+            switch (i) {
+                case R.id.dayFragment:
+                    navControllerChart.popBackStack();
+                    navControllerChart.navigate(R.id.chartDayFragment);
+                    tv_per.setText("Per day");
+                    return;
+
+                case R.id.weekFragment:
+                    navControllerChart.popBackStack();
+                    navControllerChart.navigate(R.id.chartWeekFragment);
+                    tv_per.setText("Per week");
+                    return;
+
+                case R.id.monthFragment:
+                    navControllerChart.popBackStack();
+                    navControllerChart.navigate(R.id.chartMonthFragment);
+                    tv_per.setText("Per month");
+                    return;
+
+                case R.id.yearFragment:
+                    navControllerChart.popBackStack();
+                    navControllerChart.navigate(R.id.chartYearFragment);
+                    tv_per.setText("Per year");
+            }
+        });
+
+        constLayout_expand = view.findViewById(R.id.selectedD_constLayoutExpanded);
+        iv_arrow = view.findViewById(R.id.selectedD_iv_arrow);
+        cv_insight = view.findViewById(R.id.selectedD_cv_insight);
         iv_arrow.setOnClickListener(v -> {
-            if(constLayout_expand.getVisibility()== View.GONE){
-                TransitionManager.beginDelayedTransition(cv_insight,new AutoTransition());
+            if (constLayout_expand.getVisibility() == View.GONE) {
+                TransitionManager.beginDelayedTransition(cv_insight, new AutoTransition());
                 constLayout_expand.setVisibility(View.VISIBLE);
                 iv_arrow.setBackgroundResource(R.drawable.ic_arrow_up);
             }
@@ -550,5 +517,71 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
             case 12:
                 imageView.setImageResource(R.drawable.ic_plug);
         }
+    }
+
+    @SuppressLint("SetTextI18n")
+    public void getDeviceInfo(int agg, int spinnerItem) {
+        MainActivity.displayLoadingDialog();
+        MainActivity.museViewModel.getDeviceById(deviceId)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(result -> {
+                            // set selected device info
+                            device = result;
+                            goalModels = result.getGoals();
+
+                            Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).show();
+                            Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle(device.getName());
+
+                            setupIcons(iv_icon, device.getPictureId());
+                            tv_name.setText(device.getName());
+                            switchCompat.setChecked(device.getState() != 0);
+
+                            // display getting info
+                            if (device.getState() != 0) {
+                                iv_icon.setColorFilter(MainActivity.colorPrimaryVariant);
+                                tv_percent.setVisibility(View.VISIBLE);
+                                progressBar.setVisibility(View.VISIBLE);
+                            } else {
+                                iv_icon.setColorFilter(requireContext().getResources().getColor(R.color.gray));
+                                tv_percent.setVisibility(View.INVISIBLE);
+                                progressBar.setVisibility(View.INVISIBLE);
+                            }
+                            MainActivity.museViewModel.getInsightRequest(result.getId(), agg, spinnerItem)
+                                    .subscribeOn(Schedulers.computation())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(result1 -> {
+                                                dataModels.clear();
+                                                dataModels = result1.getData();
+                                                tv_average.setText(result1.getAverageUsage() + "");
+                                                tv_consumedV.setText(result1.getUsage() + "");
+                                                tv_estimation.setText(result1.getEstimatedUsage() + "");
+
+                                                MainActivity.museViewModel.getCurrentUsageRequest(result.getId(), spinnerItem + "")
+                                                        .subscribeOn(Schedulers.computation())
+                                                        .observeOn(AndroidSchedulers.mainThread())
+                                                        .subscribe(result2 -> {
+                                                            tv_current.setText(result2.string());
+                                                            MainActivity.progressDialog.dismiss();
+                                                        }, error -> {
+                                                            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                                                            MainActivity.progressDialog.dismiss();
+                                                        });
+                                                if (notViewed) {
+                                                    navControllerChart.popBackStack();
+                                                    navControllerChart.popBackStack();
+                                                    navControllerChart.navigate(R.id.chartDayFragment);
+                                                    notViewed = false;
+                                                }
+                                            },
+                                            error -> {
+                                                Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                                                MainActivity.progressDialog.dismiss();
+                                            });
+                        },
+                        error -> {
+                            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                            MainActivity.progressDialog.dismiss();
+                        });
     }
 }

@@ -98,25 +98,20 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
 
         getAllDevicesReq(0, 0);
 
-        addDeviceAdapter.setSwitchListener((device, state) -> {
-            MainActivity.displayLoadingDialog();
-            MainActivity.museViewModel.setState(device.getId(), state).enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
-                    if (response.isSuccessful())
-                        Toast.makeText(getContext(), "Updated state", Toast.LENGTH_SHORT).show();
-                    else
-                        Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
-                    MainActivity.progressDialog.dismiss();
-                }
+        addDeviceAdapter.setSwitchListener((device, state) -> MainActivity.museViewModel.setState(device.getId(), state).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
+//                    if (response.isSuccessful())
+//                        Toast.makeText(getContext(), "Updated state", Toast.LENGTH_SHORT).show();
+//                    else
+//                        Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+            }
 
-                @Override
-                public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
-                    Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                    MainActivity.progressDialog.dismiss();
-                }
-            });
-        });
+            @Override
+            public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
+                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }));
 
         addDeviceAdapter.setListener(new OnDeviceItemListener() {
             @Override

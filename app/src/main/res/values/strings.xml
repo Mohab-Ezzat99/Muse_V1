@@ -233,4 +233,5 @@
     <string name="txt_save">Save</string>
     <string name="txt_delete">Delete</string>
     <string name="txt_max_usage">Max usage</string>
+    <string name="txt_loading">Loading…</string>
 </resources>
