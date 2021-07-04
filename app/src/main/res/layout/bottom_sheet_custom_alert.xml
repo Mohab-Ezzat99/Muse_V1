@@ -244,8 +244,55 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/customAlertBotSheet_rg"
+        app:layout_constraintTop_toBottomOf="@+id/textView21"
         app:layout_constraintVertical_bias=".01"
         app:layout_constraintWidth_percent=".7" />
+
+    <TextView
+        android:id="@+id/textView21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_max_usage"
+        android:textColor="?attr/colorOnSecondary"
+        android:textSize="@dimen/_14ssp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/relativeLayout4"
+        app:layout_constraintStart_toStartOf="@+id/textView8"
+        app:layout_constraintTop_toTopOf="@+id/relativeLayout4" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout4"
+        android:layout_width="@dimen/_74sdp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:background="@drawable/shape_primary_circle_fill"
+        android:gravity="center_vertical"
+        android:padding="@dimen/_2sdp"
+        app:layout_constraintEnd_toEndOf="@+id/customAlertBotSheet_relativeLayout_after"
+        app:layout_constraintTop_toBottomOf="@+id/customAlertBotSheet_relativeLayout_after">
+
+        <Spinner
+            android:id="@+id/customAlertBotSheet_spinner_max"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:background="@android:color/transparent"
+            android:entries="@array/spinner_consumption"
+            android:gravity="center"
+            android:popupBackground="?attr/colorOnPrimary"
+            android:spinnerMode="dropdown" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:contentDescription="@string/txt_null"
+            android:src="@drawable/ic_arrow_down"
+            app:tint="?attr/colorOnSecondary" />
+
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

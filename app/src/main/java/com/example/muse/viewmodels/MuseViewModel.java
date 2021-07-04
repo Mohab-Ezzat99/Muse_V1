@@ -62,7 +62,7 @@ public class MuseViewModel extends AndroidViewModel {
     //________________________________________________________________________________________//
     //Custom Alerts
 
-    public Observable<Call<List<AlertModel>>> getAllCustomAlertsRequest(){
+    public Observable<List<AlertModel>> getAllCustomAlertsRequest(){
         return repository.getAllCustomAlertsRequest();
     }
 

@@ -56,7 +56,7 @@ public interface ApiService {
     //Custom Alerts
 
     @GET("api/CustomAlerts")
-    Observable<Call<List<AlertModel>>> getAllCustomAlertsRequest();
+    Observable<List<AlertModel>> getAllCustomAlertsRequest();
 
     @POST("api/CustomAlerts")
     Call<AlertModel> addCustomAlert(@Body AlertModel scheduleModel);

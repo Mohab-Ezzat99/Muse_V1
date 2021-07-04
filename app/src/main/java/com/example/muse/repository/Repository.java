@@ -70,7 +70,7 @@ public class Repository {
     //________________________________________________________________________________________//
     //Custom Alerts
 
-    public Observable<Call<List<AlertModel>>> getAllCustomAlertsRequest(){
+    public Observable<List<AlertModel>> getAllCustomAlertsRequest(){
         return apiService.getAllCustomAlertsRequest();
     }
 

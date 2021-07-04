@@ -23,18 +23,32 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.muse.MainActivity;
 import com.example.muse.R;
 import com.example.muse.adapters.RVAddCustomAlertAdapter;
+import com.example.muse.model.AlertModel;
 import com.example.muse.model.DeviceModel;
+import com.example.muse.model.DeviceRequestModel;
+import com.example.muse.model.ScheduleModel;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+import nl.bryanderidder.themedtogglebuttongroup.ThemedButton;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CustomAlertsFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private RVAddCustomAlertAdapter adapter;
     private Group not_add;
-    private List<DeviceModel> result;
+    private String[] strings;
+    private List<DeviceRequestModel> result_devices;
 
     public CustomAlertsFragment() {
         // Required empty public constructor
@@ -62,24 +76,12 @@ public class CustomAlertsFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         setupSwipe();
 
-//        MainActivity.museViewModel.getDevicesCustomAlerts().observe(getViewLifecycleOwner(), deviceModels -> {
-//            if (deviceModels.size() != 0) {
-//                // visibility
-//                not_add.setVisibility(View.GONE);
-//                recyclerView.setVisibility(View.VISIBLE);
-//            } else {
-//                // visibility
-//                not_add.setVisibility(View.VISIBLE);
-//                recyclerView.setVisibility(View.GONE);
-//            }
-//            adapter.submitList(deviceModels);
-//        });
-
-        MainActivity.museViewModel.getDevicesWithoutCustomAlerts().observe(getViewLifecycleOwner(), deviceModels -> result = deviceModels);
+        getAllDevicesReq(0, 0);
+        getAllCustomAlertsReq();
 
         FloatingActionButton fab_add = view.findViewById(R.id.FCustomAlert_fab_add);
         fab_add.setOnClickListener(v -> {
-            if (result.size() == 0)
+            if (result_devices.size() == 0)
                 Toast.makeText(getContext(), "No device found to set custom alert", Toast.LENGTH_LONG).show();
             else
                 showBottomSheet(view);
@@ -92,11 +94,6 @@ public class CustomAlertsFragment extends Fragment {
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireContext(), R.style.BottomSheetDialogTheme);
         View bottom_sheet = LayoutInflater.from(getContext()).inflate(R.layout.bottom_sheet_custom_alert, view.findViewById(R.id.customAlertBotSheet));
 
-        //catch spinner devices
-        String[] strings = new String[result.size()];
-        for (int i = 0; i < result.size(); i++) {
-            strings[i] = result.get(i).getName();
-        }
         Spinner spinner_device = bottom_sheet.findViewById(R.id.customAlertBotSheet_spinner_devices);
         ArrayAdapter<String> stringsAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, strings);
         stringsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -123,39 +120,76 @@ public class CustomAlertsFragment extends Fragment {
         Spinner spinner_state = bottom_sheet.findViewById(R.id.customAlertBotSheet_spinner_state);
         Spinner spinner_at = bottom_sheet.findViewById(R.id.customAlertBotSheet_spinner_at);
         Spinner spinner_after = bottom_sheet.findViewById(R.id.customAlertBotSheet_spinner_after);
+        Spinner spinner_max = bottom_sheet.findViewById(R.id.customAlertBotSheet_spinner_max);
 
         //btn submit
         Button btn_submit = bottom_sheet.findViewById(R.id.customAlertBotSheet_btn_submit);
         btn_submit.setOnClickListener(v1 -> {
             // add item to rv
-            DeviceModel device = result.get(spinner_device.getSelectedItemPosition());
-            device.setHasCustomAlert(true);
-            switch (spinner_state.getSelectedItemPosition()) {
+            DeviceRequestModel device = result_devices.get(spinner_device.getSelectedItemPosition());
+            AlertModel alertModel;
+
+            int after = -1;
+            int maxUsage=-1;
+
+            switch (spinner_max.getSelectedItemPosition()) {
                 case 0:
-                    device.setAlertOn(false);
+                    maxUsage = 100;
                     break;
+
                 case 1:
-                    device.setAlertOn(true);
+                    maxUsage = 200;
                     break;
+
+                case 2:
+                    maxUsage = 300;
             }
+
             switch (radioGroup.getCheckedRadioButtonId()) {
                 case R.id.customAlertBotSheet_rb_at:
-                    device.setTime_type("At");
-                    device.setTime(spinner_at.getSelectedItem().toString());
+                    alertModel = new AlertModel(device.getId(), spinner_state.getSelectedItemPosition()
+                            , spinner_at.getSelectedItem().toString(), null, maxUsage);
                     break;
 
                 case R.id.customAlertBotSheet_rb_after:
-                    device.setTime_type("After");
-                    device.setTime(spinner_after.getSelectedItem().toString());
+                    switch (spinner_state.getSelectedItemPosition()) {
+                        case 0:
+                            after = 30;
+                            break;
+
+                        case 1:
+                            after = 60;
+                            break;
+
+                        case 2:
+                            after = 180;
+                            break;
+
+                        case 3:
+                            after = 360;
+                    }
+                    alertModel = new AlertModel(device.getId(), spinner_state.getSelectedItemPosition()
+                            , null, after+"", maxUsage);
                     break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + radioGroup.getCheckedRadioButtonId());
             }
-            MainActivity.museViewModel.updateDevice(device);
 
-            // visibility
-            not_add.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.VISIBLE);
-            bottomSheetDialog.dismiss();
+            MainActivity.museViewModel.addCustomAlert(alertModel).enqueue(new Callback<AlertModel>() {
+                @Override
+                public void onResponse(@NotNull Call<AlertModel> call, @NotNull Response<AlertModel> response) {
+                    if (response.isSuccessful()) {
+                        Toast.makeText(getContext(), "Added successfully", Toast.LENGTH_SHORT).show();
+                        getAllCustomAlertsReq();
+                        bottomSheetDialog.dismiss();
+                    } else Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+                }
 
+                @Override
+                public void onFailure(@NotNull Call<AlertModel> call, @NotNull Throwable t) {
+                    Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
         });
 
         //launch bottom sheet
@@ -173,13 +207,73 @@ public class CustomAlertsFragment extends Fragment {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 
-                DeviceModel device = adapter.getItemAt(viewHolder.getAdapterPosition());
-                device.setHasCustomAlert(false);
-                MainActivity.museViewModel.updateDevice(device);
+                AlertModel alertModel = adapter.getItemAt(viewHolder.getAdapterPosition());
+                MainActivity.displayLoadingDialog();
+                MainActivity.museViewModel.deleteCustomAlertById(alertModel.getId()).enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
+                        if (response.isSuccessful()) {
+                            Toast.makeText(getContext(), "Deleted successfully", Toast.LENGTH_SHORT).show();
+                            MainActivity.progressDialog.dismiss();
+                            getAllCustomAlertsReq();
+                        } else {
+                            Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+                            MainActivity.progressDialog.dismiss();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
+                        Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                        MainActivity.progressDialog.dismiss();
+                    }
+                });
             }
         };
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
+    }
+
+    public void getAllDevicesReq(int aggregation, int unit) {
+        MainActivity.displayLoadingDialog();
+        MainActivity.museViewModel.getAllDevicesRequest(aggregation, unit)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(result -> {
+                            result_devices = result;
+                            strings = new String[result.size()];
+                            for (int i = 0; i < result.size(); i++)
+                                strings[i] = result.get(i).getName();
+                            MainActivity.progressDialog.dismiss();
+                        },
+                        error -> {
+                            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                            MainActivity.progressDialog.dismiss();
+                        });
+    }
+
+    public void getAllCustomAlertsReq() {
+        MainActivity.displayLoadingDialog();
+        MainActivity.museViewModel.getAllCustomAlertsRequest()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(result -> {
+                            if (result.size() != 0) {
+                                // visibility
+                                not_add.setVisibility(View.GONE);
+                                recyclerView.setVisibility(View.VISIBLE);
+                            } else {
+                                // visibility
+                                not_add.setVisibility(View.VISIBLE);
+                                recyclerView.setVisibility(View.GONE);
+                            }
+                            adapter.submitList(result);
+                            MainActivity.progressDialog.dismiss();
+                        },
+                        error -> {
+                            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                            MainActivity.progressDialog.dismiss();
+                        });
     }
 }
