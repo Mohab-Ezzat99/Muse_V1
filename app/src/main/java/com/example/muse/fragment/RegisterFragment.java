@@ -86,6 +86,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
         tv_login = view.findViewById(R.id.register_tv_login);
         btn_register = view.findViewById(R.id.register_btn_register);
+        progressDialog=new ProgressDialog(getContext());
 
         tv_login.setOnClickListener(this);
         btn_register.setOnClickListener(this);

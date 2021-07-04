@@ -121,7 +121,13 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
         addDeviceAdapter.setListener(new OnDeviceItemListener() {
             @Override
             public void OnItemClick(DeviceRequestModel device) {
-                navController.navigate(DevicesFragmentDirections.actionDevicesFragmentToSelectedDeviceFragment(device.getId()));
+                if(device.getPictureId()!=0)
+                    navController.navigate(DevicesFragmentDirections.actionDevicesFragmentToSelectedDeviceFragment(device.getId()));
+                else {
+                    navController.popBackStack();
+                    navController.popBackStack();
+                    navController.navigate(R.id.homeFragment);
+                }
             }
 
             @Override

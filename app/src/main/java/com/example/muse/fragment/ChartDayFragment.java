@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.muse.MainActivity;
 import com.example.muse.R;
+import com.example.muse.model.InsightDataModel;
 import com.example.muse.utility.DataCharts;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -35,12 +36,17 @@ public class ChartDayFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        lineChart = view.findViewById(R.id.FDay_chart);
-
         // fixed line chart for now
-        int[] xAxis_value = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23};
-        float[] yAxis_value = {24f, 17f, 12f, 18f, 22f, 28f, 32f, 30f, 25f, 34f, 30f, 28f, 31f, 17f, 18f, 14f, 15f
-                , 11f, 13f, 16f, 18f, 17f, 19f, 23f};
+        int[] xAxis_value =new int[HomeFragment.dataModels.size()];
+        int[] yAxis_value = new int[HomeFragment.dataModels.size()];
+
+
+        for (int i=0;i<HomeFragment.dataModels.size();i++){
+            xAxis_value[i]=i;
+            yAxis_value[i]=HomeFragment.dataModels.get(i).getValue();
+        }
+
+        lineChart = view.findViewById(R.id.FDay_chart);
         lineChart.setData(DataCharts.drawLineChart(getContext(), xAxis_value, yAxis_value));
         setupLineChart();
     }
@@ -61,8 +67,11 @@ public class ChartDayFragment extends Fragment {
         lineChart.setVisibleXRangeMaximum(7);
 
         // x axis edit
-        String[] xValues = new String[]{"12 am","1 am","2 am","3 am","4 am","5 am","6 am","7 am","8 am","9 am","10 am", "11 am"
-                , "12 pm", "1 pm", "2 pm", "3 pm", "4 pm", "5 pm", "6 pm", "7 pm","8 pm","9 pm","10 pm","11 pm"};
+        String[] xValues = new String[HomeFragment.dataModels.size()];
+        for (int i=0;i<HomeFragment.dataModels.size();i++){
+            xValues[i]=HomeFragment.dataModels.get(i).getTime();
+        }
+
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setTextColor(MainActivity.colorPrimaryVariant);
         xAxis.setGranularity(1f);
@@ -73,7 +82,6 @@ public class ChartDayFragment extends Fragment {
         // y axis edit
         YAxis yAxis = lineChart.getAxisLeft();
         yAxis.setAxisMinimum(0f);
-        yAxis.setAxisMaximum(80f);
         yAxis.setLabelCount(5);
         yAxis.setTextColor(MainActivity.colorPrimaryVariant);
         yAxis.setDrawLimitLinesBehindData(true);

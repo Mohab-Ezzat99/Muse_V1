@@ -34,13 +34,18 @@ public class ChartYearFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        barChart=view.findViewById(R.id.FYear_chart);
-        setupBarChart();
-
         // fixed line chart for now
-        int[] xAxis_value = {0, 1, 2, 3, 4, 5, 6};
-        float[] yAxis_value = {1f, 7f, 2f, 4f, 3f, 6f, 8f};
+        int[] xAxis_value =new int[HomeFragment.dataModels.size()];
+        int[] yAxis_value = new int[HomeFragment.dataModels.size()];
+
+        for (int i=0;i<HomeFragment.dataModels.size();i++){
+            xAxis_value[i]=i;
+            yAxis_value[i]=HomeFragment.dataModels.get(i).getValue();
+        }
+
+        barChart=view.findViewById(R.id.FYear_chart);
         barChart.setData(DataCharts.drawBarChart(getContext(), xAxis_value, yAxis_value));
+        setupBarChart();
     }
 
     public void setupBarChart() {
@@ -65,7 +70,6 @@ public class ChartYearFragment extends Fragment {
         // y axis edit
         YAxis yAxis = barChart.getAxisLeft();
         yAxis.setTextColor(MainActivity.colorPrimaryVariant);
-        yAxis.setAxisMaximum(10f);
         yAxis.setAxisMinimum(0f);
         yAxis.setLabelCount(6, true);
         yAxis.setDrawLimitLinesBehindData(true);

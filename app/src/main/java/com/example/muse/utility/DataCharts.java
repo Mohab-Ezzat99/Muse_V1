@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class DataCharts {
 
-    public static LineData drawLineChart(Context context, int[] xAxis_value, float[] yAxis_value) {
+    public static LineData drawLineChart(Context context, int[] xAxis_value, int[] yAxis_value) {
         // y axis values
         ArrayList<Entry> yEntries = new ArrayList<>();
         for (int i=0;i<xAxis_value.length;i++)
@@ -46,7 +46,7 @@ public class DataCharts {
         return new LineData(dataSets);
     }
 
-    public static BarData drawBarChart(Context context, int[] xAxis_value, float[] yAxis_value) {
+    public static BarData drawBarChart(Context context, int[] xAxis_value, int[] yAxis_value) {
         // y axis values
         ArrayList<BarEntry> yEntries = new ArrayList<>();
         for (int i=0;i<xAxis_value.length;i++)

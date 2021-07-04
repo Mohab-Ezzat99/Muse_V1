@@ -35,13 +35,18 @@ public class ChartMonthFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        barChart = view.findViewById(R.id.FMonth_chart);
-        setupBarChart();
-
         // fixed line chart for now
-        int[] xAxis_value = {0, 1, 2, 3, 4, 5, 6};
-        float[] yAxis_value = {.5f, 2f, 4f, 2f, 5f, 6f, 10f};
+        int[] xAxis_value =new int[HomeFragment.dataModels.size()];
+        int[] yAxis_value = new int[HomeFragment.dataModels.size()];
+
+        for (int i=0;i<HomeFragment.dataModels.size();i++){
+            xAxis_value[i]=i;
+            yAxis_value[i]=HomeFragment.dataModels.get(i).getValue();
+        }
+
+        barChart = view.findViewById(R.id.FMonth_chart);
         barChart.setData(DataCharts.drawBarChart(getContext(), xAxis_value, yAxis_value));
+        setupBarChart();
     }
 
     public void setupBarChart() {
@@ -66,7 +71,6 @@ public class ChartMonthFragment extends Fragment {
         // y axis edit
         YAxis yAxis = barChart.getAxisLeft();
         yAxis.setTextColor(MainActivity.colorPrimaryVariant);
-        yAxis.setAxisMaximum(10f);
         yAxis.setAxisMinimum(0f);
         yAxis.setLabelCount(6, true);
         yAxis.setDrawLimitLinesBehindData(true);

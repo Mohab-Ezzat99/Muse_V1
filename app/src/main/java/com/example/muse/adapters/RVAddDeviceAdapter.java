@@ -5,7 +5,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -46,6 +45,10 @@ public class RVAddDeviceAdapter extends RecyclerView.Adapter<RVAddDeviceAdapter.
         holder.tv_device.setText(deviceModel.getName());
         holder.device = deviceModel;
         switch (deviceModel.getPictureId()) {
+            case 0:
+                holder.iv_icon.setImageResource(R.drawable.ic_home);
+                break;
+
             case 1:
                 holder.iv_icon.setImageResource(R.drawable.ic_tv);
                 break;

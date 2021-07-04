@@ -31,11 +31,11 @@ import androidx.navigation.Navigation;
 
 import com.example.muse.MainActivity;
 import com.example.muse.R;
-import com.example.muse.model.DeviceResponseModel;
-import com.example.muse.model.InsightModel;
+import com.example.muse.model.InsightDataModel;
 import com.example.muse.utility.SaveState;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Objects;
 
@@ -56,8 +56,8 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
     private Spinner spinner;
     private TextView tv_current, tv_average, tv_per, tv_consumedV, tv_estimation;
     private int aggregation = -1;
-    private DeviceResponseModel houseDevice;
-    private InsightModel insightModel;
+    private boolean notViewed=true;
+    public static ArrayList<InsightDataModel> dataModels=new ArrayList<>();
 
     public HomeFragment() {
         // Required empty public constructor
@@ -74,6 +74,7 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         navControllerChart = Navigation.findNavController(requireActivity(), R.id.FHome_fragment);
+        navControllerChart.navigate(R.id.chartDayFragment);
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).hide();
     }
 
@@ -127,6 +128,7 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
             switch (i) {
                 case R.id.dayFragment:
                     navControllerChart.popBackStack();
+                    navControllerChart.popBackStack();
                     navControllerChart.navigate(R.id.chartDayFragment);
                     tv_per.setText("Per day");
                     aggregation = 1;
@@ -134,6 +136,7 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
                     return;
 
                 case R.id.weekFragment:
+                    navControllerChart.popBackStack();
                     navControllerChart.popBackStack();
                     navControllerChart.navigate(R.id.chartWeekFragment);
                     tv_per.setText("Per week");
@@ -143,6 +146,7 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
 
                 case R.id.monthFragment:
                     navControllerChart.popBackStack();
+                    navControllerChart.popBackStack();
                     navControllerChart.navigate(R.id.chartMonthFragment);
                     tv_per.setText("Per month");
                     aggregation = 3;
@@ -150,6 +154,7 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
                     return;
 
                 case R.id.yearFragment:
+                    navControllerChart.popBackStack();
                     navControllerChart.popBackStack();
                     navControllerChart.navigate(R.id.chartYearFragment);
                     tv_per.setText("Per year");
@@ -239,11 +244,13 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
                         .subscribeOn(Schedulers.computation())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(result1 -> {
+                                    dataModels.clear();
+                                    dataModels = result1.getData();
                                     tv_average.setText(result1.getAverageUsage() + "");
                                     tv_consumedV.setText(result1.getUsage() + "");
                                     tv_estimation.setText(result1.getEstimatedUsage() + "");
 
-                                    MainActivity.museViewModel.getCurrentUsageRequest(result.getId(),spinnerItem+"")
+                                    MainActivity.museViewModel.getCurrentUsageRequest(result.getId(), spinnerItem + "")
                                             .subscribeOn(Schedulers.computation())
                                             .observeOn(AndroidSchedulers.mainThread())
                                             .subscribe(result2 -> {
@@ -253,6 +260,12 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
                                                 Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
                                                 MainActivity.progressDialog.dismiss();
                                             });
+                                    if(notViewed){
+                                        navControllerChart.popBackStack();
+                                        navControllerChart.popBackStack();
+                                        navControllerChart.navigate(R.id.chartDayFragment);
+                                        notViewed=false;
+                                    }
                                 },
                                 error -> {
                                     Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
