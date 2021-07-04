@@ -40,6 +40,7 @@ import com.example.muse.MainActivity;
 import com.example.muse.R;
 import com.example.muse.adapters.OnDeviceItemListener;
 import com.example.muse.adapters.RVDeviceBotAdapter;
+import com.example.muse.model.AlertModel;
 import com.example.muse.model.DeviceModel;
 import com.example.muse.model.DeviceRequestModel;
 import com.example.muse.model.DeviceResponseModel;
@@ -52,6 +53,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Calendar;
 import java.util.Objects;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -67,7 +70,7 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
     private SwitchCompat switchCompat;
     private ProgressBar progressBar;
     private ImageView iv_custom;
-    private DeviceRequestModel device;
+    private DeviceResponseModel device;
     private int day, month, year;
     private DatePickerDialog datePickerDialog;
     private ConstraintLayout constLayout_expand;
@@ -89,7 +92,17 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
 
         if (getArguments() != null) {
             SelectedDeviceFragmentArgs args = SelectedDeviceFragmentArgs.fromBundle(getArguments());
-            device = args.getSelectedDevice();
+            MainActivity.displayLoadingDialog();
+            MainActivity.museViewModel.getDeviceById(args.getDeviceId())
+                    .subscribeOn(Schedulers.computation())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(result -> {
+                        device=result;
+                        MainActivity.progressDialog.dismiss();
+                    },error ->{
+                        Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                        MainActivity.progressDialog.dismiss();
+                    });
         }
 
         setHasOptionsMenu(true);
@@ -470,6 +483,11 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
         botAdapter.setListener(new OnDeviceItemListener() {
             @Override
             public void OnItemClick(DeviceRequestModel device1) {
+
+            }
+
+            @Override
+            public void OnItemClick(AlertModel alertModel) {
 
             }
 

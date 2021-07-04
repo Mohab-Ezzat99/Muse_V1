@@ -28,6 +28,7 @@ import com.example.muse.R;
 import com.example.muse.adapters.OnDeviceItemListener;
 import com.example.muse.adapters.RVAddDeviceAdapter;
 import com.example.muse.adapters.RVDeviceBotAdapter;
+import com.example.muse.model.AlertModel;
 import com.example.muse.model.DeviceModel;
 import com.example.muse.model.DeviceRequestModel;
 import com.example.muse.model.DeviceResponseModel;
@@ -120,7 +121,12 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
         addDeviceAdapter.setListener(new OnDeviceItemListener() {
             @Override
             public void OnItemClick(DeviceRequestModel device) {
-                navController.navigate(DevicesFragmentDirections.actionDevicesFragmentToSelectedDeviceFragment(device));
+                navController.navigate(DevicesFragmentDirections.actionDevicesFragmentToSelectedDeviceFragment(device.getId()));
+            }
+
+            @Override
+            public void OnItemClick(AlertModel alertModel) {
+
             }
 
             @Override
@@ -227,6 +233,11 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
         botAdapter.setListener(new OnDeviceItemListener() {
             @Override
             public void OnItemClick(DeviceRequestModel device) {
+
+            }
+
+            @Override
+            public void OnItemClick(AlertModel alertModel) {
 
             }
 

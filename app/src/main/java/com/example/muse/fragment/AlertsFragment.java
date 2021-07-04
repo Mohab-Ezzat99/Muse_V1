@@ -1,6 +1,10 @@
 package com.example.muse.fragment;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,17 +17,24 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.example.muse.R;
 import com.example.muse.MainActivity;
-import com.example.muse.adapters.RVAlertAdapter;
+import com.example.muse.R;
 import com.example.muse.adapters.OnDeviceItemListener;
+import com.example.muse.adapters.RVAlertAdapter;
+import com.example.muse.model.AlertModel;
 import com.example.muse.model.DeviceModel;
+import com.example.muse.model.DeviceRequestModel;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AlertsFragment extends Fragment {
 
@@ -59,36 +70,33 @@ public class AlertsFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         //recycleView
-        adapter=new RVAlertAdapter(getContext());
+        adapter = new RVAlertAdapter(getContext());
         recyclerView.setAdapter(adapter);
         setupSwipe();
 
-        MainActivity.museViewModel.getDevicesAlerts().observe(getViewLifecycleOwner(), deviceModels -> {
-            if(deviceModels.size()!=0)
-            {
-                // visibility
-                not_add.setVisibility(View.GONE);
-                recyclerView.setVisibility(View.VISIBLE);
-            }
-            else {
-                // visibility
-                not_add.setVisibility(View.VISIBLE);
-                recyclerView.setVisibility(View.GONE);
-            }
-            adapter.submitList(deviceModels);
-        });
+        getAllAlertsReq();
 
-//        adapter.setListener(new OnDeviceItemListener() {
-//            @Override
-//            public void OnItemClick(DeviceModel device) {
-//                navController.navigate(AlertsFragmentDirections.actionAlertsFragmentToSelectedDeviceFragment(device));
-//            }
-//
-//            @Override
-//            public void OnItemLongClick(View view, DeviceModel device) {
-//
-//            }
-//        });
+        adapter.setListener(new OnDeviceItemListener() {
+            @Override
+            public void OnItemClick(DeviceRequestModel device) {
+            }
+
+            @Override
+            public void OnItemClick(AlertModel alertModel) {
+                navController.navigate(AlertsFragmentDirections
+                        .actionAlertsFragmentToSelectedDeviceFragment(alertModel.getDeviceId()));
+            }
+
+            @Override
+            public void OnBottomSheetItemClick(DeviceModel device, int position) {
+
+            }
+
+            @Override
+            public void OnItemLongClick(View view, DeviceRequestModel device) {
+
+            }
+        });
     }
 
     private void setupSwipe()
@@ -102,13 +110,55 @@ public class AlertsFragment extends Fragment {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 
-                DeviceModel device=adapter.getItemAt(viewHolder.getAdapterPosition());
-                device.setHasAlert(false);
-                MainActivity.museViewModel.updateDevice(device);
+                AlertModel alertModel = adapter.getItemAt(viewHolder.getAdapterPosition());
+                MainActivity.displayLoadingDialog();
+                MainActivity.museViewModel.deleteAlertById(alertModel.getId()).enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
+                        if (response.isSuccessful()) {
+                            Toast.makeText(getContext(), "Deleted successfully", Toast.LENGTH_SHORT).show();
+                            MainActivity.progressDialog.dismiss();
+                            getAllAlertsReq();
+                        } else {
+                            Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+                            MainActivity.progressDialog.dismiss();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
+                        Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                        MainActivity.progressDialog.dismiss();
+                    }
+                });
             }
         };
 
-        ItemTouchHelper itemTouchHelper=new ItemTouchHelper(callback);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
+    }
+
+    public void getAllAlertsReq() {
+        MainActivity.displayLoadingDialog();
+        MainActivity.museViewModel.getAllAlertsRequest()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(result -> {
+                            if (result.size() != 0) {
+                                // visibility
+                                not_add.setVisibility(View.GONE);
+                                recyclerView.setVisibility(View.VISIBLE);
+                            } else {
+                                // visibility
+                                not_add.setVisibility(View.VISIBLE);
+                                recyclerView.setVisibility(View.GONE);
+                            }
+                            adapter.submitList(result);
+                            MainActivity.progressDialog.dismiss();
+                        },
+                        error -> {
+                            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                            MainActivity.progressDialog.dismiss();
+                        });
     }
 }

@@ -47,7 +47,7 @@ public class MuseViewModel extends AndroidViewModel {
     //________________________________________________________________________________________//
     //Alerts
 
-    public Observable<Call<List<AlertModel>>> getAllAlertsRequest(){
+    public Observable<List<AlertModel>> getAllAlertsRequest(){
         return repository.getAllAlertsRequest();
     }
 
@@ -97,7 +97,7 @@ public class MuseViewModel extends AndroidViewModel {
         return repository.getAllDevicesRequest(aggregation,unit);
     }
 
-    public Observable<Call<DeviceResponseModel>> getDeviceById(int deviceId){
+    public Observable<DeviceResponseModel> getDeviceById(int deviceId){
         return repository.getDeviceById(deviceId);
     }
 

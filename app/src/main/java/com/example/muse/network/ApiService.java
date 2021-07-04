@@ -44,7 +44,7 @@ public interface ApiService {
     //Alerts
 
     @GET("api/Alerts")
-    Observable<Call<List<AlertModel>>> getAllAlertsRequest();
+    Observable<List<AlertModel>> getAllAlertsRequest();
 
     @GET("api/Alerts/{deviceId}")
     Observable<Call<List<AlertModel>>> getAlertsById(@Path("deviceId") int deviceId);
@@ -83,7 +83,7 @@ public interface ApiService {
     Observable<List<DeviceRequestModel>> getAllDevicesRequest(@Query("aggregation") int aggregation, @Query("unit") int unit);
 
     @GET("api/Devices/{deviceId}")
-    Observable<Call<DeviceResponseModel>> getDeviceById(@Path("deviceId") int deviceId);
+    Observable<DeviceResponseModel> getDeviceById(@Path("deviceId") int deviceId);
 
     @PUT("api/Devices/{deviceId}")
     Call<DeviceResponseModel> editDeviceById(@Path("deviceId") int deviceId, @Body DeviceRequestModel requestModel);

@@ -55,7 +55,7 @@ public class Repository {
     //________________________________________________________________________________________//
     //Alerts
 
-    public Observable<Call<List<AlertModel>>> getAllAlertsRequest(){
+    public Observable<List<AlertModel>> getAllAlertsRequest(){
         return apiService.getAllAlertsRequest();
     }
 
@@ -105,7 +105,7 @@ public class Repository {
         return apiService.getAllDevicesRequest(aggregation,unit);
     }
 
-    public Observable<Call<DeviceResponseModel>> getDeviceById(int deviceId){
+    public Observable<DeviceResponseModel> getDeviceById(int deviceId){
         return apiService.getDeviceById(deviceId);
     }
 

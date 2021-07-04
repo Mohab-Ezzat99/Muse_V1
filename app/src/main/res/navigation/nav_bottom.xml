@@ -25,8 +25,8 @@
         android:name="com.example.muse.fragment.SelectedDeviceFragment"
         tools:layout="@layout/fragment_selected_device">
         <argument
-            android:name="selected_device"
-            app:argType="com.example.muse.model.DeviceRequestModel" />
+            android:name="deviceId"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/goalFragment"
@@ -50,10 +50,6 @@
         android:name="com.example.muse.fragment.AlertsFragment"
         android:label="@string/tit_alerts"
         tools:layout="@layout/fragment_alerts" >
-
-        <argument
-            android:name="alert_device"
-            app:argType="com.example.muse.model.DeviceModel" />
         <action
             android:id="@+id/action_alertsFragment_to_selectedDeviceFragment"
             app:destination="@id/selectedDeviceFragment" />

@@ -27,25 +27,17 @@
             tools:ignore="VectorDrawableCompat" />
 
         <TextView
-            android:id="@+id/itemAlert_tv_name"
-            android:layout_width="wrap_content"
+            android:id="@+id/itemAlert_tv_desc"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_8sdp"
-            android:layout_marginLeft="@dimen/_8sdp"
-            android:textColor="?attr/colorOnSecondary"
+            android:text="@string/txt_turn_on_for_more_3_hrs"
             android:textSize="@dimen/_14ssp"
-            app:layout_constraintVertical_bias="0"
-            app:layout_constraintBottom_toBottomOf="@+id/itemAlert_iv_device"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toEndOf="@+id/itemAlert_iv_device"
-            app:layout_constraintTop_toTopOf="@+id/itemAlert_iv_device" />
-
-        <TextView
-            android:id="@+id/itemAlert_tv_message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/_14ssp"
-            app:layout_constraintStart_toStartOf="@+id/itemAlert_tv_name"
-            app:layout_constraintTop_toBottomOf="@+id/itemAlert_tv_name" />
+            app:layout_constraintTop_toTopOf="@+id/itemAlert_iv_device"
+            app:layout_constraintWidth_percent=".7" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
