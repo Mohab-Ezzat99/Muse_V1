@@ -77,9 +77,9 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
     private CardView cv_insight;
     private ImageView iv_arrow;
     private Spinner spinner;
-    private TextView tv_current,tv_average,tv_per,tv_perV, tv_estimation;
+    private TextView tv_current, tv_average, tv_per, tv_perV, tv_estimation;
     private BottomSheetDialog bottomSheetDialog;
-    private int chosenIcon=-1;
+    private int chosenIcon = -1, deviceId = -1;
 
     public SelectedDeviceFragment() {
         // Required empty public constructor
@@ -92,18 +92,35 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
 
         if (getArguments() != null) {
             SelectedDeviceFragmentArgs args = SelectedDeviceFragmentArgs.fromBundle(getArguments());
-            MainActivity.displayLoadingDialog();
-            MainActivity.museViewModel.getDeviceById(args.getDeviceId())
-                    .subscribeOn(Schedulers.computation())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(result -> {
-                        device=result;
-                        MainActivity.progressDialog.dismiss();
-                    },error ->{
-                        Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                        MainActivity.progressDialog.dismiss();
-                    });
+            deviceId = args.getDeviceId();
         }
+
+        MainActivity.displayLoadingDialog();
+        MainActivity.museViewModel.getDeviceById(deviceId)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(result -> {
+                    // set selected device info
+                    device = result;
+                    setupIcons(iv_icon, device.getPictureId());
+                    tv_name.setText(device.getName());
+                    switchCompat.setChecked(device.getState() != 0);
+
+                    // display getting info
+                    if (device.getState() != 0) {
+                        iv_icon.setColorFilter(MainActivity.colorPrimaryVariant);
+                        tv_percent.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.VISIBLE);
+                    } else {
+                        iv_icon.setColorFilter(requireContext().getResources().getColor(R.color.gray));
+                        tv_percent.setVisibility(View.INVISIBLE);
+                        progressBar.setVisibility(View.INVISIBLE);
+                    }
+                    MainActivity.progressDialog.dismiss();
+                }, error -> {
+                    Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    MainActivity.progressDialog.dismiss();
+                });
 
         setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_selected_device, container, false);
@@ -113,7 +130,8 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).show();
-        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle(device.getName());
+        if (device != null)
+            Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle(device.getName());
         navControllerChart = Navigation.findNavController(requireActivity(), R.id.selectedD_fragment);
     }
 
@@ -129,23 +147,7 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
         switchCompat = view.findViewById(R.id.selectedD_switch);
         tv_percent = view.findViewById(R.id.selectedD_progressValue);
         progressBar = view.findViewById(R.id.selectedD_pb);
-
-        // set selected device info
         iv_custom = view.findViewById(R.id.selectedD_iv_custom);
-        setupIcons(iv_icon, device.getPictureId());
-        tv_name.setText(device.getName());
-        switchCompat.setChecked(device.getState() != 0);
-
-        // display getting info
-        if (device.getState() != 0) {
-            iv_icon.setColorFilter(MainActivity.colorPrimaryVariant);
-            tv_percent.setVisibility(View.VISIBLE);
-            progressBar.setVisibility(View.VISIBLE);
-        } else {
-            iv_icon.setColorFilter(requireContext().getResources().getColor(R.color.gray));
-            tv_percent.setVisibility(View.INVISIBLE);
-            progressBar.setVisibility(View.INVISIBLE);
-        }
 
         switchCompat.setOnCheckedChangeListener((buttonView, isChecked) -> {
             MainActivity.displayLoadingDialog();

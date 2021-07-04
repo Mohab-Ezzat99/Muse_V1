@@ -29,13 +29,18 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import com.example.muse.R;
 import com.example.muse.MainActivity;
+import com.example.muse.R;
+import com.example.muse.model.DeviceResponseModel;
+import com.example.muse.model.InsightModel;
 import com.example.muse.utility.SaveState;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 import java.util.Calendar;
 import java.util.Objects;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 
 public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickListener {
@@ -49,7 +54,10 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
     private CardView cv_insight;
     private ImageView iv_arrow;
     private Spinner spinner;
-    private TextView tv_current, tv_average, tv_per, tv_perV, tv_estimation;
+    private TextView tv_current, tv_average, tv_per, tv_consumedV, tv_estimation;
+    private int aggregation = -1;
+    private DeviceResponseModel houseDevice;
+    private InsightModel insightModel;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -88,6 +96,29 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
         iv_custom = view.findViewById(R.id.FHome_iv_custom);
         iv_custom.setOnClickListener(this::showPopup);
 
+        //spinner
+        spinner = view.findViewById(R.id.home_spinner_unit);
+        tv_current = view.findViewById(R.id.home_tv_currentV);
+        tv_average = view.findViewById(R.id.home_tv_averageV);
+        tv_consumedV = view.findViewById(R.id.home_tv_consumedV);
+        tv_estimation = view.findViewById(R.id.home_tv_estV);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                getHouseInfo(aggregation, position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        //default info
+        aggregation = 1;
+        getHouseInfo(1, 0);
+
         //chipNav
         chipNavigationBar = view.findViewById(R.id.FHome_chipNav);
         tv_per = view.findViewById(R.id.home_tv_per);
@@ -98,52 +129,32 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
                     navControllerChart.popBackStack();
                     navControllerChart.navigate(R.id.chartDayFragment);
                     tv_per.setText("Per day");
+                    aggregation = 1;
+                    getHouseInfo(1, spinner.getSelectedItemPosition());
                     return;
 
                 case R.id.weekFragment:
                     navControllerChart.popBackStack();
                     navControllerChart.navigate(R.id.chartWeekFragment);
                     tv_per.setText("Per week");
+                    aggregation = 2;
+                    getHouseInfo(2, spinner.getSelectedItemPosition());
                     return;
 
-                case R.id.monthFragment :
+                case R.id.monthFragment:
                     navControllerChart.popBackStack();
                     navControllerChart.navigate(R.id.chartMonthFragment);
                     tv_per.setText("Per month");
+                    aggregation = 3;
+                    getHouseInfo(3, spinner.getSelectedItemPosition());
                     return;
 
                 case R.id.yearFragment:
                     navControllerChart.popBackStack();
                     navControllerChart.navigate(R.id.chartYearFragment);
                     tv_per.setText("Per year");
-            }
-        });
-
-        spinner = view.findViewById(R.id.home_spinner_unit);
-        tv_current = view.findViewById(R.id.home_tv_currentV);
-        tv_average = view.findViewById(R.id.home_tv_averageV);
-        tv_perV = view.findViewById(R.id.home_tv_perV);
-        tv_estimation = view.findViewById(R.id.home_tv_estV);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) {
-                    tv_current.setText("20 W");
-                    tv_average.setText("200 W");
-                    tv_perV.setText("30 KW");
-                    tv_estimation.setText("20 KW");
-                } else {
-                    tv_current.setText("12 EGP");
-                    tv_average.setText("120 EGP");
-                    tv_perV.setText("390 EGP");
-                    tv_estimation.setText("260 EGP");
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
+                    aggregation = 4;
+                    getHouseInfo(4, spinner.getSelectedItemPosition());
             }
         });
 
@@ -211,10 +222,45 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
             }
         };
         datePickerDialog = new DatePickerDialog(getContext()
-                , android.R.style.Theme_Holo_Light_Dialog_MinWidth,onDateSetListener, year, month, day);
+                , android.R.style.Theme_Holo_Light_Dialog_MinWidth, onDateSetListener, year, month, day);
         datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         datePickerDialog.show();
         datePickerDialog.getButton(DatePickerDialog.BUTTON_POSITIVE).setBackground(null);
         datePickerDialog.getButton(DatePickerDialog.BUTTON_NEGATIVE).setBackground(null);
+    }
+
+    @SuppressLint("SetTextI18n")
+    public void getHouseInfo(int agg, int spinnerItem) {
+        MainActivity.displayLoadingDialog();
+        MainActivity.museViewModel.getHouse()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(result -> MainActivity.museViewModel.getInsightRequest(result.getId(), agg, spinnerItem)
+                        .subscribeOn(Schedulers.computation())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(result1 -> {
+                                    tv_average.setText(result1.getAverageUsage() + "");
+                                    tv_consumedV.setText(result1.getUsage() + "");
+                                    tv_estimation.setText(result1.getEstimatedUsage() + "");
+
+                                    MainActivity.museViewModel.getCurrentUsageRequest(result.getId(),spinnerItem+"")
+                                            .subscribeOn(Schedulers.computation())
+                                            .observeOn(AndroidSchedulers.mainThread())
+                                            .subscribe(result2 -> {
+                                                tv_current.setText(result2.string());
+                                                MainActivity.progressDialog.dismiss();
+                                            },error ->{
+                                                Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                                                MainActivity.progressDialog.dismiss();
+                                            });
+                                },
+                                error -> {
+                                    Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                                    MainActivity.progressDialog.dismiss();
+                                }),
+                        error -> {
+                            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                            MainActivity.progressDialog.dismiss();
+                        });
     }
 }

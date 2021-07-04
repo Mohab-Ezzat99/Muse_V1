@@ -19,11 +19,14 @@ import com.example.muse.model.ScheduleModel;
 import com.example.muse.network.ApiService;
 import com.example.muse.network.RetrofitBuilder;
 
+import org.json.JSONObject;
+
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.Response;
 
 public class Repository {
     private ApiService apiService;
@@ -93,7 +96,7 @@ public class Repository {
         return apiService.addHouse(requestModel);
     }
 
-    public Observable<Call<DeviceResponseModel>> getHouse(){
+    public Observable<DeviceResponseModel> getHouse(){
         return apiService.getHouse();
     }
 
@@ -143,7 +146,7 @@ public class Repository {
     //________________________________________________________________________________________//
     //Insights
 
-    public Observable<Call<InsightModel>> getInsightRequest(int id, int aggregation, int unit){
+    public Observable<InsightModel> getInsightRequest(int id, int aggregation, int unit){
         return apiService.getInsightRequest(id,aggregation,unit);
     }
 
@@ -152,7 +155,7 @@ public class Repository {
         return apiService.getCustomInsightRequest(id,unit,year,month,day);
     }
 
-    public Observable<Call<ResponseBody>> getCurrentUsageRequest(int id, String unit){
+    public Observable<ResponseBody> getCurrentUsageRequest(int id, String unit){
         return apiService.getCurrentUsageRequest(id,unit);
     }
 

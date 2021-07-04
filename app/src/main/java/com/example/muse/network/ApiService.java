@@ -18,6 +18,7 @@ import java.util.List;
 import io.reactivex.rxjava3.core.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
@@ -74,7 +75,7 @@ public interface ApiService {
     Call<DeviceResponseModel> addHouse(@Body DeviceRequestModel requestModel);
 
     @GET("GetHouse")
-    Observable<Call<DeviceResponseModel>> getHouse();
+    Observable<DeviceResponseModel> getHouse();
 
     @POST("api/Devices")
     Call<DeviceResponseModel> addDevice(@Body DeviceRequestModel requestModel);
@@ -113,14 +114,14 @@ public interface ApiService {
     //Insights
 
     @GET("Insights/GetInsight")
-    Observable<Call<InsightModel>> getInsightRequest(@Query("id") int id, @Query("aggregation") int aggregation, @Query("unit") int unit);
+    Observable<InsightModel> getInsightRequest(@Query("id") int id, @Query("aggregation") int aggregation, @Query("unit") int unit);
 
     @GET("Insights/GetCustomInsight")
     Observable<Call<InsightModel>> getCustomInsightRequest(@Query("id") int id, @Query("unit") String unit, @Query("year") String year
             , @Query("month") String month, @Query("day") String day);
 
     @GET("Insights/GetCurrentUsage")
-    Observable<Call<ResponseBody>> getCurrentUsageRequest(@Query("id") int id, @Query("unit") String unit);
+    Observable<ResponseBody> getCurrentUsageRequest(@Query("id") int id, @Query("unit") String unit);
 
     //________________________________________________________________________________________//
     //Schedules

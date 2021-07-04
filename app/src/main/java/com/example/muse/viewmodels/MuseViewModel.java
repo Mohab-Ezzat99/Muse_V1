@@ -19,6 +19,8 @@ import com.example.muse.model.ScheduleModel;
 import com.example.muse.repository.Repository;
 import com.example.muse.utility.SaveState;
 
+import org.json.JSONObject;
+
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Observable;
@@ -85,7 +87,7 @@ public class MuseViewModel extends AndroidViewModel {
         return repository.addHouse(requestModel);
     }
 
-    public Observable<Call<DeviceResponseModel>> getHouse(){
+    public Observable<DeviceResponseModel> getHouse(){
         return repository.getHouse();
     }
 
@@ -135,7 +137,7 @@ public class MuseViewModel extends AndroidViewModel {
     //________________________________________________________________________________________//
     //Insights
 
-    public Observable<Call<InsightModel>> getInsightRequest(int id, int aggregation, int unit){
+    public Observable<InsightModel> getInsightRequest(int id, int aggregation, int unit){
         return repository.getInsightRequest(id,aggregation,unit);
     }
 
@@ -144,7 +146,7 @@ public class MuseViewModel extends AndroidViewModel {
         return repository.getCustomInsightRequest(id,unit,year,month,day);
     }
 
-    public Observable<Call<ResponseBody>> getCurrentUsageRequest(int id,String unit){
+    public Observable<ResponseBody> getCurrentUsageRequest(int id, String unit){
         return repository.getCurrentUsageRequest(id,unit);
     }
 
