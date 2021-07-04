@@ -99,7 +99,7 @@ public interface ApiService {
     //Goals
 
     @GET("api/Goals")
-    Observable<Call<List<GoalModel>>> getAllGoalsRequest();
+    Observable<List<GoalModel>> getAllGoalsRequest();
 
     @POST("api/Goals")
     Call<GoalModel> addGoal(@Body GoalModel goalModel);

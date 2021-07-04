@@ -21,12 +21,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.muse.MainActivity;
 import com.example.muse.R;
 import com.example.muse.adapters.RVAddGoalAdapter;
-import com.example.muse.model.DeviceModel;
+import com.example.muse.model.DeviceRequestModel;
+import com.example.muse.model.GoalModel;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 import java.util.Objects;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class GoalsFragment extends Fragment {
 
@@ -34,7 +44,7 @@ public class GoalsFragment extends Fragment {
     private RVAddGoalAdapter adapter;
     private Group not_add;
     private String[] strings;
-    private List<DeviceModel> result;
+    private List<DeviceRequestModel> result_devices;
 
     public GoalsFragment() {
         // Required empty public constructor
@@ -64,35 +74,17 @@ public class GoalsFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         setupSwipe();
 
-//        MainActivity.museViewModel.getDevicesGoals().observe(getViewLifecycleOwner(), deviceModels -> {
-//            if (deviceModels.size() != 0) {
-//                // visibility
-//                not_add.setVisibility(View.GONE);
-//                recyclerView.setVisibility(View.VISIBLE);
-//            } else {
-//                // visibility
-//                not_add.setVisibility(View.VISIBLE);
-//                recyclerView.setVisibility(View.GONE);
-//            }
-//            adapter.submitList(deviceModels);
-//        });
-
-        MainActivity.museViewModel.getDevicesCWithoutGoal().observe(getViewLifecycleOwner(), deviceModels -> {
-            result = deviceModels;
-            strings = new String[deviceModels.size()];
-            for (int i = 0; i < deviceModels.size(); i++)
-                strings[i] = deviceModels.get(i).getName();
-        });
+        getAllDevicesReq(0, 0);
+        getAllGoalsReq();
 
         // fab add
         FloatingActionButton fab_add = view.findViewById(R.id.FGoals_fab_add);
         fab_add.setOnClickListener(v -> {
-            if (result.size() == 0)
+            if (result_devices.size() == 0)
                 Toast.makeText(getContext(), "No device found to set goal", Toast.LENGTH_LONG).show();
             else
                 showBottomSheet(view);
         });
-
     }
 
     public void showBottomSheet(View view) {
@@ -106,16 +98,45 @@ public class GoalsFragment extends Fragment {
         stringsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_device.setAdapter(stringsAdapter);
 
+        Spinner spinner_agg = bottom_sheet.findViewById(R.id.goalBotSheet_spinner_agg);
+        Spinner spinner_values = bottom_sheet.findViewById(R.id.goalBotSheet_spinner_values);
+        int usage = 0;
+
+        switch (spinner_values.getSelectedItemPosition()) {
+            case 0:
+                usage = 100;
+                break;
+
+            case 1:
+                usage = 200;
+                break;
+
+            case 2:
+                usage = 300;
+        }
+
+
         Button btn_submit = bottom_sheet.findViewById(R.id.goalBotSheet_btn_submit);
+        int finalUsage = usage;
         btn_submit.setOnClickListener(v1 -> {
             // add item to rv
-            DeviceModel device = result.get(spinner_device.getSelectedItemPosition());
-            device.setHasGoal(true);
-            MainActivity.museViewModel.updateDevice(device);
+            DeviceRequestModel device = result_devices.get(spinner_device.getSelectedItemPosition());
+            GoalModel goalModel = new GoalModel(device.getId(), spinner_agg.getSelectedItemPosition(), finalUsage, 0);
+            MainActivity.museViewModel.addGoal(goalModel).enqueue(new Callback<GoalModel>() {
+                @Override
+                public void onResponse(@NotNull Call<GoalModel> call, @NotNull Response<GoalModel> response) {
+                    if (response.isSuccessful()) {
+                        Toast.makeText(getContext(), "Added successfully", Toast.LENGTH_SHORT).show();
+                        getAllGoalsReq();
+                        bottomSheetDialog.dismiss();
+                    } else Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+                }
 
-            // visibility
-            not_add.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.VISIBLE);
+                @Override
+                public void onFailure(@NotNull Call<GoalModel> call, @NotNull Throwable t) {
+                    Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
             bottomSheetDialog.dismiss();
         });
 
@@ -135,13 +156,73 @@ public class GoalsFragment extends Fragment {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 
-                DeviceModel device=adapter.getItemAt(viewHolder.getAdapterPosition());
-                device.setHasGoal(false);
-                MainActivity.museViewModel.updateDevice(device);
+                GoalModel goalModel = adapter.getItemAt(viewHolder.getAdapterPosition());
+                MainActivity.displayLoadingDialog();
+                MainActivity.museViewModel.deleteGoalById(goalModel.getId()).enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
+                        if (response.isSuccessful()) {
+                            Toast.makeText(getContext(), "Deleted successfully", Toast.LENGTH_SHORT).show();
+                            MainActivity.progressDialog.dismiss();
+                            getAllGoalsReq();
+                        } else {
+                            Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+                            MainActivity.progressDialog.dismiss();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
+                        Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                        MainActivity.progressDialog.dismiss();
+                    }
+                });
             }
         };
 
-        ItemTouchHelper itemTouchHelper=new ItemTouchHelper(callback);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
+    }
+
+    public void getAllDevicesReq(int aggregation, int unit) {
+        MainActivity.displayLoadingDialog();
+        MainActivity.museViewModel.getAllDevicesRequest(aggregation, unit)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(result -> {
+                            result_devices = result;
+                            strings = new String[result.size()];
+                            for (int i = 0; i < result.size(); i++)
+                                strings[i] = result.get(i).getName();
+                            MainActivity.progressDialog.dismiss();
+                        },
+                        error -> {
+                            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                            MainActivity.progressDialog.dismiss();
+                        });
+    }
+
+    public void getAllGoalsReq() {
+        MainActivity.displayLoadingDialog();
+        MainActivity.museViewModel.getAllGoalsRequest()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(result -> {
+                            if (result.size() != 0) {
+                                // visibility
+                                not_add.setVisibility(View.GONE);
+                                recyclerView.setVisibility(View.VISIBLE);
+                            } else {
+                                // visibility
+                                not_add.setVisibility(View.VISIBLE);
+                                recyclerView.setVisibility(View.GONE);
+                            }
+                            adapter.submitList(result);
+                            MainActivity.progressDialog.dismiss();
+                        },
+                        error -> {
+                            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                            MainActivity.progressDialog.dismiss();
+                        });
     }
 }

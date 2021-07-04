@@ -48,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/_8sdp"
-            android:text="@string/txt_turn_on_for_more_3_hrs"
+            android:text="@string/txt_tv_is_set_to_turn_off_at_12_00_everyday"
             android:textColor="?attr/colorPrimaryVariant"
             android:textSize="@dimen/_14sdp"
             app:layout_constraintEnd_toEndOf="@+id/itemAS_iv_patch"

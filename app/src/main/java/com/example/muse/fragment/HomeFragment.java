@@ -137,7 +137,7 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 for (GoalModel model:goalModels){
                     if(model.getType()==position){
-                        tv_used.setText(model.getUsed());
+                        tv_used.setText(model.getUsed()+"");
                         if(model.getEstimation()==0)
                             tv_prediction.setText("Goal will not achieve");
                         else

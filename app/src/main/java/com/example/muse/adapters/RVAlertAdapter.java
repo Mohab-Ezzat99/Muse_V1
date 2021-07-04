@@ -50,6 +50,10 @@ public class RVAlertAdapter extends ListAdapter<AlertModel, RVAlertAdapter.Alert
         holder.alertModel = mAlert;
         holder.tv_desc.setText(mAlert.getDescription());
         switch (mAlert.getPictureId()) {
+            case 0:
+                holder.iv_icon.setImageResource(R.drawable.ic_home);
+                break;
+
             case 1:
                 holder.iv_icon.setImageResource(R.drawable.ic_tv);
                 break;

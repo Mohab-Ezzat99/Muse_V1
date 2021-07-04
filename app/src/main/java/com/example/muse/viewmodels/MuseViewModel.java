@@ -118,7 +118,7 @@ public class MuseViewModel extends AndroidViewModel {
     //________________________________________________________________________________________//
     //Goals
 
-    public Observable<Call<List<GoalModel>>> getAllGoalsRequest(){
+    public Observable<List<GoalModel>> getAllGoalsRequest(){
         return repository.getAllGoalsRequest();
     }
 

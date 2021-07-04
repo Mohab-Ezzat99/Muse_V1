@@ -48,6 +48,10 @@ public class RVAddSchedulesAdapter extends ListAdapter<ScheduleModel, RVAddSched
         ScheduleModel schedule_model = getItem(position);
         holder.tv_decs.setText(schedule_model.getDescription());
         switch (schedule_model.getPictureId()) {
+            case 0:
+                holder.iv_icon.setImageResource(R.drawable.ic_home);
+                break;
+
             case 1:
                 holder.iv_icon.setImageResource(R.drawable.ic_tv);
                 break;

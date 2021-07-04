@@ -28,18 +28,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias=".05"
         app:tint="?attr/colorPrimaryVariant" />
-    <TextView
-        android:id="@+id/itemAG_tv_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_8sdp"
-        android:text="@string/tit_tv"
-        android:textColor="?attr/colorPrimaryVariant"
-        android:textSize="@dimen/_16ssp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/itemAG_iv_icon"
-        app:layout_constraintStart_toEndOf="@+id/itemAG_iv_icon"
-        app:layout_constraintTop_toTopOf="@+id/itemAG_iv_icon" />
 
         <RelativeLayout
             android:id="@+id/itemAG_rl_aggregation"
@@ -91,7 +79,7 @@
         app:layout_constraintTop_toBottomOf="@+id/itemAG_iv_icon" />
 
     <TextView
-        android:id="@+id/TUse1V"
+        android:id="@+id/itemAG_tv_used"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -117,7 +105,7 @@
         app:layout_constraintTop_toBottomOf="@+id/TUse1" />
 
     <TextView
-        android:id="@+id/itemAG_TPre1V"
+        android:id="@+id/itemAG_predictionV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -126,21 +114,21 @@
         android:textColor="@color/green"
         android:textSize="@dimen/_14ssp"
         app:layout_constraintBottom_toBottomOf="@+id/TPre1"
-        app:layout_constraintEnd_toEndOf="@+id/TUse1V"
+        app:layout_constraintEnd_toEndOf="@+id/itemAG_tv_used"
         app:layout_constraintTop_toTopOf="@+id/TPre1" />
 
         <TextView
-            android:id="@+id/itemAD_tv_percent"
+            android:id="@+id/itemAG_tv_percent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/txt_50"
             android:textSize="@dimen/_14ssp"
-            app:layout_constraintBottom_toBottomOf="@+id/itemAD_pb"
+            app:layout_constraintBottom_toBottomOf="@+id/itemAG_pb"
             app:layout_constraintStart_toStartOf="@+id/TPre1"
-            app:layout_constraintTop_toTopOf="@+id/itemAD_pb" />
+            app:layout_constraintTop_toTopOf="@+id/itemAG_pb" />
 
         <ProgressBar
-            android:id="@+id/itemAD_pb"
+            android:id="@+id/itemAG_pb"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="0dp"
             android:layout_height="@dimen/_12sdp"
@@ -148,8 +136,8 @@
             android:progress="50"
             android:progressDrawable="@drawable/shape_progress"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/TUse1V"
-            app:layout_constraintStart_toEndOf="@+id/itemAD_tv_percent"
+            app:layout_constraintEnd_toEndOf="@+id/itemAG_tv_used"
+            app:layout_constraintStart_toEndOf="@+id/itemAG_tv_percent"
             app:layout_constraintTop_toBottomOf="@+id/TPre1" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

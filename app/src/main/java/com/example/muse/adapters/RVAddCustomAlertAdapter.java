@@ -49,6 +49,10 @@ public class RVAddCustomAlertAdapter extends ListAdapter<AlertModel, RVAddCustom
         AlertModel alertModel = getItem(position);
         holder.tv_desc.setText(alertModel.getDescription());
         switch (alertModel.getPictureId()) {
+            case 0:
+                holder.iv_icon.setImageResource(R.drawable.ic_home);
+                break;
+
             case 1:
                 holder.iv_icon.setImageResource(R.drawable.ic_tv);
                 break;

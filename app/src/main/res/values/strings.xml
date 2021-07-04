@@ -234,4 +234,5 @@
     <string name="txt_delete">Delete</string>
     <string name="txt_max_usage">Max usage</string>
     <string name="txt_loading">Loading…</string>
+    <string name="txt_tv_is_set_to_turn_off_at_12_00_everyday">TV is set to turn off at 12:00 Everyday</string>
 </resources>

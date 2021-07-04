@@ -111,7 +111,7 @@
         app:layout_constraintTop_toTopOf="@+id/textView11">
 
         <Spinner
-            android:id="@+id/goalBotSheet_spinner_time"
+            android:id="@+id/goalBotSheet_spinner_agg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
