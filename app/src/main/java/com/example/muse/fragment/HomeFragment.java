@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.transition.AutoTransition;
 import android.transition.Fade;
 import android.transition.TransitionManager;
@@ -218,6 +219,9 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
             }
         });
 
+        //refresh realtime
+        updateRealtime();
+
         //back pressed
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(),
                 new OnBackPressedCallback(true) {
@@ -298,15 +302,6 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
                             homeId = result.getId();
                             getGoalInfo(0);
                             getInsightReq(0, 0);
-                            if (chipNavigationBar.getSelectedItemId() == -1) {
-                                if (Objects.requireNonNull(navControllerChart.getCurrentDestination()).getId() == R.id.chartDayFragment) {
-                                    chipNavigationBar.setItemSelected(R.id.dayFragment, true);
-                                } else {
-                                    chipNavigationBar.setItemSelected(R.id.dayFragment, true);
-                                    navControllerChart.navigate(R.id.chartDayFragment);
-                                    navControllerChart.popBackStack();
-                                }
-                            }
                         },
                         error -> {
                             Toast.makeText(getContext(), "House Error! " + error.getMessage(), Toast.LENGTH_LONG).show();
@@ -327,7 +322,13 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
 
                             tv_average.setText(result1.getAverageUsage()+" W");
                             tv_consumedV.setText(result1.getUsage()+" W");
-                            tv_estimation.setText(result1.getEstimatedUsage()+" W");
+                            tv_estimation.setText(result1.getEstimatedUsage()+"W");
+
+                            if (chipNavigationBar.getSelectedItemId() == -1) {
+                                chipNavigationBar.setItemSelected(R.id.dayFragment, true);
+                                navControllerChart.navigate(R.id.chartDayFragment);
+                                navControllerChart.popBackStack();
+                            }
 
                             getCurrentUsage(String.valueOf(unit));
                         },
@@ -338,12 +339,13 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
     }
 
     //3th info step
+    @SuppressLint("SetTextI18n")
     public void getCurrentUsage(String unit) {
         MainActivity.museViewModel.getCurrentUsageRequest(homeId, unit)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(result2 -> {
-                    tv_current.setText(result2.string());
+                    tv_current.setText(result2.string()+" W");
                     MainActivity.progressDialog.dismiss();
                 }, error -> {
                     Toast.makeText(getContext(), "Realtime Error! " + error.getMessage(), Toast.LENGTH_LONG).show();
@@ -355,8 +357,8 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
     public void getGoalInfo(int aggregation) {
         for (GoalModel model : goalModels) {
             if (model.getType() == aggregation) {
-                tv_used.setText(String.valueOf(model.getUsed()));
-                tv_percent.setText(String.valueOf(model.getPercent()));
+                tv_used.setText(model.getUsed()+" W");
+                tv_percent.setText(model.getPercent()+"%");
                 progressBar.setProgress(model.getPercent());
                 if (model.getEstimation() == 0) {
                     tv_prediction.setText("Goal will not achieve");
@@ -369,5 +371,16 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
                 break;
             }
         }
+    }
+
+    public void updateRealtime(){
+        MainActivity.displayLoadingDialog();
+        getCurrentUsage(String.valueOf(unitOfData));
+        Toast.makeText(getContext(), "Realtime refreshed", Toast.LENGTH_SHORT).show();
+        refresh();
+    }
+
+    public void refresh(){
+        new Handler().postDelayed(this::updateRealtime,15000);
     }
 }
