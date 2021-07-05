@@ -263,7 +263,7 @@
                 android:padding="@dimen/_8sdp">
 
                 <TextView
-                    android:id="@+id/itemAG_tv_name"
+                    android:id="@+id/hime_tv_goals"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_4sdp"
@@ -284,9 +284,9 @@
                     android:background="@drawable/shape_primary_circle_fill"
                     android:gravity="center_vertical"
                     android:padding="@dimen/_4sdp"
-                    app:layout_constraintBottom_toBottomOf="@+id/itemAG_tv_name"
+                    app:layout_constraintBottom_toBottomOf="@+id/hime_tv_goals"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/itemAG_tv_name">
+                    app:layout_constraintTop_toTopOf="@+id/hime_tv_goals">
 
                     <Spinner
                         android:id="@+id/home_spinner_aggregation"
@@ -321,8 +321,8 @@
                     android:textColor="?attr/colorOnSecondary"
                     android:textSize="@dimen/_14ssp"
                     android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="@+id/itemAG_tv_name"
-                    app:layout_constraintTop_toBottomOf="@+id/itemAG_tv_name" />
+                    app:layout_constraintStart_toStartOf="@+id/hime_tv_goals"
+                    app:layout_constraintTop_toBottomOf="@+id/hime_tv_goals" />
 
                 <TextView
                     android:id="@+id/home_tv_goalUsed"

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -45,7 +46,7 @@ public class RVAddGoalAdapter extends ListAdapter<GoalModel, RVAddGoalAdapter.AG
         return new AGViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_add_goal, parent, false));
     }
 
-    @SuppressLint("UseCompatLoadingForDrawables")
+    @SuppressLint({"UseCompatLoadingForDrawables", "SetTextI18n"})
     @Override
     public void onBindViewHolder(@NonNull AGViewHolder holder, int position) {
         GoalModel goalModel = getItem(position);
@@ -99,6 +100,24 @@ public class RVAddGoalAdapter extends ListAdapter<GoalModel, RVAddGoalAdapter.AG
             holder.tv_prediction.setText(R.string.txt_goal_will_not_achieved);
             holder.tv_prediction.setTextColor(ContextCompat.getColor(context, R.color.red));
         }
+        holder.rl_agg.setVisibility(View.INVISIBLE);
+        holder.tv_type.setVisibility(View.VISIBLE);
+        switch (goalModel.getType()) {
+            case 0:
+                holder.tv_type.setText("Day");
+                break;
+
+            case 1:
+                holder.tv_type.setText("Week");
+                break;
+
+            case 2:
+                holder.tv_type.setText("Month");
+                break;
+
+            case 3:
+                holder.tv_type.setText("Year");
+        }
     }
 
     public GoalModel getItemAt(int position) {
@@ -108,8 +127,9 @@ public class RVAddGoalAdapter extends ListAdapter<GoalModel, RVAddGoalAdapter.AG
     static class AGViewHolder extends RecyclerView.ViewHolder {
 
         private final ImageView iv_icon;
-        private final TextView tv_prediction, tv_used, tv_percent;
+        private final TextView tv_prediction, tv_used, tv_percent, tv_type;
         private final ProgressBar progressBar;
+        private final RelativeLayout rl_agg;
 
         public AGViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -117,7 +137,9 @@ public class RVAddGoalAdapter extends ListAdapter<GoalModel, RVAddGoalAdapter.AG
             tv_prediction = itemView.findViewById(R.id.itemAG_predictionV);
             tv_used = itemView.findViewById(R.id.itemAG_tv_used);
             tv_percent = itemView.findViewById(R.id.itemAG_tv_percent);
+            tv_type = itemView.findViewById(R.id.itemAG_tv_type);
             progressBar = itemView.findViewById(R.id.itemAG_pb);
+            rl_agg = itemView.findViewById(R.id.itemAG_rl_aggregation);
         }
     }
 }

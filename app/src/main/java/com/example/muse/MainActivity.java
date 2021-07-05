@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
     private static Window window;
     public static MuseViewModel museViewModel;
     public static ProgressDialog progressDialog;
+    public static MutableLiveData<Boolean> isFirstTime=new MutableLiveData<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 
 import com.example.muse.MainActivity;
 import com.example.muse.R;
@@ -48,6 +49,9 @@ public class ChartDayFragment extends Fragment {
 
         lineChart = view.findViewById(R.id.FDay_chart);
         lineChart.setData(DataCharts.drawLineChart(getContext(), xAxis_value, yAxis_value));
+        MainActivity.isFirstTime.observe(getViewLifecycleOwner(), aBoolean -> {
+            lineChart.setData(DataCharts.drawLineChart(getContext(), xAxis_value, yAxis_value));
+        });
         setupLineChart();
     }
 
@@ -64,7 +68,7 @@ public class ChartDayFragment extends Fragment {
         lineChart.zoomOut();
         lineChart.setTouchEnabled(true);
         lineChart.setPinchZoom(true);
-        lineChart.setVisibleXRangeMaximum(7);
+        lineChart.setVisibleXRangeMaximum(6);
 
         // x axis edit
         String[] xValues = new String[HomeFragment.dataModels.size()];
@@ -83,6 +87,7 @@ public class ChartDayFragment extends Fragment {
         YAxis yAxis = lineChart.getAxisLeft();
         yAxis.setAxisMinimum(0f);
         yAxis.setLabelCount(5);
+        yAxis.setAxisMaximum(yAxis.getAxisMaximum()+10);
         yAxis.setTextColor(MainActivity.colorPrimaryVariant);
         yAxis.setDrawLimitLinesBehindData(true);
         yAxis.setDrawGridLines(false);

@@ -227,7 +227,7 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
                 new OnBackPressedCallback(true) {
                     @Override
                     public void handleOnBackPressed() {
-                        requireActivity().finish();
+                        requireActivity().finishAffinity();
                     }
                 });
     }
@@ -326,8 +326,7 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
 
                             if (chipNavigationBar.getSelectedItemId() == -1) {
                                 chipNavigationBar.setItemSelected(R.id.dayFragment, true);
-                                navControllerChart.navigate(R.id.chartDayFragment);
-                                navControllerChart.popBackStack();
+                                MainActivity.isFirstTime.setValue(true);
                             }
 
                             getCurrentUsage(String.valueOf(unit));
@@ -345,11 +344,13 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(result2 -> {
-                    tv_current.setText(result2.string()+" W");
-                    MainActivity.progressDialog.dismiss();
+                    tv_current.setText(result2.string() + " W");
+                    if (MainActivity.progressDialog.isShowing())
+                        MainActivity.progressDialog.dismiss();
                 }, error -> {
                     Toast.makeText(getContext(), "Realtime Error! " + error.getMessage(), Toast.LENGTH_LONG).show();
-                    MainActivity.progressDialog.dismiss();
+                    if (MainActivity.progressDialog.isShowing())
+                        MainActivity.progressDialog.dismiss();
                 });
     }
 
@@ -374,9 +375,9 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
     }
 
     public void updateRealtime(){
-        MainActivity.displayLoadingDialog();
         getCurrentUsage(String.valueOf(unitOfData));
-        Toast.makeText(getContext(), "Realtime refreshed", Toast.LENGTH_SHORT).show();
+        if(isAdded())
+            Toast.makeText(requireContext(), "Realtime refreshed", Toast.LENGTH_SHORT).show();
         refresh();
     }
 

@@ -312,17 +312,32 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
         return true;
     }
 
-    @SuppressLint("NonConstantResourceId")
+    @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
 
             case R.id.selectedD_cv_goal:
-                View viewG = displayDialog(R.layout.item_add_goal);
-                ImageView ivG_icon = viewG.findViewById(R.id.itemAG_iv_icon);
-                TextView tvG_name = viewG.findViewById(R.id.itemAG_tv_name);
-                setupIcons(ivG_icon, device.getPictureId());
-                tvG_name.setText(device.getName());
+                if (goalModels.size() > 0) {
+                    View viewG = displayDialog(R.layout.item_add_goal);
+                    Spinner spinnerAgg = viewG.findViewById(R.id.itemAG_spinner_agg);
+
+                    getGoalInfo(viewG, 0);
+
+                    spinnerAgg.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            getGoalInfo(viewG,position);
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
+                    });
+
+                } else
+                    Toast.makeText(getContext(), "No goal found", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.selectedD_cv_schedule:
@@ -625,5 +640,35 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
                 Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @SuppressLint("SetTextI18n")
+    public void getGoalInfo(View view, int aggregation) {
+        ImageView ivG_icon = view.findViewById(R.id.itemAG_iv_icon);
+        TextView tv_used = view.findViewById(R.id.itemAG_tv_used);
+        TextView tv_prediction = view.findViewById(R.id.itemAG_predictionV);
+        TextView tv_percent = view.findViewById(R.id.itemAG_tv_percent);
+        ProgressBar progressBar = view.findViewById(R.id.itemAG_pb);
+        setupIcons(ivG_icon, device.getPictureId());
+        boolean typeFound = false;
+
+        for (GoalModel goalModel : goalModels) {
+            if (goalModel.getType() == aggregation) {
+                typeFound = true;
+                tv_used.setText(goalModel.getUsed() + " W");
+                tv_percent.setText(goalModel.getPercent() + "%");
+                progressBar.setProgress(goalModel.getPercent());
+                if (goalModel.getEstimation() == 0) {
+                    tv_prediction.setText("Goal will not achieve");
+                    tv_prediction.setTextColor(Color.RED);
+                } else {
+                    tv_prediction.setText("Goal will achieve");
+                    tv_prediction.setTextColor(Color.GREEN);
+                }
+                break;
+            }
+        }
+        if (!typeFound)
+            Toast.makeText(getContext(), "Goal does not exist", Toast.LENGTH_SHORT).show();
     }
 }
