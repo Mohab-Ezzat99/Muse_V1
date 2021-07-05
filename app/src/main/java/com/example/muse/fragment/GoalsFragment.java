@@ -115,7 +115,6 @@ public class GoalsFragment extends Fragment {
                 usage = 300;
         }
 
-
         Button btn_submit = bottom_sheet.findViewById(R.id.goalBotSheet_btn_submit);
         int finalUsage = usage;
         btn_submit.setOnClickListener(v1 -> {

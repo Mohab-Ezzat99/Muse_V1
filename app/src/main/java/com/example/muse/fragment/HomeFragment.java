@@ -21,6 +21,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -46,22 +47,23 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 
 public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickListener {
-
     private ChipNavigationBar chipNavigationBar;
     private NavController navControllerChart;
-    private ImageView iv_custom;
-    private int day, month, year;
+    private ImageView iv_custom, iv_arrow;
+
+    private int day, month, year, homeId, unitOfData, chipAggregation;
     private DatePickerDialog datePickerDialog;
+
     private ConstraintLayout constLayout_expand;
     private CardView cv_insight;
-    private ImageView iv_arrow;
-    private Spinner spinner,spinner_agg;
-    private TextView tv_current, tv_average, tv_per, tv_consumedV, tv_estimation,tv_used,tv_prediction,tv_percent;
+
+    private Spinner spinnerUnit, spinnerAgg;
+    private TextView tv_current, tv_average, tv_per, tv_consumedV, tv_estimation, tv_used, tv_prediction, tv_percent;
     private ProgressBar progressBar;
-    private int aggregation = -1;
-    private boolean notViewed=true;
-    public static ArrayList<InsightDataModel> dataModels=new ArrayList<>();
-    public ArrayList<GoalModel> goalModels=new ArrayList<>();
+
+    private boolean notViewed = true;
+    public static ArrayList<InsightDataModel> dataModels = new ArrayList<>();
+    public ArrayList<GoalModel> goalModels = new ArrayList<>();
 
     public HomeFragment() {
         // Required empty public constructor
@@ -101,17 +103,35 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
         iv_custom = view.findViewById(R.id.FHome_iv_custom);
         iv_custom.setOnClickListener(this::showPopup);
 
-        //spinner insight
-        spinner = view.findViewById(R.id.home_spinner_aggregation);
+        // insight inflation
+        spinnerUnit = view.findViewById(R.id.home_spinner_unit);
         tv_current = view.findViewById(R.id.home_tv_currentV);
         tv_average = view.findViewById(R.id.home_tv_averageV);
         tv_consumedV = view.findViewById(R.id.home_tv_consumedV);
         tv_estimation = view.findViewById(R.id.home_tv_estV);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+        // goal inflation
+        spinnerAgg = view.findViewById(R.id.home_spinner_aggregation);
+        tv_used = view.findViewById(R.id.home_tv_goalUsed);
+        tv_prediction = view.findViewById(R.id.home_tv_predictionV);
+        tv_percent = view.findViewById(R.id.home_tv_percent);
+        progressBar = view.findViewById(R.id.home_pb);
+
+        // chip inflation
+        chipNavigationBar = view.findViewById(R.id.FHome_chipNav);
+        tv_per = view.findViewById(R.id.home_tv_per);
+
+        //default info
+        getHouseInfo();
+
+        //display insight info depend on unit spinner
+        spinnerUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                getHouseInfo(aggregation, position);
+                unitOfData = position;
+                MainActivity.displayLoadingDialog();
+                getInsightReq(chipAggregation, unitOfData);
             }
 
             @Override
@@ -120,33 +140,12 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
             }
         });
 
-        //spinner agg
-        spinner_agg = view.findViewById(R.id.home_spinner_unit);
-        tv_used = view.findViewById(R.id.home_tv_goalUsed);
-        tv_prediction = view.findViewById(R.id.home_tv_estimation);
-        tv_percent = view.findViewById(R.id.home_tv_percent);
-        progressBar = view.findViewById(R.id.home_pb);
-
-        //default info
-        aggregation = 1;
-        getHouseInfo(1, 0);
-
-        spinner_agg.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        //catch goal info depend on aggregation
+        spinnerAgg.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                for (GoalModel model:goalModels){
-                    if(model.getType()==position){
-                        tv_used.setText(model.getUsed()+"");
-                        if(model.getEstimation()==0)
-                            tv_prediction.setText("Goal will not achieve");
-                        else
-                            tv_prediction.setText("Goal will achieve");
-                        tv_percent.setText(model.getPercent()+"");
-                        progressBar.setProgress(model.getPercent());
-                        break;
-                    }
-                }
+                getGoalInfo(position);
             }
 
             @Override
@@ -156,45 +155,50 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
         });
 
         //chipNav
-        chipNavigationBar = view.findViewById(R.id.FHome_chipNav);
-        tv_per = view.findViewById(R.id.home_tv_per);
-        chipNavigationBar.setItemSelected(R.id.dayFragment, true);
         chipNavigationBar.setOnItemSelectedListener(i -> {
             switch (i) {
                 case R.id.dayFragment:
                     navControllerChart.popBackStack();
                     navControllerChart.popBackStack();
                     navControllerChart.navigate(R.id.chartDayFragment);
+
                     tv_per.setText("Per day");
-                    aggregation = 1;
-                    getHouseInfo(1, spinner.getSelectedItemPosition());
+                    chipAggregation = 1;
+                    MainActivity.displayLoadingDialog();
+                    getInsightReq(1, unitOfData);
                     return;
 
                 case R.id.weekFragment:
                     navControllerChart.popBackStack();
                     navControllerChart.popBackStack();
                     navControllerChart.navigate(R.id.chartWeekFragment);
+
                     tv_per.setText("Per week");
-                    aggregation = 2;
-                    getHouseInfo(2, spinner.getSelectedItemPosition());
+                    chipAggregation = 2;
+                    MainActivity.displayLoadingDialog();
+                    getInsightReq(2, unitOfData);
                     return;
 
                 case R.id.monthFragment:
                     navControllerChart.popBackStack();
                     navControllerChart.popBackStack();
                     navControllerChart.navigate(R.id.chartMonthFragment);
+
                     tv_per.setText("Per month");
-                    aggregation = 3;
-                    getHouseInfo(3, spinner.getSelectedItemPosition());
+                    chipAggregation = 3;
+                    MainActivity.displayLoadingDialog();
+                    getInsightReq(3, unitOfData);
                     return;
 
                 case R.id.yearFragment:
                     navControllerChart.popBackStack();
                     navControllerChart.popBackStack();
                     navControllerChart.navigate(R.id.chartYearFragment);
+
                     tv_per.setText("Per year");
-                    aggregation = 4;
-                    getHouseInfo(4, spinner.getSelectedItemPosition());
+                    chipAggregation = 4;
+                    MainActivity.displayLoadingDialog();
+                    getInsightReq(4, unitOfData);
             }
         });
 
@@ -213,6 +217,15 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
                 iv_arrow.setBackgroundResource(R.drawable.ic_arrow_down);
             }
         });
+
+        //back pressed
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(),
+                new OnBackPressedCallback(true) {
+                    @Override
+                    public void handleOnBackPressed() {
+                        requireActivity().finish();
+                    }
+                });
     }
 
     public void showPopup(View v) {
@@ -222,6 +235,7 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
         popupMenu.show();
     }
 
+    // click on custom menu
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onMenuItemClick(MenuItem item) {
@@ -251,6 +265,7 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
         }
     }
 
+    // display data dialog depend on custom choice
     public void displayDatePicker(int position) {
         DatePickerDialog.OnDateSetListener onDateSetListener= (view, year, month, dayOfMonth) -> {
             if (position == 0) {
@@ -269,61 +284,90 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
         datePickerDialog.getButton(DatePickerDialog.BUTTON_NEGATIVE).setBackground(null);
     }
 
+    //get house device info
+    //1st info step
     @SuppressLint("SetTextI18n")
-    public void getHouseInfo(int agg, int spinnerItem) {
+    public void getHouseInfo() {
         MainActivity.displayLoadingDialog();
         MainActivity.museViewModel.getHouse()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(result -> {
-                            goalModels=result.getGoals();
-                            for (GoalModel model:result.getGoals()){
-                                if(model.getType()==spinner_agg.getSelectedItemPosition()){
-                                    tv_used.setText(model.getUsed());
-                                    if(model.getEstimation()==0)
-                                        tv_prediction.setText("Goal will not achieve");
-                                    else
-                                        tv_prediction.setText("Goal will achieve");
-                                    tv_percent.setText(model.getPercent()+"");
-                                    progressBar.setProgress(model.getPercent());
-                                    break;
+                            goalModels = result.getGoals();
+
+                            homeId = result.getId();
+                            getGoalInfo(0);
+                            getInsightReq(0, 0);
+                            if (chipNavigationBar.getSelectedItemId() == -1) {
+                                if (Objects.requireNonNull(navControllerChart.getCurrentDestination()).getId() == R.id.chartDayFragment) {
+                                    chipNavigationBar.setItemSelected(R.id.dayFragment, true);
+                                } else {
+                                    chipNavigationBar.setItemSelected(R.id.dayFragment, true);
+                                    navControllerChart.navigate(R.id.chartDayFragment);
+                                    navControllerChart.popBackStack();
                                 }
                             }
-                            MainActivity.museViewModel.getInsightRequest(result.getId(), agg, spinnerItem)
-                                    .subscribeOn(Schedulers.computation())
-                                    .observeOn(AndroidSchedulers.mainThread())
-                                    .subscribe(result1 -> {
-                                                dataModels.clear();
-                                                dataModels = result1.getData();
-                                                tv_average.setText(result1.getAverageUsage() + "");
-                                                tv_consumedV.setText(result1.getUsage() + "");
-                                                tv_estimation.setText(result1.getEstimatedUsage() + "");
-
-                                                MainActivity.museViewModel.getCurrentUsageRequest(result.getId(), spinnerItem + "")
-                                                        .subscribeOn(Schedulers.computation())
-                                                        .observeOn(AndroidSchedulers.mainThread())
-                                                        .subscribe(result2 -> {
-                                                            tv_current.setText(result2.string());
-                                                            MainActivity.progressDialog.dismiss();
-                                                        }, error -> {
-                                                            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
-                                                            MainActivity.progressDialog.dismiss();
-                                                        });
-                                                if (notViewed) {
-                                                    navControllerChart.popBackStack();
-                                                    navControllerChart.popBackStack();
-                                                    navControllerChart.navigate(R.id.chartDayFragment);
-                                                    notViewed = false;
-                                                }
-                                            },
-                                            error -> {
-                                                Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
-                                                MainActivity.progressDialog.dismiss();
-                                            });
                         },
                         error -> {
-                            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), "House Error! " + error.getMessage(), Toast.LENGTH_LONG).show();
                             MainActivity.progressDialog.dismiss();
                         });
+    }
+
+    //2ed info step
+    @SuppressLint("SetTextI18n")
+    public void getInsightReq(int aggregation, int unit) {
+        MainActivity.museViewModel.getInsightRequest(homeId, aggregation, unit)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(result1 -> {
+                            //array of data chart
+                            dataModels.clear();
+                            dataModels = result1.getData();
+
+                            tv_average.setText(result1.getAverageUsage()+" W");
+                            tv_consumedV.setText(result1.getUsage()+" W");
+                            tv_estimation.setText(result1.getEstimatedUsage()+" W");
+
+                            getCurrentUsage(String.valueOf(unit));
+                        },
+                        error -> {
+                            Toast.makeText(getContext(), "Insight Error! " + error.getMessage(), Toast.LENGTH_LONG).show();
+                            MainActivity.progressDialog.dismiss();
+                        });
+    }
+
+    //3th info step
+    public void getCurrentUsage(String unit) {
+        MainActivity.museViewModel.getCurrentUsageRequest(homeId, unit)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(result2 -> {
+                    tv_current.setText(result2.string());
+                    MainActivity.progressDialog.dismiss();
+                }, error -> {
+                    Toast.makeText(getContext(), "Realtime Error! " + error.getMessage(), Toast.LENGTH_LONG).show();
+                    MainActivity.progressDialog.dismiss();
+                });
+    }
+
+    @SuppressLint("SetTextI18n")
+    public void getGoalInfo(int aggregation) {
+        for (GoalModel model : goalModels) {
+            if (model.getType() == aggregation) {
+                tv_used.setText(String.valueOf(model.getUsed()));
+                tv_percent.setText(String.valueOf(model.getPercent()));
+                progressBar.setProgress(model.getPercent());
+                if (model.getEstimation() == 0) {
+                    tv_prediction.setText("Goal will not achieve");
+                    tv_prediction.setTextColor(Color.RED);
+                }
+                else {
+                    tv_prediction.setText("Goal will achieve");
+                    tv_prediction.setTextColor(Color.GREEN);
+                }
+                break;
+            }
+        }
     }
 }
