@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name = "Muse"
+rootProject.name = "Muse V1"

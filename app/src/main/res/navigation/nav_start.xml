@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.example.muse.fragment.SplashFragment"
+        android:name="com.example.musev1.fragment.SplashFragment"
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash">
         <action
@@ -23,7 +23,7 @@
     </fragment>
     <fragment
         android:id="@+id/onBoardFragment"
-        android:name="com.example.muse.fragment.OnBoardFragment"
+        android:name="com.example.musev1.fragment.OnBoardFragment"
         android:label="fragment_on_board"
         tools:layout="@layout/fragment_on_board">
         <action
@@ -34,13 +34,13 @@
     </fragment>
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.example.muse.fragment.MainFragment"
+        android:name="com.example.musev1.fragment.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.muse.fragment.LoginFragment"
+        android:name="com.example.musev1.fragment.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login">
         <action
@@ -61,7 +61,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.example.muse.fragment.RegisterFragment"
+        android:name="com.example.musev1.fragment.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register">
         <action

@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.muse.fragment.HomeFragment"
+        android:name="com.example.musev1.fragment.HomeFragment"
         android:label="@string/tit_home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/devicesFragment"
-        android:name="com.example.muse.fragment.DevicesFragment"
+        android:name="com.example.musev1.fragment.DevicesFragment"
         android:label="@string/tit_devices"
         tools:layout="@layout/fragment_devices">
         <action
@@ -22,7 +22,7 @@
 
     <fragment
         android:id="@+id/selectedDeviceFragment"
-        android:name="com.example.muse.fragment.SelectedDeviceFragment"
+        android:name="com.example.musev1.fragment.SelectedDeviceFragment"
         tools:layout="@layout/fragment_selected_device">
         <argument
             android:name="deviceId"
@@ -30,12 +30,12 @@
     </fragment>
     <fragment
         android:id="@+id/goalFragment"
-        android:name="com.example.muse.fragment.GoalsFragment"
+        android:name="com.example.musev1.fragment.GoalsFragment"
         android:label="@string/txt_goals"
         tools:layout="@layout/fragment_goals" />
     <fragment
         android:id="@+id/menuFragment"
-        android:name="com.example.muse.fragment.MenuFragment"
+        android:name="com.example.musev1.fragment.MenuFragment"
         android:label="@string/tit_more"
         tools:layout="@layout/fragment_menu" >
         <action
@@ -47,7 +47,7 @@
     </fragment>
     <fragment
         android:id="@+id/alertsFragment"
-        android:name="com.example.muse.fragment.AlertsFragment"
+        android:name="com.example.musev1.fragment.AlertsFragment"
         android:label="@string/tit_alerts"
         tools:layout="@layout/fragment_alerts" >
         <action
@@ -56,12 +56,12 @@
     </fragment>
     <fragment
         android:id="@+id/schedulesFragment"
-        android:name="com.example.muse.fragment.SchedulesFragment"
+        android:name="com.example.musev1.fragment.SchedulesFragment"
         android:label="@string/txt_schedule"
         tools:layout="@layout/fragment_schedules" />
     <fragment
         android:id="@+id/customAlertsFragment"
-        android:name="com.example.muse.fragment.CustomAlertsFragment"
+        android:name="com.example.musev1.fragment.CustomAlertsFragment"
         android:label="@string/txt_custom_alert"
         tools:layout="@layout/fragment_custom_alerts" />
 

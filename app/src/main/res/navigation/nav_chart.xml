@@ -7,22 +7,22 @@
 
     <fragment
         android:id="@+id/chartDayFragment"
-        android:name="com.example.muse.fragment.ChartDayFragment"
+        android:name="com.example.musev1.fragment.ChartDayFragment"
         android:label="fragment_chart_day"
         tools:layout="@layout/fragment_chart_day" />
     <fragment
         android:id="@+id/chartWeekFragment"
-        android:name="com.example.muse.fragment.ChartWeekFragment"
+        android:name="com.example.musev1.fragment.ChartWeekFragment"
         android:label="fragment_chart_week"
         tools:layout="@layout/fragment_chart_week" />
     <fragment
         android:id="@+id/chartMonthFragment"
-        android:name="com.example.muse.fragment.ChartMonthFragment"
+        android:name="com.example.musev1.fragment.ChartMonthFragment"
         android:label="fragment_chart_month"
         tools:layout="@layout/fragment_chart_month" />
     <fragment
         android:id="@+id/chartYearFragment"
-        android:name="com.example.muse.fragment.ChartYearFragment"
+        android:name="com.example.musev1.fragment.ChartYearFragment"
         android:label="fragment_chart_year"
         tools:layout="@layout/fragment_chart_year" />
 </navigation>
