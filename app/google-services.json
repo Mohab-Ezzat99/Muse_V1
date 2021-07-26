@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:188513946426:android:4d734c0f5610a07296de03",
         "android_client_info": {
-          "package_name": "com.example.muse"
+          "package_name": "com.example.musev1"
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "188513946426-vt8v6v385ge7qi2u6101h0736ts6575q.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.muse",
+            "package_name": "com.example.musev1",
             "certificate_hash": "63ebf5f0282f7fd52aec8c8a946119b08f041ebc"
           }
         },

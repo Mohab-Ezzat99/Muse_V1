@@ -23,26 +23,22 @@ import androidx.navigation.Navigation;
 
 import com.example.musev1.MainActivity;
 import com.example.musev1.R;
-import com.example.musev1.model.AuthModel;
 import com.example.musev1.model.LoginResponseModel;
 import com.example.musev1.utility.SaveState;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-
-import org.jetbrains.annotations.NotNull;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 
 import java.util.Objects;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import static com.example.musev1.MainActivity.mAuth;
 
 public class LoginFragment extends Fragment implements View.OnClickListener {
 
     private TextView tv_forgot, tv_signUp;
     private Button btn_login;
     private String email, password;
-    private ProgressDialog progressDialog;
     private TextInputEditText et_email, et_password;
     private TextInputLayout itl_email, itl_password;
     private NavController navController;
@@ -63,10 +59,12 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        // hide action bar
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).hide();
+
+        // init nav graph
         navController = Navigation.findNavController(requireActivity(), R.id.start_fragment);
-        if (SaveState.getToken() != null) {
-            MainActivity.museViewModel.setSecretToken(SaveState.getToken());
+        if (mAuth.getCurrentUser() != null) {
             if (SaveState.getShownOnBoarding())
                 navController.navigate(R.id.action_loginFragment_to_mainFragment);
             else
@@ -88,7 +86,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         et_password = view.findViewById(R.id.login_et_password);
         itl_email = view.findViewById(R.id.itl_email);
         itl_password = view.findViewById(R.id.itl_password);
-        progressDialog = new ProgressDialog(getContext());
 
         tv_forgot = view.findViewById(R.id.login_tv_forgot);
         tv_signUp = view.findViewById(R.id.login_tv_signUp);
@@ -112,8 +109,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.login_btn_login:
-                navController.navigate(R.id.action_loginFragment_to_mainFragment);
-                //setupLogin();
+                setupLogin();
         }
     }
 
@@ -144,11 +140,22 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 tv_submit.setVisibility(View.INVISIBLE);
                 tv_cancel.setVisibility(View.INVISIBLE);
 
-                //do some code
-
-                pb.setVisibility(View.GONE);
-                tv_submit.setVisibility(View.VISIBLE);
-                tv_cancel.setVisibility(View.VISIBLE);
+                mAuth.fetchSignInMethodsForEmail(reset_email).addOnSuccessListener(task -> mAuth.sendPasswordResetEmail(reset_email)
+                        .addOnSuccessListener(aVoid -> {
+                            Toast.makeText(getContext(), "Reset link sent to your email", Toast.LENGTH_LONG).show();
+                            alertDialog.dismiss();
+                        })
+                        .addOnFailureListener(e -> {
+                            Toast.makeText(getContext(), "Error! " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            pb.setVisibility(View.GONE);
+                            tv_submit.setVisibility(View.VISIBLE);
+                            tv_cancel.setVisibility(View.VISIBLE);
+                        })).addOnFailureListener(e -> {
+                    Toast.makeText(getContext(), "Error! " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    pb.setVisibility(View.GONE);
+                    tv_submit.setVisibility(View.VISIBLE);
+                    tv_cancel.setVisibility(View.VISIBLE);
+                });
             }
         });
         tv_cancel.setOnClickListener(v12 -> alertDialog.dismiss());
@@ -169,42 +176,43 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             return;
         }
 
-        if (SaveState.checkConnection(requireContext())) {
+        if (!SaveState.checkConnection(requireContext())) {
+            // no connection
             itl_email.setError(null);
-            Toast.makeText(getContext(), "No Internet", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "No Internet", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        progressDialog.setMessage("Please wait...");
-        progressDialog.show();
-        ((ProgressBar) progressDialog.findViewById(android.R.id.progress))
-                .getIndeterminateDrawable()
-                .setColorFilter(MainActivity.colorPrimaryVariant, android.graphics.PorterDuff.Mode.SRC_IN);
-        progressDialog.setCanceledOnTouchOutside(false);
+        MainActivity.displayLoadingDialog();
+        mAuth.fetchSignInMethodsForEmail(email).addOnSuccessListener(task -> mAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener(task1 -> {
+            if (SaveState.getShownOnBoarding())
+                navController.navigate(R.id.action_loginFragment_to_mainFragment);
+            else
+                navController.navigate(R.id.action_loginFragment_to_onBoardFragment);
+            MainActivity.hideKeyboardFrom(getContext(),btn_login);
+            MainActivity.progressDialog.dismiss();
+        })
+                .addOnFailureListener(e -> {
+                    //email does not exist
+                    if (e instanceof FirebaseAuthInvalidUserException) {
+                        itl_email.setError("Invalid email");
+                        itl_password.setError(null);
+                    }
 
-        Call<LoginResponseModel> call = MainActivity.museViewModel.login(new AuthModel(email, password));
-        call.enqueue(new Callback<LoginResponseModel>() {
-            @Override
-            public void onResponse(@NotNull Call<LoginResponseModel> call, @NotNull Response<LoginResponseModel> response) {
-                if (response.body() == null)
-                    Toast.makeText(getContext(), response.message(), Toast.LENGTH_SHORT).show();
-                else {
-                    MainActivity.hideKeyboardFrom(requireContext(), btn_login);
-                    if (SaveState.getShownOnBoarding())
-                        navController.navigate(R.id.action_loginFragment_to_mainFragment);
-                    else
-                        navController.navigate(R.id.action_loginFragment_to_onBoardFragment);
-                    SaveState.setToken(response.body().getToken());
-                    MainActivity.museViewModel.setSecretToken(response.body().getToken());
-                }
-                progressDialog.dismiss();
-            }
+                    //wrong password
+                    if (e instanceof FirebaseAuthInvalidCredentialsException) {
+                        itl_password.setError("Password is wrong");
+                        itl_email.setError(null);
+                    }
+                    MainActivity.progressDialog.dismiss();
+                })).addOnFailureListener(e -> {
 
-            @Override
-            public void onFailure(@NotNull Call<LoginResponseModel> call, @NotNull Throwable t) {
-                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
-                progressDialog.dismiss();
-            }
+            if (e instanceof FirebaseAuthInvalidCredentialsException) {
+                itl_email.setError("Badly format");
+                itl_password.setError(null);
+            } else
+                Toast.makeText(requireContext(), "Error! " + e.getCause(), Toast.LENGTH_SHORT).show();
+            MainActivity.progressDialog.dismiss();
         });
     }
 }

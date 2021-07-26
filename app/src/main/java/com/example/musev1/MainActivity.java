@@ -24,6 +24,8 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.musev1.model.DeviceModel;
 import com.example.musev1.utility.SaveState;
 import com.example.musev1.viewmodels.MuseViewModel;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -55,6 +57,9 @@ public class MainActivity extends AppCompatActivity {
     public static ProgressDialog progressDialog;
     public static MutableLiveData<Boolean> isFirstTime=new MutableLiveData<>();
 
+    public static FirebaseAuth mAuth;
+    public static FirebaseApp firebaseApp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +80,10 @@ public class MainActivity extends AppCompatActivity {
         museViewModel = new ViewModelProvider(this).get(MuseViewModel.class);
         progressDialog = new ProgressDialog(this);
         setupMode();
+
+        //firebase
+        firebaseApp = FirebaseApp.initializeApp(this);
+        mAuth = FirebaseAuth.getInstance();
 
         // toolbar
         toolbar = findViewById(R.id.start_tool);
@@ -151,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void hideKeyboardFrom(Context context, View view) {
-        InputMethodManager imm = (InputMethodManager) context.getSystemService(context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 

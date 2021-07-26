@@ -60,47 +60,6 @@ public class OnThirdFragment extends Fragment {
         btn_submit=view.findViewById(R.id.onThird_btn_submit);
         progressDialog = new ProgressDialog(getContext());
 
-        btn_submit.setOnClickListener(v -> {
-            Call<DeviceResponseModel> call=MainActivity.museViewModel.addHouse(new DeviceRequestModel(0,"House","Mohab Ezzat"));
-            call.enqueue(new Callback<DeviceResponseModel>() {
-                @Override
-                public void onResponse(@NotNull Call<DeviceResponseModel> call, @NotNull Response<DeviceResponseModel> response) {
-                    Toast.makeText(getContext(), response.body().getName(), Toast.LENGTH_SHORT).show();
-                    viewPager.setCurrentItem(3);
-//                    progressDialog.setMessage("Please wait...");
-//                    progressDialog.show();
-//                    ((ProgressBar)progressDialog.findViewById(android.R.id.progress))
-//                            .getIndeterminateDrawable()
-//                            .setColorFilter(MainActivity.colorPrimaryVariant, android.graphics.PorterDuff.Mode.SRC_IN);
-//                    progressDialog.setCanceledOnTouchOutside(false);
-//
-//                    SSID=et_ssid.getText().toString().trim();
-//                    password=et_password.getText().toString().trim();
-//
-//                    apiService= RetrofitBuilder.getPlugInstance().create(ApiService.class);
-//                    apiService.setMqtt(1,MQTT_SERVER);
-//                    Call<JSONObject> call2=apiService.setWifi(1,SSID,password);
-//                    call2.enqueue(new Callback<JSONObject>() {
-//                        @Override
-//                        public void onResponse(@NotNull Call<JSONObject> call, @NotNull Response<JSONObject> response) {
-//                            Toast.makeText(getContext(), "Connected Successfully", Toast.LENGTH_SHORT).show();
-//                            viewPager.setCurrentItem(3);
-//                            progressDialog.dismiss();
-//                        }
-//
-//                        @Override
-//                        public void onFailure(@NotNull Call<JSONObject> call, @NotNull Throwable t) {
-//                            Toast.makeText(getContext(), "WIFI Failed", Toast.LENGTH_SHORT).show();
-//                            progressDialog.dismiss();
-//                        }
-//                    });
-                }
-
-                @Override
-                public void onFailure(@NotNull Call<DeviceResponseModel> call, @NotNull Throwable t) {
-
-                }
-            });
-        });
+        btn_submit.setOnClickListener(v -> viewPager.setCurrentItem(3));
     }
 }
