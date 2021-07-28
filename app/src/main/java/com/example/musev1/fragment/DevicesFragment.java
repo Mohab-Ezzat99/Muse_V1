@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -33,6 +34,7 @@ import com.example.musev1.model.DeviceRequestModel;
 import com.example.musev1.model.DeviceResponseModel;
 import com.example.musev1.network.ApiService;
 import com.example.musev1.network.RetrofitBuilder;
+import com.example.musev1.utility.SaveState;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -40,6 +42,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
+import java.util.List;
 import java.util.Objects;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -60,8 +63,7 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
     private FloatingActionButton fab_add;
     private BottomSheetDialog bottomSheetDialog;
     private NavController navController;
-    private DeviceRequestModel currentDevice;
-    private String SSID, password;
+    private DeviceModel currentDevice;
 
     public DevicesFragment() {
         // Required empty public constructor
@@ -102,34 +104,23 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
         fab_add = view.findViewById(R.id.FDevices_fab_add);
         fab_add.setOnClickListener(v -> displayPlug());
 
-        /*
-        getAllDevicesReq(0, 0);
-
-        addDeviceAdapter.setSwitchListener((device, state) -> MainActivity.museViewModel.setState(device.getId(), state).enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
-//                    if (response.isSuccessful())
-//                        Toast.makeText(getContext(), "Updated state", Toast.LENGTH_SHORT).show();
-//                    else
-//                        Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+        MainActivity.museViewModel.getDevicesAdded().observe(getViewLifecycleOwner(), deviceModels -> {
+            if (deviceModels.size() != 0) {
+                // visibility
+                not_add.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+            } else {
+                // visibility
+                not_add.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
             }
-
-            @Override
-            public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
-                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        }));
+            addDeviceAdapter.setDeviceModels(deviceModels);
+        });
 
         addDeviceAdapter.setListener(new OnDeviceItemListener() {
             @Override
-            public void OnItemClick(DeviceRequestModel device) {
-                if(device.getPictureId()!=0)
-                    navController.navigate(DevicesFragmentDirections.actionDevicesFragmentToSelectedDeviceFragment(device.getId()));
-                else {
-                    navController.popBackStack();
-                    navController.popBackStack();
-                    navController.navigate(R.id.homeFragment);
-                }
+            public void OnItemClick(DeviceModel device) {
+                navController.navigate(DevicesFragmentDirections.actionDevicesFragmentToSelectedDeviceFragment(device));
             }
 
             @Override
@@ -143,13 +134,16 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
             }
 
             @Override
-            public void OnItemLongClick(View view, DeviceRequestModel device) {
+            public void OnItemLongClick(View view, DeviceModel device) {
                 showPopup(view);
                 currentDevice = device;
             }
         });
 
-         */
+        addDeviceAdapter.setSwitchListener((device, isOn) -> {
+            device.setOn(isOn);
+            MainActivity.museViewModel.updateDevice(device);
+        });
     }
 
     public void showPopup(View v) {
@@ -163,25 +157,7 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         if (item.getItemId() == R.id.popup_delete) {
-            MainActivity.displayLoadingDialog();
-            MainActivity.museViewModel.deleteDeviceById(currentDevice.getId()).enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
-                    if (response.isSuccessful()){
-                        Toast.makeText(getContext(), "Deleted successfully", Toast.LENGTH_SHORT).show();
-                        getAllDevicesReq(0,0);
-                    }
-                    else
-                        Toast.makeText(getContext(), response.message(), Toast.LENGTH_SHORT).show();
-                    MainActivity.progressDialog.dismiss();
-                }
-
-                @Override
-                public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
-                    Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                    MainActivity.progressDialog.dismiss();
-                }
-            });
+            MainActivity.museViewModel.deleteDevice(currentDevice);
             return true;
         }
         return false;
@@ -217,33 +193,11 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
 
         final TextView tv_submit = viewWifi.findViewById(R.id.dialogWifi_tv_submit);
         final TextView tv_wifiCancel = viewWifi.findViewById(R.id.dialogWifi_tv_cancel);
-        final TextInputEditText et_ssid = viewWifi.findViewById(R.id.dialogWifi_et_ssid);
-        final TextInputEditText et_password = viewWifi.findViewById(R.id.dialogWifi_et_password);
 
         tv_submit.setOnClickListener(v -> {
             MainActivity.hideKeyboardFrom(requireContext(), fab_add);
-//            showBottomSheet(fab_add);
-            MainActivity.displayLoadingDialog();
-            SSID= Objects.requireNonNull(et_ssid.getText()).toString().trim();
-            password= Objects.requireNonNull(et_password.getText()).toString().trim();
-
-            ApiService apiService= RetrofitBuilder.getPlugInstance().create(ApiService.class);
-            apiService.setMqtt(1,MQTT_SERVER);
-            Call<JSONObject> call=apiService.setWifi(1,SSID,password);
-            call.enqueue(new Callback<JSONObject>() {
-                @Override
-                public void onResponse(@NotNull Call<JSONObject> call, @NotNull Response<JSONObject> response) {
-                    Toast.makeText(getContext(), "Connected Successfully", Toast.LENGTH_SHORT).show();
-                    showBottomSheet(fab_add);
-                    MainActivity.progressDialog.dismiss();
-                }
-
-                @Override
-                public void onFailure(@NotNull Call<JSONObject> call, @NotNull Throwable t) {
-                    Toast.makeText(getContext(), "WIFI Failed", Toast.LENGTH_SHORT).show();
-                    MainActivity.progressDialog.dismiss();
-                }
-            });
+            alertDialogWifi.dismiss();
+            showBottomSheet(fab_add);
         });
 
         tv_wifiCancel.setOnClickListener(v -> alertDialogWifi.dismiss());
@@ -265,7 +219,7 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
 
         botAdapter.setListener(new OnDeviceItemListener() {
             @Override
-            public void OnItemClick(DeviceRequestModel device) {
+            public void OnItemClick(DeviceModel device) {
 
             }
 
@@ -276,33 +230,15 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
 
             @Override
             public void OnBottomSheetItemClick(DeviceModel device, int position) {
-                MainActivity.displayLoadingDialog();
                 //init device
-//                SaveState.setNewAlert((SaveState.getLastAlerts()) + 1);
-                DeviceRequestModel requestModel = new DeviceRequestModel(position, device.getName(), "shellyplug-DB455D");
-                MainActivity.museViewModel.addDevice(requestModel).enqueue(new Callback<DeviceResponseModel>() {
-                    @Override
-                    public void onResponse(@NotNull Call<DeviceResponseModel> call, @NotNull Response<DeviceResponseModel> response) {
-                        if (response.isSuccessful()) {
-                            Toast.makeText(getContext(), "Added successfully", Toast.LENGTH_SHORT).show();
-                            getAllDevicesReq(0,0);
-                        }
-                        else
-                            Toast.makeText(getContext(), response.message(), Toast.LENGTH_SHORT).show();
-                        MainActivity.progressDialog.dismiss();
-                    }
-
-                    @Override
-                    public void onFailure(@NotNull Call<DeviceResponseModel> call, @NotNull Throwable t) {
-                        Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                        MainActivity.progressDialog.dismiss();
-                    }
-                });
+                SaveState.setNewAlert((SaveState.getLastAlerts()) + 1);
+                device.setAdded(true);
+                MainActivity.museViewModel.insertDevice(device);
                 bottomSheetDialog.dismiss();
             }
 
             @Override
-            public void OnItemLongClick(View view, DeviceRequestModel device) {
+            public void OnItemLongClick(View view, DeviceModel device) {
 
             }
         });
@@ -310,33 +246,5 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
         //launch bottom sheet
         bottomSheetDialog.setContentView(bottom_sheet);
         bottomSheetDialog.show();
-    }
-
-    public void getAllDevicesReq(int aggregation, int unit) {
-        MainActivity.displayLoadingDialog();
-        MainActivity.museViewModel.getAllDevicesRequest(aggregation, unit)
-                .subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(result -> {
-                            if (result.size() != 0) {
-                                // visibility
-                                not_add.setVisibility(View.GONE);
-                                recyclerView.setVisibility(View.VISIBLE);
-                                cv_aggregation.setVisibility(View.VISIBLE);
-                                cv_unit.setVisibility(View.VISIBLE);
-                            } else {
-                                // visibility
-                                not_add.setVisibility(View.VISIBLE);
-                                recyclerView.setVisibility(View.GONE);
-                                cv_aggregation.setVisibility(View.GONE);
-                                cv_unit.setVisibility(View.GONE);
-                            }
-                            addDeviceAdapter.setDeviceRequestModels(result);
-                            MainActivity.progressDialog.dismiss();
-                        },
-                        error -> {
-                            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                            MainActivity.progressDialog.dismiss();
-                        });
     }
 }

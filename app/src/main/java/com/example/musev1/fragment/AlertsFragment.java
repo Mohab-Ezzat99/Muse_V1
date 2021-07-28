@@ -78,13 +78,13 @@ public class AlertsFragment extends Fragment {
 
         adapter.setListener(new OnDeviceItemListener() {
             @Override
-            public void OnItemClick(DeviceRequestModel device) {
+            public void OnItemClick(DeviceModel device) {
             }
 
             @Override
             public void OnItemClick(AlertModel alertModel) {
-                navController.navigate(AlertsFragmentDirections
-                        .actionAlertsFragmentToSelectedDeviceFragment(alertModel.getDeviceId()));
+//                navController.navigate(AlertsFragmentDirections
+//                        .actionAlertsFragmentToSelectedDeviceFragment(alertModel.getDeviceId()));
             }
 
             @Override
@@ -93,7 +93,7 @@ public class AlertsFragment extends Fragment {
             }
 
             @Override
-            public void OnItemLongClick(View view, DeviceRequestModel device) {
+            public void OnItemLongClick(View view, DeviceModel device) {
 
             }
         });

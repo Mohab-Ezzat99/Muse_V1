@@ -15,20 +15,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.musev1.MainActivity;
 import com.example.musev1.R;
-import com.example.musev1.model.DeviceRequestModel;
+import com.example.musev1.model.DeviceModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RVAddDeviceAdapter extends RecyclerView.Adapter<RVAddDeviceAdapter.ADViewHolder> {
-    private List<DeviceRequestModel> DeviceRequestModels;
+    private List<DeviceModel> DeviceModels;
     private OnDeviceItemListener listener;
     private final Context context;
     private OnSwitchListener switchListener;
 
     public RVAddDeviceAdapter(Context context) {
         this.context = context;
-        this.DeviceRequestModels = new ArrayList<>();
+        this.DeviceModels = new ArrayList<>();
     }
 
     @SuppressLint("InflateParams")
@@ -38,67 +38,24 @@ public class RVAddDeviceAdapter extends RecyclerView.Adapter<RVAddDeviceAdapter.
         return new ADViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_add_device, null, false));
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ADViewHolder holder, int position) {
-        DeviceRequestModel deviceModel = DeviceRequestModels.get(position);
+        DeviceModel deviceModel = DeviceModels.get(position);
 
         holder.tv_device.setText(deviceModel.getName());
         holder.device = deviceModel;
-        switch (deviceModel.getPictureId()) {
-            case 0:
-                holder.iv_icon.setImageResource(R.drawable.ic_home);
-                break;
+        holder.iv_icon.setImageResource(deviceModel.getIcon());
+        holder.switchCompat.setChecked(deviceModel.isOn());
 
-            case 1:
-                holder.iv_icon.setImageResource(R.drawable.ic_tv);
-                break;
-            case 2:
-                holder.iv_icon.setImageResource(R.drawable.ic_fridge);
-                break;
-            case 3:
-                holder.iv_icon.setImageResource(R.drawable.ic_air_conditioner);
-                break;
-            case 4:
-                holder.iv_icon.setImageResource(R.drawable.ic_pc);
-                break;
-            case 5:
-                holder.iv_icon.setImageResource(R.drawable.ic_clothes_dryer);
-                break;
-            case 6:
-                holder.iv_icon.setImageResource(R.drawable.ic_freezer);
-                break;
-            case 7:
-                holder.iv_icon.setImageResource(R.drawable.ic_coffee_maker);
-                break;
-            case 8:
-                holder.iv_icon.setImageResource(R.drawable.ic_dishwasher);
-                break;
-            case 9:
-                holder.iv_icon.setImageResource(R.drawable.ic_fan_heater);
-                break;
-            case 10:
-                holder.iv_icon.setImageResource(R.drawable.ic_toaster);
-                break;
-            case 11:
-                holder.iv_icon.setImageResource(R.drawable.ic_water_dispenser);
-                break;
-            case 12:
-                holder.iv_icon.setImageResource(R.drawable.ic_plug);
-        }
-        holder.switchCompat.setChecked(deviceModel.getState() != 0);
+        holder.tv_percent.setText("50%");
+        holder.progressBar.setProgress(50);
 
-        holder.tv_percent.setText(String.valueOf(deviceModel.getUsage()));
-        holder.progressBar.setProgress(deviceModel.getPercent());
-
-        if(deviceModel.getState() != 0){
+        if (deviceModel.isOn()) {
             holder.iv_icon.setColorFilter(MainActivity.colorPrimaryVariant);
             holder.tv_percent.setVisibility(View.VISIBLE);
             holder.progressBar.setVisibility(View.VISIBLE);
-
-            holder.tv_percent.setText(String.valueOf(deviceModel.getUsage()));
-            holder.progressBar.setProgress(deviceModel.getPercent());
-        }
-        else {
+        } else {
             holder.iv_icon.setColorFilter(context.getResources().getColor(R.color.gray));
             holder.tv_percent.setVisibility(View.INVISIBLE);
             holder.progressBar.setVisibility(View.INVISIBLE);
@@ -107,11 +64,11 @@ public class RVAddDeviceAdapter extends RecyclerView.Adapter<RVAddDeviceAdapter.
 
     @Override
     public int getItemCount() {
-        return DeviceRequestModels.size();
+        return DeviceModels.size();
     }
 
-    public void setDeviceRequestModels(List<DeviceRequestModel> deviceModels) {
-        this.DeviceRequestModels = deviceModels;
+    public void setDeviceModels(List<DeviceModel> deviceModels) {
+        this.DeviceModels = deviceModels;
         notifyDataSetChanged();
     }
 
@@ -129,7 +86,7 @@ public class RVAddDeviceAdapter extends RecyclerView.Adapter<RVAddDeviceAdapter.
         private final SwitchCompat switchCompat;
         private final TextView tv_device,tv_percent;
         private final ProgressBar progressBar;
-        private DeviceRequestModel device;
+        private DeviceModel device;
 
         @SuppressLint("SetTextI18n")
         public ADViewHolder(@NonNull View itemView) {
@@ -146,16 +103,11 @@ public class RVAddDeviceAdapter extends RecyclerView.Adapter<RVAddDeviceAdapter.
                 return true;
             });
 
-            switchCompat.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                if(isChecked)
-                    switchListener.isChecked(device,1);
-                else
-                    switchListener.isChecked(device,0);
-            });
+            switchCompat.setOnCheckedChangeListener((buttonView, isChecked) -> switchListener.isChecked(device, isChecked));
         }
     }
 
     public interface OnSwitchListener {
-        void isChecked(DeviceRequestModel device, int state);
+        void isChecked(DeviceModel device, boolean isOn);
     }
 }

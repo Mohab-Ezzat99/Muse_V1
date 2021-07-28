@@ -25,8 +25,8 @@
         android:name="com.example.musev1.fragment.SelectedDeviceFragment"
         tools:layout="@layout/fragment_selected_device">
         <argument
-            android:name="deviceId"
-            app:argType="integer" />
+            android:name="device"
+            app:argType="com.example.musev1.model.DeviceModel" />
     </fragment>
     <fragment
         android:id="@+id/goalFragment"

@@ -43,25 +43,14 @@ import com.example.musev1.adapters.RVDeviceBotAdapter;
 import com.example.musev1.model.AlertModel;
 import com.example.musev1.model.DeviceModel;
 import com.example.musev1.model.DeviceRequestModel;
-import com.example.musev1.model.DeviceResponseModel;
-import com.example.musev1.model.GoalModel;
-import com.example.musev1.model.InsightDataModel;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.textfield.TextInputEditText;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Objects;
-
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.schedulers.Schedulers;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class SelectedDeviceFragment extends Fragment implements View.OnClickListener, MenuItem.OnMenuItemClickListener {
 
@@ -78,11 +67,8 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
     private ConstraintLayout constLayout_expand;
     private Spinner spinnerUnit;
 
-    private DeviceResponseModel device;
-    private int day, month, year, chosenIcon = -1, deviceId = -1, chipAggregation = 0,unitOfData=0;
-    private boolean notViewed = true;
-    public static ArrayList<InsightDataModel> dataModels = new ArrayList<>();
-    public ArrayList<GoalModel> goalModels = new ArrayList<>();
+    private DeviceModel device;
+    private int day, month, year, chosenIcon = -1;
 
     public SelectedDeviceFragment() {
         // Required empty public constructor
@@ -95,7 +81,7 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
         // get selected device id
         if (getArguments() != null) {
             SelectedDeviceFragmentArgs args = SelectedDeviceFragmentArgs.fromBundle(getArguments());
-            deviceId = args.getDeviceId();
+            device = args.getDevice();
         }
 
         // fetch view before getting data
@@ -117,10 +103,7 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        //get default device info
-        getDeviceInfo();
-
+        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle(device.getName());
         navControllerChart = Navigation.findNavController(requireActivity(), R.id.selectedD_fragment);
     }
 
@@ -128,6 +111,9 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        iv_icon.setImageResource(device.getIcon());
+        tv_name.setText(device.getName());
 
         // spinner info inflation
         spinnerUnit = view.findViewById(R.id.selectedD_spinner_unit);
@@ -137,28 +123,37 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
         tv_estimation = view.findViewById(R.id.selectedD_tv_estV);
 
         // device state..on/off
+        //when display
+        switchCompat.setChecked(device.isOn());
+        if (device.isOn()) {
+            iv_icon.setColorFilter(MainActivity.colorPrimaryVariant);
+            tv_percent.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.VISIBLE);
+        } else {
+            iv_icon.setColorFilter(requireContext().getResources().getColor(R.color.gray));
+            tv_percent.setVisibility(View.INVISIBLE);
+            progressBar.setVisibility(View.INVISIBLE);
+        }
+        //set change
         switchCompat.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            MainActivity.displayLoadingDialog();
             if (isChecked) {
                 iv_icon.setColorFilter(MainActivity.colorPrimaryVariant);
                 tv_percent.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.VISIBLE);
-                updateDeviceState(device.getId(), 1);
             } else {
                 iv_icon.setColorFilter(requireContext().getResources().getColor(R.color.gray));
                 tv_percent.setVisibility(View.INVISIBLE);
                 progressBar.setVisibility(View.INVISIBLE);
-                updateDeviceState(device.getId(), 0);
             }
+            device.setOn(isChecked);
+            MainActivity.museViewModel.updateDevice(device);
         });
 
         spinnerUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                unitOfData=position;
-                MainActivity.displayLoadingDialog();
-                getInsightReq(chipAggregation,unitOfData);
+
             }
 
             @Override
@@ -184,9 +179,6 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
                     navControllerChart.navigate(R.id.chartDayFragment);
 
                     tv_per.setText("Per day");
-                    chipAggregation = 1;
-                    MainActivity.displayLoadingDialog();
-                    getInsightReq(1, unitOfData);
                     return;
 
                 case R.id.weekFragment:
@@ -194,9 +186,6 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
                     navControllerChart.navigate(R.id.chartWeekFragment);
 
                     tv_per.setText("Per week");
-                    chipAggregation = 2;
-                    MainActivity.displayLoadingDialog();
-                    getInsightReq(2, unitOfData);
                     return;
 
                 case R.id.monthFragment:
@@ -204,9 +193,6 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
                     navControllerChart.navigate(R.id.chartMonthFragment);
 
                     tv_per.setText("Per month");
-                    chipAggregation = 3;
-                    MainActivity.displayLoadingDialog();
-                    getInsightReq(3, unitOfData);
                     return;
 
                 case R.id.yearFragment:
@@ -214,9 +200,6 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
                     navControllerChart.navigate(R.id.chartYearFragment);
 
                     tv_per.setText("Per year");
-                    chipAggregation = 4;
-                    MainActivity.displayLoadingDialog();
-                    getInsightReq(4, unitOfData);
             }
         });
 
@@ -267,40 +250,34 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
                 TextView tv_save = view.findViewById(R.id.dialogEdit_tv_save);
                 TextView tv_delete = view.findViewById(R.id.dialogEdit_tv_delete);
                 TextInputEditText et_name = view.findViewById(R.id.dialogEdit_et_deviceName);
-                setupIcons(dialogIv_icon, device.getPictureId());
-                dialogIv_icon.setOnClickListener(v ->{
-                    MainActivity.hideKeyboardFrom(requireContext(),dialogIv_icon);
+                dialogIv_icon.setImageResource(device.getIcon());
+                dialogIv_icon.setOnClickListener(v -> {
+                    MainActivity.hideKeyboardFrom(requireContext(), dialogIv_icon);
                     showBottomSheet(dialogIv_icon);
                 });
 
                 tv_save.setOnClickListener(v -> {
                     // fetch data edited
                     String new_name = Objects.requireNonNull(et_name.getText()).toString();
-                    DeviceRequestModel requestModel = null;
+                    if (!new_name.equals(""))
+                        device.setName(new_name);
 
-                    // check what is updated
-                    if (chosenIcon >= 0) {
-                        if (!(new_name.equals("")))
-                            requestModel = new DeviceRequestModel(chosenIcon, new_name);
-                        else requestModel = new DeviceRequestModel(chosenIcon, device.getName());
-                        chosenIcon = -1;
-                    } else {
-                        if (!(new_name.equals(""))) {
-                            requestModel = new DeviceRequestModel(device.getPictureId(), new_name);
-                        }
-                    }
+                    if (chosenIcon != -1)
+                        device.setIcon(chosenIcon);
 
-                    if (requestModel != null)
-                        editDevice(alertDialog, requestModel);
+                    MainActivity.museViewModel.updateDevice(device);
+                    Toast.makeText(getContext(), "Updated successfully", Toast.LENGTH_SHORT).show();
+                    Navigation.findNavController(requireActivity(), R.id.main_fragment).popBackStack();
+                    alertDialog.dismiss();
 
-                    else {
-                        Toast.makeText(getContext(), "No changes", Toast.LENGTH_SHORT).show();
-                        Navigation.findNavController(requireActivity(), R.id.main_fragment).popBackStack();
-                        alertDialog.dismiss();
-                    }
                 });
 
-                tv_delete.setOnClickListener(v -> deleteDevice(alertDialog));
+                tv_delete.setOnClickListener(v -> {
+                    MainActivity.museViewModel.deleteDevice(device);
+                    Toast.makeText(getContext(), "deleted successfully", Toast.LENGTH_SHORT).show();
+                    Navigation.findNavController(requireActivity(), R.id.main_fragment).popBackStack();
+                    alertDialog.dismiss();
+                });
                 return true;
 
             //click back arrow
@@ -318,32 +295,13 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
         switch (v.getId()) {
 
             case R.id.selectedD_cv_goal:
-                if (goalModels.size() > 0) {
-                    View viewG = displayDialog(R.layout.item_add_goal);
-                    Spinner spinnerAgg = viewG.findViewById(R.id.itemAG_spinner_agg);
 
-                    getGoalInfo(viewG, 0);
-
-                    spinnerAgg.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            getGoalInfo(viewG,position);
-                        }
-
-                        @Override
-                        public void onNothingSelected(AdapterView<?> parent) {
-
-                        }
-                    });
-
-                } else
-                    Toast.makeText(getContext(), "No goal found", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.selectedD_cv_schedule:
                 View viewS = displayDialog(R.layout.item_add_schedules);
                 ImageView ivS_icon = viewS.findViewById(R.id.itemAS_iv_icon);
-                setupIcons(ivS_icon, device.getPictureId());
+                ivS_icon.setImageResource(device.getIcon());
                 break;
 
             case R.id.selectedD_iv_custom:
@@ -437,7 +395,7 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
 
         botAdapter.setListener(new OnDeviceItemListener() {
             @Override
-            public void OnItemClick(DeviceRequestModel device1) {
+            public void OnItemClick(DeviceModel device1) {
 
             }
 
@@ -448,13 +406,13 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
 
             @Override
             public void OnBottomSheetItemClick(DeviceModel device, int position) {
-                chosenIcon = position;
-                setupIcons(dialogIv_icon, chosenIcon);
+                chosenIcon = device.getIcon();
+                dialogIv_icon.setImageResource(chosenIcon);
                 bottomSheetDialog.dismiss();
             }
 
             @Override
-            public void OnItemLongClick(View view, DeviceRequestModel device) {
+            public void OnItemLongClick(View view, DeviceModel device) {
 
             }
         });
@@ -462,213 +420,5 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
         //launch bottom sheet
         bottomSheetDialog.setContentView(bottom_sheet);
         bottomSheetDialog.show();
-    }
-
-    public void setupIcons(ImageView imageView, int id) {
-
-        switch (id) {
-            case 1:
-                imageView.setImageResource(R.drawable.ic_tv);
-                break;
-            case 2:
-                imageView.setImageResource(R.drawable.ic_fridge);
-                break;
-            case 3:
-                imageView.setImageResource(R.drawable.ic_air_conditioner);
-                break;
-            case 4:
-                imageView.setImageResource(R.drawable.ic_pc);
-                break;
-            case 5:
-                imageView.setImageResource(R.drawable.ic_clothes_dryer);
-                break;
-            case 6:
-                imageView.setImageResource(R.drawable.ic_freezer);
-                break;
-            case 7:
-                imageView.setImageResource(R.drawable.ic_coffee_maker);
-                break;
-            case 8:
-                imageView.setImageResource(R.drawable.ic_dishwasher);
-                break;
-            case 9:
-                imageView.setImageResource(R.drawable.ic_fan_heater);
-                break;
-            case 10:
-                imageView.setImageResource(R.drawable.ic_toaster);
-                break;
-            case 11:
-                imageView.setImageResource(R.drawable.ic_water_dispenser);
-                break;
-            case 12:
-                imageView.setImageResource(R.drawable.ic_plug);
-        }
-    }
-
-    // 1st device info
-    @SuppressLint("SetTextI18n")
-    public void getDeviceInfo() {
-        MainActivity.displayLoadingDialog();
-        MainActivity.museViewModel.getDeviceById(deviceId)
-                .subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(result -> {
-                            // set selected device info
-                            device = result;
-                            goalModels = result.getGoals();
-                            setupIcons(iv_icon, device.getPictureId());
-                            tv_name.setText(device.getName());
-                            switchCompat.setChecked(device.getState() != 0);
-
-                            //toolbar title
-                            Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).show();
-                            Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle(device.getName());
-
-                            // display getting info
-                            if (device.getState() != 0) {
-                                iv_icon.setColorFilter(MainActivity.colorPrimaryVariant);
-                                tv_percent.setVisibility(View.VISIBLE);
-                                progressBar.setVisibility(View.VISIBLE);
-                            } else {
-                                iv_icon.setColorFilter(requireContext().getResources().getColor(R.color.gray));
-                                tv_percent.setVisibility(View.INVISIBLE);
-                                progressBar.setVisibility(View.INVISIBLE);
-                            }
-                            getInsightReq(0,0);
-                        },
-                        error -> {
-                            Toast.makeText(getContext(), "Info Error! "+error.getMessage(), Toast.LENGTH_LONG).show();
-                            MainActivity.progressDialog.dismiss();
-                        });
-    }
-
-    //2ed device info
-    @SuppressLint("SetTextI18n")
-    public void getInsightReq(int aggregation, int unit){
-        MainActivity.museViewModel.getInsightRequest(deviceId, aggregation, unit)
-                .subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(result1 -> {
-                            dataModels.clear();
-                            dataModels = result1.getData();
-                            tv_average.setText(result1.getAverageUsage() + " W");
-                            tv_consumedV.setText(result1.getUsage() + " W");
-                            tv_estimation.setText(result1.getEstimatedUsage() + " W");
-
-                            if (notViewed) {
-                                navControllerChart.popBackStack();
-                                navControllerChart.popBackStack();
-                                navControllerChart.navigate(R.id.chartDayFragment);
-                                notViewed = false;
-                            }
-
-                            getDeviceRealtime(String.valueOf(unit));
-                        },
-                        error -> {
-                            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
-                            MainActivity.progressDialog.dismiss();
-                        });
-    }
-
-    //3rd device info
-    @SuppressLint("SetTextI18n")
-    public void getDeviceRealtime(String unit){
-        MainActivity.museViewModel.getCurrentUsageRequest(device.getId(),unit)
-                .subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(result2 -> {
-                    tv_current.setText(result2.string()+" W");
-                    MainActivity.progressDialog.dismiss();
-                }, error -> {
-                    Toast.makeText(getContext(), "Realtime Error! "+error.getMessage(), Toast.LENGTH_LONG).show();
-                    MainActivity.progressDialog.dismiss();
-                });
-    }
-
-    public void updateDeviceState(int deviceId, int state) {
-        MainActivity.displayLoadingDialog();
-        MainActivity.museViewModel.setState(deviceId, state).enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
-                if (response.isSuccessful())
-                    Toast.makeText(getContext(), "Updated state", Toast.LENGTH_SHORT).show();
-                else
-                    Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
-                MainActivity.progressDialog.dismiss();
-            }
-
-            @Override
-            public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
-                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                MainActivity.progressDialog.dismiss();
-            }
-        });
-    }
-
-    public void editDevice(AlertDialog alertDialog, DeviceRequestModel requestModel) {
-        MainActivity.museViewModel.editDeviceById(device.getId(), requestModel).enqueue(new Callback<DeviceResponseModel>() {
-            @Override
-            public void onResponse(@NotNull Call<DeviceResponseModel> call, @NotNull Response<DeviceResponseModel> response) {
-                if (response.isSuccessful()) {
-                    Toast.makeText(getContext(), "Updated successfully", Toast.LENGTH_SHORT).show();
-                    Navigation.findNavController(requireActivity(), R.id.main_fragment).popBackStack();
-                    alertDialog.dismiss();
-                } else
-                    Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onFailure(@NotNull Call<DeviceResponseModel> call, @NotNull Throwable t) {
-                Toast.makeText(getContext(), "Edit error! " + t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    public void deleteDevice(AlertDialog alertDialog) {
-        MainActivity.museViewModel.deleteDeviceById(device.getId()).enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
-                if (response.isSuccessful()) {
-                    Toast.makeText(getContext(), "Deleted successfully", Toast.LENGTH_SHORT).show();
-                    Navigation.findNavController(requireActivity(), R.id.main_fragment).popBackStack();
-                    alertDialog.dismiss();
-                } else Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
-                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    @SuppressLint("SetTextI18n")
-    public void getGoalInfo(View view, int aggregation) {
-        ImageView ivG_icon = view.findViewById(R.id.itemAG_iv_icon);
-        TextView tv_used = view.findViewById(R.id.itemAG_tv_used);
-        TextView tv_prediction = view.findViewById(R.id.itemAG_predictionV);
-        TextView tv_percent = view.findViewById(R.id.itemAG_tv_percent);
-        ProgressBar progressBar = view.findViewById(R.id.itemAG_pb);
-        setupIcons(ivG_icon, device.getPictureId());
-        boolean typeFound = false;
-
-        for (GoalModel goalModel : goalModels) {
-            if (goalModel.getType() == aggregation) {
-                typeFound = true;
-                tv_used.setText(goalModel.getUsed() + " W");
-                tv_percent.setText(goalModel.getPercent() + "%");
-                progressBar.setProgress(goalModel.getPercent());
-                if (goalModel.getEstimation() == 0) {
-                    tv_prediction.setText("Goal will not achieve");
-                    tv_prediction.setTextColor(Color.RED);
-                } else {
-                    tv_prediction.setText("Goal will achieve");
-                    tv_prediction.setTextColor(Color.GREEN);
-                }
-                break;
-            }
-        }
-        if (!typeFound)
-            Toast.makeText(getContext(), "Goal does not exist", Toast.LENGTH_SHORT).show();
     }
 }
