@@ -36,20 +36,17 @@ public class ChartDayFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // fixed line chart for now
-        int[] xAxis_value =new int[HomeFragment.dataModels.size()];
-        int[] yAxis_value = new int[HomeFragment.dataModels.size()];
+        int[] xAxis_value =new int[12];
+        int[] yAxis_value = {10,15,12,18,14,16,20,18,14,16,20,22};
 
 
-        for (int i=0;i<HomeFragment.dataModels.size();i++){
+        for (int i=0;i<xAxis_value.length;i++){
             xAxis_value[i]=i;
-            yAxis_value[i]=HomeFragment.dataModels.get(i).getValue();
         }
 
         lineChart = view.findViewById(R.id.FDay_chart);
         lineChart.setData(DataCharts.drawLineChart(getContext(), xAxis_value, yAxis_value));
-        MainActivity.isFirstTime.observe(getViewLifecycleOwner(), aBoolean -> {
-            lineChart.setData(DataCharts.drawLineChart(getContext(), xAxis_value, yAxis_value));
-        });
+        MainActivity.isFirstTime.observe(getViewLifecycleOwner(), aBoolean -> lineChart.setData(DataCharts.drawLineChart(getContext(), xAxis_value, yAxis_value)));
         setupLineChart();
     }
 
@@ -66,13 +63,11 @@ public class ChartDayFragment extends Fragment {
         lineChart.zoomOut();
         lineChart.setTouchEnabled(true);
         lineChart.setPinchZoom(true);
-        lineChart.setVisibleXRangeMaximum(6);
+        lineChart.setVisibleXRangeMaximum(7);
 
         // x axis edit
-        String[] xValues = new String[HomeFragment.dataModels.size()];
-        for (int i=0;i<HomeFragment.dataModels.size();i++){
-            xValues[i]=HomeFragment.dataModels.get(i).getTime();
-        }
+        String[] xValues = {"12 AM","2 AM","4 AM","6 AM","8 AM","10 AM"
+                ,"12 PM","2 PM","4 PM","6 PM","8 PM","10 PM"};
 
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setTextColor(MainActivity.colorPrimaryVariant);

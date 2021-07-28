@@ -7,13 +7,16 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.transition.AutoTransition;
+import android.transition.Fade;
+import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,36 +32,32 @@ import androidx.navigation.Navigation;
 
 import com.example.musev1.MainActivity;
 import com.example.musev1.R;
-import com.example.musev1.model.GoalModel;
-import com.example.musev1.model.InsightDataModel;
 import com.example.musev1.utility.SaveState;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
-import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Objects;
-
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 
 public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickListener {
+    // charts
     private ChipNavigationBar chipNavigationBar;
     private NavController navControllerChart;
     private ImageView iv_custom, iv_arrow;
 
-    private int day, month, year, homeId, unitOfData, chipAggregation;
+    // date
+    private int day, month, year;
     private DatePickerDialog datePickerDialog;
 
+    // expanded card view
     private ConstraintLayout constLayout_expand;
     private CardView cv_insight;
 
+    // spinner
     private Spinner spinnerUnit, spinnerAgg;
-    private TextView tv_current, tv_average, tv_per, tv_consumedV, tv_estimation, tv_used, tv_prediction, tv_percent;
-    private ProgressBar progressBar;
-
-    private boolean notViewed = true;
-    public static ArrayList<InsightDataModel> dataModels = new ArrayList<>();
-    public ArrayList<GoalModel> goalModels = new ArrayList<>();
+    private TextView tv_per, tv_currentV, tv_avgV, tv_consV, tv_estV;
+    private boolean realtimeSwitch;
+    private int unitPos;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -74,9 +73,18 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        navControllerChart = Navigation.findNavController(requireActivity(), R.id.FHome_fragment);
-        navControllerChart.navigate(R.id.chartDayFragment);
+
+        //hide action bar
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).hide();
+
+        // init main graph
+        navControllerChart = Navigation.findNavController(requireActivity(), R.id.FHome_fragment);
+
+        //StatusBar color
+        if (SaveState.getDarkModeState())
+            MainActivity.setupBackgroundStatusBar(getResources().getColor(R.color.nice_black, null));
+        else
+            MainActivity.setupLightStatusBar(getResources().getColor(R.color.white_muse, null));
     }
 
     @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
@@ -84,13 +92,6 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //StatusBar color
-        if (SaveState.getDarkModeState())
-            MainActivity.setupBackgroundStatusBar(getResources().getColor(R.color.nice_black, null));
-        else
-            MainActivity.setupLightStatusBar(getResources().getColor(R.color.white_muse, null));
-
-        /*
         //iv_custom
         Calendar calendar = Calendar.getInstance();
         day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -101,33 +102,42 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
 
         // insight inflation
         spinnerUnit = view.findViewById(R.id.home_spinner_unit);
-        tv_current = view.findViewById(R.id.home_tv_currentV);
-        tv_average = view.findViewById(R.id.home_tv_averageV);
-        tv_consumedV = view.findViewById(R.id.home_tv_consumedV);
-        tv_estimation = view.findViewById(R.id.home_tv_estV);
-
         // goal inflation
         spinnerAgg = view.findViewById(R.id.home_spinner_aggregation);
-        tv_used = view.findViewById(R.id.home_tv_goalUsed);
-        tv_prediction = view.findViewById(R.id.home_tv_predictionV);
-        tv_percent = view.findViewById(R.id.home_tv_percent);
-        progressBar = view.findViewById(R.id.home_pb);
 
         // chip inflation
         chipNavigationBar = view.findViewById(R.id.FHome_chipNav);
         tv_per = view.findViewById(R.id.home_tv_per);
-
-        //default info
-        getHouseInfo();
+        tv_currentV = view.findViewById(R.id.home_tv_currentV);
+        tv_avgV = view.findViewById(R.id.home_tv_averageV);
+        tv_consV = view.findViewById(R.id.home_tv_consumedV);
+        tv_estV = view.findViewById(R.id.home_tv_estV);
 
         //display insight info depend on unit spinner
         spinnerUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                unitOfData = position;
-                MainActivity.displayLoadingDialog();
-                getInsightReq(chipAggregation, unitOfData);
+                unitPos = position;
+                if (position == 0) {
+                    tv_avgV.setText("80 W");
+                    tv_consV.setText("120 W");
+                    tv_estV.setText("250 W");
+
+                    if(realtimeSwitch)
+                        tv_currentV.setText("30 W");
+                    else
+                        tv_currentV.setText("45 W");
+                } else {
+                    tv_avgV.setText("40 EGP");
+                    tv_consV.setText("60 EGP");
+                    tv_estV.setText("120 EGP");
+
+                    if(!realtimeSwitch)
+                        tv_currentV.setText("15 EGP");
+                    else
+                        tv_currentV.setText("22 EGP");
+                }
             }
 
             @Override
@@ -141,7 +151,7 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
             @SuppressLint("SetTextI18n")
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                getGoalInfo(position);
+
             }
 
             @Override
@@ -151,57 +161,38 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
         });
 
         //chipNav
+        chipNavigationBar.setItemSelected(R.id.dayFragment, true);
         chipNavigationBar.setOnItemSelectedListener(i -> {
             switch (i) {
                 case R.id.dayFragment:
                     navControllerChart.popBackStack();
-                    navControllerChart.popBackStack();
                     navControllerChart.navigate(R.id.chartDayFragment);
-
                     tv_per.setText("Per day");
-                    chipAggregation = 1;
-                    MainActivity.displayLoadingDialog();
-                    getInsightReq(1, unitOfData);
                     return;
 
                 case R.id.weekFragment:
                     navControllerChart.popBackStack();
-                    navControllerChart.popBackStack();
                     navControllerChart.navigate(R.id.chartWeekFragment);
-
                     tv_per.setText("Per week");
-                    chipAggregation = 2;
-                    MainActivity.displayLoadingDialog();
-                    getInsightReq(2, unitOfData);
                     return;
 
                 case R.id.monthFragment:
                     navControllerChart.popBackStack();
-                    navControllerChart.popBackStack();
                     navControllerChart.navigate(R.id.chartMonthFragment);
-
                     tv_per.setText("Per month");
-                    chipAggregation = 3;
-                    MainActivity.displayLoadingDialog();
-                    getInsightReq(3, unitOfData);
                     return;
 
                 case R.id.yearFragment:
                     navControllerChart.popBackStack();
-                    navControllerChart.popBackStack();
                     navControllerChart.navigate(R.id.chartYearFragment);
-
                     tv_per.setText("Per year");
-                    chipAggregation = 4;
-                    MainActivity.displayLoadingDialog();
-                    getInsightReq(4, unitOfData);
             }
         });
 
         // arrow info
-        constLayout_expand=view.findViewById(R.id.constLayoutExpanded);
+        cv_insight = view.findViewById(R.id.home_cv_insight);
+        constLayout_expand = view.findViewById(R.id.constLayoutExpanded);
         iv_arrow=view.findViewById(R.id.home_iv_arrow);
-        cv_insight=view.findViewById(R.id.home_cv_insight);
         iv_arrow.setOnClickListener(v -> {
             if (constLayout_expand.getVisibility() == View.GONE) {
                 TransitionManager.beginDelayedTransition(cv_insight, new AutoTransition());
@@ -216,16 +207,6 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
 
         //refresh realtime
         updateRealtime();
-
-        //back pressed
-        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(),
-                new OnBackPressedCallback(true) {
-                    @Override
-                    public void handleOnBackPressed() {
-                        requireActivity().finishAffinity();
-                    }
-                });
-        */
     }
 
     public void showPopup(View v) {
@@ -284,100 +265,27 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
         datePickerDialog.getButton(DatePickerDialog.BUTTON_NEGATIVE).setBackground(null);
     }
 
-    //get house device info
-    //1st info step
     @SuppressLint("SetTextI18n")
-    public void getHouseInfo() {
-        MainActivity.displayLoadingDialog();
-        MainActivity.museViewModel.getHouse()
-                .subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(result -> {
-                            goalModels = result.getGoals();
-
-                            homeId = result.getId();
-                            getGoalInfo(0);
-                            getInsightReq(0, 0);
-                        },
-                        error -> {
-                            Toast.makeText(getContext(), "House Error! " + error.getMessage(), Toast.LENGTH_LONG).show();
-                            MainActivity.progressDialog.dismiss();
-                        });
-    }
-
-    //2ed info step
-    @SuppressLint("SetTextI18n")
-    public void getInsightReq(int aggregation, int unit) {
-        MainActivity.museViewModel.getInsightRequest(homeId, aggregation, unit)
-                .subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(result1 -> {
-                            //array of data chart
-                            dataModels.clear();
-                            dataModels = result1.getData();
-
-                            tv_average.setText(result1.getAverageUsage()+" W");
-                            tv_consumedV.setText(result1.getUsage()+" W");
-                            tv_estimation.setText(result1.getEstimatedUsage()+"W");
-
-                            if (chipNavigationBar.getSelectedItemId() == -1) {
-                                chipNavigationBar.setItemSelected(R.id.dayFragment, true);
-                                MainActivity.isFirstTime.setValue(true);
-                            }
-
-                            getCurrentUsage(String.valueOf(unit));
-                        },
-                        error -> {
-                            Toast.makeText(getContext(), "Insight Error! " + error.getMessage(), Toast.LENGTH_LONG).show();
-                            MainActivity.progressDialog.dismiss();
-                        });
-    }
-
-    //3th info step
-    @SuppressLint("SetTextI18n")
-    public void getCurrentUsage(String unit) {
-        MainActivity.museViewModel.getCurrentUsageRequest(homeId, unit)
-                .subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(result2 -> {
-                    tv_current.setText(result2.string() + " W");
-                    if (MainActivity.progressDialog.isShowing())
-                        MainActivity.progressDialog.dismiss();
-                }, error -> {
-                    Toast.makeText(getContext(), "Realtime Error! " + error.getMessage(), Toast.LENGTH_LONG).show();
-                    if (MainActivity.progressDialog.isShowing())
-                        MainActivity.progressDialog.dismiss();
-                });
-    }
-
-    @SuppressLint("SetTextI18n")
-    public void getGoalInfo(int aggregation) {
-        for (GoalModel model : goalModels) {
-            if (model.getType() == aggregation) {
-                tv_used.setText(model.getUsed()+" W");
-                tv_percent.setText(model.getPercent()+"%");
-                progressBar.setProgress(model.getPercent());
-                if (model.getEstimation() == 0) {
-                    tv_prediction.setText("Goal will not achieve");
-                    tv_prediction.setTextColor(Color.RED);
-                }
-                else {
-                    tv_prediction.setText("Goal will achieve");
-                    tv_prediction.setTextColor(Color.GREEN);
-                }
-                break;
-            }
+    public void updateRealtime() {
+        if (realtimeSwitch) {
+            realtimeSwitch = false;
+            if (unitPos == 0)
+                tv_currentV.setText("30 W");
+            else
+                tv_currentV.setText("15 EGP");
+        } else {
+            realtimeSwitch = true;
+            if (unitPos == 0)
+                tv_currentV.setText("45 W");
+            else
+                tv_currentV.setText("22 EGP");
         }
-    }
-
-    public void updateRealtime(){
-        getCurrentUsage(String.valueOf(unitOfData));
-        if(isAdded())
-            Toast.makeText(requireContext(), "Realtime refreshed", Toast.LENGTH_SHORT).show();
         refresh();
+        if (isAdded())
+            Toast.makeText(requireContext(), "Realtime refreshed", Toast.LENGTH_SHORT).show();
     }
 
     public void refresh(){
-        new Handler().postDelayed(this::updateRealtime,15000);
+        new Handler().postDelayed(this::updateRealtime, 10000);
     }
 }

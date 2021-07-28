@@ -235,4 +235,10 @@
     <string name="txt_max_usage">Max usage</string>
     <string name="txt_loading">Loading…</string>
     <string name="txt_tv_is_set_to_turn_off_at_12_00_everyday">TV is set to turn off at 12:00 Everyday</string>
+    <string name="txt_30_w">30 W</string>
+    <string name="txt_80_w">80 W</string>
+    <string name="txt_120_w">120 W</string>
+    <string name="txt_45_w">45 W</string>
+    <string name="txt_160_w">160 W</string>
+    <string name="txt_250_w">250 W</string>
 </resources>

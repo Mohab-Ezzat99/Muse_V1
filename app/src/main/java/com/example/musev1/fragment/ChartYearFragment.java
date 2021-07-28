@@ -35,12 +35,11 @@ public class ChartYearFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // fixed line chart for now
-        int[] xAxis_value =new int[HomeFragment.dataModels.size()];
-        int[] yAxis_value = new int[HomeFragment.dataModels.size()];
+        int[] xAxis_value =new int[7];
+        int[] yAxis_value ={18300,16180,19000,15800,18900,20300,21250};
 
-        for (int i=0;i<HomeFragment.dataModels.size();i++){
+        for (int i=0;i<xAxis_value.length;i++){
             xAxis_value[i]=i;
-            yAxis_value[i]=HomeFragment.dataModels.get(i).getValue();
         }
 
         barChart=view.findViewById(R.id.FYear_chart);
@@ -58,6 +57,7 @@ public class ChartYearFragment extends Fragment {
         barChart.animateY(1000);
         barChart.setDescription(null);
         barChart.getLegend().setEnabled(false);
+        barChart.setVisibleXRangeMaximum(7);
 
         // x axis edit
         String[] values = new String[]{"2014", "2015", "2016", "2017", "2018", "2019", "2020"};
@@ -72,6 +72,7 @@ public class ChartYearFragment extends Fragment {
         yAxis.setTextColor(MainActivity.colorPrimaryVariant);
         yAxis.setAxisMinimum(0f);
         yAxis.setLabelCount(6, true);
+        yAxis.setAxisMaximum(yAxis.getAxisMaximum()+100);
         yAxis.setDrawLimitLinesBehindData(true);
         yAxis.setDrawGridLines(false);
         yAxis.setValueFormatter(new DataCharts.AxisFormat());

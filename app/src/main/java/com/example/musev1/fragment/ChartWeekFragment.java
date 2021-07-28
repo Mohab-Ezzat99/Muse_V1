@@ -36,12 +36,11 @@ public class ChartWeekFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // fixed line chart for now
-        int[] xAxis_value =new int[HomeFragment.dataModels.size()];
-        int[] yAxis_value = new int[HomeFragment.dataModels.size()];
+        int[] xAxis_value =new int[7];
+        int[] yAxis_value ={100,118,104,120,125,114,105};
 
-        for (int i=0;i<HomeFragment.dataModels.size();i++){
+        for (int i=0;i<xAxis_value.length;i++){
             xAxis_value[i]=i;
-            yAxis_value[i]=HomeFragment.dataModels.get(i).getValue();
         }
 
         barChart = view.findViewById(R.id.FWeak_chart);
@@ -59,9 +58,10 @@ public class ChartWeekFragment extends Fragment {
         barChart.animateY(1000);
         barChart.setDescription(null);
         barChart.getLegend().setEnabled(false);
+        barChart.setVisibleXRangeMaximum(7);
 
         // x axis edit
-        String[] values = new String[]{"Fri", "Sat", "Sun", "Mon", "Tue", "Wed", "Thu"};
+        String[] values = new String[]{"Sat", "Sun", "Mon", "Tue", "Wed", "Thu","Fri"};
         XAxis xAxis = barChart.getXAxis();
         xAxis.setTextColor(MainActivity.colorPrimaryVariant);
         xAxis.setValueFormatter(new IndexAxisValueFormatter(values));
@@ -73,6 +73,7 @@ public class ChartWeekFragment extends Fragment {
         yAxis.setTextColor(MainActivity.colorPrimaryVariant);
         yAxis.setAxisMinimum(0f);
         yAxis.setLabelCount(6, true);
+        yAxis.setAxisMaximum(yAxis.getAxisMaximum()+10);
         yAxis.setDrawLimitLinesBehindData(true);
         yAxis.setDrawGridLines(false);
         yAxis.setValueFormatter(new DataCharts.AxisFormat());

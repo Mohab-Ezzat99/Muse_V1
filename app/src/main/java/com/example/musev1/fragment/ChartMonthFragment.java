@@ -36,12 +36,11 @@ public class ChartMonthFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // fixed line chart for now
-        int[] xAxis_value =new int[HomeFragment.dataModels.size()];
-        int[] yAxis_value = new int[HomeFragment.dataModels.size()];
+        int[] xAxis_value =new int[12];
+        int[] yAxis_value ={12000,11080,10400,14000,12500,13000,11270,14200,11700,13800,12400,14580};
 
-        for (int i=0;i<HomeFragment.dataModels.size();i++){
+        for (int i=0;i<xAxis_value.length;i++){
             xAxis_value[i]=i;
-            yAxis_value[i]=HomeFragment.dataModels.get(i).getValue();
         }
 
         barChart = view.findViewById(R.id.FMonth_chart);
@@ -59,9 +58,10 @@ public class ChartMonthFragment extends Fragment {
         barChart.animateY(1000);
         barChart.setDescription(null);
         barChart.getLegend().setEnabled(false);
+        barChart.setVisibleXRangeMaximum(7);
 
         // x axis edit
-        String[] values = new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul"};
+        String[] values = new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul","Aug", "Sep", "Oct", "Nov", "Dec"};
         XAxis xAxis = barChart.getXAxis();
         xAxis.setTextColor(MainActivity.colorPrimaryVariant);
         xAxis.setValueFormatter(new IndexAxisValueFormatter(values));
@@ -73,6 +73,7 @@ public class ChartMonthFragment extends Fragment {
         yAxis.setTextColor(MainActivity.colorPrimaryVariant);
         yAxis.setAxisMinimum(0f);
         yAxis.setLabelCount(6, true);
+        yAxis.setAxisMaximum(yAxis.getAxisMaximum()+50);
         yAxis.setDrawLimitLinesBehindData(true);
         yAxis.setDrawGridLines(false);
         yAxis.setValueFormatter(new DataCharts.AxisFormat());

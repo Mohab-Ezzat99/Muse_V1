@@ -33,9 +33,6 @@ public class MainFragment extends Fragment {
 
     private BottomNavigationView bottomNavigationView;
     private NavController navControllerMain;
-    private static NotificationManager notificationManager;
-    private static final String CHANNEL_ID = "first_channel";
-
 
     public MainFragment() {
         // Required empty public constructor
@@ -84,32 +81,5 @@ public class MainFragment extends Fragment {
             else
                 bottomNavigationView.removeBadge(R.id.alertsFragment);
         });
-    }
-
-    public static void displayNotification(Context context, int notificationId, int current) {
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
-            NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID,
-                    "Muse channel", NotificationManager.IMPORTANCE_DEFAULT);
-            notificationChannel.setDescription("Test notification channel");
-            notificationManager.createNotificationChannel(notificationChannel);
-        }
-
-        PendingIntent pi = new NavDeepLinkBuilder(context)
-                .setComponentName(MainActivity.class)
-                .setGraph(R.navigation.nav_bottom)
-                .setDestination(current)
-                .createPendingIntent();
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID);
-        builder.setSmallIcon(R.mipmap.ic_launcher_round)
-                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_water_dispenser))
-                .setContentTitle("temp")
-                .setContentText("Mohab ezzat shosha")
-                .setContentIntent(pi)
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setContentText("My data");
-
-        NotificationManagerCompat nmc = NotificationManagerCompat.from(context);
-        nmc.notify(notificationId, builder.build());
     }
 }
