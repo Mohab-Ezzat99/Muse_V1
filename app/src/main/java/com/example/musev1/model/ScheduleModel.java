@@ -10,15 +10,16 @@ public class ScheduleModel {
     private int deviceId;
     private String deviceName;
     private int pictureId;
-    private String description;
-    private int newState;
+    private String state;
     private String atTime;
-    private int afterPeriod;
+    private String afterPeriod;
     private String repeat;
 
-    public ScheduleModel(int deviceId, int newState, String atTime, int afterPeriod, String repeat) {
+    public ScheduleModel(int deviceId,String deviceName,int pictureId, String state, String atTime, String afterPeriod, String repeat) {
         this.deviceId = deviceId;
-        this.newState = newState;
+        this.deviceName = deviceName;
+        this.pictureId = pictureId;
+        this.state = state;
         this.atTime = atTime;
         this.afterPeriod = afterPeriod;
         this.repeat = repeat;
@@ -56,20 +57,12 @@ public class ScheduleModel {
         this.pictureId = pictureId;
     }
 
-    public String getDescription() {
-        return description;
+    public String getState() {
+        return state;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public int getNewState() {
-        return newState;
-    }
-
-    public void setNewState(int newState) {
-        this.newState = newState;
+    public void setNewState(String state) {
+        this.state = state;
     }
 
     public String getAtTime() {
@@ -80,11 +73,11 @@ public class ScheduleModel {
         this.atTime = atTime;
     }
 
-    public int getAfterPeriod() {
+    public String getAfterPeriod() {
         return afterPeriod;
     }
 
-    public void setAfterPeriod(int afterPeriod) {
+    public void setAfterPeriod(String afterPeriod) {
         this.afterPeriod = afterPeriod;
     }
 

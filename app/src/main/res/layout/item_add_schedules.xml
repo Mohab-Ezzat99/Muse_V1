@@ -20,7 +20,6 @@
             android:layout_marginVertical="@dimen/_8sdp"
             android:contentDescription="@string/txt_null"
             android:src="@drawable/ic_tv"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias=".05"
             app:layout_constraintStart_toStartOf="parent"
@@ -32,31 +31,92 @@
             android:id="@+id/itemAS_iv_patch"
             android:layout_width="@dimen/_24sdp"
             android:layout_height="@dimen/_24sdp"
-            android:layout_marginVertical="@dimen/_8sdp"
             android:contentDescription="@string/txt_null"
             android:src="@drawable/ic_schedules"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/itemAS_iv_icon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias=".95"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/itemAS_iv_icon"
             app:layout_constraintVertical_bias=".05"
             app:tint="?attr/colorOnSecondary" />
 
         <TextView
-            android:id="@+id/itemAS_tv_dec"
+            android:id="@+id/itemAS_tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:textColor="?attr/colorPrimaryVariant"
+            android:textSize="@dimen/_14sdp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/itemAS_iv_icon"
+            app:layout_constraintTop_toTopOf="@+id/itemAS_iv_icon" />
+
+        <TextView
+            android:id="@+id/itemAS_tv_turn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/_8sdp"
-            android:text="@string/txt_tv_is_set_to_turn_off_at_12_00_everyday"
-            android:textColor="?attr/colorPrimaryVariant"
-            android:textSize="@dimen/_14sdp"
-            app:layout_constraintEnd_toEndOf="@+id/itemAS_iv_patch"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0"
+            android:text="@string/txt_turn"
+            android:textColor="?attr/colorOnSecondary"
+            android:textSize="@dimen/_12ssp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/itemAS_iv_icon"
-            app:layout_constraintTop_toBottomOf="@id/itemAS_iv_icon"
-            app:layout_constraintVertical_bias="0" />
+            app:layout_constraintTop_toBottomOf="@+id/itemAS_iv_icon" />
+
+        <TextView
+            android:id="@+id/itemAS_tv_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/itemAS_tv_turn"
+            app:layout_constraintEnd_toEndOf="@+id/itemAS_iv_patch"
+            app:layout_constraintTop_toTopOf="@+id/itemAS_tv_turn" />
+
+        <TextView
+            android:id="@+id/itemAS_tv_later"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_8sdp"
+            android:textColor="?attr/colorOnSecondary"
+            android:textSize="@dimen/_12ssp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/itemAS_tv_turn"
+            app:layout_constraintTop_toBottomOf="@+id/itemAS_tv_turn" />
+
+        <TextView
+            android:id="@+id/itemAS_tv_period"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/itemAS_tv_later"
+            app:layout_constraintEnd_toEndOf="@+id/itemAS_tv_state"
+            app:layout_constraintTop_toTopOf="@+id/itemAS_tv_later" />
+
+        <TextView
+            android:id="@+id/itemAS_tv_repeat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_8sdp"
+            android:text="@string/txt_repeat"
+            android:textColor="?attr/colorOnSecondary"
+            android:textSize="@dimen/_12ssp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/itemAS_tv_later"
+            app:layout_constraintTop_toBottomOf="@+id/itemAS_tv_later" />
+
+        <TextView
+            android:id="@+id/itemAS_tv_days"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/itemAS_tv_repeat"
+            app:layout_constraintEnd_toEndOf="@+id/itemAS_tv_period"
+            app:layout_constraintTop_toTopOf="@+id/itemAS_tv_repeat" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/itemAS_repeatGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="itemAS_tv_repeat,itemAS_tv_days" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

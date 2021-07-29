@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -77,6 +78,19 @@ public class SchedulesFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         setupSwipe();
 
+        MainActivity.museViewModel.getAllSchedules().observe(getViewLifecycleOwner(), scheduleModels -> {
+            if (scheduleModels.size() != 0) {
+                // visibility
+                not_add.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+            } else {
+                // visibility
+                not_add.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
+            }
+            adapter.submitList(scheduleModels);
+        });
+
         MainActivity.museViewModel.getAllDevices().observe(getViewLifecycleOwner(), deviceModels -> {
             result_devices=deviceModels;
             strings = new String[deviceModels.size()];
@@ -134,23 +148,29 @@ public class SchedulesFragment extends Fragment {
         btn_submit.setOnClickListener(v1 -> {
             // add item to rv
             DeviceModel device = result_devices.get(spinner_device.getSelectedItemPosition());
-            ScheduleModel scheduleModel;
 
+            // days of weak
             List<ThemedButton> buttons_long = tg_long.getSelectedButtons();
             List<ThemedButton> buttons_small = tg_small.getSelectedButtons();
-            StringBuilder dayStringBuilder = new StringBuilder();
-            String days = "";
-            int after = -1;
 
+            // selected day step by step
+            StringBuilder dayStringBuilder = new StringBuilder();
+            //result of selected days
+            String days = "";
+
+            // 4 days
             if (buttons_long.size() > 0)
                 for (ThemedButton themedButton : buttons_long)
                     dayStringBuilder.append(",").append(themedButton.getText());
 
+            // 3 days
             if (buttons_small.size() > 0)
                 for (ThemedButton themedButton : buttons_small)
                     dayStringBuilder.append(",").append(themedButton.getText());
 
+            // days not null
             if (dayStringBuilder.length() > 0) {
+                // all days selected
                 if (dayStringBuilder.length() == 28)
                     days = "Everyday";
                 else {
@@ -161,33 +181,23 @@ public class SchedulesFragment extends Fragment {
 
             switch (radioGroup.getCheckedRadioButtonId()) {
                 case R.id.schedulesBotSheet_rb_at:
-                    scheduleModel = new ScheduleModel(device.getId(), spinner_state.getSelectedItemPosition()
-                            , spinner_at.getSelectedItem().toString(), 0, days);
+                    MainActivity.museViewModel.insertSchedule(new ScheduleModel(
+                            device.getId(),device.getName(),device.getIcon()
+                            , spinner_state.getSelectedItem().toString()
+                            , spinner_at.getSelectedItem().toString()
+                            , null, days));
                     break;
 
                 case R.id.schedulesBotSheet_rb_after:
-                    switch (spinner_state.getSelectedItemPosition()) {
-                        case 0:
-                            after = 30;
-                            break;
-
-                        case 1:
-                            after = 60;
-                            break;
-
-                        case 2:
-                            after = 180;
-                            break;
-
-                        case 3:
-                            after = 360;
-                    }
-                    scheduleModel = new ScheduleModel(device.getId(), spinner_state.getSelectedItemPosition()
-                            , null, after, days);
+                    MainActivity.museViewModel.insertSchedule(new ScheduleModel(
+                            device.getId(),device.getName(),device.getIcon()
+                            , spinner_state.getSelectedItem().toString(), null
+                            , spinner_after.getSelectedItem().toString(), days));
                     break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + radioGroup.getCheckedRadioButtonId());
             }
+            bottomSheetDialog.dismiss();
         });
 
         //launch bottom sheet
@@ -206,6 +216,7 @@ public class SchedulesFragment extends Fragment {
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 
                 ScheduleModel scheduleModel = adapter.getItemAt(viewHolder.getAdapterPosition());
+                MainActivity.museViewModel.deleteSchedule(scheduleModel);
 
             }
         };

@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.Group;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,7 +27,9 @@ public class RVAddSchedulesAdapter extends ListAdapter<ScheduleModel, RVAddSched
 
         @Override
         public boolean areContentsTheSame(@NonNull ScheduleModel oldItem, @NonNull ScheduleModel newItem) {
-            return oldItem.getDescription().equals(newItem.getDescription());
+            return oldItem.getDeviceName().equals(newItem.getDeviceName()) &&
+                    oldItem.getPictureId() == (newItem.getPictureId()) &&
+                    oldItem.getState().equals(newItem.getState());
         }
     };
 
@@ -46,48 +49,25 @@ public class RVAddSchedulesAdapter extends ListAdapter<ScheduleModel, RVAddSched
     @Override
     public void onBindViewHolder(@NonNull ASViewHolder holder, int position) {
         ScheduleModel schedule_model = getItem(position);
-        holder.tv_decs.setText(schedule_model.getDescription());
-        switch (schedule_model.getPictureId()) {
-            case 0:
-                holder.iv_icon.setImageResource(R.drawable.ic_home);
-                break;
+        holder.iv_icon.setImageResource(schedule_model.getPictureId());
+        holder.tv_name.setText(schedule_model.getDeviceName());
+        holder.tv_state.setText(schedule_model.getState());
+        holder.tv_days.setText(schedule_model.getRepeat());
 
-            case 1:
-                holder.iv_icon.setImageResource(R.drawable.ic_tv);
-                break;
-            case 2:
-                holder.iv_icon.setImageResource(R.drawable.ic_fridge);
-                break;
-            case 3:
-                holder.iv_icon.setImageResource(R.drawable.ic_air_conditioner);
-                break;
-            case 4:
-                holder.iv_icon.setImageResource(R.drawable.ic_pc);
-                break;
-            case 5:
-                holder.iv_icon.setImageResource(R.drawable.ic_clothes_dryer);
-                break;
-            case 6:
-                holder.iv_icon.setImageResource(R.drawable.ic_freezer);
-                break;
-            case 7:
-                holder.iv_icon.setImageResource(R.drawable.ic_coffee_maker);
-                break;
-            case 8:
-                holder.iv_icon.setImageResource(R.drawable.ic_dishwasher);
-                break;
-            case 9:
-                holder.iv_icon.setImageResource(R.drawable.ic_fan_heater);
-                break;
-            case 10:
-                holder.iv_icon.setImageResource(R.drawable.ic_toaster);
-                break;
-            case 11:
-                holder.iv_icon.setImageResource(R.drawable.ic_water_dispenser);
-                break;
-            case 12:
-                holder.iv_icon.setImageResource(R.drawable.ic_plug);
+        if (schedule_model.getAtTime() != null) {
+            holder.tv_later.setText("At");
+            holder.tv_period.setText(schedule_model.getAtTime());
         }
+
+        if (schedule_model.getAfterPeriod() != null) {
+            holder.tv_later.setText("After");
+            holder.tv_period.setText(schedule_model.getAfterPeriod());
+        }
+
+        if (schedule_model.getRepeat().equals(""))
+            holder.repeatGroup.setVisibility(View.GONE);
+        else
+            holder.tv_days.setText(schedule_model.getRepeat());
     }
 
     public ScheduleModel getItemAt(int position) {
@@ -96,13 +76,19 @@ public class RVAddSchedulesAdapter extends ListAdapter<ScheduleModel, RVAddSched
 
     static class ASViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView tv_decs;
+        private TextView tv_name, tv_state, tv_later, tv_period, tv_days;
         private ImageView iv_icon;
+        private Group repeatGroup;
 
         public ASViewHolder(@NonNull View itemView) {
             super(itemView);
             iv_icon = itemView.findViewById(R.id.itemAS_iv_icon);
-            tv_decs = itemView.findViewById(R.id.itemAS_tv_dec);
+            tv_name = itemView.findViewById(R.id.itemAS_tv_name);
+            tv_state = itemView.findViewById(R.id.itemAS_tv_state);
+            tv_later = itemView.findViewById(R.id.itemAS_tv_later);
+            tv_period = itemView.findViewById(R.id.itemAS_tv_period);
+            tv_days = itemView.findViewById(R.id.itemAS_tv_days);
+            repeatGroup = itemView.findViewById(R.id.itemAS_repeatGroup);
         }
     }
 }
