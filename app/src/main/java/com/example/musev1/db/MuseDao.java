@@ -6,13 +6,20 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
+
+import com.example.musev1.model.AlertModel;
+import com.example.musev1.model.CustomAlertModel;
 import com.example.musev1.model.DeviceModel;
+import com.example.musev1.model.GoalModel;
+import com.example.musev1.model.ScheduleModel;
+
 import java.util.List;
 
 @Dao
 public interface MuseDao {
+    //devices
     @Insert
-    void insertDevice(DeviceModel device);
+    long insertDevice(DeviceModel device);
 
     @Update
     void updateDevice(DeviceModel device);
@@ -23,27 +30,50 @@ public interface MuseDao {
     @Query("select * from devices_table")
     LiveData<List<DeviceModel>> getAllDevices();
 
-    @Query("select * from devices_table where isAdded=1")
-    LiveData<List<DeviceModel>> getDevicesAdded();
+    @Query("select * from devices_table where id=:deviceId")
+    LiveData<DeviceModel> getDevice(Long deviceId);
 
-    @Query("select * from devices_table where hasGoal=1")
-    LiveData<List<DeviceModel>> getDevicesGoals();
+    //____________________________________________________________________________________________//
+    //alerts
+    @Insert
+    void insertAlert(AlertModel alert);
 
-    @Query("select * from devices_table where hasAlert=1")
-    LiveData<List<DeviceModel>> getDevicesAlerts();
+    @Delete
+    void deleteAlert(AlertModel alert);
 
-    @Query("select * from devices_table where hasSchedules=1")
-    LiveData<List<DeviceModel>> getDevicesSchedules();
+    @Query("select * from alerts_table")
+    LiveData<List<AlertModel>> getAllAlerts();
 
-    @Query("select * from devices_table where hasCustomAlert=1")
-    LiveData<List<DeviceModel>> getDevicesCustomAlerts();
+    //____________________________________________________________________________________________//
+    //custom alerts
+    @Insert
+    void insertCustomAlert(CustomAlertModel customAlert);
 
-    @Query("select * from devices_table where isAdded=1 and hasGoal=0")
-    LiveData<List<DeviceModel>> getDevicesWithoutGoal();
+    @Delete
+    void deleteCustomAlert(CustomAlertModel customAlert);
 
-    @Query("select * from devices_table where isAdded=1 and hasSchedules=0")
-    LiveData<List<DeviceModel>> getDevicesWithoutSchedule();
+    @Query("select * from customAlerts_table")
+    LiveData<List<CustomAlertModel>> getAllCustomAlerts();
 
-    @Query("select * from devices_table where isAdded=1 and hasCustomAlert=0")
-    LiveData<List<DeviceModel>> getDevicesWithoutCustomAlert();
+    //____________________________________________________________________________________________//
+    //goals
+    @Insert
+    void insertGoal(GoalModel goal);
+
+    @Delete
+    void deleteGoal(GoalModel goal);
+
+    @Query("select * from goals_table")
+    LiveData<List<GoalModel>> getAllGoals();
+
+    //____________________________________________________________________________________________//
+    //schedule
+    @Insert
+    void insertSchedule(ScheduleModel schedule);
+
+    @Delete
+    void deleteSchedule(ScheduleModel schedule);
+
+    @Query("select * from schedules_table")
+    LiveData<List<ScheduleModel>> getAllSchedules();
 }

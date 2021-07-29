@@ -24,6 +24,7 @@ import com.example.musev1.MainActivity;
 import com.example.musev1.R;
 import com.example.musev1.adapters.RVAddCustomAlertAdapter;
 import com.example.musev1.model.AlertModel;
+import com.example.musev1.model.CustomAlertModel;
 import com.example.musev1.model.DeviceRequestModel;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -124,7 +125,7 @@ public class CustomAlertsFragment extends Fragment {
         btn_submit.setOnClickListener(v1 -> {
             // add item to rv
             DeviceRequestModel device = result_devices.get(spinner_device.getSelectedItemPosition());
-            AlertModel alertModel;
+            CustomAlertModel alertModel;
 
             int after = -1;
             int maxUsage=-1;
@@ -144,7 +145,7 @@ public class CustomAlertsFragment extends Fragment {
 
             switch (radioGroup.getCheckedRadioButtonId()) {
                 case R.id.customAlertBotSheet_rb_at:
-                    alertModel = new AlertModel(device.getId(), spinner_state.getSelectedItemPosition()
+                    alertModel = new CustomAlertModel(device.getId(), spinner_state.getSelectedItemPosition()
                             , spinner_at.getSelectedItem().toString(), null, maxUsage);
                     break;
 
@@ -165,28 +166,28 @@ public class CustomAlertsFragment extends Fragment {
                         case 3:
                             after = 360;
                     }
-                    alertModel = new AlertModel(device.getId(), spinner_state.getSelectedItemPosition()
+                    alertModel = new CustomAlertModel(device.getId(), spinner_state.getSelectedItemPosition()
                             , null, after+"", maxUsage);
                     break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + radioGroup.getCheckedRadioButtonId());
             }
 
-            MainActivity.museViewModel.addCustomAlert(alertModel).enqueue(new Callback<AlertModel>() {
-                @Override
-                public void onResponse(@NotNull Call<AlertModel> call, @NotNull Response<AlertModel> response) {
-                    if (response.isSuccessful()) {
-                        Toast.makeText(getContext(), "Added successfully", Toast.LENGTH_SHORT).show();
-                        getAllCustomAlertsReq();
-                        bottomSheetDialog.dismiss();
-                    } else Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
-                }
-
-                @Override
-                public void onFailure(@NotNull Call<AlertModel> call, @NotNull Throwable t) {
-                    Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
+//            MainActivity.museViewModel.addCustomAlert(alertModel).enqueue(new Callback<AlertModel>() {
+//                @Override
+//                public void onResponse(@NotNull Call<AlertModel> call, @NotNull Response<AlertModel> response) {
+//                    if (response.isSuccessful()) {
+//                        Toast.makeText(getContext(), "Added successfully", Toast.LENGTH_SHORT).show();
+//                        getAllCustomAlertsReq();
+//                        bottomSheetDialog.dismiss();
+//                    } else Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+//                }
+//
+//                @Override
+//                public void onFailure(@NotNull Call<AlertModel> call, @NotNull Throwable t) {
+//                    Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+//                }
+//            });
         });
 
         //launch bottom sheet

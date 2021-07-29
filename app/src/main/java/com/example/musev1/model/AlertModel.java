@@ -1,22 +1,23 @@
 package com.example.musev1.model;
 
-public class AlertModel {
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+@Entity(tableName = "alerts_table")
+public class AlertModel {
+    @PrimaryKey(autoGenerate = true)
     private int id;
-    private int deviceId;
+    private Long deviceId;
+    private String deviceName;
     private int pictureId;
     private String description;
-    private int state;
-    private String atTime;
-    private String forPeriod;
-    private int maxUsage;
 
-    public AlertModel(int deviceId, int state, String atTime, String forPeriod, int maxUsage) {
+
+    public AlertModel(Long deviceId, String deviceName, int pictureId, String description) {
         this.deviceId = deviceId;
-        this.state = state;
-        this.atTime = atTime;
-        this.forPeriod = forPeriod;
-        this.maxUsage = maxUsage;
+        this.deviceName = deviceName;
+        this.pictureId = pictureId;
+        this.description = description;
     }
 
     public int getId() {
@@ -27,12 +28,20 @@ public class AlertModel {
         this.id = id;
     }
 
-    public int getDeviceId() {
+    public Long getDeviceId() {
         return deviceId;
     }
 
-    public void setDeviceId(int deviceId) {
+    public void setDeviceId(Long deviceId) {
         this.deviceId = deviceId;
+    }
+
+    public String getDeviceName() {
+        return deviceName;
+    }
+
+    public void setDeviceName(String deviceName) {
+        this.deviceName = deviceName;
     }
 
     public int getPictureId() {
@@ -49,37 +58,5 @@ public class AlertModel {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public int getState() {
-        return state;
-    }
-
-    public void setState(int state) {
-        this.state = state;
-    }
-
-    public String getAtTime() {
-        return atTime;
-    }
-
-    public void setAtTime(String atTime) {
-        this.atTime = atTime;
-    }
-
-    public String getForPeriod() {
-        return forPeriod;
-    }
-
-    public void setForPeriod(String forPeriod) {
-        this.forPeriod = forPeriod;
-    }
-
-    public int getMaxUsage() {
-        return maxUsage;
-    }
-
-    public void setMaxUsage(int maxUsage) {
-        this.maxUsage = maxUsage;
     }
 }

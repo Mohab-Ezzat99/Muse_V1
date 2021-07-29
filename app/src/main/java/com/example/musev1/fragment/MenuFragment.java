@@ -61,7 +61,6 @@ public class MenuFragment extends Fragment {
         adapter.addItem(new NavMenuModel(R.drawable.ic_custom_alert, "Custom alerts"));
         adapter.addItem(new NavMenuModel(R.drawable.ic_notification, "Notifications"));
         adapter.addItem(new NavMenuModel(R.drawable.ic_moon, "Dark mode"));
-        adapter.addItem(new NavMenuModel(R.drawable.ic_ai, "AI plan"));
         adapter.addItem(new NavMenuModel(R.drawable.ic_contactus, "Contact us"));
         adapter.addItem(new NavMenuModel(R.drawable.ic_logout, "Logout"));
         recyclerView.setAdapter(adapter);
@@ -82,14 +81,14 @@ public class MenuFragment extends Fragment {
                         navController_main.navigate(R.id.action_menuFragment_to_customAlertsFragment);
                         break;
                     //Contact us
-                    case 5:
+                    case 4:
                         Uri callUri = Uri.parse("tel:01205186367");
                         Intent callIntent = new Intent(Intent.ACTION_DIAL, callUri);
                         startActivity(callIntent);
                         break;
                     //Logout
-                    case 6:
-                        SaveState.setToken(null);
+                    case 5:
+                        MainActivity.mAuth.signOut();
                         navController_start.popBackStack();
                         navController_start.navigate(R.id.loginFragment);
                         break;

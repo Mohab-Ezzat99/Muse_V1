@@ -17,7 +17,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -30,29 +29,11 @@ import com.example.musev1.adapters.RVAddDeviceAdapter;
 import com.example.musev1.adapters.RVDeviceBotAdapter;
 import com.example.musev1.model.AlertModel;
 import com.example.musev1.model.DeviceModel;
-import com.example.musev1.model.DeviceRequestModel;
-import com.example.musev1.model.DeviceResponseModel;
-import com.example.musev1.network.ApiService;
-import com.example.musev1.network.RetrofitBuilder;
 import com.example.musev1.utility.SaveState;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.textfield.TextInputEditText;
 
-import org.jetbrains.annotations.NotNull;
-import org.json.JSONObject;
-
-import java.util.List;
 import java.util.Objects;
-
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.schedulers.Schedulers;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-import static com.example.musev1.fragment.OnThirdFragment.MQTT_SERVER;
 
 public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClickListener {
 
@@ -104,7 +85,7 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
         fab_add = view.findViewById(R.id.FDevices_fab_add);
         fab_add.setOnClickListener(v -> displayPlug());
 
-        MainActivity.museViewModel.getDevicesAdded().observe(getViewLifecycleOwner(), deviceModels -> {
+        MainActivity.museViewModel.getAllDevices().observe(getViewLifecycleOwner(), deviceModels -> {
             if (deviceModels.size() != 0) {
                 // visibility
                 not_add.setVisibility(View.GONE);
@@ -232,8 +213,9 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
             public void OnBottomSheetItemClick(DeviceModel device, int position) {
                 //init device
                 SaveState.setNewAlert((SaveState.getLastAlerts()) + 1);
-                device.setAdded(true);
-                MainActivity.museViewModel.insertDevice(device);
+                Long deviceId=MainActivity.museViewModel.insertDevice(device);
+                MainActivity.museViewModel.insertAlert(new AlertModel(deviceId, device.getName()
+                        , device.getIcon(), "Added successfully"));
                 bottomSheetDialog.dismiss();
             }
 

@@ -5,10 +5,10 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import com.example.musev1.model.AlertModel;
 import com.example.musev1.model.AuthModel;
+import com.example.musev1.model.CustomAlertModel;
 import com.example.musev1.model.DeviceModel;
 import com.example.musev1.model.DeviceRequestModel;
 import com.example.musev1.model.DeviceResponseModel;
@@ -17,7 +17,6 @@ import com.example.musev1.model.InsightModel;
 import com.example.musev1.model.LoginResponseModel;
 import com.example.musev1.model.ScheduleModel;
 import com.example.musev1.repository.Repository;
-import com.example.musev1.utility.SaveState;
 
 import java.util.List;
 
@@ -163,18 +162,19 @@ public class MuseViewModel extends AndroidViewModel {
         return repository.getSchedulesById(deviceId);
     }
 
-    public Call<ResponseBody> deleteScheduleById(int scheduleId){
+    public Call<ResponseBody> deleteScheduleById(int scheduleId) {
         return repository.deleteScheduleById(scheduleId);
     }
 
     //===========================================================================================//
     //Room
 
-    public void insertDevice(DeviceModel device){
-        repository.insertDevice(device);
+    //devices
+    public Long insertDevice(DeviceModel device) {
+        return repository.insertDevice(device);
     }
 
-    public void updateDevice(DeviceModel device){
+    public void updateDevice(DeviceModel device) {
         repository.updateDevice(device);
     }
 
@@ -186,35 +186,67 @@ public class MuseViewModel extends AndroidViewModel {
         return repository.getAllDevices();
     }
 
-    public LiveData<List<DeviceModel>> getDevicesAdded() {
-        return repository.getDevicesAdded();
+    public LiveData<DeviceModel> getDevice(Long deviceId) {
+        return repository.getDevice(deviceId);
     }
 
-    public LiveData<List<DeviceModel>> getDevicesGoals() {
-        return repository.getDevicesGoals();
+    //____________________________________________________________________________________________//
+    //alerts
+
+    public void insertAlert(AlertModel alert) {
+        repository.insertAlert(alert);
     }
 
-    public LiveData<List<DeviceModel>> getDevicesAlerts() {
-        return repository.getDevicesAlerts();
+    public void deleteAlert(AlertModel alert) {
+        repository.deleteAlert(alert);
     }
 
-    public LiveData<List<DeviceModel>> getDevicesSchedules() { return repository.getDevicesSchedules();}
-
-    public LiveData<List<DeviceModel>> getDevicesCustomAlerts(){return repository.getDevicesCustomAlerts();}
-
-    public MutableLiveData<Integer> getNewAlerts() {
-        return SaveState.getNewAlerts();
+    public LiveData<List<AlertModel>> getAllAlerts() {
+        return repository.getAllAlerts();
     }
 
-    public LiveData<List<DeviceModel>> getDevicesCWithoutGoal() {
-        return repository.getDevicesWithoutGoal();
+    //____________________________________________________________________________________________//
+    //custom alerts
+
+    public void insertCustomAlert(CustomAlertModel customAlert) {
+        repository.insertCustomAlert(customAlert);
     }
 
-    public LiveData<List<DeviceModel>> getDevicesWithoutSchedule() {
-        return repository.getDevicesWithoutSchedule();
+    public void deleteCustomAlert(CustomAlertModel customAlert) {
+        repository.deleteCustomAlert(customAlert);
     }
 
-    public LiveData<List<DeviceModel>> getDevicesWithoutCustomAlerts() {
-        return repository.getDevicesWithoutCustomAlert();
+    public LiveData<List<CustomAlertModel>> getAllCustomAlerts() {
+        return repository.getAllCustomAlerts();
+    }
+
+    //____________________________________________________________________________________________//
+    //goals
+
+    public void insertGoal(GoalModel goal) {
+        repository.insertGoal(goal);
+    }
+
+    public void deleteGoal(GoalModel goal) {
+        repository.deleteGoal(goal);
+    }
+
+    public LiveData<List<GoalModel>> getAllGoals() {
+        return repository.getAllGoals();
+    }
+
+    //____________________________________________________________________________________________//
+    //schedules
+
+    public void insertSchedule(ScheduleModel schedule) {
+        repository.insertSchedule(schedule);
+    }
+
+    public void deleteSchedule(ScheduleModel schedule) {
+        repository.deleteSchedule(schedule);
+    }
+
+    public LiveData<List<ScheduleModel>> getAllSchedules() {
+        return repository.getAllSchedules();
     }
 }

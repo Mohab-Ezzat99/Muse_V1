@@ -41,7 +41,7 @@ public class RVNavMenuAdapter extends RecyclerView.Adapter<RVNavMenuAdapter.NMVi
         holder.iv_icon.setImageDrawable(context.getResources().getDrawable(NavMenuModel.getIcon(),null));
         holder.tv_name.setText(NavMenuModel.getName());
         holder.pos=position;
-        if (position == 2 || position == 3 || position==4) {
+        if (position == 2 || position == 3) {
             holder.switchCompat.setVisibility(View.VISIBLE);
             switch (position){
                 //notification
@@ -64,7 +64,6 @@ public class RVNavMenuAdapter extends RecyclerView.Adapter<RVNavMenuAdapter.NMVi
     public void addItem(NavMenuModel NavMenuModel) {
         this.NavMenuModels.add(NavMenuModel);
         notifyDataSetChanged();
-
     }
 
     public void setListener(OnItemClickListener listener) {
@@ -94,12 +93,13 @@ public class RVNavMenuAdapter extends RecyclerView.Adapter<RVNavMenuAdapter.NMVi
             itemView.setOnClickListener(v -> listener.onItemClick(pos));
 
             switchCompat.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                //dark mode
-                if (pos == 3)
-                    listener.isDarkModeChecked(isChecked);
                 //notification
-                else
+                if (pos == 2)
                     listener.isNotificationChecked(isChecked);
+                //dark mode
+                else
+                    listener.isDarkModeChecked(isChecked);
+
             });
         }
     }

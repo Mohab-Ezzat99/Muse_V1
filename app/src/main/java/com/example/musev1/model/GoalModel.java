@@ -1,9 +1,14 @@
 package com.example.musev1.model;
 
-public class GoalModel {
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+@Entity(tableName = "goals_table")
+public class GoalModel {
+    @PrimaryKey(autoGenerate = true)
     private int id;
     private int deviceId;
+    private String deviceName;
     private int pictureId;
     private int type;
     private int used;
@@ -33,6 +38,14 @@ public class GoalModel {
 
     public void setDeviceId(int deviceId) {
         this.deviceId = deviceId;
+    }
+
+    public String getDeviceName() {
+        return deviceName;
+    }
+
+    public void setDeviceName(String deviceName) {
+        this.deviceName = deviceName;
     }
 
     public int getPictureId() {

@@ -27,16 +27,27 @@
             tools:ignore="VectorDrawableCompat" />
 
         <TextView
-            android:id="@+id/itemAlert_tv_desc"
+            android:id="@+id/itemAlert_tv_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_8sdp"
-            android:text="@string/txt_turn_on_for_more_3_hrs"
-            android:textSize="@dimen/_14ssp"
+            android:textSize="@dimen/_12ssp"
+            android:textColor="?attr/colorOnSecondary"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toEndOf="@+id/itemAlert_iv_device"
             app:layout_constraintTop_toTopOf="@+id/itemAlert_iv_device"
+            app:layout_constraintWidth_percent=".7" />
+
+        <TextView
+            android:id="@+id/itemAlert_tv_desc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="@+id/itemAlert_tv_name"
+            app:layout_constraintTop_toBottomOf="@+id/itemAlert_tv_name"
             app:layout_constraintWidth_percent=".7" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

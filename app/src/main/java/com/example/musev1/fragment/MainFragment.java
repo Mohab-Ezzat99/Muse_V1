@@ -75,11 +75,11 @@ public class MainFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         if(SaveState.getLastAlerts()!=0)
             bottomNavigationView.showBadge(R.id.alertsFragment).setNumber(SaveState.getLastAlerts());
-        MainActivity.museViewModel.getNewAlerts().observe(requireActivity(), integer -> {
-            if(integer!=0)
-                bottomNavigationView.showBadge(R.id.alertsFragment).setNumber(integer);
-            else
-                bottomNavigationView.removeBadge(R.id.alertsFragment);
-        });
+//        MainActivity.museViewModel.getNewAlerts().observe(requireActivity(), integer -> {
+//            if(integer!=0)
+//                bottomNavigationView.showBadge(R.id.alertsFragment).setNumber(integer);
+//            else
+//                bottomNavigationView.removeBadge(R.id.alertsFragment);
+//        });
     }
 }

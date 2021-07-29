@@ -3,25 +3,25 @@ package com.example.musev1.model;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "schedules_table")
-public class ScheduleModel {
-    @PrimaryKey(autoGenerate = true)
+@Entity(tableName = "customAlerts_table")
+public class CustomAlertModel {
+    @PrimaryKey()
     private int id;
     private int deviceId;
     private String deviceName;
     private int pictureId;
     private String description;
-    private int newState;
+    private int state;
     private String atTime;
-    private int afterPeriod;
-    private String repeat;
+    private String forPeriod;
+    private int maxUsage;
 
-    public ScheduleModel(int deviceId, int newState, String atTime, int afterPeriod, String repeat) {
+    public CustomAlertModel(int deviceId, int state, String atTime, String forPeriod, int maxUsage) {
         this.deviceId = deviceId;
-        this.newState = newState;
+        this.state = state;
         this.atTime = atTime;
-        this.afterPeriod = afterPeriod;
-        this.repeat = repeat;
+        this.forPeriod = forPeriod;
+        this.maxUsage = maxUsage;
     }
 
     public int getId() {
@@ -64,12 +64,12 @@ public class ScheduleModel {
         this.description = description;
     }
 
-    public int getNewState() {
-        return newState;
+    public int getState() {
+        return state;
     }
 
-    public void setNewState(int newState) {
-        this.newState = newState;
+    public void setState(int state) {
+        this.state = state;
     }
 
     public String getAtTime() {
@@ -80,19 +80,19 @@ public class ScheduleModel {
         this.atTime = atTime;
     }
 
-    public int getAfterPeriod() {
-        return afterPeriod;
+    public String getForPeriod() {
+        return forPeriod;
     }
 
-    public void setAfterPeriod(int afterPeriod) {
-        this.afterPeriod = afterPeriod;
+    public void setForPeriod(String forPeriod) {
+        this.forPeriod = forPeriod;
     }
 
-    public String getRepeat() {
-        return repeat;
+    public int getMaxUsage() {
+        return maxUsage;
     }
 
-    public void setRepeat(String repeat) {
-        this.repeat = repeat;
+    public void setMaxUsage(int maxUsage) {
+        this.maxUsage = maxUsage;
     }
 }

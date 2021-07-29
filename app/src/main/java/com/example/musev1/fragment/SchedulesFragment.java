@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.musev1.MainActivity;
 import com.example.musev1.R;
 import com.example.musev1.adapters.RVAddSchedulesAdapter;
+import com.example.musev1.model.DeviceModel;
 import com.example.musev1.model.DeviceRequestModel;
 import com.example.musev1.model.ScheduleModel;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -47,7 +48,7 @@ public class SchedulesFragment extends Fragment {
     private RVAddSchedulesAdapter adapter;
     private Group not_add;
     private String[] strings;
-    private List<DeviceRequestModel> result_devices;
+    private List<DeviceModel> result_devices;
 
     public SchedulesFragment() {
         // Required empty public constructor
@@ -76,8 +77,12 @@ public class SchedulesFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         setupSwipe();
 
-        getAllDevicesReq(0, 0);
-        getAllSchedulesReq();
+        MainActivity.museViewModel.getAllDevices().observe(getViewLifecycleOwner(), deviceModels -> {
+            result_devices=deviceModels;
+            strings = new String[deviceModels.size()];
+            for (int i = 0; i < deviceModels.size(); i++)
+                strings[i] = deviceModels.get(i).getName();
+        });
 
         FloatingActionButton fab_add = view.findViewById(R.id.FSchedules_fab_add);
         fab_add.setOnClickListener(v -> {
@@ -128,7 +133,7 @@ public class SchedulesFragment extends Fragment {
         Button btn_submit = bottom_sheet.findViewById(R.id.schedulesBotSheet_btn_submit);
         btn_submit.setOnClickListener(v1 -> {
             // add item to rv
-            DeviceRequestModel device = result_devices.get(spinner_device.getSelectedItemPosition());
+            DeviceModel device = result_devices.get(spinner_device.getSelectedItemPosition());
             ScheduleModel scheduleModel;
 
             List<ThemedButton> buttons_long = tg_long.getSelectedButtons();
@@ -183,22 +188,6 @@ public class SchedulesFragment extends Fragment {
                 default:
                     throw new IllegalStateException("Unexpected value: " + radioGroup.getCheckedRadioButtonId());
             }
-
-            MainActivity.museViewModel.addSchedule(scheduleModel).enqueue(new Callback<ScheduleModel>() {
-                @Override
-                public void onResponse(@NotNull Call<ScheduleModel> call, @NotNull Response<ScheduleModel> response) {
-                    if (response.isSuccessful()) {
-                        Toast.makeText(getContext(), "Added successfully", Toast.LENGTH_SHORT).show();
-                        getAllSchedulesReq();
-                        bottomSheetDialog.dismiss();
-                    } else Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
-                }
-
-                @Override
-                public void onFailure(@NotNull Call<ScheduleModel> call, @NotNull Throwable t) {
-                    Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
         });
 
         //launch bottom sheet
@@ -217,72 +206,11 @@ public class SchedulesFragment extends Fragment {
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 
                 ScheduleModel scheduleModel = adapter.getItemAt(viewHolder.getAdapterPosition());
-                MainActivity.displayLoadingDialog();
-                MainActivity.museViewModel.deleteScheduleById(scheduleModel.getId()).enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
-                        if (response.isSuccessful()) {
-                            Toast.makeText(getContext(), "Deleted successfully", Toast.LENGTH_SHORT).show();
-                            MainActivity.progressDialog.dismiss();
-                            getAllSchedulesReq();
-                        } else {
-                            Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
-                            MainActivity.progressDialog.dismiss();
-                        }
-                    }
 
-                    @Override
-                    public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
-                        Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                        MainActivity.progressDialog.dismiss();
-                    }
-                });
             }
         };
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
-    }
-
-    public void getAllDevicesReq(int aggregation, int unit) {
-        MainActivity.displayLoadingDialog();
-        MainActivity.museViewModel.getAllDevicesRequest(aggregation, unit)
-                .subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(result -> {
-                            result_devices = result;
-                            strings = new String[result.size()];
-                            for (int i = 0; i < result.size(); i++)
-                                strings[i] = result.get(i).getName();
-                            MainActivity.progressDialog.dismiss();
-                        },
-                        error -> {
-                            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                            MainActivity.progressDialog.dismiss();
-                        });
-    }
-
-    public void getAllSchedulesReq() {
-        MainActivity.displayLoadingDialog();
-        MainActivity.museViewModel.getAllSchedulesRequest()
-                .subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(result -> {
-                            if (result.size() != 0) {
-                                // visibility
-                                not_add.setVisibility(View.GONE);
-                                recyclerView.setVisibility(View.VISIBLE);
-                            } else {
-                                // visibility
-                                not_add.setVisibility(View.VISIBLE);
-                                recyclerView.setVisibility(View.GONE);
-                            }
-                            adapter.submitList(result);
-                            MainActivity.progressDialog.dismiss();
-                        },
-                        error -> {
-                            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
-                            MainActivity.progressDialog.dismiss();
-                        });
     }
 }

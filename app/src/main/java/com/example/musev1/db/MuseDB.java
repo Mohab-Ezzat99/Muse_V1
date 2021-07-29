@@ -6,9 +6,14 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import com.example.musev1.model.AlertModel;
+import com.example.musev1.model.CustomAlertModel;
 import com.example.musev1.model.DeviceModel;
+import com.example.musev1.model.GoalModel;
+import com.example.musev1.model.ScheduleModel;
 
-@Database(entities = DeviceModel.class,version = 8,exportSchema = false)
+@Database(entities = {DeviceModel.class, AlertModel.class, CustomAlertModel.class, GoalModel.class, ScheduleModel.class}
+        , version = 12, exportSchema = false)
 public abstract class MuseDB extends RoomDatabase {
     private static MuseDB instance;
     public abstract MuseDao museDao();

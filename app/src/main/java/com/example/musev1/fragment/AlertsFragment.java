@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,18 +22,8 @@ import com.example.musev1.adapters.OnDeviceItemListener;
 import com.example.musev1.adapters.RVAlertAdapter;
 import com.example.musev1.model.AlertModel;
 import com.example.musev1.model.DeviceModel;
-import com.example.musev1.model.DeviceRequestModel;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
-
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.schedulers.Schedulers;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class AlertsFragment extends Fragment {
 
@@ -74,17 +63,29 @@ public class AlertsFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         setupSwipe();
 
-        getAllAlertsReq();
+        MainActivity.museViewModel.getAllAlerts().observe(getViewLifecycleOwner(), deviceModels -> {
+            if (deviceModels.size() != 0) {
+                // visibility
+                not_add.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+            } else {
+                // visibility
+                not_add.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
+            }
+            adapter.submitList(deviceModels);
+        });
 
         adapter.setListener(new OnDeviceItemListener() {
             @Override
             public void OnItemClick(DeviceModel device) {
+
             }
 
             @Override
             public void OnItemClick(AlertModel alertModel) {
-//                navController.navigate(AlertsFragmentDirections
-//                        .actionAlertsFragmentToSelectedDeviceFragment(alertModel.getDeviceId()));
+                MainActivity.museViewModel.getDevice(alertModel.getDeviceId()).observe(getViewLifecycleOwner(),
+                        deviceModel -> navController.navigate(AlertsFragmentDirections.actionAlertsFragmentToSelectedDeviceFragment(deviceModel)));
             }
 
             @Override
@@ -111,54 +112,11 @@ public class AlertsFragment extends Fragment {
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 
                 AlertModel alertModel = adapter.getItemAt(viewHolder.getAdapterPosition());
-                MainActivity.displayLoadingDialog();
-                MainActivity.museViewModel.deleteAlertById(alertModel.getId()).enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
-                        if (response.isSuccessful()) {
-                            Toast.makeText(getContext(), "Deleted successfully", Toast.LENGTH_SHORT).show();
-                            MainActivity.progressDialog.dismiss();
-                            getAllAlertsReq();
-                        } else {
-                            Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
-                            MainActivity.progressDialog.dismiss();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
-                        Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                        MainActivity.progressDialog.dismiss();
-                    }
-                });
+                MainActivity.museViewModel.deleteAlert(alertModel);
             }
         };
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
-    }
-
-    public void getAllAlertsReq() {
-        MainActivity.displayLoadingDialog();
-        MainActivity.museViewModel.getAllAlertsRequest()
-                .subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(result -> {
-                            if (result.size() != 0) {
-                                // visibility
-                                not_add.setVisibility(View.GONE);
-                                recyclerView.setVisibility(View.VISIBLE);
-                            } else {
-                                // visibility
-                                not_add.setVisibility(View.VISIBLE);
-                                recyclerView.setVisibility(View.GONE);
-                            }
-                            adapter.submitList(result);
-                            MainActivity.progressDialog.dismiss();
-                        },
-                        error -> {
-                            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                            MainActivity.progressDialog.dismiss();
-                        });
     }
 }

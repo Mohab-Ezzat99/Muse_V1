@@ -9,6 +9,7 @@ import com.example.musev1.db.MuseDB;
 import com.example.musev1.db.MuseDao;
 import com.example.musev1.model.AlertModel;
 import com.example.musev1.model.AuthModel;
+import com.example.musev1.model.CustomAlertModel;
 import com.example.musev1.model.DeviceModel;
 import com.example.musev1.model.DeviceRequestModel;
 import com.example.musev1.model.DeviceResponseModel;
@@ -178,8 +179,9 @@ public class Repository {
     //===========================================================================================//
     //Room
 
-    public void insertDevice(DeviceModel device){
-        new InsertDeviceAsyncTask(museDao).doInBackground(device);
+    //devices
+    public Long insertDevice(DeviceModel device){
+        return new InsertDeviceAsyncTask(museDao).doInBackground(device);
     }
 
     public void updateDevice(DeviceModel device){
@@ -194,39 +196,11 @@ public class Repository {
         return museDao.getAllDevices();
     }
 
-    public LiveData<List<DeviceModel>> getDevicesAdded(){
-        return museDao.getDevicesAdded();
+    public LiveData<DeviceModel> getDevice(Long deviceId){
+        return museDao.getDevice(deviceId);
     }
 
-    public LiveData<List<DeviceModel>> getDevicesGoals(){
-        return museDao.getDevicesGoals();
-    }
-
-    public LiveData<List<DeviceModel>> getDevicesAlerts(){
-        return museDao.getDevicesAlerts();
-    }
-
-    public LiveData<List<DeviceModel>> getDevicesSchedules() {
-        return museDao.getDevicesSchedules();
-    }
-
-    public LiveData<List<DeviceModel>> getDevicesCustomAlerts() {
-        return museDao.getDevicesCustomAlerts();
-    }
-
-    public LiveData<List<DeviceModel>> getDevicesWithoutGoal() {
-        return museDao.getDevicesWithoutGoal();
-    }
-
-    public LiveData<List<DeviceModel>> getDevicesWithoutSchedule() {
-        return museDao.getDevicesWithoutSchedule();
-    }
-
-    public LiveData<List<DeviceModel>> getDevicesWithoutCustomAlert() {
-        return museDao.getDevicesWithoutCustomAlert();
-    }
-
-    public static class InsertDeviceAsyncTask extends AsyncTask<DeviceModel,Void,Void>{
+    public static class InsertDeviceAsyncTask extends AsyncTask<DeviceModel,Void, Long>{
         private final MuseDao museDao;
 
         public InsertDeviceAsyncTask(MuseDao museDao) {
@@ -234,9 +208,8 @@ public class Repository {
         }
 
         @Override
-        protected Void doInBackground(DeviceModel... deviceModels) {
-            museDao.insertDevice(deviceModels[0]);
-            return null;
+        protected Long doInBackground(DeviceModel... deviceModels) {
+            return museDao.insertDevice(deviceModels[0]);
         }
     }
 
@@ -264,6 +237,178 @@ public class Repository {
         @Override
         protected Void doInBackground(DeviceModel... deviceModels) {
             museDao.deleteDevice(deviceModels[0]);
+            return null;
+        }
+    }
+
+    //____________________________________________________________________________________________//
+    //alerts
+
+    public void insertAlert(AlertModel alert){
+        new InsertAlertAsyncTask(museDao).doInBackground(alert);
+    }
+
+    public void deleteAlert(AlertModel alert){
+        new DeleteAlertAsyncTask(museDao).doInBackground(alert);
+    }
+
+    public LiveData<List<AlertModel>> getAllAlerts(){
+        return museDao.getAllAlerts();
+    }
+
+    public static class InsertAlertAsyncTask extends AsyncTask<AlertModel,Void,Void>{
+        private final MuseDao museDao;
+
+        public InsertAlertAsyncTask(MuseDao museDao) {
+            this.museDao = museDao;
+        }
+
+        @Override
+        protected Void doInBackground(AlertModel... alertModels) {
+            museDao.insertAlert(alertModels[0]);
+            return null;
+        }
+    }
+
+    public static class DeleteAlertAsyncTask extends AsyncTask<AlertModel,Void,Void>{
+        private final MuseDao museDao;
+
+        public DeleteAlertAsyncTask(MuseDao museDao) {
+            this.museDao = museDao;
+        }
+
+        @Override
+        protected Void doInBackground(AlertModel... alertModels) {
+            museDao.deleteAlert(alertModels[0]);
+            return null;
+        }
+    }
+
+    //____________________________________________________________________________________________//
+    //custom alerts
+
+    public void insertCustomAlert(CustomAlertModel customAlert){
+        new InsertCustomAlertAsyncTask(museDao).doInBackground(customAlert);
+    }
+
+    public void deleteCustomAlert(CustomAlertModel customAlert){
+        new DeleteCustomAlertAsyncTask(museDao).doInBackground(customAlert);
+    }
+
+    public LiveData<List<CustomAlertModel>> getAllCustomAlerts(){
+        return museDao.getAllCustomAlerts();
+    }
+
+    public static class InsertCustomAlertAsyncTask extends AsyncTask<CustomAlertModel,Void,Void>{
+        private final MuseDao museDao;
+
+        public InsertCustomAlertAsyncTask(MuseDao museDao) {
+            this.museDao = museDao;
+        }
+
+        @Override
+        protected Void doInBackground(CustomAlertModel... customAlertModels) {
+            museDao.insertCustomAlert(customAlertModels[0]);
+            return null;
+        }
+    }
+
+    public static class DeleteCustomAlertAsyncTask extends AsyncTask<CustomAlertModel,Void,Void>{
+        private final MuseDao museDao;
+
+        public DeleteCustomAlertAsyncTask(MuseDao museDao) {
+            this.museDao = museDao;
+        }
+
+        @Override
+        protected Void doInBackground(CustomAlertModel... customAlertModels) {
+            museDao.deleteCustomAlert(customAlertModels[0]);
+            return null;
+        }
+    }
+
+    //____________________________________________________________________________________________//
+    //goal
+
+    public void insertGoal(GoalModel goal){
+        new InsertGoalAsyncTask(museDao).doInBackground(goal);
+    }
+
+    public void deleteGoal(GoalModel goal){
+        new DeleteGoalAsyncTask(museDao).doInBackground(goal);
+    }
+
+    public LiveData<List<GoalModel>> getAllGoals(){
+        return museDao.getAllGoals();
+    }
+
+    public static class InsertGoalAsyncTask extends AsyncTask<GoalModel,Void,Void>{
+        private final MuseDao museDao;
+
+        public InsertGoalAsyncTask(MuseDao museDao) {
+            this.museDao = museDao;
+        }
+
+        @Override
+        protected Void doInBackground(GoalModel... goalModels) {
+            museDao.insertGoal(goalModels[0]);
+            return null;
+        }
+    }
+
+    public static class DeleteGoalAsyncTask extends AsyncTask<GoalModel,Void,Void>{
+        private final MuseDao museDao;
+
+        public DeleteGoalAsyncTask(MuseDao museDao) {
+            this.museDao = museDao;
+        }
+
+        @Override
+        protected Void doInBackground(GoalModel... goalModels) {
+            museDao.deleteGoal(goalModels[0]);
+            return null;
+        }
+    }
+
+    //____________________________________________________________________________________________//
+    //schedule
+
+    public void insertSchedule(ScheduleModel schedule){
+        new InsertScheduleAsyncTask(museDao).doInBackground(schedule);
+    }
+
+    public void deleteSchedule(ScheduleModel schedule){
+        new DeleteScheduleAsyncTask(museDao).doInBackground(schedule);
+    }
+
+    public LiveData<List<ScheduleModel>> getAllSchedules(){
+        return museDao.getAllSchedules();
+    }
+
+    public static class InsertScheduleAsyncTask extends AsyncTask<ScheduleModel,Void,Void>{
+        private final MuseDao museDao;
+
+        public InsertScheduleAsyncTask(MuseDao museDao) {
+            this.museDao = museDao;
+        }
+
+        @Override
+        protected Void doInBackground(ScheduleModel... scheduleModels) {
+            museDao.insertSchedule(scheduleModels[0]);
+            return null;
+        }
+    }
+
+    public static class DeleteScheduleAsyncTask extends AsyncTask<ScheduleModel,Void,Void>{
+        private final MuseDao museDao;
+
+        public DeleteScheduleAsyncTask(MuseDao museDao) {
+            this.museDao = museDao;
+        }
+
+        @Override
+        protected Void doInBackground(ScheduleModel... scheduleModels) {
+            museDao.deleteSchedule(scheduleModels[0]);
             return null;
         }
     }

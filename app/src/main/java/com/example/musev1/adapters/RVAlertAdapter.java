@@ -48,48 +48,10 @@ public class RVAlertAdapter extends ListAdapter<AlertModel, RVAlertAdapter.Alert
     public void onBindViewHolder(@NonNull AlertViewHolder holder, int position) {
         AlertModel mAlert = getItem(position);
         holder.alertModel = mAlert;
-        holder.tv_desc.setText(mAlert.getDescription());
-        switch (mAlert.getPictureId()) {
-            case 0:
-                holder.iv_icon.setImageResource(R.drawable.ic_home);
-                break;
 
-            case 1:
-                holder.iv_icon.setImageResource(R.drawable.ic_tv);
-                break;
-            case 2:
-                holder.iv_icon.setImageResource(R.drawable.ic_fridge);
-                break;
-            case 3:
-                holder.iv_icon.setImageResource(R.drawable.ic_air_conditioner);
-                break;
-            case 4:
-                holder.iv_icon.setImageResource(R.drawable.ic_pc);
-                break;
-            case 5:
-                holder.iv_icon.setImageResource(R.drawable.ic_clothes_dryer);
-                break;
-            case 6:
-                holder.iv_icon.setImageResource(R.drawable.ic_freezer);
-                break;
-            case 7:
-                holder.iv_icon.setImageResource(R.drawable.ic_coffee_maker);
-                break;
-            case 8:
-                holder.iv_icon.setImageResource(R.drawable.ic_dishwasher);
-                break;
-            case 9:
-                holder.iv_icon.setImageResource(R.drawable.ic_fan_heater);
-                break;
-            case 10:
-                holder.iv_icon.setImageResource(R.drawable.ic_toaster);
-                break;
-            case 11:
-                holder.iv_icon.setImageResource(R.drawable.ic_water_dispenser);
-                break;
-            case 12:
-                holder.iv_icon.setImageResource(R.drawable.ic_plug);
-        }
+        holder.iv_icon.setImageResource(mAlert.getPictureId());
+        holder.tv_name.setText(mAlert.getDeviceName());
+        holder.tv_desc.setText(mAlert.getDescription());
     }
 
     public AlertModel getItemAt(int position) {
@@ -102,13 +64,14 @@ public class RVAlertAdapter extends ListAdapter<AlertModel, RVAlertAdapter.Alert
 
     class AlertViewHolder extends RecyclerView.ViewHolder {
         private final ImageView iv_icon;
-        private final TextView tv_desc;
+        private final TextView tv_name, tv_desc;
         private AlertModel alertModel;
 
         public AlertViewHolder(@NonNull View itemView) {
             super(itemView);
             iv_icon = itemView.findViewById(R.id.itemAlert_iv_device);
-            tv_desc=itemView.findViewById(R.id.itemAlert_tv_desc);
+            tv_name = itemView.findViewById(R.id.itemAlert_tv_name);
+            tv_desc = itemView.findViewById(R.id.itemAlert_tv_desc);
 
             itemView.setOnClickListener(v -> listener.OnItemClick(alertModel));
         }
