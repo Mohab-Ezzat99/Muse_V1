@@ -57,7 +57,7 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
     private Spinner spinnerUnit, spinnerAgg;
     private TextView tv_per, tv_currentV, tv_avgV, tv_consV, tv_estV;
     private boolean realtimeSwitch;
-    private int unitPos;
+    private int unitPos=0, chipAgg =0;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -119,25 +119,7 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 unitPos = position;
-                if (position == 0) {
-                    tv_avgV.setText("80 W");
-                    tv_consV.setText("120 W");
-                    tv_estV.setText("250 W");
-
-                    if(realtimeSwitch)
-                        tv_currentV.setText("30 W");
-                    else
-                        tv_currentV.setText("45 W");
-                } else {
-                    tv_avgV.setText("40 EGP");
-                    tv_consV.setText("60 EGP");
-                    tv_estV.setText("120 EGP");
-
-                    if(!realtimeSwitch)
-                        tv_currentV.setText("15 EGP");
-                    else
-                        tv_currentV.setText("22 EGP");
-                }
+                initData();
             }
 
             @Override
@@ -167,25 +149,29 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
                 case R.id.dayFragment:
                     navControllerChart.popBackStack();
                     navControllerChart.navigate(R.id.chartDayFragment);
-                    tv_per.setText("Per day");
+                    chipAgg = 0;
+                    initData();
                     return;
 
                 case R.id.weekFragment:
                     navControllerChart.popBackStack();
                     navControllerChart.navigate(R.id.chartWeekFragment);
-                    tv_per.setText("Per week");
+                    chipAgg = 1;
+                    initData();
                     return;
 
                 case R.id.monthFragment:
                     navControllerChart.popBackStack();
                     navControllerChart.navigate(R.id.chartMonthFragment);
-                    tv_per.setText("Per month");
+                    chipAgg = 2;
+                    initData();
                     return;
 
                 case R.id.yearFragment:
                     navControllerChart.popBackStack();
                     navControllerChart.navigate(R.id.chartYearFragment);
-                    tv_per.setText("Per year");
+                    chipAgg = 3;
+                    initData();
             }
         });
 
@@ -287,5 +273,79 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
 
     public void refresh(){
         new Handler().postDelayed(this::updateRealtime, 10000);
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void initData() {
+        if (unitPos == 0) {
+            switch (chipAgg) {
+                case 0:
+                    tv_per.setText("Per day");
+                    tv_avgV.setText("80 W");
+                    tv_consV.setText("120 W");
+                    tv_estV.setText("250 W");
+                    break;
+
+                case 1:
+                    tv_per.setText("Per weak");
+                    tv_avgV.setText("107 W");
+                    tv_consV.setText("830 W");
+                    tv_estV.setText("1000 W");
+                    break;
+
+                case 2:
+                    tv_per.setText("Per month");
+                    tv_avgV.setText("11 KW");
+                    tv_consV.setText("127 KW");
+                    tv_estV.setText("150 KW");
+                    break;
+
+                case 3:
+                    tv_per.setText("Per year");
+                    tv_avgV.setText("160 KW");
+                    tv_consV.setText("360 KW");
+                    tv_estV.setText("500 KW");
+                    break;
+            }
+            if (realtimeSwitch)
+                tv_currentV.setText("30 W");
+            else
+                tv_currentV.setText("45 W");
+        } else {
+            switch (chipAgg) {
+                case 0:
+                    tv_per.setText("Per day");
+                    tv_avgV.setText("40 EGP");
+                    tv_consV.setText("60 EGP");
+                    tv_estV.setText("120 EGP");
+                    break;
+
+                case 1:
+                    tv_per.setText("Per weak");
+                    tv_avgV.setText("53 EGP");
+                    tv_consV.setText("415 EGP");
+                    tv_estV.setText("500 EGP");
+                    break;
+
+                case 2:
+                    tv_per.setText("Per month");
+                    tv_avgV.setText("5500 EGP");
+                    tv_consV.setText("6350 EGP");
+                    tv_estV.setText("7500 EGP");
+                    break;
+
+                case 3:
+                    tv_per.setText("Per year");
+                    tv_avgV.setText("20000 EGP");
+                    tv_consV.setText("43800 EGP");
+                    tv_estV.setText("50300 EGP");
+                    break;
+            }
+
+            if(!realtimeSwitch)
+                tv_currentV.setText("15 EGP");
+            else
+                tv_currentV.setText("22 EGP");
+        }
     }
 }

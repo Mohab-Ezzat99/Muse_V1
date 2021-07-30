@@ -74,7 +74,7 @@ public class SchedulesFragment extends Fragment {
         recyclerView = view.findViewById(R.id.FSchedules_rv);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new RVAddSchedulesAdapter(getContext());
+        adapter = new RVAddSchedulesAdapter();
         recyclerView.setAdapter(adapter);
         setupSwipe();
 

@@ -19,7 +19,6 @@
             android:layout_height="@dimen/_24sdp"
             android:layout_marginVertical="@dimen/_8sdp"
             android:contentDescription="@string/txt_null"
-            android:src="@drawable/ic_tv"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias=".05"
             app:layout_constraintStart_toStartOf="parent"

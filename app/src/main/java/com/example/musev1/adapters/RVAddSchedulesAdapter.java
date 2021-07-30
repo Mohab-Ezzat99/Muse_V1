@@ -18,7 +18,6 @@ import com.example.musev1.R;
 import com.example.musev1.model.ScheduleModel;
 
 public class RVAddSchedulesAdapter extends ListAdapter<ScheduleModel, RVAddSchedulesAdapter.ASViewHolder> {
-    private final Context context;
     private static final DiffUtil.ItemCallback<ScheduleModel> DIFF_CALLBACK = new DiffUtil.ItemCallback<ScheduleModel>() {
         @Override
         public boolean areItemsTheSame(@NonNull ScheduleModel oldItem, @NonNull ScheduleModel newItem) {
@@ -33,9 +32,8 @@ public class RVAddSchedulesAdapter extends ListAdapter<ScheduleModel, RVAddSched
         }
     };
 
-    public RVAddSchedulesAdapter(Context context) {
+    public RVAddSchedulesAdapter() {
         super(DIFF_CALLBACK);
-        this.context = context;
     }
 
     @SuppressLint("InflateParams")
@@ -52,7 +50,6 @@ public class RVAddSchedulesAdapter extends ListAdapter<ScheduleModel, RVAddSched
         holder.iv_icon.setImageResource(schedule_model.getPictureId());
         holder.tv_name.setText(schedule_model.getDeviceName());
         holder.tv_state.setText(schedule_model.getState());
-        holder.tv_days.setText(schedule_model.getRepeat());
 
         if (schedule_model.getAtTime() != null) {
             holder.tv_later.setText("At");

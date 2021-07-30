@@ -19,8 +19,6 @@
             android:layout_height="@dimen/_24sdp"
             android:layout_marginVertical="@dimen/_8sdp"
             android:contentDescription="@string/txt_null"
-            android:src="@drawable/ic_tv"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias=".05"
             app:layout_constraintStart_toStartOf="parent"
@@ -32,30 +30,86 @@
             android:id="@+id/itemAC_iv_patch"
             android:layout_width="@dimen/_24sdp"
             android:layout_height="@dimen/_24sdp"
-            android:layout_marginVertical="@dimen/_8sdp"
             android:contentDescription="@string/txt_null"
-            android:src="@drawable/ic_notification"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:src="@drawable/ic_custom_alert"
+            app:layout_constraintBottom_toBottomOf="@+id/itemAC_iv_icon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias=".95"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/itemAC_iv_icon"
             app:layout_constraintVertical_bias=".05"
             app:tint="?attr/colorOnSecondary" />
 
         <TextView
-            android:id="@+id/itemAC_tv_desc"
+            android:id="@+id/itemAC_tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintHorizontal_bias="0"
-            android:text="@string/tit_tv"
+            android:layout_marginStart="@dimen/_8sdp"
             android:textColor="?attr/colorPrimaryVariant"
-            android:textSize="@dimen/_14ssp"
+            android:textSize="@dimen/_14sdp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/itemAC_iv_icon"
+            app:layout_constraintTop_toTopOf="@+id/itemAC_iv_icon" />
+
+        <TextView
+            android:id="@+id/itemAC_tv_turn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/_8sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/itemAC_iv_patch"
+            android:text="@string/txt_when"
+            android:textColor="?attr/colorOnSecondary"
+            android:textSize="@dimen/_12ssp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/itemAC_iv_icon"
             app:layout_constraintTop_toBottomOf="@+id/itemAC_iv_icon" />
+
+        <TextView
+            android:id="@+id/itemAC_tv_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/itemAC_tv_turn"
+            app:layout_constraintEnd_toEndOf="@+id/itemAC_iv_patch"
+            app:layout_constraintTop_toTopOf="@+id/itemAC_tv_turn" />
+
+        <TextView
+            android:id="@+id/itemAC_tv_later"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_8sdp"
+            android:textColor="?attr/colorOnSecondary"
+            android:textSize="@dimen/_12ssp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/itemAC_tv_turn"
+            app:layout_constraintTop_toBottomOf="@+id/itemAC_tv_turn" />
+
+        <TextView
+            android:id="@+id/itemAC_tv_period"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/itemAC_tv_later"
+            app:layout_constraintEnd_toEndOf="@+id/itemAC_tv_state"
+            app:layout_constraintTop_toTopOf="@+id/itemAC_tv_later" />
+
+        <TextView
+            android:id="@+id/itemAC_tv_maxUsage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_8sdp"
+            android:text="@string/txt_max_usage"
+            android:textColor="?attr/colorOnSecondary"
+            android:textSize="@dimen/_12ssp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/itemAC_tv_later"
+            app:layout_constraintTop_toBottomOf="@+id/itemAC_tv_later" />
+
+        <TextView
+            android:id="@+id/itemAC_tv_max"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/itemAC_tv_maxUsage"
+            app:layout_constraintEnd_toEndOf="@+id/itemAC_tv_period"
+            app:layout_constraintTop_toTopOf="@+id/itemAC_tv_maxUsage" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

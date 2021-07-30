@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.transition.AutoTransition;
 import android.transition.Fade;
 import android.transition.TransitionManager;
@@ -57,7 +58,7 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
     private ChipNavigationBar chipNavigationBar;
     private NavController navControllerChart;
 
-    private TextView tv_name, tv_percent, tv_current, tv_average, tv_per, tv_consumedV, tv_estimation;
+    private TextView tv_name, tv_percent, tv_per,tv_currentV, tv_avgV, tv_consV, tv_estV;
     private ImageView iv_icon, dialogIv_icon, iv_arrow, iv_custom;
     private CardView cv_goal, cv_schedules, cv_insight;
     private SwitchCompat switchCompat;
@@ -66,6 +67,8 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
     private BottomSheetDialog bottomSheetDialog;
     private ConstraintLayout constLayout_expand;
     private Spinner spinnerUnit;
+    private boolean realtimeSwitch;
+    private int unitPos=0,chipAgg=0;
 
     private DeviceModel device;
     private int day, month, year, chosenIcon = -1;
@@ -117,10 +120,10 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
 
         // spinner info inflation
         spinnerUnit = view.findViewById(R.id.selectedD_spinner_unit);
-        tv_current = view.findViewById(R.id.selectedD_tv_currentV);
-        tv_average = view.findViewById(R.id.selectedD_tv_averageV);
-        tv_consumedV = view.findViewById(R.id.selectedD_tv_consumedV);
-        tv_estimation = view.findViewById(R.id.selectedD_tv_estV);
+        tv_currentV = view.findViewById(R.id.selectedD_tv_currentV);
+        tv_avgV = view.findViewById(R.id.selectedD_tv_averageV);
+        tv_consV = view.findViewById(R.id.selectedD_tv_consumedV);
+        tv_estV = view.findViewById(R.id.selectedD_tv_estV);
 
         // device state..on/off
         //when display
@@ -153,7 +156,8 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
             @SuppressLint("SetTextI18n")
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                unitPos = position;
+                initData();
             }
 
             @Override
@@ -177,29 +181,29 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
                 case R.id.dayFragment:
                     navControllerChart.popBackStack();
                     navControllerChart.navigate(R.id.chartDayFragment);
-
-                    tv_per.setText("Per day");
+                    chipAgg=0;
+                    initData();
                     return;
 
                 case R.id.weekFragment:
                     navControllerChart.popBackStack();
                     navControllerChart.navigate(R.id.chartWeekFragment);
-
-                    tv_per.setText("Per week");
+                    chipAgg=1;
+                    initData();
                     return;
 
                 case R.id.monthFragment:
                     navControllerChart.popBackStack();
                     navControllerChart.navigate(R.id.chartMonthFragment);
-
-                    tv_per.setText("Per month");
+                    chipAgg=2;
+                    initData();
                     return;
 
                 case R.id.yearFragment:
                     navControllerChart.popBackStack();
                     navControllerChart.navigate(R.id.chartYearFragment);
-
-                    tv_per.setText("Per year");
+                    chipAgg=3;
+                    initData();
             }
         });
 
@@ -222,6 +226,9 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
         cv_goal.setOnClickListener(this);
         cv_schedules.setOnClickListener(this);
         iv_custom.setOnClickListener(this);
+
+        //refresh realtime
+        updateRealtime();
     }
 
     // inflation setting icon in menu
@@ -420,5 +427,101 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
         //launch bottom sheet
         bottomSheetDialog.setContentView(bottom_sheet);
         bottomSheetDialog.show();
+    }
+
+    @SuppressLint("SetTextI18n")
+    public void updateRealtime() {
+        if (realtimeSwitch) {
+            realtimeSwitch = false;
+            if (unitPos == 0)
+                tv_currentV.setText("30 W");
+            else
+                tv_currentV.setText("15 EGP");
+        } else {
+            realtimeSwitch = true;
+            if (unitPos == 0)
+                tv_currentV.setText("45 W");
+            else
+                tv_currentV.setText("22 EGP");
+        }
+        refresh();
+    }
+
+    public void refresh(){
+        new Handler().postDelayed(this::updateRealtime, 8000);
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void initData() {
+        if (unitPos == 0) {
+            switch (chipAgg) {
+                case 0:
+                    tv_per.setText("Per day");
+                    tv_avgV.setText("80 W");
+                    tv_consV.setText("120 W");
+                    tv_estV.setText("250 W");
+                    break;
+
+                case 1:
+                    tv_per.setText("Per weak");
+                    tv_avgV.setText("107 W");
+                    tv_consV.setText("830 W");
+                    tv_estV.setText("1000 W");
+                    break;
+
+                case 2:
+                    tv_per.setText("Per month");
+                    tv_avgV.setText("11 KW");
+                    tv_consV.setText("127 KW");
+                    tv_estV.setText("150 KW");
+                    break;
+
+                case 3:
+                    tv_per.setText("Per year");
+                    tv_avgV.setText("160 KW");
+                    tv_consV.setText("360 KW");
+                    tv_estV.setText("500 KW");
+                    break;
+            }
+            if (realtimeSwitch)
+                tv_currentV.setText("30 W");
+            else
+                tv_currentV.setText("45 W");
+        } else {
+            switch (chipAgg) {
+                case 0:
+                    tv_per.setText("Per day");
+                    tv_avgV.setText("40 EGP");
+                    tv_consV.setText("60 EGP");
+                    tv_estV.setText("120 EGP");
+                    break;
+
+                case 1:
+                    tv_per.setText("Per weak");
+                    tv_avgV.setText("53 EGP");
+                    tv_consV.setText("415 EGP");
+                    tv_estV.setText("500 EGP");
+                    break;
+
+                case 2:
+                    tv_per.setText("Per month");
+                    tv_avgV.setText("5500 EGP");
+                    tv_consV.setText("6350 EGP");
+                    tv_estV.setText("7500 EGP");
+                    break;
+
+                case 3:
+                    tv_per.setText("Per year");
+                    tv_avgV.setText("20000 EGP");
+                    tv_consV.setText("43800 EGP");
+                    tv_estV.setText("50300 EGP");
+                    break;
+            }
+
+            if(!realtimeSwitch)
+                tv_currentV.setText("15 EGP");
+            else
+                tv_currentV.setText("22 EGP");
+        }
     }
 }

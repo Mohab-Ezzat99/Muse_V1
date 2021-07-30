@@ -5,19 +5,20 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "customAlerts_table")
 public class CustomAlertModel {
-    @PrimaryKey()
+    @PrimaryKey(autoGenerate = true)
     private int id;
     private int deviceId;
     private String deviceName;
     private int pictureId;
-    private String description;
-    private int state;
+    private String state;
     private String atTime;
     private String forPeriod;
-    private int maxUsage;
+    private String maxUsage;
 
-    public CustomAlertModel(int deviceId, int state, String atTime, String forPeriod, int maxUsage) {
+    public CustomAlertModel(int deviceId,String deviceName,int pictureId, String state, String atTime, String forPeriod, String maxUsage) {
         this.deviceId = deviceId;
+        this.deviceName = deviceName;
+        this.pictureId = pictureId;
         this.state = state;
         this.atTime = atTime;
         this.forPeriod = forPeriod;
@@ -56,19 +57,11 @@ public class CustomAlertModel {
         this.pictureId = pictureId;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public int getState() {
+    public String getState() {
         return state;
     }
 
-    public void setState(int state) {
+    public void setState(String state) {
         this.state = state;
     }
 
@@ -88,11 +81,11 @@ public class CustomAlertModel {
         this.forPeriod = forPeriod;
     }
 
-    public int getMaxUsage() {
+    public String getMaxUsage() {
         return maxUsage;
     }
 
-    public void setMaxUsage(int maxUsage) {
+    public void setMaxUsage(String maxUsage) {
         this.maxUsage = maxUsage;
     }
 }
