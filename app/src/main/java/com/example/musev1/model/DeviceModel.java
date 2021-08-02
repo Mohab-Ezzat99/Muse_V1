@@ -16,6 +16,9 @@ public class DeviceModel implements Serializable {
     private boolean isOn;
     private String percent;
     private int progress;
+    private boolean hasGoal;
+    private boolean hasCustomAlert;
+    private boolean hasSchedule;
 
     public DeviceModel() {
     }
@@ -73,5 +76,29 @@ public class DeviceModel implements Serializable {
 
     public void setProgress(int progress) {
         this.progress = progress;
+    }
+
+    public boolean isHasGoal() {
+        return hasGoal;
+    }
+
+    public void setHasGoal(boolean hasGoal) {
+        this.hasGoal = hasGoal;
+    }
+
+    public boolean isHasCustomAlert() {
+        return hasCustomAlert;
+    }
+
+    public void setHasCustomAlert(boolean hasCustomAlert) {
+        this.hasCustomAlert = hasCustomAlert;
+    }
+
+    public boolean isHasSchedule() {
+        return hasSchedule;
+    }
+
+    public void setHasSchedule(boolean hasSchedule) {
+        this.hasSchedule = hasSchedule;
     }
 }

@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 public class CustomAlertModel {
     @PrimaryKey(autoGenerate = true)
     private int id;
-    private int deviceId;
+    private long deviceId;
     private String deviceName;
     private int pictureId;
     private String state;
@@ -15,7 +15,7 @@ public class CustomAlertModel {
     private String forPeriod;
     private String maxUsage;
 
-    public CustomAlertModel(int deviceId,String deviceName,int pictureId, String state, String atTime, String forPeriod, String maxUsage) {
+    public CustomAlertModel(long deviceId,String deviceName,int pictureId, String state, String atTime, String forPeriod, String maxUsage) {
         this.deviceId = deviceId;
         this.deviceName = deviceName;
         this.pictureId = pictureId;
@@ -33,11 +33,11 @@ public class CustomAlertModel {
         this.id = id;
     }
 
-    public int getDeviceId() {
+    public long getDeviceId() {
         return deviceId;
     }
 
-    public void setDeviceId(int deviceId) {
+    public void setDeviceId(long deviceId) {
         this.deviceId = deviceId;
     }
 

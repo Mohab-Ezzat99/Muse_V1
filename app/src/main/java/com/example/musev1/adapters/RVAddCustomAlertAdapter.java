@@ -26,8 +26,13 @@ public class RVAddCustomAlertAdapter extends ListAdapter<CustomAlertModel, RVAdd
         @Override
         public boolean areContentsTheSame(@NonNull CustomAlertModel oldItem, @NonNull CustomAlertModel newItem) {
             return oldItem.getDeviceName().equals(newItem.getDeviceName()) &&
+                    oldItem.getId() == (newItem.getId()) &&
                     oldItem.getPictureId() == (newItem.getPictureId()) &&
-                    oldItem.getState().equals(newItem.getState());
+                    oldItem.getDeviceId() == (newItem.getDeviceId()) &&
+                    oldItem.getState().equals(newItem.getState()) &&
+                    oldItem.getForPeriod().equals(newItem.getForPeriod()) &&
+                    oldItem.getAtTime().equals(newItem.getAtTime()) &&
+                    oldItem.getMaxUsage().equals(newItem.getMaxUsage());
         }
     };
 
@@ -51,12 +56,12 @@ public class RVAddCustomAlertAdapter extends ListAdapter<CustomAlertModel, RVAdd
         holder.tv_state.setText(customAlertModel.getState());
         holder.tv_max.setText(customAlertModel.getMaxUsage());
 
-        if (customAlertModel.getAtTime() != null) {
+        if (!customAlertModel.getAtTime().equals("")) {
             holder.tv_later.setText("At");
             holder.tv_period.setText(customAlertModel.getAtTime());
         }
 
-        if (customAlertModel.getForPeriod() != null) {
+        if (!customAlertModel.getForPeriod().equals("")) {
             holder.tv_later.setText("After");
             holder.tv_period.setText(customAlertModel.getForPeriod());
         }

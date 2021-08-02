@@ -13,7 +13,7 @@ import com.example.musev1.model.GoalModel;
 import com.example.musev1.model.ScheduleModel;
 
 @Database(entities = {DeviceModel.class, AlertModel.class, CustomAlertModel.class, GoalModel.class, ScheduleModel.class}
-        , version = 16, exportSchema = false)
+        , version = 17, exportSchema = false)
 public abstract class MuseDB extends RoomDatabase {
     private static MuseDB instance;
     public abstract MuseDao museDao();

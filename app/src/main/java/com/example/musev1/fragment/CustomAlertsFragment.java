@@ -23,23 +23,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.musev1.MainActivity;
 import com.example.musev1.R;
 import com.example.musev1.adapters.RVAddCustomAlertAdapter;
-import com.example.musev1.model.AlertModel;
 import com.example.musev1.model.CustomAlertModel;
 import com.example.musev1.model.DeviceModel;
-import com.example.musev1.model.DeviceRequestModel;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.List;
-
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.schedulers.Schedulers;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class CustomAlertsFragment extends Fragment {
 
@@ -88,8 +77,8 @@ public class CustomAlertsFragment extends Fragment {
             adapter.submitList(customAlertModels);
         });
 
-        MainActivity.museViewModel.getAllDevices().observe(getViewLifecycleOwner(), deviceModels -> {
-            result_devices=deviceModels;
+        MainActivity.museViewModel.getAvailableCustomAlerts().observe(getViewLifecycleOwner(), deviceModels -> {
+            result_devices = deviceModels;
             strings = new String[deviceModels.size()];
             for (int i = 0; i < deviceModels.size(); i++)
                 strings[i] = deviceModels.get(i).getName();
@@ -143,21 +132,22 @@ public class CustomAlertsFragment extends Fragment {
         btn_submit.setOnClickListener(v1 -> {
             // add item to rv
             DeviceModel device = result_devices.get(spinner_device.getSelectedItemPosition());
-            CustomAlertModel alertModel;
+            device.setHasCustomAlert(true);
+            MainActivity.museViewModel.updateDevice(device);
 
             switch (radioGroup.getCheckedRadioButtonId()) {
                 case R.id.customAlertBotSheet_rb_at:
                     MainActivity.museViewModel.insertCustomAlert(new CustomAlertModel(
-                            device.getId(),device.getName(),device.getIcon()
+                            device.getId(), device.getName(), device.getIcon()
                             , spinner_state.getSelectedItem().toString()
-                            , spinner_at.getSelectedItem().toString(), null
+                            , spinner_at.getSelectedItem().toString(), ""
                             , spinner_max.getSelectedItem().toString()));
                     break;
 
                 case R.id.customAlertBotSheet_rb_after:
                     MainActivity.museViewModel.insertCustomAlert(new CustomAlertModel(
                             device.getId(),device.getName(),device.getIcon()
-                            , spinner_state.getSelectedItem().toString(), null
+                            , spinner_state.getSelectedItem().toString(), ""
                             , spinner_after.getSelectedItem().toString()
                             , spinner_max.getSelectedItem().toString()));
                     break;
@@ -183,6 +173,13 @@ public class CustomAlertsFragment extends Fragment {
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 
                 CustomAlertModel customAlertModel = adapter.getItemAt(viewHolder.getAdapterPosition());
+
+                MainActivity.museViewModel.getDevice(customAlertModel.getDeviceId())
+                        .observe(getViewLifecycleOwner(), deviceModel -> {
+                            deviceModel.setHasCustomAlert(false);
+                            MainActivity.museViewModel.updateDevice(deviceModel);
+                        });
+
                 MainActivity.museViewModel.deleteCustomAlert(customAlertModel);
             }
         };

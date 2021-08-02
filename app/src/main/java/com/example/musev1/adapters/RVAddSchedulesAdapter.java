@@ -1,7 +1,6 @@
 package com.example.musev1.adapters;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,8 +26,13 @@ public class RVAddSchedulesAdapter extends ListAdapter<ScheduleModel, RVAddSched
         @Override
         public boolean areContentsTheSame(@NonNull ScheduleModel oldItem, @NonNull ScheduleModel newItem) {
             return oldItem.getDeviceName().equals(newItem.getDeviceName()) &&
+                    oldItem.getId() == (newItem.getId()) &&
                     oldItem.getPictureId() == (newItem.getPictureId()) &&
-                    oldItem.getState().equals(newItem.getState());
+                    oldItem.getDeviceId() == (newItem.getDeviceId()) &&
+                    oldItem.getState().equals(newItem.getState()) &&
+                    oldItem.getAfterPeriod().equals(newItem.getAfterPeriod()) &&
+                    oldItem.getAtTime().equals(newItem.getAtTime()) &&
+                    oldItem.getRepeat().equals(newItem.getRepeat());
         }
     };
 
@@ -51,12 +55,12 @@ public class RVAddSchedulesAdapter extends ListAdapter<ScheduleModel, RVAddSched
         holder.tv_name.setText(schedule_model.getDeviceName());
         holder.tv_state.setText(schedule_model.getState());
 
-        if (schedule_model.getAtTime() != null) {
+        if (!schedule_model.getAtTime().equals("")) {
             holder.tv_later.setText("At");
             holder.tv_period.setText(schedule_model.getAtTime());
         }
 
-        if (schedule_model.getAfterPeriod() != null) {
+        if (!schedule_model.getAfterPeriod().equals("")) {
             holder.tv_later.setText("After");
             holder.tv_period.setText(schedule_model.getAfterPeriod());
         }

@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 public class ScheduleModel {
     @PrimaryKey(autoGenerate = true)
     private int id;
-    private int deviceId;
+    private long deviceId;
     private String deviceName;
     private int pictureId;
     private String state;
@@ -15,7 +15,7 @@ public class ScheduleModel {
     private String afterPeriod;
     private String repeat;
 
-    public ScheduleModel(int deviceId,String deviceName,int pictureId, String state, String atTime, String afterPeriod, String repeat) {
+    public ScheduleModel(long deviceId,String deviceName,int pictureId, String state, String atTime, String afterPeriod, String repeat) {
         this.deviceId = deviceId;
         this.deviceName = deviceName;
         this.pictureId = pictureId;
@@ -33,11 +33,11 @@ public class ScheduleModel {
         this.id = id;
     }
 
-    public int getDeviceId() {
+    public long getDeviceId() {
         return deviceId;
     }
 
-    public void setDeviceId(int deviceId) {
+    public void setDeviceId(long deviceId) {
         this.deviceId = deviceId;
     }
 

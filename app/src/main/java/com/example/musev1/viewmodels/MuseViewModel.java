@@ -190,6 +190,18 @@ public class MuseViewModel extends AndroidViewModel {
         return repository.getDevice(deviceId);
     }
 
+    public LiveData<List<DeviceModel>> getAvailableGoals() {
+        return repository.getAvailableGoals();
+    }
+
+    public LiveData<List<DeviceModel>> getAvailableCustomAlerts() {
+        return repository.getAvailableCustomAlerts();
+    }
+
+    public LiveData<List<DeviceModel>> getAvailableSchedules() {
+        return repository.getAvailableSchedules();
+    }
+
     //____________________________________________________________________________________________//
     //alerts
 

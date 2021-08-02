@@ -91,7 +91,7 @@ public class SchedulesFragment extends Fragment {
             adapter.submitList(scheduleModels);
         });
 
-        MainActivity.museViewModel.getAllDevices().observe(getViewLifecycleOwner(), deviceModels -> {
+        MainActivity.museViewModel.getAvailableSchedules().observe(getViewLifecycleOwner(), deviceModels -> {
             result_devices=deviceModels;
             strings = new String[deviceModels.size()];
             for (int i = 0; i < deviceModels.size(); i++)
@@ -148,6 +148,8 @@ public class SchedulesFragment extends Fragment {
         btn_submit.setOnClickListener(v1 -> {
             // add item to rv
             DeviceModel device = result_devices.get(spinner_device.getSelectedItemPosition());
+            device.setHasSchedule(true);
+            MainActivity.museViewModel.updateDevice(device);
 
             // days of weak
             List<ThemedButton> buttons_long = tg_long.getSelectedButtons();
@@ -185,13 +187,13 @@ public class SchedulesFragment extends Fragment {
                             device.getId(),device.getName(),device.getIcon()
                             , spinner_state.getSelectedItem().toString()
                             , spinner_at.getSelectedItem().toString()
-                            , null, days));
+                            , "", days));
                     break;
 
                 case R.id.schedulesBotSheet_rb_after:
                     MainActivity.museViewModel.insertSchedule(new ScheduleModel(
                             device.getId(),device.getName(),device.getIcon()
-                            , spinner_state.getSelectedItem().toString(), null
+                            , spinner_state.getSelectedItem().toString(), ""
                             , spinner_after.getSelectedItem().toString(), days));
                     break;
                 default:
@@ -216,6 +218,13 @@ public class SchedulesFragment extends Fragment {
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 
                 ScheduleModel scheduleModel = adapter.getItemAt(viewHolder.getAdapterPosition());
+
+                MainActivity.museViewModel.getDevice(scheduleModel.getDeviceId())
+                        .observe(getViewLifecycleOwner(), deviceModel -> {
+                            deviceModel.setHasSchedule(false);
+                            MainActivity.museViewModel.updateDevice(deviceModel);
+                        });
+
                 MainActivity.museViewModel.deleteSchedule(scheduleModel);
 
             }
