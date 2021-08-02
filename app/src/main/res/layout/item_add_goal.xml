@@ -71,13 +71,12 @@
         android:id="@+id/itemAG_tv_used"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_2sdp"
         android:layout_weight="1"
         android:gravity="end"
         android:textColor="?attr/colorOnSecondary"
         android:textSize="@dimen/_14ssp"
         app:layout_constraintBottom_toBottomOf="@+id/TUse1"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/itemAG_tv_type"
         app:layout_constraintTop_toTopOf="@+id/TUse1" />
 
 

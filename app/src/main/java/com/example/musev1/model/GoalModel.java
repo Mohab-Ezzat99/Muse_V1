@@ -10,14 +10,14 @@ public class GoalModel {
     private long deviceId;
     private String deviceName;
     private int pictureId;
-    private int type;
+    private String type;
     private int used;
     private int estimation;
     private int percent;
     private String usageLimit;
     private int unit;
 
-    public GoalModel(long deviceId,String deviceName,int pictureId, int type, String  usageLimit, int unit) {
+    public GoalModel(long deviceId,String deviceName,int pictureId, String type, String  usageLimit, int unit) {
         this.deviceId = deviceId;
         this.deviceName = deviceName;
         this.pictureId = pictureId;
@@ -58,11 +58,11 @@ public class GoalModel {
         this.pictureId = pictureId;
     }
 
-    public int getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(String type) {
         this.type = type;
     }
 

@@ -276,4 +276,23 @@ public class MuseViewModel extends AndroidViewModel {
     public LiveData<List<ScheduleModel>> getAllSchedules() {
         return repository.getAllSchedules();
     }
+
+    //____________________________________________________________________________________________//
+    //get device info
+
+    public LiveData<GoalModel> getGoalByDeviceId(int deviceId){
+        return repository.getGoalByDeviceId(deviceId);
+    }
+
+    public LiveData<AlertModel> getAlertByDeviceId(int deviceId){
+        return repository.getAlertByDeviceId(deviceId);
+    }
+
+    public LiveData<ScheduleModel> getScheduleByDeviceId(int deviceId){
+        return repository.getScheduleByDeviceId(deviceId);
+    }
+
+    public LiveData<CustomAlertModel> getCustomAlertByDeviceId(int deviceId){
+        return repository.getCustomAlertByDeviceId(deviceId);
+    }
 }

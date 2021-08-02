@@ -236,6 +236,52 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/selectedD_cv_customAlert"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:backgroundTint="?attr/colorAccent"
+                app:cardCornerRadius="@dimen/_6sdp"
+                app:cardElevation="@dimen/_3sdp"
+                app:cardUseCompatPadding="true">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/_8sdp">
+
+                    <ImageView
+                        android:id="@+id/itemBD_iv4"
+                        android:layout_width="@dimen/_36sdp"
+                        android:layout_height="@dimen/_36sdp"
+                        android:contentDescription="@string/txt_null"
+                        android:src="@drawable/ic_custom_alert"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHeight_percent=".45"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias=".3"
+                        app:layout_constraintWidth_percent=".5"
+                        app:tint="?attr/colorPrimaryVariant" />
+
+                    <TextView
+                        android:id="@+id/itemBD_tv4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:text="@string/txt_custom_alert"
+                        android:textColor="?attr/colorOnSecondary"
+                        android:gravity="center"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintEnd_toEndOf="@+id/itemBD_iv4"
+                        app:layout_constraintStart_toStartOf="@+id/itemBD_iv4"
+                        app:layout_constraintTop_toBottomOf="@+id/itemBD_iv4" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
         </LinearLayout>
 
         <androidx.cardview.widget.CardView

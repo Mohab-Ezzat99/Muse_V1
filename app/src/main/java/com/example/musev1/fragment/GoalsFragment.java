@@ -117,7 +117,7 @@ public class GoalsFragment extends Fragment {
             MainActivity.museViewModel.updateDevice(device);
 
             MainActivity.museViewModel.insertGoal(new GoalModel(device.getId(),device.getName(),device.getIcon()
-                    , spinner_agg.getSelectedItemPosition()
+                    , spinner_agg.getSelectedItem().toString()
                     , spinner_values.getSelectedItem().toString(), 0));
 
             bottomSheetDialog.dismiss();

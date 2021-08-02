@@ -444,4 +444,23 @@ public class Repository {
     public void deleteCustomAlertByDeviceId(int deviceId){
         museDao.deleteCustomAlertByDeviceId(deviceId);
     }
+
+    //____________________________________________________________________________________________//
+    //get device info
+
+    public LiveData<GoalModel> getGoalByDeviceId(int deviceId){
+        return museDao.getGoalByDeviceId(deviceId);
+    }
+
+    public LiveData<AlertModel> getAlertByDeviceId(int deviceId){
+        return museDao.getAlertByDeviceId(deviceId);
+    }
+
+    public LiveData<ScheduleModel> getScheduleByDeviceId(int deviceId){
+        return museDao.getScheduleByDeviceId(deviceId);
+    }
+
+    public LiveData<CustomAlertModel> getCustomAlertByDeviceId(int deviceId){
+        return museDao.getCustomAlertByDeviceId(deviceId);
+    }
 }

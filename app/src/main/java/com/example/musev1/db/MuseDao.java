@@ -99,4 +99,18 @@ public interface MuseDao {
 
     @Query("delete from customAlerts_table where deviceId=:deviceId")
     void deleteCustomAlertByDeviceId(int deviceId);
+
+    //____________________________________________________________________________________________//
+    //get device info
+    @Query("select * from goals_table where deviceId=:deviceId")
+    LiveData<GoalModel> getGoalByDeviceId(int deviceId);
+
+    @Query("select * from alerts_table where deviceId=:deviceId")
+    LiveData<AlertModel> getAlertByDeviceId(int deviceId);
+
+    @Query("select * from schedules_table where deviceId=:deviceId")
+    LiveData<ScheduleModel> getScheduleByDeviceId(int deviceId);
+
+    @Query("select * from customAlerts_table where deviceId=:deviceId")
+    LiveData<CustomAlertModel> getCustomAlertByDeviceId(int deviceId);
 }

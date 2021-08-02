@@ -53,27 +53,12 @@ public class RVAddGoalAdapter extends ListAdapter<GoalModel, RVAddGoalAdapter.AG
         holder.iv_icon.setImageResource(goalModel.getPictureId());
         holder.tv_name.setText(goalModel.getDeviceName());
         holder.tv_used.setText(goalModel.getUsageLimit());
+        holder.tv_type.setText(goalModel.getType());
         if (position%2 != 0) {
             holder.tv_prediction.setText(R.string.txt_goal_will_be_achieved);
         } else {
             holder.tv_prediction.setText(R.string.txt_goal_will_not_achieved);
             holder.tv_prediction.setTextColor(ContextCompat.getColor(context, R.color.red));
-        }
-        switch (goalModel.getType()) {
-            case 0:
-                holder.tv_type.setText("Day");
-                break;
-
-            case 1:
-                holder.tv_type.setText("Week");
-                break;
-
-            case 2:
-                holder.tv_type.setText("Month");
-                break;
-
-            case 3:
-                holder.tv_type.setText("Year");
         }
     }
 

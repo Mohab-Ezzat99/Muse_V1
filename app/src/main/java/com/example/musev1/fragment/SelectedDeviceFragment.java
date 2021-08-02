@@ -31,6 +31,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -43,7 +44,6 @@ import com.example.musev1.adapters.OnDeviceItemListener;
 import com.example.musev1.adapters.RVDeviceBotAdapter;
 import com.example.musev1.model.AlertModel;
 import com.example.musev1.model.DeviceModel;
-import com.example.musev1.model.DeviceRequestModel;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.textfield.TextInputEditText;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
@@ -58,9 +58,9 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
     private ChipNavigationBar chipNavigationBar;
     private NavController navControllerChart;
 
-    private TextView tv_name, tv_percent, tv_per,tv_currentV, tv_avgV, tv_consV, tv_estV;
+    private TextView tv_name, tv_percent, tv_per, tv_currentV, tv_avgV, tv_consV, tv_estV;
     private ImageView iv_icon, dialogIv_icon, iv_arrow, iv_custom;
-    private CardView cv_goal, cv_schedules, cv_insight;
+    private CardView cv_goal, cv_schedules, cv_customAlert, cv_insight;
     private SwitchCompat switchCompat;
     private ProgressBar progressBar;
     private DatePickerDialog datePickerDialog;
@@ -68,7 +68,7 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
     private ConstraintLayout constLayout_expand;
     private Spinner spinnerUnit;
     private boolean realtimeSwitch;
-    private int unitPos=0,chipAgg=0;
+    private int unitPos = 0, chipAgg = 0;
 
     private DeviceModel device;
     private int day, month, year, chosenIcon = -1;
@@ -94,6 +94,7 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
         iv_icon = view.findViewById(R.id.selectedD_iv_icon);
         cv_goal = view.findViewById(R.id.selectedD_cv_goal);
         cv_schedules = view.findViewById(R.id.selectedD_cv_schedule);
+        cv_customAlert = view.findViewById(R.id.selectedD_cv_customAlert);
         switchCompat = view.findViewById(R.id.selectedD_switch);
         tv_percent = view.findViewById(R.id.selectedD_progressValue);
         progressBar = view.findViewById(R.id.selectedD_pb);
@@ -225,6 +226,7 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
 
         cv_goal.setOnClickListener(this);
         cv_schedules.setOnClickListener(this);
+        cv_customAlert.setOnClickListener(this);
         iv_custom.setOnClickListener(this);
 
         //refresh realtime
@@ -302,13 +304,85 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
         switch (v.getId()) {
 
             case R.id.selectedD_cv_goal:
-
+                if (device.isHasGoal()) {
+                    View viewG = displayDialog(R.layout.item_add_goal);
+                    ImageView ivG_icon = viewG.findViewById(R.id.itemAG_iv_icon);
+                    TextView tv_name = viewG.findViewById(R.id.itemAG_tv_name);
+                    TextView tv_prediction = viewG.findViewById(R.id.itemAG_predictionV);
+                    TextView tv_used = viewG.findViewById(R.id.itemAG_tv_used);
+                    TextView tv_type = viewG.findViewById(R.id.itemAG_tv_type);
+                    MainActivity.museViewModel.getGoalByDeviceId(device.getId()).observe(getViewLifecycleOwner(), goalModel -> {
+                        ivG_icon.setImageResource(goalModel.getPictureId());
+                        tv_name.setText(goalModel.getDeviceName());
+                        tv_used.setText(goalModel.getUsageLimit());
+                        tv_prediction.setText(R.string.txt_goal_will_be_achieved);
+                        tv_type.setText(goalModel.getType());
+                    });
+                } else
+                    Toast.makeText(getContext(), "No goal found", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.selectedD_cv_schedule:
-                View viewS = displayDialog(R.layout.item_add_schedules);
-                ImageView ivS_icon = viewS.findViewById(R.id.itemAS_iv_icon);
-                ivS_icon.setImageResource(device.getIcon());
+                if (device.isHasSchedule()) {
+                    View viewS = displayDialog(R.layout.item_add_schedules);
+                    ImageView iv_icon = viewS.findViewById(R.id.itemAS_iv_icon);
+                    TextView tv_name = viewS.findViewById(R.id.itemAS_tv_name);
+                    TextView tv_state = viewS.findViewById(R.id.itemAS_tv_state);
+                    TextView tv_later = viewS.findViewById(R.id.itemAS_tv_later);
+                    TextView tv_period = viewS.findViewById(R.id.itemAS_tv_period);
+                    TextView tv_days = viewS.findViewById(R.id.itemAS_tv_days);
+                    Group repeatGroup = viewS.findViewById(R.id.itemAS_repeatGroup);
+                    MainActivity.museViewModel.getScheduleByDeviceId(device.getId()).observe(getViewLifecycleOwner(), scheduleModel -> {
+                        iv_icon.setImageResource(scheduleModel.getPictureId());
+                        tv_name.setText(scheduleModel.getDeviceName());
+                        tv_state.setText(scheduleModel.getState());
+
+                        if (!scheduleModel.getAtTime().equals("")) {
+                            tv_later.setText("At");
+                            tv_period.setText(scheduleModel.getAtTime());
+                        }
+
+                        if (!scheduleModel.getAfterPeriod().equals("")) {
+                            tv_later.setText("After");
+                            tv_period.setText(scheduleModel.getAfterPeriod());
+                        }
+
+                        if (scheduleModel.getRepeat().equals(""))
+                            repeatGroup.setVisibility(View.GONE);
+                        else
+                            tv_days.setText(scheduleModel.getRepeat());
+                    });
+                } else
+                    Toast.makeText(getContext(), "No schedule found", Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.selectedD_cv_customAlert:
+                if (device.isHasCustomAlert()) {
+                    View viewC = displayDialog(R.layout.item_add_custom_alert);
+                    ImageView iv_icon=viewC.findViewById(R.id.itemAC_iv_icon);
+                    TextView tv_name = viewC.findViewById(R.id.itemAC_tv_name);
+                    TextView tv_state = viewC.findViewById(R.id.itemAC_tv_state);
+                    TextView tv_later = viewC.findViewById(R.id.itemAC_tv_later);
+                    TextView tv_period = viewC.findViewById(R.id.itemAC_tv_period);
+                    TextView tv_max = viewC.findViewById(R.id.itemAC_tv_max);
+                    MainActivity.museViewModel.getCustomAlertByDeviceId(device.getId()).observe(getViewLifecycleOwner(), customAlertModel -> {
+                        iv_icon.setImageResource(customAlertModel.getPictureId());
+                        tv_name.setText(customAlertModel.getDeviceName());
+                        tv_state.setText(customAlertModel.getState());
+                        tv_max.setText(customAlertModel.getMaxUsage());
+
+                        if (!customAlertModel.getAtTime().equals("")) {
+                            tv_later.setText("At");
+                            tv_period.setText(customAlertModel.getAtTime());
+                        }
+
+                        if (!customAlertModel.getForPeriod().equals("")) {
+                            tv_later.setText("After");
+                            tv_period.setText(customAlertModel.getForPeriod());
+                        }
+                    });
+                } else
+                    Toast.makeText(getContext(), "No custom alert found", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.selectedD_iv_custom:
