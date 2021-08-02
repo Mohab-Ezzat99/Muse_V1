@@ -54,7 +54,7 @@
             tools:ignore="FragmentTagUsage" />
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/home_cv_insight"
+            android:id="@+id/FHome_cv_insight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="?attr/colorAccent"
@@ -85,7 +85,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <RelativeLayout
-                    android:id="@+id/relativeLayout2"
+                    android:id="@+id/FHome_rl_unit"
                     android:layout_width="@dimen/_74sdp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/_2sdp"
@@ -96,7 +96,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <Spinner
-                        android:id="@+id/home_spinner_unit"
+                        android:id="@+id/FHome_spinner_unit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -131,7 +131,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/tv_tit_cons" />
 
                 <TextView
-                    android:id="@+id/home_tv_currentV"
+                    android:id="@+id/FHome_tv_currentV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="?attr/colorOnSecondary"
@@ -141,13 +141,13 @@
                     app:layout_constraintTop_toTopOf="@+id/tv_current" />
 
                 <ImageView
-                    android:id="@+id/home_iv_arrow"
+                    android:id="@+id/FHome_iv_arrow"
                     android:layout_width="@dimen/_24sdp"
                     android:layout_height="@dimen/_24sdp"
                     android:background="@drawable/ic_arrow_down"
                     android:contentDescription="@string/txt_null"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_current"
-                    app:layout_constraintEnd_toEndOf="@+id/relativeLayout2"
+                    app:layout_constraintEnd_toEndOf="@+id/FHome_rl_unit"
                     app:layout_constraintTop_toTopOf="@+id/tv_current"
                     app:layout_constraintVertical_bias="0" />
 
@@ -159,11 +159,11 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/home_iv_arrow"
+                    app:layout_constraintTop_toBottomOf="@+id/FHome_iv_arrow"
                     app:layout_constraintVertical_bias="0">
 
                     <TextView
-                        android:id="@+id/home_tv_per"
+                        android:id="@+id/FHome_tv_per"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/_4sdp"
@@ -185,10 +185,10 @@
                         android:textSize="@dimen/_14ssp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/home_tv_per" />
+                        app:layout_constraintTop_toBottomOf="@id/FHome_tv_per" />
 
                     <TextView
-                        android:id="@+id/home_tv_averageV"
+                        android:id="@+id/FHome_tv_averageV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/_30sdp"
@@ -198,7 +198,7 @@
                         app:layout_constraintTop_toTopOf="@+id/tv_average" />
 
                     <TextView
-                        android:id="@+id/home_tv_consumption"
+                        android:id="@+id/FHome_tv_consumption"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/_4sdp"
@@ -210,14 +210,14 @@
                         app:layout_constraintTop_toBottomOf="@+id/tv_average" />
 
                     <TextView
-                        android:id="@+id/home_tv_consumedV"
+                        android:id="@+id/FHome_tv_consumedV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/_30sdp"
                         android:textColor="?attr/colorOnSecondary"
                         android:textSize="@dimen/_14ssp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/home_tv_consumption" />
+                        app:layout_constraintTop_toTopOf="@+id/FHome_tv_consumption" />
 
                     <TextView
                         android:id="@+id/tv_est"
@@ -229,10 +229,10 @@
                         android:textSize="@dimen/_14ssp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/home_tv_consumption" />
+                        app:layout_constraintTop_toBottomOf="@+id/FHome_tv_consumption" />
 
                     <TextView
-                        android:id="@+id/home_tv_estV"
+                        android:id="@+id/FHome_tv_estV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/_30sdp"
@@ -245,7 +245,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/home_cv_goal"
+            android:id="@+id/FHome_cv_goal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="?attr/colorAccent"
@@ -254,7 +254,7 @@
             app:cardUseCompatPadding="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/home_cv_insight">
+            app:layout_constraintTop_toBottomOf="@+id/FHome_cv_insight">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -290,7 +290,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/hime_tv_goals" />
 
                 <TextView
-                    android:id="@+id/home_tv_goalUsed"
+                    android:id="@+id/FHome_tv_goalUsed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/_2sdp"
@@ -316,7 +316,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/TUse1" />
 
                 <TextView
-                    android:id="@+id/home_tv_predictionV"
+                    android:id="@+id/FHome_tv_predictionV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -325,21 +325,21 @@
                     android:textColor="@color/green"
                     android:textSize="@dimen/_14ssp"
                     app:layout_constraintBottom_toBottomOf="@+id/TPre1"
-                    app:layout_constraintEnd_toEndOf="@+id/home_tv_goalUsed"
+                    app:layout_constraintEnd_toEndOf="@+id/FHome_tv_goalUsed"
                     app:layout_constraintTop_toTopOf="@+id/TPre1" />
 
                 <TextView
-                    android:id="@+id/home_tv_percent"
+                    android:id="@+id/FHome_tv_percent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/_14ssp"
                     android:text="@string/txt_50"
-                    app:layout_constraintBottom_toBottomOf="@+id/home_pb"
+                    app:layout_constraintBottom_toBottomOf="@+id/FHome_pb"
                     app:layout_constraintStart_toStartOf="@+id/TPre1"
-                    app:layout_constraintTop_toTopOf="@+id/home_pb"/>
+                    app:layout_constraintTop_toTopOf="@+id/FHome_pb"/>
 
                 <ProgressBar
-                    android:id="@+id/home_pb"
+                    android:id="@+id/FHome_pb"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/_16sdp"
@@ -347,8 +347,8 @@
                     android:progress="50"
                     android:progressDrawable="@drawable/shape_progress"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/home_tv_goalUsed"
-                    app:layout_constraintStart_toEndOf="@+id/home_tv_percent"
+                    app:layout_constraintEnd_toEndOf="@+id/FHome_tv_goalUsed"
+                    app:layout_constraintStart_toEndOf="@+id/FHome_tv_percent"
                     app:layout_constraintTop_toBottomOf="@+id/TPre1" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>

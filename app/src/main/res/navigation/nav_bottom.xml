@@ -35,9 +35,9 @@
         tools:layout="@layout/fragment_goals" />
     <fragment
         android:id="@+id/menuFragment"
-        android:name="com.example.musev1.fragment.MenuFragment"
+        android:name="com.example.musev1.fragment.MoreFragment"
         android:label="@string/tit_more"
-        tools:layout="@layout/fragment_menu" >
+        tools:layout="@layout/fragment_more" >
         <action
             android:id="@+id/action_menuFragment_to_schedulesFragment"
             app:destination="@id/schedulesFragment" />

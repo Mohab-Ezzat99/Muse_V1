@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,12 +23,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.musev1.MainActivity;
 import com.example.musev1.R;
-import com.example.musev1.adapters.OnDeviceItemListener;
+import com.example.musev1.interfaces.OnBottomItemListener;
+import com.example.musev1.interfaces.OnDeviceItemListener;
 import com.example.musev1.adapters.RVAddDeviceAdapter;
 import com.example.musev1.adapters.RVDeviceBotAdapter;
 import com.example.musev1.model.AlertModel;
 import com.example.musev1.model.DeviceModel;
-import com.example.musev1.utility.SaveState;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -102,16 +101,6 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
             @Override
             public void OnItemClick(DeviceModel device) {
                 navController.navigate(DevicesFragmentDirections.actionDevicesFragmentToSelectedDeviceFragment(device));
-            }
-
-            @Override
-            public void OnItemClick(AlertModel alertModel) {
-
-            }
-
-            @Override
-            public void OnBottomSheetItemClick(DeviceModel device, int position) {
-
             }
 
             @Override
@@ -194,34 +183,16 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
         RecyclerView rv = bottom_sheet.findViewById(R.id.deviceBotSheet_rv);
         rv.setHasFixedSize(true);
         rv.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        RVDeviceBotAdapter botAdapter = new RVDeviceBotAdapter(getContext());
+        RVDeviceBotAdapter botAdapter = new RVDeviceBotAdapter();
         botAdapter.setList(MainActivity.modelArrayList);
         rv.setAdapter(botAdapter);
 
-        botAdapter.setListener(new OnDeviceItemListener() {
-            @Override
-            public void OnItemClick(DeviceModel device) {
-
-            }
-
-            @Override
-            public void OnItemClick(AlertModel alertModel) {
-
-            }
-
-            @Override
-            public void OnBottomSheetItemClick(DeviceModel device, int position) {
-                //init device
-                Long deviceId=MainActivity.museViewModel.insertDevice(device);
-                MainActivity.museViewModel.insertAlert(new AlertModel(deviceId, device.getName()
-                        , device.getIcon(), "Added successfully"));
-                bottomSheetDialog.dismiss();
-            }
-
-            @Override
-            public void OnItemLongClick(View view, DeviceModel device) {
-
-            }
+        botAdapter.setListener((device, position) -> {
+            //init device
+            Long deviceId=MainActivity.museViewModel.insertDevice(device);
+            MainActivity.museViewModel.insertAlert(new AlertModel(deviceId, device.getName()
+                    , device.getIcon(), "Added successfully"));
+            bottomSheetDialog.dismiss();
         });
 
         //launch bottom sheet

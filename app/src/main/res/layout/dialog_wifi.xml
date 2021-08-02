@@ -14,7 +14,7 @@
         android:layout_margin="@dimen/_4sdp">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/itl_ssid"
+            android:id="@+id/dialogWifi_itl_ssid"
             style="@style/TextInputLayoutStyle"
             android:layout_width="@dimen/_250sdp"
             android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/itl_password"
+            android:id="@+id/dialogWifi_itl_password"
             style="@style/TextInputLayoutStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -48,9 +48,9 @@
             android:hint="@string/hint_password"
             android:textColorHint="@color/gray"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/itl_ssid"
-            app:layout_constraintStart_toStartOf="@+id/itl_ssid"
-            app:layout_constraintTop_toBottomOf="@+id/itl_ssid"
+            app:layout_constraintEnd_toEndOf="@+id/dialogWifi_itl_ssid"
+            app:layout_constraintStart_toStartOf="@+id/dialogWifi_itl_ssid"
+            app:layout_constraintTop_toBottomOf="@+id/dialogWifi_itl_ssid"
             app:layout_constraintVertical_bias=".01"
             app:passwordToggleEnabled="true"
             app:passwordToggleTint="?attr/colorPrimaryVariant">
@@ -123,9 +123,9 @@
             android:indeterminateTint="?attr/colorPrimaryVariant"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/itl_password"
-            app:layout_constraintStart_toStartOf="@+id/itl_password"
-            app:layout_constraintTop_toBottomOf="@+id/itl_password" />
+            app:layout_constraintEnd_toEndOf="@+id/dialogWifi_itl_password"
+            app:layout_constraintStart_toStartOf="@+id/dialogWifi_itl_password"
+            app:layout_constraintTop_toBottomOf="@+id/dialogWifi_itl_password" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

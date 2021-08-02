@@ -49,7 +49,7 @@
         app:layout_constraintVertical_bias=".05" />
 
     <RelativeLayout
-        android:id="@+id/relativeLayout1"
+        android:id="@+id/goalBotSheet_rl_devices"
         android:layout_width="@dimen/_124sdp"
         android:layout_height="wrap_content"
         android:background="@drawable/shape_primary_circle_fill"
@@ -98,7 +98,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <RelativeLayout
-        android:id="@+id/relativeLayout2"
+        android:id="@+id/goalBotSheet_rl_agg"
         android:layout_width="@dimen/_74sdp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_8sdp"
@@ -106,7 +106,7 @@
         android:gravity="center_vertical"
         android:padding="@dimen/_2sdp"
         app:layout_constraintBottom_toBottomOf="@+id/textView11"
-        app:layout_constraintEnd_toEndOf="@+id/relativeLayout1"
+        app:layout_constraintEnd_toEndOf="@+id/goalBotSheet_rl_devices"
         app:layout_constraintHorizontal_bias=".9"
         app:layout_constraintTop_toTopOf="@+id/textView11">
 
@@ -146,14 +146,14 @@
         app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
     <RelativeLayout
-        android:id="@+id/relativeLayout3"
+        android:id="@+id/goalBotSheet_rl_values"
         android:layout_width="@dimen/_74sdp"
         android:layout_height="wrap_content"
         android:background="@drawable/shape_primary_circle_fill"
         android:gravity="center_vertical"
         android:padding="@dimen/_2sdp"
         app:layout_constraintBottom_toBottomOf="@+id/textView12"
-        app:layout_constraintEnd_toEndOf="@+id/relativeLayout2"
+        app:layout_constraintEnd_toEndOf="@+id/goalBotSheet_rl_agg"
         app:layout_constraintTop_toTopOf="@+id/textView12">
 
         <Spinner
@@ -194,7 +194,7 @@
         android:textSize="@dimen/_12ssp"
         app:layout_constraintWidth_percent=".7"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/relativeLayout3"
+        app:layout_constraintEnd_toEndOf="@+id/goalBotSheet_rl_values"
         app:layout_constraintStart_toStartOf="@+id/textView12"
         app:layout_constraintTop_toBottomOf="@+id/textView12"
         app:layout_constraintVertical_bias=".01" />

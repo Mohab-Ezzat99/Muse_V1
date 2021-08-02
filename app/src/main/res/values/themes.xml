@@ -17,18 +17,15 @@
         <item name="colorOnBackground">@color/white_muse</item>
     </style>
 
-    <style name="CustomActivityAnimation" parent="@android:style/Animation.Activity">
-        <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>
-        <item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>
-        <item name="android:activityCloseEnterAnimation">@anim/slide_in_left</item>
-        <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
-    </style>
+    //____________________________________________________________________________________________//
 
     <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="boxStrokeColor">@color/selector_textinputbox</item>
         <item name="boxStrokeWidth">@dimen/_1sdp</item>
         <item name="hintTextColor">@color/selector_textinputbox</item>
     </style>
+
+    //____________________________________________________________________________________________//
 
     <style name="BottomSheetDialogTheme" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/BottomSheetStyle</item>
@@ -38,15 +35,21 @@
         <item name="android:background">@android:color/transparent</item>
     </style>
 
+    //____________________________________________________________________________________________//
+
     <style name="DialogStyle" parent="Theme.MaterialComponents.Light.Dialog.Alert">
         <item name="android:background">@android:color/transparent</item>
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
+    //____________________________________________________________________________________________//
+
     <style name="ToolbarTitleStyle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/_16ssp</item>
     </style>
+
+    //____________________________________________________________________________________________//
 
     <style name="menu_text_style" parent="@android:style/TextAppearance.DeviceDefault.Widget.ActionBar.Menu">
         <item name="android:textSize">@dimen/_10ssp</item>

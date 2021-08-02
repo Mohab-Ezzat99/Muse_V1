@@ -10,16 +10,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.musev1.R;
+import com.example.musev1.interfaces.OnBottomItemListener;
+import com.example.musev1.interfaces.OnDeviceItemListener;
 import com.example.musev1.model.DeviceModel;
 import java.util.ArrayList;
 
 public class RVDeviceBotAdapter extends RecyclerView.Adapter<RVDeviceBotAdapter.DBViewHolder> {
     private ArrayList<DeviceModel> mDevice =new ArrayList<>();
-    private OnDeviceItemListener listener;
-    private final Context context;
+    private OnBottomItemListener listener;
 
-    public RVDeviceBotAdapter(Context context) {
-        this.context = context;
+    public RVDeviceBotAdapter() {
     }
 
     @SuppressLint("InflateParams")
@@ -48,7 +48,7 @@ public class RVDeviceBotAdapter extends RecyclerView.Adapter<RVDeviceBotAdapter.
         notifyDataSetChanged();
     }
 
-    public void setListener(OnDeviceItemListener listener) {
+    public void setListener(OnBottomItemListener listener) {
         this.listener= listener;
     }
 

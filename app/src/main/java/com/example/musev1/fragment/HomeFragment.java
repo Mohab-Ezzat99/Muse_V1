@@ -101,16 +101,16 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
         iv_custom.setOnClickListener(this::showPopup);
 
         // insight inflation
-        spinnerUnit = view.findViewById(R.id.home_spinner_unit);
+        spinnerUnit = view.findViewById(R.id.FHome_spinner_unit);
         // goal inflation
 
         // chip inflation
         chipNavigationBar = view.findViewById(R.id.FHome_chipNav);
-        tv_per = view.findViewById(R.id.home_tv_per);
-        tv_currentV = view.findViewById(R.id.home_tv_currentV);
-        tv_avgV = view.findViewById(R.id.home_tv_averageV);
-        tv_consV = view.findViewById(R.id.home_tv_consumedV);
-        tv_estV = view.findViewById(R.id.home_tv_estV);
+        tv_per = view.findViewById(R.id.FHome_tv_per);
+        tv_currentV = view.findViewById(R.id.FHome_tv_currentV);
+        tv_avgV = view.findViewById(R.id.FHome_tv_averageV);
+        tv_consV = view.findViewById(R.id.FHome_tv_consumedV);
+        tv_estV = view.findViewById(R.id.FHome_tv_estV);
 
         //display insight info depend on unit spinner
         spinnerUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -161,9 +161,9 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
         });
 
         // arrow info
-        cv_insight = view.findViewById(R.id.home_cv_insight);
+        cv_insight = view.findViewById(R.id.FHome_cv_insight);
         constLayout_expand = view.findViewById(R.id.constLayoutExpanded);
-        iv_arrow=view.findViewById(R.id.home_iv_arrow);
+        iv_arrow=view.findViewById(R.id.FHome_iv_arrow);
         iv_arrow.setOnClickListener(v -> {
             if (constLayout_expand.getVisibility() == View.GONE) {
                 TransitionManager.beginDelayedTransition(cv_insight, new AutoTransition());

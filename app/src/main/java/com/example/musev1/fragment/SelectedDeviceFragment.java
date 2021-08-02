@@ -40,7 +40,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.musev1.MainActivity;
 import com.example.musev1.R;
-import com.example.musev1.adapters.OnDeviceItemListener;
+import com.example.musev1.interfaces.OnBottomItemListener;
+import com.example.musev1.interfaces.OnDeviceItemListener;
 import com.example.musev1.adapters.RVDeviceBotAdapter;
 import com.example.musev1.model.AlertModel;
 import com.example.musev1.model.DeviceModel;
@@ -470,32 +471,14 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
         rv.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
         // adapter with click listener
-        RVDeviceBotAdapter botAdapter = new RVDeviceBotAdapter(getContext());
+        RVDeviceBotAdapter botAdapter = new RVDeviceBotAdapter();
         botAdapter.setList(MainActivity.modelArrayList);
         rv.setAdapter(botAdapter);
 
-        botAdapter.setListener(new OnDeviceItemListener() {
-            @Override
-            public void OnItemClick(DeviceModel device1) {
-
-            }
-
-            @Override
-            public void OnItemClick(AlertModel alertModel) {
-
-            }
-
-            @Override
-            public void OnBottomSheetItemClick(DeviceModel device, int position) {
-                chosenIcon = device.getIcon();
-                dialogIv_icon.setImageResource(chosenIcon);
-                bottomSheetDialog.dismiss();
-            }
-
-            @Override
-            public void OnItemLongClick(View view, DeviceModel device) {
-
-            }
+        botAdapter.setListener((device, position) -> {
+            chosenIcon = device.getIcon();
+            dialogIv_icon.setImageResource(chosenIcon);
+            bottomSheetDialog.dismiss();
         });
 
         //launch bottom sheet

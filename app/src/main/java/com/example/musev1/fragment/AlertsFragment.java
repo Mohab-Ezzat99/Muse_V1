@@ -18,7 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.musev1.MainActivity;
 import com.example.musev1.R;
-import com.example.musev1.adapters.OnDeviceItemListener;
+import com.example.musev1.interfaces.OnAlertItemListener;
+import com.example.musev1.interfaces.OnDeviceItemListener;
 import com.example.musev1.adapters.RVAlertAdapter;
 import com.example.musev1.model.AlertModel;
 import com.example.musev1.model.DeviceModel;
@@ -76,28 +77,11 @@ public class AlertsFragment extends Fragment {
             adapter.submitList(deviceModels);
         });
 
-        adapter.setListener(new OnDeviceItemListener() {
-            @Override
-            public void OnItemClick(DeviceModel device) {
-
-            }
-
-            @Override
-            public void OnItemClick(AlertModel alertModel) {
-                MainActivity.museViewModel.getDevice(alertModel.getDeviceId()).observe(getViewLifecycleOwner(),
-                        deviceModel -> navController.navigate(AlertsFragmentDirections.actionAlertsFragmentToSelectedDeviceFragment(deviceModel)));
-            }
-
-            @Override
-            public void OnBottomSheetItemClick(DeviceModel device, int position) {
-
-            }
-
-            @Override
-            public void OnItemLongClick(View view, DeviceModel device) {
-
-            }
-        });
+        adapter.setListener(alertModel ->
+                MainActivity.museViewModel.getDevice(alertModel.getDeviceId())
+                        .observe(getViewLifecycleOwner(), deviceModel ->
+                                navController.navigate(AlertsFragmentDirections
+                                        .actionAlertsFragmentToSelectedDeviceFragment(deviceModel))));
     }
 
     private void setupSwipe()

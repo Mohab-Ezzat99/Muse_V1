@@ -1,10 +1,10 @@
 package com.example.musev1.model;
 
-public class NavMenuModel {
+public class NavMoreModel {
     private int icon;
     private String name;
 
-    public NavMenuModel(int icon, String name) {
+    public NavMoreModel(int icon, String name) {
         this.icon = icon;
         this.name = name;
     }

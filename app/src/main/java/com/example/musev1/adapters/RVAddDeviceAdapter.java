@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.musev1.MainActivity;
 import com.example.musev1.R;
+import com.example.musev1.interfaces.OnDeviceItemListener;
 import com.example.musev1.model.DeviceModel;
 
 import java.util.ArrayList;

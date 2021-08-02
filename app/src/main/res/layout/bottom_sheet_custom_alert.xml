@@ -50,7 +50,7 @@
         app:layout_constraintVertical_bias=".05" />
 
     <RelativeLayout
-        android:id="@+id/relativeLayout1"
+        android:id="@+id/customAlertBotSheet_rl_agg"
         android:layout_width="@dimen/_124sdp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_8sdp"
@@ -95,20 +95,20 @@
         android:textColor="?attr/colorOnSecondary"
         android:textSize="@dimen/_14ssp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/relativeLayout2"
+        app:layout_constraintBottom_toBottomOf="@+id/customAlertBotSheet_rl_state"
         app:layout_constraintStart_toStartOf="@+id/textView8"
-        app:layout_constraintTop_toTopOf="@+id/relativeLayout2" />
+        app:layout_constraintTop_toTopOf="@+id/customAlertBotSheet_rl_state" />
 
     <RelativeLayout
-        android:id="@+id/relativeLayout2"
+        android:id="@+id/customAlertBotSheet_rl_state"
         android:layout_width="@dimen/_74sdp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_8sdp"
         android:background="@drawable/shape_primary_circle_fill"
         android:gravity="center_vertical"
         android:padding="@dimen/_2sdp"
-        app:layout_constraintEnd_toEndOf="@+id/relativeLayout1"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout1">
+        app:layout_constraintEnd_toEndOf="@+id/customAlertBotSheet_rl_agg"
+        app:layout_constraintTop_toBottomOf="@+id/customAlertBotSheet_rl_agg">
 
         <Spinner
             android:id="@+id/customAlertBotSheet_spinner_state"
@@ -140,7 +140,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="@+id/textView8"
-        app:layout_constraintTop_toTopOf="@+id/customAlertBotSheet_relativeLayout_at">
+        app:layout_constraintTop_toTopOf="@+id/customAlertBotSheet_rl_at">
 
         <RadioButton
             android:id="@+id/customAlertBotSheet_rb_at"
@@ -161,15 +161,15 @@
     </RadioGroup>
 
     <RelativeLayout
-        android:id="@+id/customAlertBotSheet_relativeLayout_at"
+        android:id="@+id/customAlertBotSheet_rl_at"
         android:layout_width="@dimen/_74sdp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_8sdp"
         android:background="@drawable/shape_primary_circle_fill"
         android:gravity="center_vertical"
         android:padding="@dimen/_2sdp"
-        app:layout_constraintEnd_toEndOf="@+id/relativeLayout1"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout2">
+        app:layout_constraintEnd_toEndOf="@+id/customAlertBotSheet_rl_agg"
+        app:layout_constraintTop_toBottomOf="@+id/customAlertBotSheet_rl_state">
 
         <Spinner
             android:id="@+id/customAlertBotSheet_spinner_at"
@@ -196,7 +196,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/customAlertBotSheet_relativeLayout_after"
+        android:id="@+id/customAlertBotSheet_rl_after"
         android:layout_width="@dimen/_74sdp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_4sdp"
@@ -204,8 +204,8 @@
         android:gravity="center_vertical"
         android:padding="@dimen/_2sdp"
         android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@+id/relativeLayout1"
-        app:layout_constraintTop_toBottomOf="@+id/customAlertBotSheet_relativeLayout_at">
+        app:layout_constraintEnd_toEndOf="@+id/customAlertBotSheet_rl_agg"
+        app:layout_constraintTop_toBottomOf="@+id/customAlertBotSheet_rl_at">
 
         <Spinner
             android:id="@+id/customAlertBotSheet_spinner_after"
@@ -256,20 +256,20 @@
         android:textColor="?attr/colorOnSecondary"
         android:textSize="@dimen/_14ssp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/relativeLayout4"
+        app:layout_constraintBottom_toBottomOf="@+id/customAlertBotSheet_rl_max"
         app:layout_constraintStart_toStartOf="@+id/textView8"
-        app:layout_constraintTop_toTopOf="@+id/relativeLayout4" />
+        app:layout_constraintTop_toTopOf="@+id/customAlertBotSheet_rl_max" />
 
     <RelativeLayout
-        android:id="@+id/relativeLayout4"
+        android:id="@+id/customAlertBotSheet_rl_max"
         android:layout_width="@dimen/_74sdp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_8sdp"
         android:background="@drawable/shape_primary_circle_fill"
         android:gravity="center_vertical"
         android:padding="@dimen/_2sdp"
-        app:layout_constraintEnd_toEndOf="@+id/customAlertBotSheet_relativeLayout_after"
-        app:layout_constraintTop_toBottomOf="@+id/customAlertBotSheet_relativeLayout_after">
+        app:layout_constraintEnd_toEndOf="@+id/customAlertBotSheet_rl_after"
+        app:layout_constraintTop_toBottomOf="@+id/customAlertBotSheet_rl_after">
 
         <Spinner
             android:id="@+id/customAlertBotSheet_spinner_max"
@@ -294,5 +294,4 @@
             app:tint="?attr/colorOnSecondary" />
 
     </RelativeLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

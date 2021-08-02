@@ -106,12 +106,9 @@
     <string name="txt_estimation">Estimation</string>
     <string name="txt_20_kw_260egp">20 KW</string>
     <string name="txt_used">Used</string>
-    <string name="txt_100kw_1500kw">100KW/50EGP</string>
     <string name="txt_predicted">Predicted</string>
     <string name="txt_goal_will_be_achieved">Goal will be achieve</string>
     <string name="txt_goal_will_not_achieved">Goal won\'t achieve</string>
-    <string name="txt_used_100kw">Used :100 KW</string>
-    <string name="txt_estimated_200kw">Estimated :200 KW</string>
 
     <!--_________________________________________________________________________________________-->
     <!--fragment login-->
@@ -121,9 +118,7 @@
     <string name="hint_password">Password</string>
 
     <!--Text-->
-    <string name="txt_remember_me">Remember me</string>
     <string name="txt_forgot_password">Forgot password?</string>
-    <string name="txt_or">OR</string>
     <string name="txt_don_t_have_an_account">Don\'t have an account?</string>
     <string name="txt_sign_up">Sign Up</string>
 
@@ -147,8 +142,6 @@
     <string name="txt_wi_fi_connection">Wi-Fi connection</string>
     <string name="txt_muse_will_be_configured_to_access_this_network">
         Muse will be configured to access this network</string>
-    <string name="txt_etisalat545">Etisalat545</string>
-    <string name="txt_connect_to_another_wi_fi">Connect to another Wi-Fi!</string>
 
     <!--_________________________________________________________________________________________-->
     <!--fragment on third-->
@@ -162,16 +155,13 @@
     <!--hint -->
     <string name="hint_full_name">Full Name</string>
     <string name="hint_confirm_password">Confirm Password</string>
-    <string name="hint_device_id">Device ID</string>
     <!--    Button text-->
     <string name="BTxt_register">Register</string>
 
     <!--_________________________________________________________________________________________-->
     <!--fragment selected device-->
     <string name="txt_50">50%</string>
-    <string name="txt_turn_on_for_more_3_hrs">turn on for more 3 hrs!</string>
     <string name="txt_schedule">Schedule</string>
-    <string name="txt_is_set_to_turn_off_at_2_00_am_everyday">is set to turn off at 2:00 am everyday</string>
 
     <!--_________________________________________________________________________________________-->
     <!--Navigation bottom-->
@@ -188,12 +178,7 @@
     <string name="tit_tv">TV</string>
     <string name="tit_another_device">Another device</string>
     <string name="txt_for_smart_amp_easy_life"><![CDATA[For smart & easy life]]></string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="txt_billing">Billing</string>
-    <string name="txt_report">Report</string>
-    <string name="txt_deviceSettings">Device settings</string>
     <string name="txt_there_are_no_alerts">There are no alerts</string>
-    <string name="txt_icon">Icon</string>
     <string name="hint_device_name">Device name</string>
     <string name="txt_custom_alert">Custom alerts</string>
     <string name="txt_add_schedule">Add schedule</string>
@@ -206,39 +191,19 @@
     <string name="hint_ssid">SSID</string>
     <string name="tit_settings">Settings</string>
     <string name="txt_repeat">Repeat</string>
-    <string name="txt_sat">Sat</string>
-    <string name="txt_sun">Sun</string>
-    <string name="txt_mon">Mon</string>
-    <string name="txt_tue">Tue</string>
-    <string name="txt_wed">Wed</string>
-    <string name="txt_thu">Thu</string>
-    <string name="txt_fri">Fri</string>
-    <string name="txt_select_days">Select days</string>
     <string name="txt_at">At</string>
     <string name="txt_after">After</string>
     <string name="txt_add_custom_alert">Add custom alert</string>
     <string name="txt_when">When</string>
     <string name="txt_ON">ON</string>
-    <string name="txt_On">On</string>
-    <string name="txt_12_am">12 AM</string>
     <string name="txt_add_new_plug">Add new plug!</string>
     <string name="txt_select_device">Select device</string>
     <string name="txt_consumed">Consumed</string>
-    <string name="txt_edit_custom_alert">Edit custom alert</string>
-    <string name="txt_edit_goal">Edit goal</string>
-    <string name="txt_edit_schedule">Edit schedule</string>
-    <string name="txt_everyday">Everyday</string>
     <string name="txt_realtime">Realtime</string>
     <string name="txt_save">Save</string>
     <string name="txt_delete">Delete</string>
     <string name="txt_max_usage">Max usage</string>
     <string name="txt_loading">Loading…</string>
-    <string name="txt_tv_is_set_to_turn_off_at_12_00_everyday">TV is set to turn off at 12:00 Everyday</string>
-    <string name="txt_30_w">30 W</string>
-    <string name="txt_80_w">80 W</string>
-    <string name="txt_120_w">120 W</string>
-    <string name="txt_45_w">45 W</string>
     <string name="txt_160_w">160 W</string>
-    <string name="txt_250_w">250 W</string>
     <string name="txt_turn">Turn</string>
 </resources>

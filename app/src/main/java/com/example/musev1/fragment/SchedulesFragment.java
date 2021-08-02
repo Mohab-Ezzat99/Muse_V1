@@ -122,8 +122,8 @@ public class SchedulesFragment extends Fragment {
         //radio group
         RadioGroup radioGroup=bottom_sheet.findViewById(R.id.schedulesBotSheet_rg);
         RelativeLayout relativeLayout_at,relativeLayout_after;
-        relativeLayout_at=bottom_sheet.findViewById(R.id.schedulesBotSheet_relativeLayout_at);
-        relativeLayout_after=bottom_sheet.findViewById(R.id.schedulesBotSheet_relativeLayout_after);
+        relativeLayout_at=bottom_sheet.findViewById(R.id.schedulesBotSheet_rl_at);
+        relativeLayout_after=bottom_sheet.findViewById(R.id.schedulesBotSheet_rl_after);
         radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
             switch (checkedId){
                 case R.id.schedulesBotSheet_rb_at:

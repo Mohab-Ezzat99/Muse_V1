@@ -26,6 +26,9 @@ public class SaveState {
         editor=sharedPreferences.edit();
     }
 
+    //____________________________________________________________________________________________//
+    //api token
+
     public static void setToken(String token) {
         editor.putString(TOKEN,token);
         editor.apply();
@@ -34,6 +37,21 @@ public class SaveState {
     public static String getToken() {
         return sharedPreferences.getString(TOKEN,null);
     }
+
+    //____________________________________________________________________________________________//
+    //on boarding
+
+    public static boolean getShownOnBoarding() {
+        return sharedPreferences.getBoolean(ON_BOARDING, false);
+    }
+
+    public static void setShownOnBoarding(boolean isShown) {
+        editor.putBoolean(ON_BOARDING, isShown);
+        editor.apply();
+    }
+
+    //____________________________________________________________________________________________//
+    //dark mode
 
     public static void setDarkModeState(boolean b){
         editor.putBoolean(DARK_MODE,b);
@@ -44,6 +62,9 @@ public class SaveState {
         return sharedPreferences.getBoolean(DARK_MODE,false);
     }
 
+    //____________________________________________________________________________________________//
+    //notification in more tab
+
     public static void setNotificationState(boolean b) {
         editor.putBoolean(NOTIFICATION, b);
         editor.apply();
@@ -52,6 +73,9 @@ public class SaveState {
     public static boolean getNotificationState() {
         return sharedPreferences.getBoolean(NOTIFICATION, true);
     }
+
+    //____________________________________________________________________________________________//
+    //alert tab
 
     public static void setLastAlert(int counter) {
         editor.putInt(NEW_ALERT, counter);
@@ -62,14 +86,8 @@ public class SaveState {
         return sharedPreferences.getInt(NEW_ALERT, 0);
     }
 
-    public static boolean getShownOnBoarding() {
-        return sharedPreferences.getBoolean(ON_BOARDING, false);
-    }
-
-    public static void setShownOnBoarding(boolean isShown) {
-        editor.putBoolean(ON_BOARDING, isShown);
-        editor.apply();
-    }
+    //____________________________________________________________________________________________//
+    //internet connection
 
     public static boolean checkConnection(Context context) {
         final ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

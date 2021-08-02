@@ -13,17 +13,17 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.musev1.R;
-import com.example.musev1.model.NavMenuModel;
+import com.example.musev1.model.NavMoreModel;
 import com.example.musev1.utility.SaveState;
 
 import java.util.ArrayList;
 
-public class RVNavMenuAdapter extends RecyclerView.Adapter<RVNavMenuAdapter.NMViewHolder> {
-    private ArrayList<NavMenuModel> NavMenuModels = new ArrayList<>();
+public class RVNavMoreAdapter extends RecyclerView.Adapter<RVNavMoreAdapter.NMViewHolder> {
+    private ArrayList<NavMoreModel> navMoreModels = new ArrayList<>();
     private OnItemClickListener listener;
     private final Context context;
 
-    public RVNavMenuAdapter(Context context) {
+    public RVNavMoreAdapter(Context context) {
         this.context = context;
     }
 
@@ -31,15 +31,15 @@ public class RVNavMenuAdapter extends RecyclerView.Adapter<RVNavMenuAdapter.NMVi
     @NonNull
     @Override
     public NMViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new NMViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_nav_menu, parent, false));
+        return new NMViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_nav_more, parent, false));
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     public void onBindViewHolder(@NonNull NMViewHolder holder, int position) {
-        NavMenuModel NavMenuModel = NavMenuModels.get(position);
-        holder.iv_icon.setImageDrawable(context.getResources().getDrawable(NavMenuModel.getIcon(),null));
-        holder.tv_name.setText(NavMenuModel.getName());
+        NavMoreModel NavMoreModel = navMoreModels.get(position);
+        holder.iv_icon.setImageDrawable(context.getResources().getDrawable(NavMoreModel.getIcon(),null));
+        holder.tv_name.setText(NavMoreModel.getName());
         holder.pos=position;
         if (position == 2 || position == 3) {
             holder.switchCompat.setVisibility(View.VISIBLE);
@@ -58,11 +58,11 @@ public class RVNavMenuAdapter extends RecyclerView.Adapter<RVNavMenuAdapter.NMVi
 
     @Override
     public int getItemCount() {
-        return NavMenuModels.size();
+        return navMoreModels.size();
     }
 
-    public void addItem(NavMenuModel NavMenuModel) {
-        this.NavMenuModels.add(NavMenuModel);
+    public void addItem(NavMoreModel NavMoreModel) {
+        this.navMoreModels.add(NavMoreModel);
         notifyDataSetChanged();
     }
 

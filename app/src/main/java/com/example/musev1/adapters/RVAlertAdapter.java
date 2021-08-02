@@ -14,11 +14,13 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.musev1.R;
+import com.example.musev1.interfaces.OnAlertItemListener;
+import com.example.musev1.interfaces.OnDeviceItemListener;
 import com.example.musev1.model.AlertModel;
 
 public class RVAlertAdapter extends ListAdapter<AlertModel, RVAlertAdapter.AlertViewHolder> {
     private final Context context;
-    private OnDeviceItemListener listener;
+    private OnAlertItemListener listener;
 
     private static final DiffUtil.ItemCallback<AlertModel> DIFF_CALLBACK = new DiffUtil.ItemCallback<AlertModel>() {
         @Override
@@ -58,7 +60,7 @@ public class RVAlertAdapter extends ListAdapter<AlertModel, RVAlertAdapter.Alert
         return getItem(position);
     }
 
-    public void setListener(OnDeviceItemListener listener) {
+    public void setListener(OnAlertItemListener listener) {
         this.listener = listener;
     }
 

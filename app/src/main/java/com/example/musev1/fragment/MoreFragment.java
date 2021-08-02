@@ -19,25 +19,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.musev1.MainActivity;
 import com.example.musev1.R;
-import com.example.musev1.adapters.RVNavMenuAdapter;
-import com.example.musev1.model.NavMenuModel;
+import com.example.musev1.adapters.RVNavMoreAdapter;
+import com.example.musev1.model.NavMoreModel;
 import com.example.musev1.utility.SaveState;
 
 import java.util.Objects;
 
-public class MenuFragment extends Fragment {
+public class MoreFragment extends Fragment {
 
     private NavController navController_main;
     private NavController navController_start;
 
-    public MenuFragment() {
+    public MoreFragment() {
         // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_menu, container, false);
+        return inflater.inflate(R.layout.fragment_more, container, false);
     }
 
     @Override
@@ -56,17 +56,17 @@ public class MenuFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         RecyclerView recyclerView = view.findViewById(R.id.FMenu_rv);
-        RVNavMenuAdapter adapter = new RVNavMenuAdapter(getContext());
-        adapter.addItem(new NavMenuModel(R.drawable.ic_schedules, "Schedules"));
-        adapter.addItem(new NavMenuModel(R.drawable.ic_custom_alert, "Custom alerts"));
-        adapter.addItem(new NavMenuModel(R.drawable.ic_notification, "Notifications"));
-        adapter.addItem(new NavMenuModel(R.drawable.ic_moon, "Dark mode"));
-        adapter.addItem(new NavMenuModel(R.drawable.ic_contactus, "Contact us"));
-        adapter.addItem(new NavMenuModel(R.drawable.ic_logout, "Logout"));
+        RVNavMoreAdapter adapter = new RVNavMoreAdapter(getContext());
+        adapter.addItem(new NavMoreModel(R.drawable.ic_schedules, "Schedules"));
+        adapter.addItem(new NavMoreModel(R.drawable.ic_custom_alert, "Custom alerts"));
+        adapter.addItem(new NavMoreModel(R.drawable.ic_notification, "Notifications"));
+        adapter.addItem(new NavMoreModel(R.drawable.ic_moon, "Dark mode"));
+        adapter.addItem(new NavMoreModel(R.drawable.ic_contactus, "Contact us"));
+        adapter.addItem(new NavMoreModel(R.drawable.ic_logout, "Logout"));
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        adapter.setListener(new RVNavMenuAdapter.OnItemClickListener() {
+        adapter.setListener(new RVNavMoreAdapter.OnItemClickListener() {
             @SuppressLint("QueryPermissionsNeeded")
             @Override
             public void onItemClick(int position) {

@@ -107,8 +107,8 @@ public class CustomAlertsFragment extends Fragment {
         //radio group
         RadioGroup radioGroup = bottom_sheet.findViewById(R.id.customAlertBotSheet_rg);
         RelativeLayout relativeLayout_at, relativeLayout_after;
-        relativeLayout_at = bottom_sheet.findViewById(R.id.customAlertBotSheet_relativeLayout_at);
-        relativeLayout_after = bottom_sheet.findViewById(R.id.customAlertBotSheet_relativeLayout_after);
+        relativeLayout_at = bottom_sheet.findViewById(R.id.customAlertBotSheet_rl_at);
+        relativeLayout_after = bottom_sheet.findViewById(R.id.customAlertBotSheet_rl_after);
         radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
             switch (checkedId) {
                 case R.id.customAlertBotSheet_rb_at:

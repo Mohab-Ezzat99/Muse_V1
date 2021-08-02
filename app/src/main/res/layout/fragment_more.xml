@@ -10,10 +10,9 @@
         android:id="@+id/FMenu_rv"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        tools:listitem="@layout/item_nav_menu"
+        tools:listitem="@layout/item_nav_more"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
