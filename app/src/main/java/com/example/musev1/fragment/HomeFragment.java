@@ -54,7 +54,7 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
     private CardView cv_insight;
 
     // spinner
-    private Spinner spinnerUnit, spinnerAgg;
+    private Spinner spinnerUnit;
     private TextView tv_per, tv_currentV, tv_avgV, tv_consV, tv_estV;
     private boolean realtimeSwitch;
     private int unitPos=0, chipAgg =0;
@@ -103,7 +103,6 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
         // insight inflation
         spinnerUnit = view.findViewById(R.id.home_spinner_unit);
         // goal inflation
-        spinnerAgg = view.findViewById(R.id.home_spinner_aggregation);
 
         // chip inflation
         chipNavigationBar = view.findViewById(R.id.FHome_chipNav);
@@ -120,20 +119,6 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 unitPos = position;
                 initData();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        //catch goal info depend on aggregation
-        spinnerAgg.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
             }
 
             @Override

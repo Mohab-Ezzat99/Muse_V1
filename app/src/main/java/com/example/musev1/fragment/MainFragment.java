@@ -53,7 +53,7 @@ public class MainFragment extends Fragment {
         navControllerMain = Navigation.findNavController(requireActivity(), R.id.main_fragment);
         navControllerMain.addOnDestinationChangedListener((controller, destination, arguments) -> {
             if (destination.getId() == R.id.alertsFragment) {
-                SaveState.setNewAlert(0);
+                SaveState.setLastAlert(0);
                 bottomNavigationView.removeBadge(R.id.alertsFragment);
             }
         });
@@ -75,11 +75,13 @@ public class MainFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         if(SaveState.getLastAlerts()!=0)
             bottomNavigationView.showBadge(R.id.alertsFragment).setNumber(SaveState.getLastAlerts());
-//        MainActivity.museViewModel.getNewAlerts().observe(requireActivity(), integer -> {
-//            if(integer!=0)
-//                bottomNavigationView.showBadge(R.id.alertsFragment).setNumber(integer);
-//            else
-//                bottomNavigationView.removeBadge(R.id.alertsFragment);
-//        });
+        MainActivity.museViewModel.getNewAlerts().observe(requireActivity(), integer -> {
+            if(integer>0) {
+                bottomNavigationView.showBadge(R.id.alertsFragment).setNumber(integer);
+                SaveState.setLastAlert(integer);
+            }
+            else
+                bottomNavigationView.removeBadge(R.id.alertsFragment);
+        });
     }
 }

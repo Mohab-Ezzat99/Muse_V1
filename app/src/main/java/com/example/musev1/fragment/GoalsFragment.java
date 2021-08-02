@@ -21,22 +21,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.musev1.MainActivity;
 import com.example.musev1.R;
 import com.example.musev1.adapters.RVAddGoalAdapter;
-import com.example.musev1.model.DeviceRequestModel;
+import com.example.musev1.model.DeviceModel;
 import com.example.musev1.model.GoalModel;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.List;
 import java.util.Objects;
-
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.schedulers.Schedulers;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class GoalsFragment extends Fragment {
 
@@ -44,7 +35,7 @@ public class GoalsFragment extends Fragment {
     private RVAddGoalAdapter adapter;
     private Group not_add;
     private String[] strings;
-    private List<DeviceRequestModel> result_devices;
+    private List<DeviceModel> result_devices;
 
     public GoalsFragment() {
         // Required empty public constructor
@@ -74,8 +65,25 @@ public class GoalsFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         setupSwipe();
 
-        getAllDevicesReq(0, 0);
-        getAllGoalsReq();
+        MainActivity.museViewModel.getAllGoals().observe(getViewLifecycleOwner(), goalModels -> {
+            if (goalModels.size() != 0) {
+                // visibility
+                not_add.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+            } else {
+                // visibility
+                not_add.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
+            }
+            adapter.submitList(goalModels);
+        });
+
+        MainActivity.museViewModel.getAvailableGoals().observe(getViewLifecycleOwner(), deviceModels -> {
+            result_devices = deviceModels;
+            strings = new String[deviceModels.size()];
+            for (int i = 0; i < deviceModels.size(); i++)
+                strings[i] = deviceModels.get(i).getName();
+        });
 
         // fab add
         FloatingActionButton fab_add = view.findViewById(R.id.FGoals_fab_add);
@@ -100,42 +108,18 @@ public class GoalsFragment extends Fragment {
 
         Spinner spinner_agg = bottom_sheet.findViewById(R.id.goalBotSheet_spinner_agg);
         Spinner spinner_values = bottom_sheet.findViewById(R.id.goalBotSheet_spinner_values);
-        int usage = 0;
-
-        switch (spinner_values.getSelectedItemPosition()) {
-            case 0:
-                usage = 100;
-                break;
-
-            case 1:
-                usage = 200;
-                break;
-
-            case 2:
-                usage = 300;
-        }
 
         Button btn_submit = bottom_sheet.findViewById(R.id.goalBotSheet_btn_submit);
-        int finalUsage = usage;
         btn_submit.setOnClickListener(v1 -> {
             // add item to rv
-            DeviceRequestModel device = result_devices.get(spinner_device.getSelectedItemPosition());
-            GoalModel goalModel = new GoalModel(device.getId(), spinner_agg.getSelectedItemPosition(), finalUsage, 0);
-            MainActivity.museViewModel.addGoal(goalModel).enqueue(new Callback<GoalModel>() {
-                @Override
-                public void onResponse(@NotNull Call<GoalModel> call, @NotNull Response<GoalModel> response) {
-                    if (response.isSuccessful()) {
-                        Toast.makeText(getContext(), "Added successfully", Toast.LENGTH_SHORT).show();
-                        getAllGoalsReq();
-                        bottomSheetDialog.dismiss();
-                    } else Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
-                }
+            DeviceModel device = result_devices.get(spinner_device.getSelectedItemPosition());
+            device.setHasGoal(true);
+            MainActivity.museViewModel.updateDevice(device);
 
-                @Override
-                public void onFailure(@NotNull Call<GoalModel> call, @NotNull Throwable t) {
-                    Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
+            MainActivity.museViewModel.insertGoal(new GoalModel(device.getId(),device.getName(),device.getIcon()
+                    , spinner_agg.getSelectedItemPosition()
+                    , spinner_values.getSelectedItem().toString(), 0));
+
             bottomSheetDialog.dismiss();
         });
 
@@ -156,72 +140,18 @@ public class GoalsFragment extends Fragment {
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 
                 GoalModel goalModel = adapter.getItemAt(viewHolder.getAdapterPosition());
-                MainActivity.displayLoadingDialog();
-                MainActivity.museViewModel.deleteGoalById(goalModel.getId()).enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
-                        if (response.isSuccessful()) {
-                            Toast.makeText(getContext(), "Deleted successfully", Toast.LENGTH_SHORT).show();
-                            MainActivity.progressDialog.dismiss();
-                            getAllGoalsReq();
-                        } else {
-                            Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
-                            MainActivity.progressDialog.dismiss();
-                        }
-                    }
 
-                    @Override
-                    public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
-                        Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                        MainActivity.progressDialog.dismiss();
-                    }
-                });
+                MainActivity.museViewModel.getDevice(goalModel.getDeviceId())
+                        .observe(getViewLifecycleOwner(), deviceModel -> {
+                            deviceModel.setHasGoal(false);
+                            MainActivity.museViewModel.updateDevice(deviceModel);
+                        });
+
+                MainActivity.museViewModel.deleteGoal(goalModel);
             }
         };
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
-    }
-
-    public void getAllDevicesReq(int aggregation, int unit) {
-        MainActivity.displayLoadingDialog();
-        MainActivity.museViewModel.getAllDevicesRequest(aggregation, unit)
-                .subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(result -> {
-                            result_devices = result;
-                            strings = new String[result.size()];
-                            for (int i = 0; i < result.size(); i++)
-                                strings[i] = result.get(i).getName();
-                            MainActivity.progressDialog.dismiss();
-                        },
-                        error -> {
-                            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                            MainActivity.progressDialog.dismiss();
-                        });
-    }
-
-    public void getAllGoalsReq() {
-        MainActivity.displayLoadingDialog();
-        MainActivity.museViewModel.getAllGoalsRequest()
-                .subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(result -> {
-                            if (result.size() != 0) {
-                                // visibility
-                                not_add.setVisibility(View.GONE);
-                                recyclerView.setVisibility(View.VISIBLE);
-                            } else {
-                                // visibility
-                                not_add.setVisibility(View.VISIBLE);
-                                recyclerView.setVisibility(View.GONE);
-                            }
-                            adapter.submitList(result);
-                            MainActivity.progressDialog.dismiss();
-                        },
-                        error -> {
-                            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
-                            MainActivity.progressDialog.dismiss();
-                        });
     }
 }

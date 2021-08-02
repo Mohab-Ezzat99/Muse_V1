@@ -5,6 +5,7 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.musev1.model.AlertModel;
 import com.example.musev1.model.AuthModel;
@@ -17,6 +18,7 @@ import com.example.musev1.model.InsightModel;
 import com.example.musev1.model.LoginResponseModel;
 import com.example.musev1.model.ScheduleModel;
 import com.example.musev1.repository.Repository;
+import com.example.musev1.utility.SaveState;
 
 import java.util.List;
 
@@ -26,6 +28,7 @@ import retrofit2.Call;
 
 public class MuseViewModel extends AndroidViewModel {
     private Repository repository;
+    private MutableLiveData<Integer> liveCount=new MutableLiveData<>();
 
     public MuseViewModel(@NonNull Application application) {
         super(application);
@@ -179,7 +182,14 @@ public class MuseViewModel extends AndroidViewModel {
     }
 
     public void deleteDevice(DeviceModel device) {
+        if(SaveState.getLastAlerts()!=0)
+            liveCount.setValue(SaveState.getLastAlerts()-1);
+
         repository.deleteDevice(device);
+        repository.deleteGoalByDeviceId(device.getId());
+        repository.deleteAlertByDeviceId(device.getId());
+        repository.deleteScheduleByDeviceId(device.getId());
+        repository.deleteCustomAlertByDeviceId(device.getId());
     }
 
     public LiveData<List<DeviceModel>> getAllDevices() {
@@ -207,6 +217,7 @@ public class MuseViewModel extends AndroidViewModel {
 
     public void insertAlert(AlertModel alert) {
         repository.insertAlert(alert);
+        liveCount.setValue(SaveState.getLastAlerts()+1);
     }
 
     public void deleteAlert(AlertModel alert) {
@@ -215,6 +226,10 @@ public class MuseViewModel extends AndroidViewModel {
 
     public LiveData<List<AlertModel>> getAllAlerts() {
         return repository.getAllAlerts();
+    }
+
+    public MutableLiveData<Integer> getNewAlerts() {
+        return liveCount;
     }
 
     //____________________________________________________________________________________________//

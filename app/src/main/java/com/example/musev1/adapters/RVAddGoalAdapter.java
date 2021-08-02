@@ -50,58 +50,15 @@ public class RVAddGoalAdapter extends ListAdapter<GoalModel, RVAddGoalAdapter.AG
     @Override
     public void onBindViewHolder(@NonNull AGViewHolder holder, int position) {
         GoalModel goalModel = getItem(position);
-        switch (goalModel.getPictureId()) {
-            case 0:
-                holder.iv_icon.setImageResource(R.drawable.ic_home);
-                break;
-
-            case 1:
-                holder.iv_icon.setImageResource(R.drawable.ic_tv);
-                break;
-            case 2:
-                holder.iv_icon.setImageResource(R.drawable.ic_fridge);
-                break;
-            case 3:
-                holder.iv_icon.setImageResource(R.drawable.ic_air_conditioner);
-                break;
-            case 4:
-                holder.iv_icon.setImageResource(R.drawable.ic_pc);
-                break;
-            case 5:
-                holder.iv_icon.setImageResource(R.drawable.ic_clothes_dryer);
-                break;
-            case 6:
-                holder.iv_icon.setImageResource(R.drawable.ic_freezer);
-                break;
-            case 7:
-                holder.iv_icon.setImageResource(R.drawable.ic_coffee_maker);
-                break;
-            case 8:
-                holder.iv_icon.setImageResource(R.drawable.ic_dishwasher);
-                break;
-            case 9:
-                holder.iv_icon.setImageResource(R.drawable.ic_fan_heater);
-                break;
-            case 10:
-                holder.iv_icon.setImageResource(R.drawable.ic_toaster);
-                break;
-            case 11:
-                holder.iv_icon.setImageResource(R.drawable.ic_water_dispenser);
-                break;
-            case 12:
-                holder.iv_icon.setImageResource(R.drawable.ic_plug);
-        }
-        holder.tv_used.setText(String.valueOf(goalModel.getUsed()));
-        holder.tv_percent.setText(String.valueOf(goalModel.getPercent()));
-        holder.progressBar.setProgress(goalModel.getPercent());
-        if (goalModel.getEstimation() != 0) {
+        holder.iv_icon.setImageResource(goalModel.getPictureId());
+        holder.tv_name.setText(goalModel.getDeviceName());
+        holder.tv_used.setText(goalModel.getUsageLimit());
+        if (position%2 != 0) {
             holder.tv_prediction.setText(R.string.txt_goal_will_be_achieved);
         } else {
             holder.tv_prediction.setText(R.string.txt_goal_will_not_achieved);
             holder.tv_prediction.setTextColor(ContextCompat.getColor(context, R.color.red));
         }
-        holder.rl_agg.setVisibility(View.INVISIBLE);
-        holder.tv_type.setVisibility(View.VISIBLE);
         switch (goalModel.getType()) {
             case 0:
                 holder.tv_type.setText("Day");
@@ -127,19 +84,15 @@ public class RVAddGoalAdapter extends ListAdapter<GoalModel, RVAddGoalAdapter.AG
     static class AGViewHolder extends RecyclerView.ViewHolder {
 
         private final ImageView iv_icon;
-        private final TextView tv_prediction, tv_used, tv_percent, tv_type;
-        private final ProgressBar progressBar;
-        private final RelativeLayout rl_agg;
+        private final TextView tv_name,tv_prediction, tv_used, tv_type;
 
         public AGViewHolder(@NonNull View itemView) {
             super(itemView);
             iv_icon = itemView.findViewById(R.id.itemAG_iv_icon);
+            tv_name = itemView.findViewById(R.id.itemAG_tv_name);
             tv_prediction = itemView.findViewById(R.id.itemAG_predictionV);
             tv_used = itemView.findViewById(R.id.itemAG_tv_used);
-            tv_percent = itemView.findViewById(R.id.itemAG_tv_percent);
             tv_type = itemView.findViewById(R.id.itemAG_tv_type);
-            progressBar = itemView.findViewById(R.id.itemAG_pb);
-            rl_agg = itemView.findViewById(R.id.itemAG_rl_aggregation);
         }
     }
 }

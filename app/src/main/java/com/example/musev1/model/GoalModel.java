@@ -7,18 +7,20 @@ import androidx.room.PrimaryKey;
 public class GoalModel {
     @PrimaryKey(autoGenerate = true)
     private int id;
-    private int deviceId;
+    private long deviceId;
     private String deviceName;
     private int pictureId;
     private int type;
     private int used;
     private int estimation;
     private int percent;
-    private int usageLimit;
+    private String usageLimit;
     private int unit;
 
-    public GoalModel(int deviceId, int type, int usageLimit, int unit) {
+    public GoalModel(long deviceId,String deviceName,int pictureId, int type, String  usageLimit, int unit) {
         this.deviceId = deviceId;
+        this.deviceName = deviceName;
+        this.pictureId = pictureId;
         this.type = type;
         this.usageLimit = usageLimit;
         this.unit = unit;
@@ -32,11 +34,11 @@ public class GoalModel {
         this.id = id;
     }
 
-    public int getDeviceId() {
+    public long getDeviceId() {
         return deviceId;
     }
 
-    public void setDeviceId(int deviceId) {
+    public void setDeviceId(long deviceId) {
         this.deviceId = deviceId;
     }
 
@@ -88,11 +90,11 @@ public class GoalModel {
         this.percent = percent;
     }
 
-    public int getUsageLimit() {
+    public String getUsageLimit() {
         return usageLimit;
     }
 
-    public void setUsageLimit(int usageLimit) {
+    public void setUsageLimit(String usageLimit) {
         this.usageLimit = usageLimit;
     }
 

@@ -212,7 +212,6 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
             @Override
             public void OnBottomSheetItemClick(DeviceModel device, int position) {
                 //init device
-                SaveState.setNewAlert((SaveState.getLastAlerts()) + 1);
                 Long deviceId=MainActivity.museViewModel.insertDevice(device);
                 MainActivity.museViewModel.insertAlert(new AlertModel(deviceId, device.getName()
                         , device.getIcon(), "Added successfully"));

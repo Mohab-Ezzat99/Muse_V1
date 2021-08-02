@@ -85,4 +85,18 @@ public interface MuseDao {
 
     @Query("select * from schedules_table")
     LiveData<List<ScheduleModel>> getAllSchedules();
+
+    //____________________________________________________________________________________________//
+    //clear device info
+    @Query("delete from goals_table where deviceId=:deviceId")
+    void deleteGoalByDeviceId(int deviceId);
+
+    @Query("delete from alerts_table where deviceId=:deviceId")
+    void deleteAlertByDeviceId(int deviceId);
+
+    @Query("delete from schedules_table where deviceId=:deviceId")
+    void deleteScheduleByDeviceId(int deviceId);
+
+    @Query("delete from customAlerts_table where deviceId=:deviceId")
+    void deleteCustomAlertByDeviceId(int deviceId);
 }

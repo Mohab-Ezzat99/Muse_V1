@@ -4,6 +4,7 @@ import android.app.Application;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
+import androidx.room.Query;
 
 import com.example.musev1.db.MuseDB;
 import com.example.musev1.db.MuseDao;
@@ -423,5 +424,24 @@ public class Repository {
             museDao.deleteSchedule(scheduleModels[0]);
             return null;
         }
+    }
+
+    //____________________________________________________________________________________________//
+    //clear device info
+
+    public void deleteGoalByDeviceId(int deviceId){
+        museDao.deleteGoalByDeviceId(deviceId);
+    }
+
+    public void deleteAlertByDeviceId(int deviceId){
+        museDao.deleteAlertByDeviceId(deviceId);
+    }
+
+    public void deleteScheduleByDeviceId(int deviceId){
+        museDao.deleteScheduleByDeviceId(deviceId);
+    }
+
+    public void deleteCustomAlertByDeviceId(int deviceId){
+        museDao.deleteCustomAlertByDeviceId(deviceId);
     }
 }

@@ -11,8 +11,6 @@ import androidx.lifecycle.MutableLiveData;
 
 public class SaveState {
 
-    private static MutableLiveData<Integer> mutableLiveData = new MutableLiveData<>();
-    private Context context;
     private static SharedPreferences sharedPreferences;
     private static SharedPreferences.Editor editor;
 
@@ -24,7 +22,6 @@ public class SaveState {
 
     @SuppressLint("CommitPrefEdits")
     public SaveState(Context context) {
-        this.context = context;
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         editor=sharedPreferences.edit();
     }
@@ -56,14 +53,9 @@ public class SaveState {
         return sharedPreferences.getBoolean(NOTIFICATION, true);
     }
 
-    public static void setNewAlert(int counter) {
-        mutableLiveData.setValue(counter);
+    public static void setLastAlert(int counter) {
         editor.putInt(NEW_ALERT, counter);
         editor.apply();
-    }
-
-    public static MutableLiveData<Integer> getNewAlerts() {
-        return mutableLiveData;
     }
 
     public static int getLastAlerts() {
