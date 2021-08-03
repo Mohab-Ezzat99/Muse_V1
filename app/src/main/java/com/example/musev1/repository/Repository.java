@@ -197,19 +197,19 @@ public class Repository {
         return museDao.getAllDevices();
     }
 
-    public LiveData<List<DeviceModel>> getAvailableGoals(){
+    public List<DeviceModel> getAvailableGoals(){
         return museDao.getAvailableGoals();
     }
 
-    public LiveData<List<DeviceModel>> getAvailableCustomAlerts(){
+    public List<DeviceModel> getAvailableCustomAlerts(){
         return museDao.getAvailableCustomAlerts();
     }
 
-    public LiveData<List<DeviceModel>> getAvailableSchedules(){
+    public List<DeviceModel> getAvailableSchedules(){
         return museDao.getAvailableSchedules();
     }
 
-    public LiveData<DeviceModel> getDevice(Long deviceId){
+    public DeviceModel getDevice(Long deviceId){
         return museDao.getDevice(deviceId);
     }
 

@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -18,10 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.musev1.MainActivity;
 import com.example.musev1.R;
-import com.example.musev1.databinding.FragmentAlertsBinding;
-import com.example.musev1.interfaces.OnAlertItemListener;
-import com.example.musev1.interfaces.OnDeviceItemListener;
 import com.example.musev1.adapters.RVAlertAdapter;
+import com.example.musev1.databinding.FragmentAlertsBinding;
 import com.example.musev1.model.AlertModel;
 import com.example.musev1.model.DeviceModel;
 
@@ -32,6 +29,7 @@ public class AlertsFragment extends Fragment {
     private RVAlertAdapter adapter;
     private NavController navController;
     private FragmentAlertsBinding binding;
+    private DeviceModel device;
 
     public AlertsFragment() {
         // Required empty public constructor
@@ -76,11 +74,10 @@ public class AlertsFragment extends Fragment {
             adapter.submitList(deviceModels);
         });
 
-        adapter.setListener(alertModel ->
-                MainActivity.museViewModel.getDevice(alertModel.getDeviceId())
-                        .observe(getViewLifecycleOwner(), deviceModel ->
-                                navController.navigate(AlertsFragmentDirections
-                                        .actionAlertsFragmentToSelectedDeviceFragment(deviceModel))));
+        adapter.setListener(alertModel -> {
+            device=MainActivity.museViewModel.getDevice(alertModel.getDeviceId());
+            navController.navigate(AlertsFragmentDirections.actionAlertsFragmentToSelectedDeviceFragment(device));
+        });
     }
 
     private void setupSwipe()

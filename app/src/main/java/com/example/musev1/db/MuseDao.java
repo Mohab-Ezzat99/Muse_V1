@@ -31,16 +31,16 @@ public interface MuseDao {
     LiveData<List<DeviceModel>> getAllDevices();
 
     @Query("select * from devices_table where hasGoal=0")
-    LiveData<List<DeviceModel>> getAvailableGoals();
+    List<DeviceModel> getAvailableGoals();
 
     @Query("select * from devices_table where hasCustomAlert=0")
-    LiveData<List<DeviceModel>> getAvailableCustomAlerts();
+    List<DeviceModel> getAvailableCustomAlerts();
 
     @Query("select * from devices_table where hasSchedule=0")
-    LiveData<List<DeviceModel>> getAvailableSchedules();
+    List<DeviceModel> getAvailableSchedules();
 
     @Query("select * from devices_table where id=:deviceId")
-    LiveData<DeviceModel> getDevice(Long deviceId);
+    DeviceModel getDevice(Long deviceId);
 
     //____________________________________________________________________________________________//
     //alerts

@@ -39,6 +39,7 @@ public class SchedulesFragment extends Fragment {
     private String[] strings;
     private List<DeviceModel> result_devices;
     private FragmentSchedulesBinding binding;
+    private DeviceModel device;
 
     public SchedulesFragment() {
         // Required empty public constructor
@@ -79,15 +80,8 @@ public class SchedulesFragment extends Fragment {
             adapter.submitList(scheduleModels);
         });
 
-        MainActivity.museViewModel.getAvailableSchedules().observe(getViewLifecycleOwner(), deviceModels -> {
-            result_devices=deviceModels;
-            strings = new String[deviceModels.size()];
-            for (int i = 0; i < deviceModels.size(); i++)
-                strings[i] = deviceModels.get(i).getName();
-        });
-
-        FloatingActionButton fab_add = view.findViewById(R.id.FSchedules_fab_add);
-        fab_add.setOnClickListener(v -> {
+        getAvailableSchedules();
+        binding.FSchedulesFabAdd.setOnClickListener(v -> {
             if (result_devices.size() == 0)
                 Toast.makeText(getContext(), "No device found to set schedule", Toast.LENGTH_LONG).show();
             else
@@ -135,9 +129,10 @@ public class SchedulesFragment extends Fragment {
         Button btn_submit = bottom_sheet.findViewById(R.id.schedulesBotSheet_btn_submit);
         btn_submit.setOnClickListener(v1 -> {
             // add item to rv
-            DeviceModel device = result_devices.get(spinner_device.getSelectedItemPosition());
+            device = result_devices.get(spinner_device.getSelectedItemPosition());
             device.setHasSchedule(true);
             MainActivity.museViewModel.updateDevice(device);
+            getAvailableSchedules();
 
             // days of weak
             List<ThemedButton> buttons_long = tg_long.getSelectedButtons();
@@ -172,7 +167,7 @@ public class SchedulesFragment extends Fragment {
             switch (radioGroup.getCheckedRadioButtonId()) {
                 case R.id.schedulesBotSheet_rb_at:
                     MainActivity.museViewModel.insertSchedule(new ScheduleModel(
-                            device.getId(),device.getName(),device.getIcon()
+                            device.getId(), device.getName(), device.getIcon()
                             , spinner_state.getSelectedItem().toString()
                             , spinner_at.getSelectedItem().toString()
                             , "", days));
@@ -180,7 +175,7 @@ public class SchedulesFragment extends Fragment {
 
                 case R.id.schedulesBotSheet_rb_after:
                     MainActivity.museViewModel.insertSchedule(new ScheduleModel(
-                            device.getId(),device.getName(),device.getIcon()
+                            device.getId(), device.getName(), device.getIcon()
                             , spinner_state.getSelectedItem().toString(), ""
                             , spinner_after.getSelectedItem().toString(), days));
                     break;
@@ -206,13 +201,10 @@ public class SchedulesFragment extends Fragment {
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 
                 ScheduleModel scheduleModel = adapter.getItemAt(viewHolder.getAdapterPosition());
-
-                MainActivity.museViewModel.getDevice(scheduleModel.getDeviceId())
-                        .observe(getViewLifecycleOwner(), deviceModel -> {
-                            deviceModel.setHasSchedule(false);
-                            MainActivity.museViewModel.updateDevice(deviceModel);
-                        });
-
+                device = MainActivity.museViewModel.getDevice(scheduleModel.getDeviceId());
+                device.setHasSchedule(false);
+                MainActivity.museViewModel.updateDevice(device);
+                getAvailableSchedules();
                 MainActivity.museViewModel.deleteSchedule(scheduleModel);
 
             }
@@ -220,5 +212,12 @@ public class SchedulesFragment extends Fragment {
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(binding.FSchedulesRv);
+    }
+
+    private void getAvailableSchedules() {
+        result_devices = MainActivity.museViewModel.getAvailableSchedules();
+        strings = new String[result_devices.size()];
+        for (int i = 0; i < result_devices.size(); i++)
+            strings[i] = result_devices.get(i).getName();
     }
 }

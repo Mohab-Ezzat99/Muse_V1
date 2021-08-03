@@ -36,6 +36,7 @@ public class GoalsFragment extends Fragment {
     private String[] strings;
     private List<DeviceModel> result_devices;
     private FragmentGoalsBinding binding;
+    private DeviceModel device;
 
     public GoalsFragment() {
         // Required empty public constructor
@@ -77,16 +78,9 @@ public class GoalsFragment extends Fragment {
             adapter.submitList(goalModels);
         });
 
-        MainActivity.museViewModel.getAvailableGoals().observe(getViewLifecycleOwner(), deviceModels -> {
-            result_devices = deviceModels;
-            strings = new String[deviceModels.size()];
-            for (int i = 0; i < deviceModels.size(); i++)
-                strings[i] = deviceModels.get(i).getName();
-        });
-
         // fab add
-        FloatingActionButton fab_add = view.findViewById(R.id.FGoals_fab_add);
-        fab_add.setOnClickListener(v -> {
+        getAvailableGoals();
+        binding.FGoalsFabAdd.setOnClickListener(v -> {
             if (result_devices.size() == 0)
                 Toast.makeText(getContext(), "No device found to set goal", Toast.LENGTH_LONG).show();
             else
@@ -111,9 +105,10 @@ public class GoalsFragment extends Fragment {
         Button btn_submit = bottom_sheet.findViewById(R.id.goalBotSheet_btn_submit);
         btn_submit.setOnClickListener(v1 -> {
             // add item to rv
-            DeviceModel device = result_devices.get(spinner_device.getSelectedItemPosition());
+            device = result_devices.get(spinner_device.getSelectedItemPosition());
             device.setHasGoal(true);
             MainActivity.museViewModel.updateDevice(device);
+            getAvailableGoals();
 
             MainActivity.museViewModel.insertGoal(new GoalModel(device.getId(),device.getName(),device.getIcon()
                     , spinner_agg.getSelectedItem().toString()
@@ -139,18 +134,22 @@ public class GoalsFragment extends Fragment {
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 
                 GoalModel goalModel = adapter.getItemAt(viewHolder.getAdapterPosition());
-
-                MainActivity.museViewModel.getDevice(goalModel.getDeviceId())
-                        .observe(getViewLifecycleOwner(), deviceModel -> {
-                            deviceModel.setHasGoal(false);
-                            MainActivity.museViewModel.updateDevice(deviceModel);
-                        });
-
+                device = MainActivity.museViewModel.getDevice(goalModel.getDeviceId());
+                device.setHasGoal(false);
+                MainActivity.museViewModel.updateDevice(device);
+                getAvailableGoals();
                 MainActivity.museViewModel.deleteGoal(goalModel);
             }
         };
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(binding.FGoalsRv);
+    }
+
+    private void getAvailableGoals() {
+        result_devices = MainActivity.museViewModel.getAvailableGoals();
+        strings = new String[result_devices.size()];
+        for (int i = 0; i < result_devices.size(); i++)
+            strings[i] = result_devices.get(i).getName();
     }
 }

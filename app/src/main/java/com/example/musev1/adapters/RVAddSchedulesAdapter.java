@@ -67,8 +67,10 @@ public class RVAddSchedulesAdapter extends ListAdapter<ScheduleModel, RVAddSched
 
         if (schedule_model.getRepeat().equals(""))
             holder.repeatGroup.setVisibility(View.GONE);
-        else
+        else {
+            holder.repeatGroup.setVisibility(View.VISIBLE);
             holder.tv_days.setText(schedule_model.getRepeat());
+        }
     }
 
     public ScheduleModel getItemAt(int position) {

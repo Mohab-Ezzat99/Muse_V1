@@ -37,6 +37,7 @@ public class CustomAlertsFragment extends Fragment {
     private String[] strings;
     private List<DeviceModel> result_devices;
     private FragmentCustomAlertsBinding binding;
+    private DeviceModel device;
 
     public CustomAlertsFragment() {
         // Required empty public constructor
@@ -76,15 +77,8 @@ public class CustomAlertsFragment extends Fragment {
             adapter.submitList(customAlertModels);
         });
 
-        MainActivity.museViewModel.getAvailableCustomAlerts().observe(getViewLifecycleOwner(), deviceModels -> {
-            result_devices = deviceModels;
-            strings = new String[deviceModels.size()];
-            for (int i = 0; i < deviceModels.size(); i++)
-                strings[i] = deviceModels.get(i).getName();
-        });
-
-        FloatingActionButton fab_add = view.findViewById(R.id.FCustomAlert_fab_add);
-        fab_add.setOnClickListener(v -> {
+        getAvailableCustomAlerts();
+        binding.FCustomAlertFabAdd.setOnClickListener(v -> {
             if (result_devices.size() == 0)
                 Toast.makeText(getContext(), "No device found to set custom alert", Toast.LENGTH_LONG).show();
             else
@@ -130,9 +124,10 @@ public class CustomAlertsFragment extends Fragment {
         Button btn_submit = bottom_sheet.findViewById(R.id.customAlertBotSheet_btn_submit);
         btn_submit.setOnClickListener(v1 -> {
             // add item to rv
-            DeviceModel device = result_devices.get(spinner_device.getSelectedItemPosition());
+            device = result_devices.get(spinner_device.getSelectedItemPosition());
             device.setHasCustomAlert(true);
             MainActivity.museViewModel.updateDevice(device);
+            getAvailableCustomAlerts();
 
             switch (radioGroup.getCheckedRadioButtonId()) {
                 case R.id.customAlertBotSheet_rb_at:
@@ -172,18 +167,22 @@ public class CustomAlertsFragment extends Fragment {
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 
                 CustomAlertModel customAlertModel = adapter.getItemAt(viewHolder.getAdapterPosition());
-
-                MainActivity.museViewModel.getDevice(customAlertModel.getDeviceId())
-                        .observe(getViewLifecycleOwner(), deviceModel -> {
-                            deviceModel.setHasCustomAlert(false);
-                            MainActivity.museViewModel.updateDevice(deviceModel);
-                        });
-
+                device = MainActivity.museViewModel.getDevice(customAlertModel.getDeviceId());
+                device.setHasCustomAlert(false);
+                MainActivity.museViewModel.updateDevice(device);
+                getAvailableCustomAlerts();
                 MainActivity.museViewModel.deleteCustomAlert(customAlertModel);
             }
         };
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(binding.FCustomAlertRv);
+    }
+
+    private void getAvailableCustomAlerts() {
+        result_devices = MainActivity.museViewModel.getAvailableCustomAlerts();
+        strings = new String[result_devices.size()];
+        for (int i = 0; i < result_devices.size(); i++)
+            strings[i] = result_devices.get(i).getName();
     }
 }
