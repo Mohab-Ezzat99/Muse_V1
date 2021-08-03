@@ -70,11 +70,11 @@ public class MainFragment extends Fragment {
             bottomNavigationView.showBadge(R.id.alertsFragment).setNumber(SaveState.getLastAlerts());
 
         MainActivity.museViewModel.getNewAlerts().observe(requireActivity(), integer -> {
-            if (integer > 0) {
+            if (integer > 0)
                 bottomNavigationView.showBadge(R.id.alertsFragment).setNumber(integer);
-                SaveState.setLastAlert(integer);
-            } else
+            else
                 bottomNavigationView.removeBadge(R.id.alertsFragment);
+            SaveState.setLastAlert(integer);
         });
     }
 }
