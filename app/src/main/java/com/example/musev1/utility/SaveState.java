@@ -7,8 +7,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
 
-import androidx.lifecycle.MutableLiveData;
-
 public class SaveState {
 
     private static SharedPreferences sharedPreferences;

@@ -28,7 +28,7 @@ import retrofit2.Call;
 
 public class MuseViewModel extends AndroidViewModel {
     private Repository repository;
-    private MutableLiveData<Integer> liveCount=new MutableLiveData<>();
+    public static MutableLiveData<Integer> liveCount = new MutableLiveData<>();
 
     public MuseViewModel(@NonNull Application application) {
         super(application);

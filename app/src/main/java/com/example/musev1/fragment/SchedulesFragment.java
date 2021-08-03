@@ -14,9 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,32 +22,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.musev1.MainActivity;
 import com.example.musev1.R;
 import com.example.musev1.adapters.RVAddSchedulesAdapter;
+import com.example.musev1.databinding.FragmentSchedulesBinding;
 import com.example.musev1.model.DeviceModel;
-import com.example.musev1.model.DeviceRequestModel;
 import com.example.musev1.model.ScheduleModel;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.List;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 import nl.bryanderidder.themedtogglebuttongroup.ThemedButton;
 import nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class SchedulesFragment extends Fragment {
 
-    private RecyclerView recyclerView;
     private RVAddSchedulesAdapter adapter;
-    private Group not_add;
     private String[] strings;
     private List<DeviceModel> result_devices;
+    private FragmentSchedulesBinding binding;
 
     public SchedulesFragment() {
         // Required empty public constructor
@@ -65,28 +54,27 @@ public class SchedulesFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        binding = FragmentSchedulesBinding.bind(view);
 
         //StatusBar color
         MainActivity.setupBackgroundStatusBar(MainActivity.colorPrimaryVariant);
-        not_add = view.findViewById(R.id.FSchedules_group);
 
         //recycleView
-        recyclerView = view.findViewById(R.id.FSchedules_rv);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.FSchedulesRv.setHasFixedSize(true);
+        binding.FSchedulesRv.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new RVAddSchedulesAdapter();
-        recyclerView.setAdapter(adapter);
+        binding.FSchedulesRv.setAdapter(adapter);
         setupSwipe();
 
         MainActivity.museViewModel.getAllSchedules().observe(getViewLifecycleOwner(), scheduleModels -> {
             if (scheduleModels.size() != 0) {
                 // visibility
-                not_add.setVisibility(View.GONE);
-                recyclerView.setVisibility(View.VISIBLE);
+                binding.FSchedulesGroup.setVisibility(View.GONE);
+                binding.FSchedulesRv.setVisibility(View.VISIBLE);
             } else {
                 // visibility
-                not_add.setVisibility(View.VISIBLE);
-                recyclerView.setVisibility(View.GONE);
+                binding.FSchedulesGroup.setVisibility(View.VISIBLE);
+                binding.FSchedulesRv.setVisibility(View.GONE);
             }
             adapter.submitList(scheduleModels);
         });
@@ -231,6 +219,6 @@ public class SchedulesFragment extends Fragment {
         };
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
-        itemTouchHelper.attachToRecyclerView(recyclerView);
+        itemTouchHelper.attachToRecyclerView(binding.FSchedulesRv);
     }
 }

@@ -23,6 +23,7 @@ import androidx.navigation.Navigation;
 
 import com.example.musev1.MainActivity;
 import com.example.musev1.R;
+import com.example.musev1.databinding.FragmentRegisterBinding;
 import com.example.musev1.model.AuthModel;
 import com.example.musev1.utility.SaveState;
 import com.google.android.material.textfield.TextInputEditText;
@@ -39,13 +40,10 @@ import retrofit2.Response;
 
 public class RegisterFragment extends Fragment implements View.OnClickListener {
 
-    private TextView tv_login;
-    private Button btn_register;
-    private String full_name, email, password, confirm_password;
+    private String full_name,email,password,confirm_password;
     private ProgressDialog progressDialog;
-    private TextInputLayout itl_fullName, itl_email, itl_password, itl_confirm;
-    private TextInputEditText et_fullName, et_email, et_password, et_confirm;
     private NavController navController;
+    private FragmentRegisterBinding binding;
 
     public RegisterFragment() {
         // Required empty public constructor
@@ -74,22 +72,11 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        et_fullName = view.findViewById(R.id.register_et_fullName);
-        et_email = view.findViewById(R.id.register_et_email);
-        et_password = view.findViewById(R.id.register_et_password);
-        et_confirm = view.findViewById(R.id.register_et_confPassword);
-        itl_fullName = view.findViewById(R.id.register_itl_fullName);
-        itl_email = view.findViewById(R.id.register_itl_email);
-        itl_password = view.findViewById(R.id.register_itl_password);
-        itl_confirm = view.findViewById(R.id.register_itl_confPassword);
-
-        tv_login = view.findViewById(R.id.register_tv_login);
-        btn_register = view.findViewById(R.id.register_btn_register);
+        binding=FragmentRegisterBinding.bind(view);
         progressDialog=new ProgressDialog(getContext());
 
-        tv_login.setOnClickListener(this);
-        btn_register.setOnClickListener(this);
+        binding.registerTvLogin.setOnClickListener(this);
+        binding.registerBtnRegister.setOnClickListener(this);
 
         //back pressed
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(),
@@ -116,41 +103,41 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     }
 
     public void  setupRegister(){
-        full_name = Objects.requireNonNull(et_fullName.getText()).toString().trim();
-        email = Objects.requireNonNull(et_email.getText()).toString().trim();
-        password = Objects.requireNonNull(et_password.getText()).toString().trim();
-        confirm_password = Objects.requireNonNull(et_confirm.getText()).toString().trim();
+        full_name = Objects.requireNonNull(binding.registerEtFullName.getText()).toString().trim();
+        email = Objects.requireNonNull(binding.registerEtEmail.getText()).toString().trim();
+        password = Objects.requireNonNull(binding.registerEtPassword.getText()).toString().trim();
+        confirm_password = Objects.requireNonNull(binding.registerEtConfPassword.getText()).toString().trim();
 
         if (TextUtils.isEmpty(full_name)) {
-            itl_fullName.setError("Full Name is required");
-            itl_fullName.requestFocus();
+            binding.registerItlFullName.setError("Full Name is required");
+            binding.registerItlFullName.requestFocus();
             return;
         } else
-            itl_fullName.setError(null);
+            binding.registerItlFullName.setError(null);
 
         if (TextUtils.isEmpty(email)) {
-            itl_email.setError("Email is required");
+            binding.registerItlEmail.setError("Email is required");
             return;
         } else
-            itl_email.setError(null);
+            binding.registerItlEmail.setError(null);
 
         if (TextUtils.isEmpty(password)) {
-            itl_password.setError("Password is required");
+            binding.registerItlPassword.setError("Password is required");
             return;
         } else
-            itl_password.setError(null);
+            binding.registerItlPassword.setError(null);
 
         if (TextUtils.isEmpty(confirm_password)) {
-            itl_confirm.setError("Confirm Password is required");
+            binding.registerItlConfPassword.setError("Confirm Password is required");
             return;
         } else
-            itl_confirm.setError(null);
+            binding.registerItlConfPassword.setError(null);
 
         if (!confirm_password.equals(password)) {
-            itl_confirm.setError("Password not match");
+            binding.registerItlConfPassword.setError("Password not match");
             return;
         } else
-            itl_confirm.setError(null);
+            binding.registerItlConfPassword.setError(null);
 
         if (SaveState.checkConnection(requireContext())) {
             Toast.makeText(getContext(), "No Internet", Toast.LENGTH_SHORT).show();

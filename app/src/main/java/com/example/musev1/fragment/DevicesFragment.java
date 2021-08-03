@@ -13,8 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -23,27 +21,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.musev1.MainActivity;
 import com.example.musev1.R;
-import com.example.musev1.interfaces.OnBottomItemListener;
-import com.example.musev1.interfaces.OnDeviceItemListener;
 import com.example.musev1.adapters.RVAddDeviceAdapter;
 import com.example.musev1.adapters.RVDeviceBotAdapter;
+import com.example.musev1.databinding.FragmentDevicesBinding;
+import com.example.musev1.interfaces.OnDeviceItemListener;
 import com.example.musev1.model.AlertModel;
 import com.example.musev1.model.DeviceModel;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Objects;
 
 public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClickListener {
 
-    private RecyclerView recyclerView;
     private RVAddDeviceAdapter addDeviceAdapter;
-    private Group not_add;
-    private CardView cv_aggregation, cv_unit;
-    private FloatingActionButton fab_add;
     private BottomSheetDialog bottomSheetDialog;
     private NavController navController;
     private DeviceModel currentDevice;
+    private FragmentDevicesBinding binding;
 
     public DevicesFragment() {
         // Required empty public constructor
@@ -65,34 +59,28 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        binding = FragmentDevicesBinding.bind(view);
 
         //StatusBar color
         MainActivity.setupBackgroundStatusBar(MainActivity.colorPrimaryVariant);
 
-
-        not_add = view.findViewById(R.id.FDevices_group);
-        cv_aggregation = view.findViewById(R.id.FDevices_cv_aggregation);
-        cv_unit = view.findViewById(R.id.FDevices_cv_unit);
-
         // recycleView
-        recyclerView = view.findViewById(R.id.FDevices_rv);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        binding.FDevicesRv.setHasFixedSize(true);
+        binding.FDevicesRv.setLayoutManager(new GridLayoutManager(getContext(), 2));
         addDeviceAdapter = new RVAddDeviceAdapter(getContext());
-        recyclerView.setAdapter(addDeviceAdapter);
+        binding.FDevicesRv.setAdapter(addDeviceAdapter);
 
-        fab_add = view.findViewById(R.id.FDevices_fab_add);
-        fab_add.setOnClickListener(v -> displayPlug());
+        binding.FDevicesFabAdd.setOnClickListener(v -> displayPlug());
 
         MainActivity.museViewModel.getAllDevices().observe(getViewLifecycleOwner(), deviceModels -> {
             if (deviceModels.size() != 0) {
                 // visibility
-                not_add.setVisibility(View.GONE);
-                recyclerView.setVisibility(View.VISIBLE);
+                binding.FDevicesGroup.setVisibility(View.GONE);
+                binding.FDevicesRv.setVisibility(View.VISIBLE);
             } else {
                 // visibility
-                not_add.setVisibility(View.VISIBLE);
-                recyclerView.setVisibility(View.GONE);
+                binding.FDevicesGroup.setVisibility(View.VISIBLE);
+                binding.FDevicesRv.setVisibility(View.GONE);
             }
             addDeviceAdapter.setDeviceModels(deviceModels);
         });
@@ -165,9 +153,9 @@ public class DevicesFragment extends Fragment implements MenuItem.OnMenuItemClic
         final TextView tv_wifiCancel = viewWifi.findViewById(R.id.dialogWifi_tv_cancel);
 
         tv_submit.setOnClickListener(v -> {
-            MainActivity.hideKeyboardFrom(requireContext(), fab_add);
+            MainActivity.hideKeyboardFrom(requireContext(), binding.FDevicesFabAdd);
             alertDialogWifi.dismiss();
-            showBottomSheet(fab_add);
+            showBottomSheet(binding.FDevicesFabAdd);
         });
 
         tv_wifiCancel.setOnClickListener(v -> alertDialogWifi.dismiss());

@@ -1,11 +1,5 @@
 package com.example.musev1.fragment;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,18 +9,16 @@ import android.view.WindowManager;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDeepLinkBuilder;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.musev1.R;
 import com.example.musev1.MainActivity;
+import com.example.musev1.R;
 import com.example.musev1.utility.SaveState;
+import com.example.musev1.viewmodels.MuseViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainFragment extends Fragment {
@@ -54,6 +46,7 @@ public class MainFragment extends Fragment {
         navControllerMain.addOnDestinationChangedListener((controller, destination, arguments) -> {
             if (destination.getId() == R.id.alertsFragment) {
                 SaveState.setLastAlert(0);
+                MuseViewModel.liveCount.setValue(0);
                 bottomNavigationView.removeBadge(R.id.alertsFragment);
             }
         });
@@ -76,16 +69,12 @@ public class MainFragment extends Fragment {
         if(SaveState.getLastAlerts()!=0)
             bottomNavigationView.showBadge(R.id.alertsFragment).setNumber(SaveState.getLastAlerts());
 
-        if(SaveState.getLastAlerts()>0) {
-            MainActivity.museViewModel.getNewAlerts().observe(requireActivity(), integer -> {
-                if (integer > 0) {
-                    bottomNavigationView.showBadge(R.id.alertsFragment).setNumber(integer);
-                    SaveState.setLastAlert(integer);
-                } else
-                    bottomNavigationView.removeBadge(R.id.alertsFragment);
-            });
-        }
-        else
-            bottomNavigationView.removeBadge(R.id.alertsFragment);
+        MainActivity.museViewModel.getNewAlerts().observe(requireActivity(), integer -> {
+            if (integer > 0) {
+                bottomNavigationView.showBadge(R.id.alertsFragment).setNumber(integer);
+                SaveState.setLastAlert(integer);
+            } else
+                bottomNavigationView.removeBadge(R.id.alertsFragment);
+        });
     }
 }

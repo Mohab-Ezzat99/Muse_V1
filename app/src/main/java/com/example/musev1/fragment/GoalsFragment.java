@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.musev1.MainActivity;
 import com.example.musev1.R;
 import com.example.musev1.adapters.RVAddGoalAdapter;
+import com.example.musev1.databinding.FragmentGoalsBinding;
 import com.example.musev1.model.DeviceModel;
 import com.example.musev1.model.GoalModel;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -31,11 +32,10 @@ import java.util.Objects;
 
 public class GoalsFragment extends Fragment {
 
-    private RecyclerView recyclerView;
     private RVAddGoalAdapter adapter;
-    private Group not_add;
     private String[] strings;
     private List<DeviceModel> result_devices;
+    private FragmentGoalsBinding binding;
 
     public GoalsFragment() {
         // Required empty public constructor
@@ -52,28 +52,27 @@ public class GoalsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        binding=FragmentGoalsBinding.bind(view);
 
         //StatusBar color
         MainActivity.setupBackgroundStatusBar(MainActivity.colorPrimaryVariant);
-        not_add = view.findViewById(R.id.FGoals_group);
 
         //recycleView
-        recyclerView = view.findViewById(R.id.FGoals_rv);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.FGoalsRv.setHasFixedSize(true);
+        binding.FGoalsRv.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new RVAddGoalAdapter(getContext());
-        recyclerView.setAdapter(adapter);
+        binding.FGoalsRv.setAdapter(adapter);
         setupSwipe();
 
         MainActivity.museViewModel.getAllGoals().observe(getViewLifecycleOwner(), goalModels -> {
             if (goalModels.size() != 0) {
                 // visibility
-                not_add.setVisibility(View.GONE);
-                recyclerView.setVisibility(View.VISIBLE);
+                binding.FGoalsGroup.setVisibility(View.GONE);
+                binding.FGoalsRv.setVisibility(View.VISIBLE);
             } else {
                 // visibility
-                not_add.setVisibility(View.VISIBLE);
-                recyclerView.setVisibility(View.GONE);
+                binding.FGoalsGroup.setVisibility(View.VISIBLE);
+                binding.FGoalsRv.setVisibility(View.GONE);
             }
             adapter.submitList(goalModels);
         });
@@ -152,6 +151,6 @@ public class GoalsFragment extends Fragment {
         };
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
-        itemTouchHelper.attachToRecyclerView(recyclerView);
+        itemTouchHelper.attachToRecyclerView(binding.FGoalsRv);
     }
 }

@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.musev1.MainActivity;
 import com.example.musev1.R;
 import com.example.musev1.adapters.RVAddCustomAlertAdapter;
+import com.example.musev1.databinding.FragmentCustomAlertsBinding;
 import com.example.musev1.model.CustomAlertModel;
 import com.example.musev1.model.DeviceModel;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -32,11 +33,10 @@ import java.util.List;
 
 public class CustomAlertsFragment extends Fragment {
 
-    private RecyclerView recyclerView;
     private RVAddCustomAlertAdapter adapter;
-    private Group not_add;
     private String[] strings;
     private List<DeviceModel> result_devices;
+    private FragmentCustomAlertsBinding binding;
 
     public CustomAlertsFragment() {
         // Required empty public constructor
@@ -52,27 +52,26 @@ public class CustomAlertsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        binding=FragmentCustomAlertsBinding.bind(view);
 
         //StatusBar color
         MainActivity.setupBackgroundStatusBar(MainActivity.colorPrimaryVariant);
-        not_add = view.findViewById(R.id.FCustomAlert_group);
 
-        recyclerView = view.findViewById(R.id.FCustomAlert_rv);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.FCustomAlertRv.setHasFixedSize(true);
+        binding.FCustomAlertRv.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new RVAddCustomAlertAdapter();
-        recyclerView.setAdapter(adapter);
+        binding.FCustomAlertRv.setAdapter(adapter);
         setupSwipe();
 
         MainActivity.museViewModel.getAllCustomAlerts().observe(getViewLifecycleOwner(), customAlertModels -> {
             if (customAlertModels.size() != 0) {
                 // visibility
-                not_add.setVisibility(View.GONE);
-                recyclerView.setVisibility(View.VISIBLE);
+                binding.FCustomAlertGroup.setVisibility(View.GONE);
+                binding.FCustomAlertRv.setVisibility(View.VISIBLE);
             } else {
                 // visibility
-                not_add.setVisibility(View.VISIBLE);
-                recyclerView.setVisibility(View.GONE);
+                binding.FCustomAlertGroup.setVisibility(View.VISIBLE);
+                binding.FCustomAlertRv.setVisibility(View.GONE);
             }
             adapter.submitList(customAlertModels);
         });
@@ -185,6 +184,6 @@ public class CustomAlertsFragment extends Fragment {
         };
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
-        itemTouchHelper.attachToRecyclerView(recyclerView);
+        itemTouchHelper.attachToRecyclerView(binding.FCustomAlertRv);
     }
 }

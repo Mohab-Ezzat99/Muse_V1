@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.musev1.MainActivity;
 import com.example.musev1.R;
+import com.example.musev1.databinding.FragmentAlertsBinding;
 import com.example.musev1.interfaces.OnAlertItemListener;
 import com.example.musev1.interfaces.OnDeviceItemListener;
 import com.example.musev1.adapters.RVAlertAdapter;
@@ -28,10 +29,9 @@ import java.util.Objects;
 
 public class AlertsFragment extends Fragment {
 
-    private RecyclerView recyclerView;
-    private Group not_add;
     private RVAlertAdapter adapter;
     private NavController navController;
+    private FragmentAlertsBinding binding;
 
     public AlertsFragment() {
         // Required empty public constructor
@@ -49,30 +49,29 @@ public class AlertsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        binding=FragmentAlertsBinding.bind(view);
 
         //StatusBar color
         MainActivity.setupBackgroundStatusBar(MainActivity.colorPrimaryVariant);
 
         //init
-        not_add = view.findViewById(R.id.FAlerts_group);
-        recyclerView = view.findViewById(R.id.FAlerts_rv);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.FAlertsRv.setHasFixedSize(true);
+        binding.FAlertsRv.setLayoutManager(new LinearLayoutManager(getContext()));
 
         //recycleView
         adapter = new RVAlertAdapter(getContext());
-        recyclerView.setAdapter(adapter);
+        binding.FAlertsRv.setAdapter(adapter);
         setupSwipe();
 
         MainActivity.museViewModel.getAllAlerts().observe(getViewLifecycleOwner(), deviceModels -> {
             if (deviceModels.size() != 0) {
                 // visibility
-                not_add.setVisibility(View.GONE);
-                recyclerView.setVisibility(View.VISIBLE);
+                binding.FAlertsGroup.setVisibility(View.GONE);
+                binding.FAlertsRv.setVisibility(View.VISIBLE);
             } else {
                 // visibility
-                not_add.setVisibility(View.VISIBLE);
-                recyclerView.setVisibility(View.GONE);
+                binding.FAlertsGroup.setVisibility(View.VISIBLE);
+                binding.FAlertsRv.setVisibility(View.GONE);
             }
             adapter.submitList(deviceModels);
         });
@@ -101,6 +100,6 @@ public class AlertsFragment extends Fragment {
         };
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
-        itemTouchHelper.attachToRecyclerView(recyclerView);
+        itemTouchHelper.attachToRecyclerView(binding.FAlertsRv);
     }
 }

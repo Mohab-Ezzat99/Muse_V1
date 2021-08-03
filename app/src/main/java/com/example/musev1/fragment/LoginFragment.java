@@ -23,6 +23,7 @@ import androidx.navigation.Navigation;
 
 import com.example.musev1.MainActivity;
 import com.example.musev1.R;
+import com.example.musev1.databinding.FragmentLoginBinding;
 import com.example.musev1.model.LoginResponseModel;
 import com.example.musev1.utility.SaveState;
 import com.google.android.material.textfield.TextInputEditText;
@@ -36,13 +37,9 @@ import static com.example.musev1.MainActivity.mAuth;
 
 public class LoginFragment extends Fragment implements View.OnClickListener {
 
-    private TextView tv_forgot, tv_signUp;
-    private Button btn_login;
     private String email, password;
-    private TextInputEditText et_email, et_password;
-    private TextInputLayout itl_email, itl_password;
     private NavController navController;
-    private LoginResponseModel model;
+    private FragmentLoginBinding binding;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -81,19 +78,11 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        binding=FragmentLoginBinding.bind(view);
 
-        et_email = view.findViewById(R.id.login_et_email);
-        et_password = view.findViewById(R.id.login_et_password);
-        itl_email = view.findViewById(R.id.itl_email);
-        itl_password = view.findViewById(R.id.itl_password);
-
-        tv_forgot = view.findViewById(R.id.login_tv_forgot);
-        tv_signUp = view.findViewById(R.id.login_tv_signUp);
-        btn_login = view.findViewById(R.id.login_btn_login);
-
-        tv_forgot.setOnClickListener(this);
-        tv_signUp.setOnClickListener(this);
-        btn_login.setOnClickListener(this);
+        binding.loginTvForgot.setOnClickListener(this);
+        binding.loginTvSignUp.setOnClickListener(this);
+        binding.loginBtnLogin.setOnClickListener(this);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -162,23 +151,23 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     }
 
     public void setupLogin() {
-        email = Objects.requireNonNull(et_email.getText()).toString().trim();
-        password = Objects.requireNonNull(et_password.getText()).toString().trim();
+        email = Objects.requireNonNull(binding.loginEtEmail.getText()).toString().trim();
+        password = Objects.requireNonNull(binding.loginEtPassword.getText()).toString().trim();
 
         if (TextUtils.isEmpty(email)) {
-            itl_email.setError("Email is required");
+            binding.itlEmail.setError("Email is required");
             return;
         }
 
         if (TextUtils.isEmpty(password)) {
-            itl_password.setError("Password is required");
-            itl_email.setError(null);
+            binding.itlPassword.setError("Password is required");
+            binding.itlEmail.setError(null);
             return;
         }
 
         if (!SaveState.checkConnection(requireContext())) {
             // no connection
-            itl_email.setError(null);
+            binding.itlEmail.setError(null);
             Toast.makeText(requireContext(), "No Internet", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -189,27 +178,27 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 navController.navigate(R.id.action_loginFragment_to_mainFragment);
             else
                 navController.navigate(R.id.action_loginFragment_to_onBoardFragment);
-            MainActivity.hideKeyboardFrom(getContext(),btn_login);
+            MainActivity.hideKeyboardFrom(getContext(),binding.loginBtnLogin);
             MainActivity.progressDialog.dismiss();
         })
                 .addOnFailureListener(e -> {
                     //email does not exist
                     if (e instanceof FirebaseAuthInvalidUserException) {
-                        itl_email.setError("Invalid email");
-                        itl_password.setError(null);
+                        binding.itlEmail.setError("Invalid email");
+                        binding.itlPassword.setError(null);
                     }
 
                     //wrong password
                     if (e instanceof FirebaseAuthInvalidCredentialsException) {
-                        itl_password.setError("Password is wrong");
-                        itl_email.setError(null);
+                        binding.itlPassword.setError("Password is wrong");
+                        binding.itlEmail.setError(null);
                     }
                     MainActivity.progressDialog.dismiss();
                 })).addOnFailureListener(e -> {
 
             if (e instanceof FirebaseAuthInvalidCredentialsException) {
-                itl_email.setError("Badly format");
-                itl_password.setError(null);
+                binding.itlEmail.setError("Badly format");
+                binding.itlPassword.setError(null);
             } else
                 Toast.makeText(requireContext(), "Error! " + e.getCause(), Toast.LENGTH_SHORT).show();
             MainActivity.progressDialog.dismiss();

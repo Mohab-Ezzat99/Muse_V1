@@ -32,6 +32,7 @@ import androidx.navigation.Navigation;
 
 import com.example.musev1.MainActivity;
 import com.example.musev1.R;
+import com.example.musev1.databinding.FragmentHomeBinding;
 import com.example.musev1.utility.SaveState;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
@@ -41,23 +42,16 @@ import java.util.Objects;
 
 public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickListener {
     // charts
-    private ChipNavigationBar chipNavigationBar;
     private NavController navControllerChart;
-    private ImageView iv_custom, iv_arrow;
 
     // date
     private int day, month, year;
     private DatePickerDialog datePickerDialog;
 
-    // expanded card view
-    private ConstraintLayout constLayout_expand;
-    private CardView cv_insight;
-
     // spinner
-    private Spinner spinnerUnit;
-    private TextView tv_per, tv_currentV, tv_avgV, tv_consV, tv_estV;
     private boolean realtimeSwitch;
     private int unitPos=0, chipAgg =0;
+    private FragmentHomeBinding binding;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -91,29 +85,17 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        binding=FragmentHomeBinding.bind(view);
 
         //iv_custom
         Calendar calendar = Calendar.getInstance();
         day = calendar.get(Calendar.DAY_OF_MONTH);
         month = calendar.get(Calendar.MONTH);
         year = calendar.get(Calendar.YEAR);
-        iv_custom = view.findViewById(R.id.FHome_iv_custom);
-        iv_custom.setOnClickListener(this::showPopup);
-
-        // insight inflation
-        spinnerUnit = view.findViewById(R.id.FHome_spinner_unit);
-        // goal inflation
-
-        // chip inflation
-        chipNavigationBar = view.findViewById(R.id.FHome_chipNav);
-        tv_per = view.findViewById(R.id.FHome_tv_per);
-        tv_currentV = view.findViewById(R.id.FHome_tv_currentV);
-        tv_avgV = view.findViewById(R.id.FHome_tv_averageV);
-        tv_consV = view.findViewById(R.id.FHome_tv_consumedV);
-        tv_estV = view.findViewById(R.id.FHome_tv_estV);
+        binding.FHomeIvCustom.setOnClickListener(this::showPopup);
 
         //display insight info depend on unit spinner
-        spinnerUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        binding.FHomeSpinnerUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -128,8 +110,8 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
         });
 
         //chipNav
-        chipNavigationBar.setItemSelected(R.id.dayFragment, true);
-        chipNavigationBar.setOnItemSelectedListener(i -> {
+        binding.FHomeChipNav.setItemSelected(R.id.dayFragment, true);
+        binding.FHomeChipNav.setOnItemSelectedListener(i -> {
             switch (i) {
                 case R.id.dayFragment:
                     navControllerChart.popBackStack();
@@ -161,18 +143,15 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
         });
 
         // arrow info
-        cv_insight = view.findViewById(R.id.FHome_cv_insight);
-        constLayout_expand = view.findViewById(R.id.constLayoutExpanded);
-        iv_arrow=view.findViewById(R.id.FHome_iv_arrow);
-        iv_arrow.setOnClickListener(v -> {
-            if (constLayout_expand.getVisibility() == View.GONE) {
-                TransitionManager.beginDelayedTransition(cv_insight, new AutoTransition());
-                constLayout_expand.setVisibility(View.VISIBLE);
-                iv_arrow.setBackgroundResource(R.drawable.ic_arrow_up);
+        binding.FHomeIvArrow.setOnClickListener(v -> {
+            if (binding.constLayoutExpanded.getVisibility() == View.GONE) {
+                TransitionManager.beginDelayedTransition(binding.FHomeCvInsight, new AutoTransition());
+                binding.constLayoutExpanded.setVisibility(View.VISIBLE);
+                binding.FHomeIvArrow.setBackgroundResource(R.drawable.ic_arrow_up);
             } else {
-                TransitionManager.beginDelayedTransition(cv_insight, new Fade());
-                constLayout_expand.setVisibility(View.GONE);
-                iv_arrow.setBackgroundResource(R.drawable.ic_arrow_down);
+                TransitionManager.beginDelayedTransition(binding.FHomeCvInsight, new Fade());
+                binding.constLayoutExpanded.setVisibility(View.GONE);
+                binding.FHomeIvArrow.setBackgroundResource(R.drawable.ic_arrow_down);
             }
         });
 
@@ -238,18 +217,19 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
 
     @SuppressLint("SetTextI18n")
     public void updateRealtime() {
+
         if (realtimeSwitch) {
             realtimeSwitch = false;
             if (unitPos == 0)
-                tv_currentV.setText("30 W");
+                binding.FHomeTvCurrentV.setText("30 W");
             else
-                tv_currentV.setText("15 EGP");
+                binding.FHomeTvCurrentV.setText("15 EGP");
         } else {
             realtimeSwitch = true;
             if (unitPos == 0)
-                tv_currentV.setText("45 W");
+                binding.FHomeTvCurrentV.setText("45 W");
             else
-                tv_currentV.setText("22 EGP");
+                binding.FHomeTvCurrentV.setText("22 EGP");
         }
         refresh();
         if (isAdded())
@@ -265,72 +245,72 @@ public class HomeFragment extends Fragment implements MenuItem.OnMenuItemClickLi
         if (unitPos == 0) {
             switch (chipAgg) {
                 case 0:
-                    tv_per.setText("Per day");
-                    tv_avgV.setText("80 W");
-                    tv_consV.setText("120 W");
-                    tv_estV.setText("250 W");
+                    binding.FHomeTvPer.setText("Per day");
+                    binding.FHomeTvAverageV.setText("80 W");
+                    binding.FHomeTvConsumedV.setText("120 W");
+                    binding.FHomeTvEstV.setText("250 W");
                     break;
 
                 case 1:
-                    tv_per.setText("Per weak");
-                    tv_avgV.setText("107 W");
-                    tv_consV.setText("830 W");
-                    tv_estV.setText("1000 W");
+                    binding.FHomeTvPer.setText("Per weak");
+                    binding.FHomeTvAverageV.setText("107 W");
+                    binding.FHomeTvConsumedV.setText("830 W");
+                    binding.FHomeTvEstV.setText("1000 W");
                     break;
 
                 case 2:
-                    tv_per.setText("Per month");
-                    tv_avgV.setText("11 KW");
-                    tv_consV.setText("127 KW");
-                    tv_estV.setText("150 KW");
+                    binding.FHomeTvPer.setText("Per month");
+                    binding.FHomeTvAverageV.setText("11 KW");
+                    binding.FHomeTvConsumedV.setText("127 KW");
+                    binding.FHomeTvEstV.setText("150 KW");
                     break;
 
                 case 3:
-                    tv_per.setText("Per year");
-                    tv_avgV.setText("160 KW");
-                    tv_consV.setText("360 KW");
-                    tv_estV.setText("500 KW");
+                    binding.FHomeTvPer.setText("Per year");
+                    binding.FHomeTvAverageV.setText("160 KW");
+                    binding.FHomeTvConsumedV.setText("360 KW");
+                    binding.FHomeTvEstV.setText("500 KW");
                     break;
             }
             if (realtimeSwitch)
-                tv_currentV.setText("30 W");
+                binding.FHomeTvCurrentV.setText("30 W");
             else
-                tv_currentV.setText("45 W");
+                binding.FHomeTvCurrentV.setText("45 W");
         } else {
             switch (chipAgg) {
                 case 0:
-                    tv_per.setText("Per day");
-                    tv_avgV.setText("40 EGP");
-                    tv_consV.setText("60 EGP");
-                    tv_estV.setText("120 EGP");
+                    binding.FHomeTvPer.setText("Per day");
+                    binding.FHomeTvAverageV.setText("40 EGP");
+                    binding.FHomeTvConsumedV.setText("60 EGP");
+                    binding.FHomeTvEstV.setText("120 EGP");
                     break;
 
                 case 1:
-                    tv_per.setText("Per weak");
-                    tv_avgV.setText("53 EGP");
-                    tv_consV.setText("415 EGP");
-                    tv_estV.setText("500 EGP");
+                    binding.FHomeTvPer.setText("Per weak");
+                    binding.FHomeTvAverageV.setText("53 EGP");
+                    binding.FHomeTvConsumedV.setText("415 EGP");
+                    binding.FHomeTvEstV.setText("500 EGP");
                     break;
 
                 case 2:
-                    tv_per.setText("Per month");
-                    tv_avgV.setText("5500 EGP");
-                    tv_consV.setText("6350 EGP");
-                    tv_estV.setText("7500 EGP");
+                    binding.FHomeTvPer.setText("Per month");
+                    binding.FHomeTvAverageV.setText("5500 EGP");
+                    binding.FHomeTvConsumedV.setText("6350 EGP");
+                    binding.FHomeTvEstV.setText("7500 EGP");
                     break;
 
                 case 3:
-                    tv_per.setText("Per year");
-                    tv_avgV.setText("20000 EGP");
-                    tv_consV.setText("43800 EGP");
-                    tv_estV.setText("50300 EGP");
+                    binding.FHomeTvPer.setText("Per year");
+                    binding.FHomeTvAverageV.setText("20000 EGP");
+                    binding.FHomeTvConsumedV.setText("43800 EGP");
+                    binding.FHomeTvEstV.setText("50300 EGP");
                     break;
             }
 
             if(!realtimeSwitch)
-                tv_currentV.setText("15 EGP");
+                binding.FHomeTvCurrentV.setText("15 EGP");
             else
-                tv_currentV.setText("22 EGP");
+                binding.FHomeTvCurrentV.setText("22 EGP");
         }
     }
 }
