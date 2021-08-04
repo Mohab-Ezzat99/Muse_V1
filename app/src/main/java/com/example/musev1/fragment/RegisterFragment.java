@@ -8,9 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
@@ -24,26 +21,30 @@ import androidx.navigation.Navigation;
 import com.example.musev1.MainActivity;
 import com.example.musev1.R;
 import com.example.musev1.databinding.FragmentRegisterBinding;
-import com.example.musev1.model.AuthModel;
 import com.example.musev1.utility.SaveState;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-import org.jetbrains.annotations.NotNull;
-
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import static com.example.musev1.MainActivity.mAuth;
 
 public class RegisterFragment extends Fragment implements View.OnClickListener {
 
-    private String full_name,email,password,confirm_password;
+    private String full_name, email, password, confirm_password, user_id;
     private ProgressDialog progressDialog;
     private NavController navController;
     private FragmentRegisterBinding binding;
+
+    private Map<String, Object> map;
+    private FirebaseFirestore db;
+    private DocumentReference documentReference;
+
 
     public RegisterFragment() {
         // Required empty public constructor
@@ -72,8 +73,11 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding=FragmentRegisterBinding.bind(view);
-        progressDialog=new ProgressDialog(getContext());
+        binding = FragmentRegisterBinding.bind(view);
+        progressDialog = new ProgressDialog(getContext());
+        db = FirebaseFirestore.getInstance();
+        map = new HashMap<>();
+
 
         binding.registerTvLogin.setOnClickListener(this);
         binding.registerBtnRegister.setOnClickListener(this);
@@ -139,36 +143,40 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         } else
             binding.registerItlConfPassword.setError(null);
 
-        if (SaveState.checkConnection(requireContext())) {
+        if (!SaveState.checkConnection(requireContext())) {
             Toast.makeText(getContext(), "No Internet", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        progressDialog.setMessage("Please wait...");
-        progressDialog.show();
-        ((ProgressBar)progressDialog.findViewById(android.R.id.progress))
-                .getIndeterminateDrawable()
-                .setColorFilter(MainActivity.colorPrimaryVariant, android.graphics.PorterDuff.Mode.SRC_IN);
-        progressDialog.setCanceledOnTouchOutside(false);
-
-        Call<ResponseBody> call= MainActivity.museViewModel.register(new AuthModel(full_name,email,password));
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
-                if(response.body()==null)
-                    Toast.makeText(getContext(), "Error! check fields", Toast.LENGTH_SHORT).show();
-                else {
-                    Toast.makeText(getContext(), "Registered Successfully", Toast.LENGTH_SHORT).show();
+        MainActivity.displayLoadingDialog();
+        mAuth.fetchSignInMethodsForEmail(email).addOnSuccessListener(signInMethodQueryResult -> mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task1 -> {
+            if (task1.isSuccessful()) {
+                user_id = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
+                documentReference = db.collection(SaveState.USERS).document(user_id);
+                map.put(SaveState.USER_ID, user_id);
+                map.put(SaveState.FULL_NAME, full_name);
+                map.put(SaveState.EMAIL, email);
+                documentReference.set(map).addOnCompleteListener(task -> {
                     navController.navigate(R.id.action_registerFragment_to_loginFragment);
-                }
-                progressDialog.dismiss();
+                    Toast.makeText(getContext(), "Registered successfully", Toast.LENGTH_SHORT).show();
+                });
+            } else {
+                if (task1.getException() instanceof FirebaseAuthUserCollisionException) {
+                    binding.registerItlEmail.setError("Already exist");
+                    binding.registerItlPassword.setError(null);
+                } else if (task1.getException() instanceof FirebaseAuthWeakPasswordException) {
+                    binding.registerItlPassword.setError("Weak password");
+                    binding.registerItlEmail.setError(null);
+                } else
+                    Toast.makeText(getContext(), "Error! " + task1.getException(), Toast.LENGTH_LONG).show();
             }
-
-            @Override
-            public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
-                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
-                progressDialog.dismiss();
-            }
+            MainActivity.progressDialog.dismiss();
+        })).addOnFailureListener(e -> {
+            if (e instanceof FirebaseAuthInvalidCredentialsException)
+                binding.registerItlEmail.setError("Badly format");
+            else
+                Toast.makeText(getContext(), "Error! " + e.getCause(), Toast.LENGTH_SHORT).show();
+            MainActivity.progressDialog.dismiss();
         });
     }
 }

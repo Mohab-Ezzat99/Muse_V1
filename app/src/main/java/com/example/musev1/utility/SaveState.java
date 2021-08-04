@@ -18,6 +18,11 @@ public class SaveState {
     public static final String ON_BOARDING = "onBoarding";
     public static final String TOKEN = "token";
 
+    public static final String USERS="Users";
+    public static final String USER_ID="User ID";
+    public static final String FULL_NAME="Full Name";
+    public static final String EMAIL="Email";
+
     @SuppressLint("CommitPrefEdits")
     public SaveState(Context context) {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
