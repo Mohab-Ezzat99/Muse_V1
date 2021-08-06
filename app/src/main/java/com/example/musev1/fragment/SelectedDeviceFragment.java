@@ -245,7 +245,7 @@ public class SelectedDeviceFragment extends Fragment implements View.OnClickList
 
                 tv_delete.setOnClickListener(v -> {
                     MainActivity.museViewModel.deleteDevice(device);
-                    Toast.makeText(getContext(), "deleted successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Deleted successfully", Toast.LENGTH_SHORT).show();
                     Navigation.findNavController(requireActivity(), R.id.main_fragment).popBackStack();
                     alertDialog.dismiss();
                 });
