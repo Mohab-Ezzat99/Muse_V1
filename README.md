@@ -21,7 +21,7 @@ The app is connected with a server by API that returns data from IoT devices (Sm
 
 Java & Material design
 
-RXJava, MVVM & Room database
+RXJava & Room database
 
 Intuit library for supporting multi-screens
 
