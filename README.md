@@ -19,27 +19,15 @@ The app is connected with a server by API that returns data from IoT devices (Sm
 
 # Tools
 
-Navigation component
+Java & Material design
 
-View binding
-
-Material design
+RXJava, MVVM & Room database
 
 Intuit library for supporting multi-screens
 
-ChipNavigation
+ChipNavigation & MPAndroidChart (for charts that used in the app)
 
-MPAndroidChart (for charts that used in the app)
-
-MVVM
-
-LiveData
-
-Room database
-
-REST API (Retrofit2)
-
-RXJava
+Android Jetpack (LiveData, ViewModel, DataBinding & Navigation)
 
 # APK
 
@@ -47,13 +35,10 @@ This version display data using room database for demonstration purposes
 
 https://drive.google.com/file/d/1vWOuNr_yVZ-gm1ZzKayfD0LIVcS712gD/view?usp=drivesdk
 
-# Overview
+# YouTube
 
-https://user-images.githubusercontent.com/73759782/128566137-b6da07c3-81ec-47ec-97f5-5c803df6e8f5.mp4
+https://www.youtube.com/watch?v=rqhb4n5NAo0
 
-https://user-images.githubusercontent.com/73759782/128566606-4666ec91-cf83-4548-9bb0-c3269ccdfeb5.mp4
-
-https://user-images.githubusercontent.com/73759782/128566623-badfb4fc-3f3e-4b09-a09b-49a5154403f9.mp4
 # Screenshots
 
 <img src="app\src\muse pic\a.jpeg" hight="75" width="150"> <img src="app\src\muse pic\b.jpeg" hight="75" width="150">
